@@ -1,0 +1,20 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("conmerge"
+ (filename . "~/Code/conmerge/")
+ (front-context-string . "CHANGELOG.md\n  d")
+ (rear-context-string . "80 Sep  8 18:24 ")
+ (position . 213))
+("Code"
+ (filename . "~/Code/")
+ (front-context-string . "conmerge\n  drwxr")
+ (rear-context-string . "96 Sep 10 15:30 ")
+ (position . 204))
+("problems"
+ (filename . "~/Code/problems/")
+ (front-context-string . "codeforces\n  drw")
+ (rear-context-string . "96 Sep 20 07:15 ")
+ (position . 210))
+)
