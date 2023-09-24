@@ -4,7 +4,8 @@
 
 ;; Loading all other files
 (setq my-config-files '("~/.emacs.d/packages.el"
-                        "~/.emacs.d/org.el"))
+                        "~/.emacs.d/org.el"
+			"~/.emacs.d/haskell.el"))
 
 (dolist (config-file my-config-files)
   (load config-file))
