@@ -2,11 +2,21 @@
 ;; |            Org Config              |
 ;; |------------------------------------|
 
+;; Org Variables
 (setq org-directory "~/Notes/Org-Roam/")
 (setq org-agenda-files (list "~/Notes/Org-Roam/todo.org"))
-(setq org-roam-directory "~/Notes/Org-Roam/")
-(setq org-roam-db-autosync t)
 
+;; Making org mode look nice
+(setq org-startup-indented t
+        org-hide-emphasis-markers t
+        org-startup-with-inline-images t
+        org-image-actual-width '(300))
+
+;; Org todo keywords
+(setq org-todo-keywords
+      '((sequence "TODO" "WAIT" "DONE")))
+
+;; Org Agenda
 (setq org-agenda-custom-commands
       `(("A" "Daily agenda and top priority tasks"
          ((tags-todo "*"

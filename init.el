@@ -1,6 +1,14 @@
 ;; |------------------------------------|
 ;; |            Gen Config              |
 ;; |------------------------------------|
+
+;; Loading all other files
+(setq my-config-files '("~/.emacs.d/packages.el"
+                        "~/.emacs.d/org.el"))
+
+(dolist (config-file my-config-files)
+  (load config-file))
+
 ;; Esc key quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -13,6 +21,16 @@
 (setq make-backup-files nil)
 (setq confirm-kill-emacs 'y-or-n-p)
 
+;; Desktop mode/session saving
+(setq desktop-path '("~/.emacs.d/desktop")
+      desktop-dirname "~/.emacs.d/desktop/"
+      desktop-base-file-name "emacs-desktop"
+      desktop-save t
+      desktop-restore-eager t
+      desktop-restore-=frams t
+      desktop-restory-in-current-display t
+      desktop-files-not-to-save "\(^$\\|\\*scratch\\*\\|\\*Messages\\*\\|\\*dashboard\\*\\|\\*Async-native-compile-log\\*)")
+
 ;; |------------------------------------|
 ;; |             UI Config              |
 ;; |------------------------------------|
@@ -24,8 +42,9 @@
 (menu-bar-mode -1)
 (setq inhibit-startup-screen t)
 (tool-bar-mode 0)
-(display-line-numbers-mode t)
-(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative)
+(global-display-line-numbers-mode t)
+(setq frame-title-format "GNU Emacs")
 
 ;; |------------------------------------|
 ;; |          Modes and Hooks           |
@@ -34,127 +53,60 @@
 (electric-pair-mode 1)
 
 ;; |------------------------------------|
-;; |             Packages               |
-;; |------------------------------------|
-
-(require 'package)
-
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")))
-
-(package-initialize)
-(unless package-archive-contents
- (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-always-ensure t)
-
-;; Ef-themes
-(use-package ef-themes
-  :ensure t
-  :config
-  (load-theme 'ef-day t)
-  (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
-  (setq ef-themes-to-toggle '(ef-autumn ef-day))
-  (setq ef-themes-headings
-      '((0 variable-pitch 1.8)
-        (1 variable-pitch 1.3)
-        (2 regular 1.2)
-        (3 1.1)
-        (agenda-structure variable-pitch 1.5)
-        (t variable-pitch))))
-
-;; Multiple Cursors
-(use-package multiple-cursors
-  :ensure t)
-
-;; Magit
-(use-package magit
-  :ensure t)
-
-;; Vertico completion
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode 1))
-
-;; Marginalia - works with vertico
-(use-package marginalia
-  :ensure t
-  :init
-  (marginalia-mode))
-
-(use-package company
-  :ensure t
-  :init
-  (global-company-mode 1))
-
-;; |------------------------------------|
 ;; |            Keybinds                |
 ;; |------------------------------------|
+
+;; Org Agenda
+(defun bard/primary-agenda ()
+  "For viewing my custom agenda"
+  (interactive)
+  (org-agenda nil "A")
+  (delete-other-windows))
+
+(global-set-key (kbd "C-c C-a") 'bard/primary-agenda)
+
+;; Surround region with character
+(defun bard/wrap-text-with-markers (start-marker end-marker marker)
+  "Surround marked text with any character."
+  (interactive "r\nsEnter marker (e.g., \"): ")
+  (save-excursion
+    (goto-char end-marker)
+    (insert marker)
+    (goto-char start-marker)
+    (insert marker)))
+
+(global-set-key (kbd "C-c s") 'bard/wrap-text-with-markers)
 
 ;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->")         'mc/mark-next-like-this)
 (global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<")     'mc/mark-all-like-this)
-(global-set-key (kbd "C-\"")        'mc/skip-to-next-like-this)
+(global-set-key (kbd "C-\\")        'mc/skip-to-next-like-this)
 (global-set-key (kbd "C-:")         'mc/skip-to-previous-like-this)
 
-;; Smex
-;;(global-set-key (kbd "M-x") 'smex)
+;; Buffer switching
+(global-set-key (kbd "C-.") 'next-buffer)
+(global-set-key (kbd "C-,") 'previous-buffer)
 
-;; |------------------------------------|
-;; |            Org Config              |
-;; |------------------------------------|
+;; Ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(setq org-directory "~/Notes/Org-Roam/")
-(setq org-agenda-files (list "~/Notes/Org-Roam/todo.org"))
-(setq org-agenda-files (list "~/Notes/Org-Roam/todo.org"))
+;; Org Cliplink
+(global-set-key (kbd "C-x p i") 'org-cliplink)
 
-(setq org-agenda-custom-commands
-      `(("A" "Daily agenda and top priority tasks"
-         ((tags-todo "*"
-                     ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "All Tasks \n")))
-          (agenda "" ((org-agenda-span 1)
-                      (org-agenda-start-day nil)
-                      (org-deadline-warning-days 0)
-                      (org-scheduled-past-days 0)
-                      ;; We don't need the `org-agenda-date-today'
-                      ;; highlight because that only has a practical
-                      ;; utility in multi-day views.
-                      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                      (org-agenda-format-date "%A %-e %B %Y")
-                      (org-agenda-overriding-header "Today's agenda \n")))
-          ;; write skip function that skips saturdays and sundays
-          (agenda "" ((org-agenda-span 7)
-                      (org-deadline-warning-days 0)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this week \n")))))
-        ("Y" "Monthly view for all tasks"
-         ((agenda "" ((org-agenda-span 365)
-                      (org-deadline-warning-days 2)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this Year\n")))))
-        ("S" "Monthly view for all tasks"
-         ((agenda "" ((org-agenda-span 31)
-                      (org-deadline-warning-days 2)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this month\n")))))))
+;; Desktop/session save
+(global-set-key (kbd "C-' s") 'desktop-save-in-desktop-dir)
+(global-set-key (kbd "C-' r") 'desktop-read)
+
+;; Custom stuff that no one cares about D:
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(marginalia company vertico magit vterm use-package multiple-cursors ef-themes)))
+   '(haskell-mode clojure-snippets cider clojure-mode mixed-pitch tao-theme gruber-darker vterm yasnippet-snippets which-key vertico use-package toc-org projectile pdf-tools org-roam org-cliplink orderless olivetti multiple-cursors marginalia magit hl-todo expand-region ef-themes dashboard counsel company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
