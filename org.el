@@ -48,3 +48,41 @@
                       (org-deadline-warning-days 2)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                       (org-agenda-overriding-header "Upcoming this month\n")))))))
+
+;; Org capture templates
+(setq org-capture-templates
+      '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Homework")
+         "* TODO %?")
+        ("r" "Reading List" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Watch/Read List")
+         "* %?")
+        ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
+         "* %U %^{Title}\n  %?")
+        ("a" "Appointment" entry (file+heading "~/Notes/Org-Roam/todo.org" "Appointment")
+         "* %^{Task}\n  %^t\n  %?")))
+
+;; Org Roam capture templates
+(setq org-roam-capture-templates
+      '(("d" "default" plain
+         "\n* Tags: \n%? \n\n"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+         :unnarrowed t)
+        ("n" "notes" plain
+         "\n\n\n* Tags :: %? \n\n* ${title} \n"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+         :unnarrowed t)
+        ("b" "bio" plain
+         "#+ANKI_DECK: Bio \n\n* Tags :: [[id:cfe7bda9-b154-4d6b-989f-6af778a98cbd][Biology]] \n\n* %? \n"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+         :unnarrowed t)
+        ("u" "apush" plain
+         "#+ANKI_DECK: APUSH \n\n* Tags :: [[id:06334c1d-5c06-4b70-bfd8-a074c0c36706][APUSH]] \n\n* %? \n"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+         :unnarrowed t)
+        ("s" "snapshot" plain
+         (file "~/Notes/Org/snapshot_template.org")
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+         :unnarrowed t)
+        ("i" "idea" plain
+         "\n* Tags: \n%? \n\n"
+         :if-new (file+head "Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+         :unnarrowed t)))
