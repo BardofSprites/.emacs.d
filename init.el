@@ -73,7 +73,7 @@
   (org-agenda nil "A")
   (delete-other-windows))
 
-(global-set-key (kbd "C-c C-a") 'bard/primary-agenda)
+(global-set-key (kbd "C-' a") 'bard/primary-agenda)
 
 ;; Surround region with character
 (defun bard/wrap-text-with-markers (start-marker end-marker marker)

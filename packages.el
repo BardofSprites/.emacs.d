@@ -23,7 +23,7 @@
 (use-package ef-themes
   :ensure t
   :config
-  ;;(load-theme 'ef-cyprus t)
+  (load-theme 'ef-cyprus t)
   (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
   (setq ef-themes-to-toggle '(ef-autumn ef-cyprus))
   (setq ef-themes-headings
@@ -33,11 +33,6 @@
         (3 1.1)
         (agenda-structure variable-pitch 1.5)
         (t variable-pitch))))
-
-(use-package tao-theme
-  :ensure t
-  :config
-  (load-theme 'tao-yin t))
 
 (use-package mixed-pitch
   :ensure t
