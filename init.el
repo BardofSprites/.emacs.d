@@ -10,6 +10,15 @@
 (dolist (config-file my-config-files)
   (load config-file))
 
+;; GHC Path
+(let ((my-ghcup-path (expand-file-name "~/.ghcup/bin")))
+  (setenv "PATH" (concat my-ghcup-path ":" (getenv "PATH")))
+  (add-to-list 'exec-path my-ghcup-path))
+
+(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+  (add-to-list 'exec-path my-cabal-path))
+
 ;; Esc key quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -107,7 +116,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(haskell-mode clojure-snippets cider clojure-mode mixed-pitch tao-theme gruber-darker vterm yasnippet-snippets which-key vertico use-package toc-org projectile pdf-tools org-roam org-cliplink orderless olivetti multiple-cursors marginalia magit hl-todo expand-region ef-themes dashboard counsel company)))
+   '(emms gruber-darker-theme haskell-mode clojure-snippets cider clojure-mode mixed-pitch tao-theme gruber-darker vterm yasnippet-snippets which-key vertico use-package toc-org projectile pdf-tools org-roam org-cliplink orderless olivetti multiple-cursors marginalia magit hl-todo expand-region ef-themes dashboard counsel company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
