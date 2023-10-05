@@ -53,6 +53,8 @@
 (setq org-capture-templates
       '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Homework")
          "* TODO %?")
+	("e" "Extra/Coding" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Extra/Coding")
+         "* TODO %?")
         ("r" "Reading List" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Watch/Read List")
          "* %?")
         ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
