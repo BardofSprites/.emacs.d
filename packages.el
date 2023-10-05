@@ -128,7 +128,10 @@
     (setq dashboard-set-footer nil))
 
 (use-package elfeed
-  :ensure t)
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x w") 'elfeed)
+  (setq elfeed-search-filter "+unread -academia"))
 
 (use-package elfeed-org
   :ensure t
