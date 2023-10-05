@@ -1,0 +1,15 @@
+#+TITLE: .emacs.d
+#+AUTHOR: BardofSprites
+
+* Emacs Configuration
+
+This is my vanilla Emacs configuration. It works for my purposes, feel free to modify it for your needs. The themes are from the =ef-themes= package made by [[https://protesilaos.com/emacs/ef-themes][Prot]].
+
+I mainly program in Haskell and Clojure, so those are the only modes I have installed. If you would like to add your own, take a look at [[https://github.com/emacs-tw/awesome-emacs#programming-language][Awesome Emacs]]. It has many useful resources and packages to get started with.
+
+** Screenshots
+I often tend to change themes with the season, so the screenshots may not reflect the end-product.
+
+[[file:img/dashboard.png][Dashboard with ef-autumn theme]]
+[[file:img/dashboard-light.png][Dashboard with ef-kassio theme]]
+[[file:img/orgdocument.png][Org Document with olivetti mode and light theme]]
