@@ -25,19 +25,24 @@
   :config
   (load-theme 'ef-cyprus t)
   (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
-  (setq ef-themes-to-toggle '(ef-autumn ef-cyprus))
-  (setq ef-themes-headings
-      '((0 variable-pitch 1.8)
-        (1 variable-pitch 1.3)
-        (2 regular 1.2)
-        (3 1.1)
-        (agenda-structure variable-pitch 1.5)
-        (t variable-pitch))))
+  (setq ef-themes-to-toggle '(ef-autumn ef-cyprus)))
+  ;; (setq ef-themes-headings
+  ;;     '((0 variable-pitch 1.8)
+  ;;       (1 variable-pitch 1.3)
+  ;;       (2 regular 1.2)
+  ;;       (3 1.1)
+  ;;       (agenda-structure variable-pitch 1.5)
+  ;;       (t variable-pitch)))
+
+(use-package rainbow-mode
+  :ensure t)
 
 (use-package mixed-pitch
   :ensure t
   :hook
-  (olivetti-mode . mixed-pitch-mode))
+  (olivetti-mode . mixed-pitch-mode)
+  :config
+  (setq mixed-pitch-cursor-type 'box))
 
 ;; Multiple Cursors
 (use-package multiple-cursors
@@ -113,10 +118,32 @@
   :config
     (dashboard-setup-startup-hook)
     (setq dashboard-startup-banner "~/.emacs.d/catwithscarf.jpg")
-    (setq dashboard-items '((recents  . 5)
-			    (projects . 5)))
+    (setq dashboard-banner-logo-width 50)
+    (setq dashboard-banner-logo-height 50)
+    (setq dashboard-center-content t)
+    (setq dashboard-items '((recents   . 5)
+			    (bookmarks . 5)
+			    (projects  . 5)))
     (setq dashboard-banner-logo-title "An Old Farmer's Smile")
     (setq dashboard-set-footer nil))
+
+(use-package elfeed
+  :ensure t)
+
+(use-package elfeed-org
+  :ensure t
+  :init
+  (elfeed-org)
+  :config
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/feeds.org"
+				   "~/.emacs.d/youtube.org")))
+
+(use-package elfeed-goodies
+  :ensure t
+  :init
+  (elfeed-goodies/setup)
+  :config
+  (setq elfeed-goodies/powerline-default-separator 'box))
 
 ;; Distraction-free writing
 (use-package olivetti
