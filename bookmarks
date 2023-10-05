@@ -2,7 +2,32 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("conmerge"
+(("org-capture-last-stored"
+ (filename . "~/Notes/Org-Roam/todo.org")
+ (front-context-string . "*** TODO Test\n**")
+ (rear-context-string . "TODO hard drive\n")
+ (position . 641))
+("School"
+ (filename . "~/Documents/School/")
+ (front-context-string . "APUSH.pdf\n  -rw-")
+ (rear-context-string . "08 Aug 22 05:26 ")
+ (position . 234))
+("Documents"
+ (filename . "~/Documents/")
+ (front-context-string . "basics.md\n  drwx")
+ (rear-context-string . "67 Jul 16 20:04 ")
+ (position . 214))
+("puzzles"
+ (filename . "~/Code/puzzles/")
+ (front-context-string . "codeforces\n  drw")
+ (rear-context-string . "96 Sep 20 07:15 ")
+ (position . 211))
+("Work"
+ (filename . "~/Notes/Org-Roam/todo.org")
+ (front-context-string . ":PROPERTIES:\n:ID")
+ (rear-context-string)
+ (position . 1))
+("conmerge"
  (filename . "~/Code/conmerge/")
  (front-context-string . "CHANGELOG.md\n  d")
  (rear-context-string . "80 Sep  8 18:24 ")
@@ -12,9 +37,4 @@
  (front-context-string . "conmerge\n  drwxr")
  (rear-context-string . "96 Sep 10 15:30 ")
  (position . 204))
-("problems"
- (filename . "~/Code/problems/")
- (front-context-string . "codeforces\n  drw")
- (rear-context-string . "96 Sep 20 07:15 ")
- (position . 210))
 )
