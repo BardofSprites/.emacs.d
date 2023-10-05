@@ -11,13 +11,13 @@
   (load config-file))
 
 ;; GHC Path
-(let ((my-ghcup-path (expand-file-name "~/.ghcup/bin")))
-  (setenv "PATH" (concat my-ghcup-path ":" (getenv "PATH")))
-  (add-to-list 'exec-path my-ghcup-path))
+;; (let ((my-ghcup-path (expand-file-name "~/.ghcup/bin")))
+;;   (setenv "PATH" (concat my-ghcup-path ":" (getenv "PATH")))
+;;   (add-to-list 'exec-path my-ghcup-path))
 
-(let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
-  (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
-  (add-to-list 'exec-path my-cabal-path))
+;; (let ((my-cabal-path (expand-file-name "~/.cabal/bin")))
+;;   (setenv "PATH" (concat my-cabal-path ":" (getenv "PATH")))
+;;   (add-to-list 'exec-path my-cabal-path))
 
 ;; Esc key quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -25,6 +25,8 @@
 ;; Fonts
 (set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Wide" :height 140)
+
+(add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
 
 ;; No Backups
 (setq auto-save-default nil)
@@ -52,15 +54,24 @@
 (menu-bar-mode -1)
 (setq inhibit-startup-screen t)
 (tool-bar-mode 0)
-(setq display-line-numbers-type 'relative)
-(global-display-line-numbers-mode t)
 (setq frame-title-format "GNU Emacs")
+(setq display-line-numbers-type 'relative)
 
 ;; |------------------------------------|
 ;; |          Modes and Hooks           |
 ;; |------------------------------------|
 ;; pair parens and quotes automatically
 (electric-pair-mode 1)
+(defun bard/common-modes-hook ()
+  "Commonly used modes, bundled in one hook"
+  (display-line-numbers-mode 1)
+  (hl-todo-mode 1))
+
+(add-hook 'org-mode-hook 'bard/common-modes-hook)
+(add-hook 'fundamental-mode-hook 'bard/common-modes-hook)
+(add-hook 'emacs-lisp-mode-hook 'bard/common-modes-hook)
+(add-hook 'haskell-mode-hook 'bard/common-modes-hook)
+(add-hook 'clojure-mode-hook 'bard/common-modes-hook)
 
 ;; |------------------------------------|
 ;; |            Keybinds                |
@@ -87,6 +98,15 @@
 
 (global-set-key (kbd "C-c s") 'bard/wrap-text-with-markers)
 
+(defun bard/copy-current-line ()
+  "Copy the current line."
+  (interactive)
+  (let ((line-text (buffer-substring (line-beginning-position) (line-end-position))))
+    (kill-new line-text)
+    (message "Copied current line")))
+
+(global-set-key (kbd "C-c l") 'bard/copy-current-line)
+
 ;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->")         'mc/mark-next-like-this)
@@ -109,14 +129,16 @@
 (global-set-key (kbd "C-' s") 'desktop-save-in-desktop-dir)
 (global-set-key (kbd "C-' r") 'desktop-read)
 
-;; Custom stuff that no one cares about D:
+
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(emms gruber-darker-theme haskell-mode clojure-snippets cider clojure-mode mixed-pitch tao-theme gruber-darker vterm yasnippet-snippets which-key vertico use-package toc-org projectile pdf-tools org-roam org-cliplink orderless olivetti multiple-cursors marginalia magit hl-todo expand-region ef-themes dashboard counsel company)))
+   '(elfeed-goodies elfeed-org elfeed rainbow-mode vterm yasnippet-snippets which-key vertico use-package toc-org tao-theme projectile pdf-tools org-roam org-cliplink orderless olivetti multiple-cursors mixed-pitch marginalia magit hl-todo haskell-mode expand-region ef-themes dashboard counsel company clojure-snippets cider)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
