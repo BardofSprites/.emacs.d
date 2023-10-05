@@ -117,7 +117,7 @@
   :ensure t
   :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner "~/.emacs.d/catwithscarf.jpg")
+    (setq dashboard-startup-banner "~/.emacs.d/img/catwithscarf.jpg")
     (setq dashboard-banner-logo-width 50)
     (setq dashboard-banner-logo-height 50)
     (setq dashboard-center-content t)
