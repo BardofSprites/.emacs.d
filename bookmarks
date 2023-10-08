@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("School"
+(("org-capture-last-stored"
+ (filename . "~/Notes/Org-Roam/journal.org")
+ (front-context-string . "**** [2023-10-08")
+ (rear-context-string . "23-10-08 Sunday\n")
+ (position . 1816))
+("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")
  (rear-context-string . "08 Aug 22 05:26 ")
