@@ -78,6 +78,7 @@
 ;; Org capture templates
 (define-key global-map (kbd "C-`") #'org-capture)
 
+(require 'org-protocol)
 (setq org-capture-templates
       '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Homework")
          "* TODO %?")
@@ -85,6 +86,10 @@
          "* TODO %?")
         ("r" "Reading List" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Watch/Read List")
          "* %?")
+	("p" "Protocol" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Quotes")
+        "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+	("L" "Protocol Link" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Watch/Read List")
+        "* [[%:link][%:description]] \nCaptured On: %U \n** Notes:\n%?")
         ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
          "* %U %^{Title}\n  %?")
         ("a" "Appointment" entry (file+heading "~/Notes/Org-Roam/todo.org" "Appointment")
