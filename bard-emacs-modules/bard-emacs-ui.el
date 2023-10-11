@@ -57,33 +57,22 @@
     "Distraction-free writing environment"
     (if (equal olivetti-mode nil)
         (progn
-          (window-configuration-to-register 1)
-          (delete-other-windows)
           (text-scale-set 0.2)
           (setq olivetti-body-width 100)
           (olivetti-mode t))
-      ;; TODO turn off line numbers
       (progn
-        (if (eq (length (window-list)) 1)
-            (jump-to-register 1))
         (olivetti-mode 0)
         (text-scale-set 0)
         (mixed-pitch-mode 0)
-	;; TODO turn restore line numbers
         (setq cursor-type 'box))))
   (defun bard/olivetti-toggle ()
     "Distraction-free writing environment"
     (if (equal olivetti-mode nil)
         (progn
-          (window-configuration-to-register 1)
-          (delete-other-windows)
           (text-scale-set 0.2)
           (setq olivetti-body-width 100)
-	  (display-line-numbers-mode 0)
           (olivetti-mode t))
       (progn
-        (if (eq (length (window-list)) 1)
-            (jump-to-register 1))
         (olivetti-mode 0)
         (text-scale-set 0)
         (mixed-pitch-mode 0)

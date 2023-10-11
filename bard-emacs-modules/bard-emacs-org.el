@@ -76,6 +76,8 @@
                       (org-agenda-overriding-header "Upcoming this month\n")))))))
 
 ;; Org capture templates
+(define-key global-map (kbd "C-`") #'org-capture)
+
 (setq org-capture-templates
       '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Homework")
          "* TODO %?")

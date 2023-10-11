@@ -74,3 +74,16 @@
 (provide 'init)
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(org-roam-ui vterm yasnippet-snippets which-key vertico use-package toc-org tao-theme rainbow-mode projectile pdf-tools org-roam org-cliplink orderless olivetti multiple-cursors modus-themes mixed-pitch marginalia magit hl-todo haskell-mode expand-region elfeed-org elfeed-goodies ef-themes dashboard counsel company clojure-snippets cider)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))

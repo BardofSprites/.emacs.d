@@ -31,6 +31,7 @@
 (use-package modus-themes
   :ensure t
   :config
+  (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (define-key global-map (kbd "M-<f5>") #'modus-themes-toggle))
 
 (use-package rainbow-mode
@@ -96,6 +97,9 @@
          ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (org-roam-db-autosync-mode 1))
+
+(use-package org-roam-ui
+  :ensure t)
 
 (use-package orderless
   :ensure t
