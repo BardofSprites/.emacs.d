@@ -52,7 +52,7 @@
 ;; olivetti
 (use-package olivetti
   :config
-  (defun bard/olivetti-toggle-interactive ()
+  (defun bard/olivetti-toggle ()
     (interactive)
     "Distraction-free writing environment"
     (if (equal olivetti-mode nil)
@@ -65,20 +65,8 @@
         (text-scale-set 0)
         (mixed-pitch-mode 0)
         (setq cursor-type 'box))))
-  (defun bard/olivetti-toggle ()
-    "Distraction-free writing environment"
-    (if (equal olivetti-mode nil)
-        (progn
-          (text-scale-set 0.2)
-          (setq olivetti-body-width 100)
-          (olivetti-mode t))
-      (progn
-        (olivetti-mode 0)
-        (text-scale-set 0)
-        (mixed-pitch-mode 0)
-        (setq cursor-type 'box))))
   :bind
-  (("<f9>" . bard/olivetti-toggle-interactive)))
+  (("<f9>" . bard/olivetti-toggle)))
 
 (provide 'bard-emacs-ui)
 

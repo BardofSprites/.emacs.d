@@ -2,11 +2,16 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
+(("todo.org"
  (filename . "~/Notes/Org-Roam/todo.org")
- (front-context-string . "*** test\nSource:")
- (rear-context-string . ":57] \n** Quotes\n")
- (position . 2147))
+ (front-context-string . ":PROPERTIES:\n:ID")
+ (rear-context-string)
+ (position . 1))
+("org-capture-last-stored"
+ (filename . "~/Notes/Org-Roam/media.org")
+ (front-context-string . "*** Source: [[ht")
+ (rear-context-string . ":44] \n** Quotes\n")
+ (position . 2004))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")
@@ -22,11 +27,6 @@
  (front-context-string . "codeforces\n  drw")
  (rear-context-string . "96 Sep 20 07:15 ")
  (position . 211))
-("Work"
- (filename . "~/Notes/Org-Roam/todo.org")
- (front-context-string . ":PROPERTIES:\n:ID")
- (rear-context-string)
- (position . 1))
 ("conmerge"
  (filename . "~/Code/conmerge/")
  (front-context-string . "CHANGELOG.md\n  d")

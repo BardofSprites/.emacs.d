@@ -21,18 +21,24 @@
 (setq use-package-always-ensure t)
 
 ;; Ef-themes
-(use-package ef-themes
-  :ensure t
-  :config
-  (load-theme 'ef-cyprus t)
-  (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
-  (setq ef-themes-to-toggle '(ef-autumn ef-cyprus)))
+;; (use-package ef-themes
+;;   :ensure t
+;;   :config
+;;   ;; (load-theme 'ef-cyprus t)
+;;   (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
+;;   (setq ef-themes-to-toggle '(ef-autumn ef-cyprus)))
 
-(use-package modus-themes
+;; (use-package modus-themes
+;;   :ensure t
+;;   :config
+;;   ;; (load-theme 'modus-operandi-tinted t)
+;;   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
+;;   (define-key global-map (kbd "M-<f5>") #'modus-themes-toggle))
+
+(use-package zenburn-theme
   :ensure t
   :config
-  (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
-  (define-key global-map (kbd "M-<f5>") #'modus-themes-toggle))
+  (load-theme 'zenburn t))
 
 (use-package rainbow-mode
   :ensure t)
@@ -160,12 +166,13 @@
   (global-hl-todo-mode t)
   :config
   (setq hl-todo-keyword-faces
-        '(("TODO" error bold)
-          ("FIXME" error bold)
-          ("WAIT" warning bold)
-          ("HACK" font-lock-constant-face bold)
-          ("DEPRECATED" font-lock-doc-face bold)
-          ("BUG" error bold))))
+        '(("TODO"        error bold)
+          ("FIXME"       error bold)
+          ("WAIT"        warning bold)
+          ("HACK"        font-lock-constant-face bold)
+          ("DEPRECATED"  font-lock-doc-face bold)
+	  ("DONE"        font-lock-doc-face bold)
+          ("BUG"         error bold))))
 
 (use-package pdf-tools
   :ensure t)
