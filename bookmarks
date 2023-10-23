@@ -8,10 +8,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Notes/Org-Roam/media.org")
- (front-context-string . "*** Source: [[ht")
- (rear-context-string . ":44] \n** Quotes\n")
- (position . 2004))
+ (filename . "~/Notes/Org-Roam/todo.org")
+ (front-context-string . "*** TODO write s")
+ (rear-context-string . "esharing server\n")
+ (position . 980))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")

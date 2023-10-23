@@ -26,6 +26,7 @@
 ;;; Code:
 
 ;; Add the directories to the load path
+(add-to-list 'load-path "~/.emacs.d/elisp/")
 (add-to-list 'load-path (expand-file-name "bard-elisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "bard-emacs-modules" user-emacs-directory))
 
@@ -63,8 +64,6 @@
 ;; |          General Keybinds          |
 ;; |------------------------------------|
 ;; Buffer switching
-(global-set-key (kbd "C-.") 'next-buffer)
-(global-set-key (kbd "C-,") 'previous-buffer)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Desktop/session save
@@ -74,3 +73,16 @@
 (provide 'init)
 
 ;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(helm-rg helm smartparens smart-parens flycheck vterm zenburn-theme yasnippet-snippets which-key vertico use-package toc-org tao-theme sly rainbow-mode projectile pdf-tools org-roam-ui org-cliplink orderless olivetti multiple-cursors modus-themes mixed-pitch marginalia magit hl-todo haskell-mode expand-region elfeed-org elfeed-goodies ef-themes dashboard counsel company clojure-snippets cider)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))

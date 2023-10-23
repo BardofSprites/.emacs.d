@@ -43,12 +43,6 @@
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
 
-;; Common UI hook
-(defun bard/text-hook ()
-  (bard/olivetti-toggle)
-  (display-line-numbers-mode 0)
-  (hl-todo-mode 1))
-
 ;; olivetti
 (use-package olivetti
   :config

@@ -75,6 +75,31 @@
   :init
   (global-company-mode 1))
 
+(use-package helm
+  :ensure t
+  :init
+  (helm-mode 1)
+  :bind (("M-x" . helm-M-x)
+	 ("C-x C-f" . helm-find-files)
+	 ("C-x b" . helm-mini)
+	 ("M-s" . helm-occur))
+  :config
+  (define-key helm-map (kbd "C-<backspace>") 'backward-kill-word)
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+  (define-key helm-map (kbd "C-z")  'helm-select-action))
+
+(use-package helm-rg
+  :ensure t
+  :config
+  (setq helm-rg-default-extra-args '("--hidden" "--smart-case"))
+  (setq helm-rg-prompt "Search for: ")
+  (setq helm-rg-result-file-action
+        (lambda (path)
+          (find-file path)))
+  (setq helm-rg-use-fuzzy-match t)
+  :bind (("C-c s" . 'helm-rg)))
+
 (use-package orderless
   :ensure t)
 
@@ -169,8 +194,8 @@
         '(("TODO"        error bold)
           ("FIXME"       error bold)
           ("WAIT"        warning bold)
-          ("HACK"        font-lock-constant-face bold)
-          ("DEPRECATED"  font-lock-doc-face bold)
+          ("HACK"        completions-common-part bold)
+          ("DEPRECATED"  completions-annotations bold)
 	  ("DONE"        font-lock-doc-face bold)
           ("BUG"         error bold))))
 
@@ -195,3 +220,21 @@
 
 (use-package haskell-mode
   :ensure t)
+
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode t))
+
+(use-package smartparens
+  :ensure t
+  :config
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t)
+  :bind
+  (("C-<down>" . sp-down-sexp))
+  ("C-<up>"    . sp-up-sexp)
+  ("M-<down>"  . sp-backward-up-sexp)
+  ("M-<up>"    . sp-backward-up-sexp)
+  ("C-M-a"     . sp-beginning-of-sexp)
+  ("C-M-e"     . sp-end-of-sexp))
