@@ -35,7 +35,7 @@
     (goto-char start-marker)
     (insert marker)))
 
-(global-set-key (kbd "C-c s") 'bard/wrap-text-with-markers)
+;;(global-set-key (kbd "C-c C-s") 'bard/wrap-text-with-markers)
 
 (defun bard/copy-current-line ()
   "Copy the current line."

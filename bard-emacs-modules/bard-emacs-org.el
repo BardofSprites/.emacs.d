@@ -7,8 +7,8 @@
 ;; Org Variables
 (setq org-directory "~/Notes/Org-Roam/")
 (setq org-agenda-files (list "~/Notes/Org-Roam/todo.org"))
-(add-hook 'org-mode-hook 'bard/text-hook)
-(add-hook 'org-agenda-mode-hook 'hl-todo-mode)
+(setq org-archive-location "~/Notes/Org-Roam/archive.org::* Archive")
+(setq org-log-done 'time)
 
 ;; Making org mode look nice
 (setq org-startup-indented t
@@ -17,8 +17,11 @@
         org-image-actual-width '(300))
 
 ;; Org todo keywords
-(setq org-todo-keywords
-      '((sequence "TODO" "WAIT" "DONE")))
+(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)"))
+      org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
+			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
+			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
+			       ("KILLED" . (:weight bold :weight bold :foreground "#656555"))))
 
 ;; Org Cliplink
 (global-set-key (kbd "C-x p i") 'org-cliplink)
@@ -87,13 +90,15 @@
         ("r" "Reading List" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Immediate Reading List")
          "* %?")
 	("p" "Protocol" entry (file+olp "~/Notes/Org-Roam/media.org" "Quotes")
-        "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
+         "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
 	("L" "Protocol Link" entry (file+olp "~/Notes/Org-Roam/media.org" "Watch/Read List")
-        "* [[%:link][%:description]] \nCaptured On: %U \n%?")
+         "* [[%:link][%:description]] \nCaptured On: %U \n%?")
         ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
          "* %U %^{Title}\n  %?")
         ("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
-         "* %^{Task}\n  %^t\n  %?")))
+         "* %^{Appointment}\n  %^t\n  %?")
+	("c" "Archive" entry (file+olp "~/Notes/Org-Roam/archive.org" "Archive")
+	 "* %^{Task}\nCaptured On: %U")))
 
 ;; Org Roam capture templates
 (setq org-roam-capture-templates
