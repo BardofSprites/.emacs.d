@@ -7,7 +7,20 @@
 
 (setq package-archives '(("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")
-			 ("melpa" . "https://melpa.org/packages/")))
+			 ("melpa" . "https://melpa.org/packages/")
+			 ("quelpa" . "https://")))
+
+(unless (package-installed-p 'quelpa)
+  (with-temp-buffer
+    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+    (eval-buffer)
+    (quelpa-self-upgrade)))
+
+(quelpa
+ '(quelpa-use-package
+   :fetcher git
+   :url "https://github.com/quelpa/quelpa-use-package.git"))
+(require 'quelpa-use-package)
 
 (package-initialize)
 (unless package-archive-contents
@@ -238,3 +251,16 @@
   ("M-<up>"    . sp-backward-up-sexp)
   ("C-M-a"     . sp-beginning-of-sexp)
   ("C-M-e"     . sp-end-of-sexp))
+
+(use-package helm-gtags
+  :ensure t
+  :config
+  (add-hook 'dired-mode-hook 'helm-gtags-mode)
+  (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+  (add-hook 'c-mode-hook 'helm-gtags-mode)
+  (add-hook 'c++-mode-hook 'helm-gtags-mode))
+
+(use-package aweshell
+  :quelpa (abc-mode :fetcher github :repo "manateelazycat/aweshell")
+  :bind(("C-M-<return>" . aweshell-dedicated-toggle)))
+
