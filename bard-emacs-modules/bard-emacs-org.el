@@ -48,21 +48,15 @@
 ;; Org Agenda
 (setq org-agenda-custom-commands
       `(("D" "Daily agenda and top priority tasks"
-         ((tags-todo "*"
-                     ((org-agenda-skip-function '(org-agenda-skip-if nil '(timestamp)))
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "All Tasks \n")))
+         ((tags-todo "-SCHEDULED/!TODO"
+                     ((org-agenda-overriding-header "Unscheduled Tasks \n")))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
                       (org-deadline-warning-days 0)
                       (org-scheduled-past-days 0)
-                      ;; We don't need the `org-agenda-date-today'
-                      ;; highlight because that only has a practical
-                      ;; utility in multi-day views.
                       (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                       (org-agenda-format-date "%A %-e %B %Y")
                       (org-agenda-overriding-header "Today's agenda \n")))
-          ;; write skip function that skips saturdays and sundays
           (agenda "" ((org-agenda-span 7)
                       (org-deadline-warning-days 0)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
