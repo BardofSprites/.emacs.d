@@ -71,17 +71,17 @@
 (use-package magit
   :ensure t)
 
-;; Vertico completion
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode 1))
+;; ;; Vertico completion
+;; (use-package vertico
+;;   :ensure t
+;;   :init
+;;   (vertico-mode 1))
 
-;; Marginalia - works with vertico
-(use-package marginalia
-  :ensure t
-  :init
-  (marginalia-mode))
+;; ;; Marginalia - works with vertico
+;; (use-package marginalia
+;;   :ensure t
+;;   :init
+;;   (marginalia-mode))
 
 (use-package company
   :ensure t

@@ -23,8 +23,13 @@
 			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
 			       ("KILLED" . (:weight bold :weight bold :foreground "#656555"))))
 
-;; Org Cliplink
-(global-set-key (kbd "C-x p i") 'org-cliplink)
+;; Org Mode Key map
+(defun bard/org-mode-keybindings ()
+  (define-key org-mode-map (kbd "C-c a") 'org-table-align)
+  (define-key org-mode-map (kbd "C-x p i") 'org-cliplink))
+
+(add-hook 'org-mode-hook 'bard/org-mode-keybindings)
+(add-hook 'org-mode-hook 'fly-spell-mode)
 
 ;; Org Agenda Faces
 (custom-set-faces '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))
