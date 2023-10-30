@@ -10,19 +10,19 @@
 			 ("melpa" . "https://melpa.org/packages/")
 			 ("quelpa" . "https://")))
 
-(unless (package-installed-p 'quelpa)
-  (with-temp-buffer
-    (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-    (eval-buffer)
-    (quelpa-self-upgrade)))
+;; (unless (package-installed-p 'quelpa)
+;;   (with-temp-buffer
+;;     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
+;;     (eval-buffer)
+;;     (quelpa-self-upgrade)))
 
-(quelpa
- '(quelpa-use-package
-   :fetcher git
-   :url "https://github.com/quelpa/quelpa-use-package.git"))
-(require 'quelpa-use-package)
+;; (quelpa
+;;  '(quelpa-use-package
+;;    :fetcher git
+;;    :url "https://github.com/quelpa/quelpa-use-package.git"))
+;; (require 'quelpa-use-package)
 
-(package-initialize)
+;; (package-initialize)
 (unless package-archive-contents
  (package-refresh-contents))
 
@@ -272,7 +272,7 @@
   (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
   (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim))
 
-(use-package aweshell
-  :quelpa (abc-mode :fetcher github :repo "manateelazycat/aweshell")
-  :bind(("C-M-<return>" . aweshell-dedicated-toggle)))
+;; (use-package aweshell
+;;   :quelpa (abc-mode :fetcher github :repo "manateelazycat/aweshell")
+;;   :bind(("C-M-<return>" . aweshell-dedicated-toggle)))
 
