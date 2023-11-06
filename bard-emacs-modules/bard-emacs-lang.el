@@ -24,13 +24,6 @@
 ;;; Commentary:
 
 ;;; Code:
-
-(message "Hello World!")
-
-(provide 'bard-emacs-lang)
-
-;;; bard-emacs-lang.el ends here
-
 (defun bard/common-modes-hook ()
   "Commonly used modes, bundled in one hook."
   (display-line-numbers-mode 1)
@@ -46,6 +39,11 @@
 
 (add-hook 'c++-mode-hook 'bard/c++-mode-keybindings)
 (add-hook 'c++-mode 'bard/common-modes-hook)
+
+;; Haskell
+(setq exec-path (append exec-path '("/home/bard/.ghcup/bin/haskell-language-server-wrapper")))
+(setq exec-path (append exec-path '("/home/bard/.ghcup/bin/haskell-language-server-9.0.2")))
+(add-to-list 'exec-path "/home/bard/.ghcup/bin")
 
 (provide 'bard-emacs-lang.el)
 ;;; bard-emacs-lang.el ends here

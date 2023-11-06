@@ -14,7 +14,7 @@
 (setq org-startup-indented t
         org-hide-emphasis-markers t
         org-startup-with-inline-images t
-        org-image-actual-width '(300))
+        org-image-actual-width '(600))
 
 ;; Org todo keywords
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)"))
@@ -29,7 +29,7 @@
   (define-key org-mode-map (kbd "C-x p i") 'org-cliplink))
 
 (add-hook 'org-mode-hook 'bard/org-mode-keybindings)
-(add-hook 'org-mode-hook 'fly-spell-mode)
+;; (add-hook 'org-mode-hook 'fly-spell-mode)
 
 ;; Org Agenda Faces
 (custom-set-faces '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))

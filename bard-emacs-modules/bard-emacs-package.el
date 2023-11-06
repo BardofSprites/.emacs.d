@@ -22,7 +22,7 @@
 ;;    :url "https://github.com/quelpa/quelpa-use-package.git"))
 ;; (require 'quelpa-use-package)
 
-;; (package-initialize)
+(package-initialize)
 (unless package-archive-contents
  (package-refresh-contents))
 
@@ -272,7 +272,7 @@
   (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
   (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim))
 
-;; (use-package aweshell
-;;   :quelpa (abc-mode :fetcher github :repo "manateelazycat/aweshell")
-;;   :bind(("C-M-<return>" . aweshell-dedicated-toggle)))
+(use-package emacs-everywhere
+  :ensure t)
 
+(provide 'bard-emacs-package.el)

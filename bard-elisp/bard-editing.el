@@ -44,7 +44,7 @@
     (kill-new line-text)
     (message "Copied current line")))
 
-(global-set-key (kbd "C-c l") 'bard/copy-current-line)
+(global-set-key (kbd "C-x l") 'bard/copy-current-line)
 
 ;; Multiple cursors
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
