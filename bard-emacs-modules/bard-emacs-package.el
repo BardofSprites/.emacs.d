@@ -275,4 +275,30 @@
 (use-package emacs-everywhere
   :ensure t)
 
+(use-package diminish
+  :ensure t
+  :config
+  (diminish 'rainbow-mode)
+  (diminish 'helm-mode)
+  (diminish 'flycheck-mode)
+  (diminish 'which-key-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'org-roam-ui-mode "ORUI")
+  (diminish 'auto-revert-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'company-mode))
+
+(use-package diminish
+  :ensure t
+  :config
+  (diminish 'rainbow-mode)
+  (diminish 'helm-mode)
+  (diminish 'flycheck-mode)
+  (diminish 'which-key-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'org-roam-ui-mode "ORUI")
+  (diminish 'auto-revert-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'company-mode))
+
 (provide 'bard-emacs-package.el)

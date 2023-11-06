@@ -27,6 +27,8 @@
 (setq inhibit-startup-message t)
 (setq inhibit-startup-screen t)
 (setq frame-title-format "GNU Emacs")
+(setq mode-line-misc-info
+      (delete (assoc 'minor-mode-alist mode-line-misc-info) mode-line-misc-info))
 
 ;; Modes
 (scroll-bar-mode -1)
@@ -36,10 +38,18 @@
 (menu-bar-mode -1)
 (tool-bar-mode 0)
 
+;; Modeline
+(setq display-time-format "%Y-%m-%d %H:%M")
+(setq display-time-default-load-average nil)
+(setq display-time-mail-file nil)
+(display-time-mode 1)
+
+
 ;; Fonts
 (set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
 (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy" :height 140)
 (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Wide" :height 140)
+;; (set-face-attribute 'variable-pitch nil :font "FreeSans" :height 140)
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
 
