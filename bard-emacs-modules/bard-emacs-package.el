@@ -38,8 +38,9 @@
 ;;   :ensure t
 ;;   :config
 ;;   ;; (load-theme 'ef-cyprus t)
+;;   (load-theme 'ef-winter t)
 ;;   (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
-;;   (setq ef-themes-to-toggle '(ef-autumn ef-cyprus)))
+;;   (setq ef-themes-to-toggle '(ef-winter ef-frost)))
 
 ;; (use-package modus-themes
 ;;   :ensure t
@@ -52,6 +53,9 @@
   :ensure t
   :config
   (load-theme 'zenburn t))
+
+(use-package gruvbox-theme
+  :ensure t)
 
 (use-package rainbow-mode
   :ensure t)
@@ -163,16 +167,17 @@
 (use-package dashboard
   :ensure t
   :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner "~/.emacs.d/img/catwithscarf.jpg")
-    (setq dashboard-banner-logo-width 50)
-    (setq dashboard-banner-logo-height 50)
-    (setq dashboard-center-content t)
-    (setq dashboard-items '((recents   . 5)
-			    (bookmarks . 5)
-			    (projects  . 5)))
-    (setq dashboard-banner-logo-title "An Old Farmer's Smile")
-    (setq dashboard-set-footer nil))
+  (setq initial-buffer-choice 'dashboard-open)
+  (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner "~/.emacs.d/img/catwithscarf.jpg")
+  (setq dashboard-banner-logo-width 50)
+  (setq dashboard-banner-logo-height 50)
+  (setq dashboard-center-content t)
+  (setq dashboard-items '((recents   . 5)
+			  (bookmarks . 5)
+			  (projects  . 5)))
+  (setq dashboard-banner-logo-title "An Old Farmer's Smile")
+  (setq dashboard-set-footer nil))
 
 (use-package elfeed
   :ensure t
@@ -239,6 +244,9 @@
   :init
   (global-flycheck-mode t))
 
+(use-package tuareg
+  :ensure t)
+
 (use-package smartparens
   :ensure t
   :config
@@ -274,19 +282,6 @@
 
 (use-package emacs-everywhere
   :ensure t)
-
-(use-package diminish
-  :ensure t
-  :config
-  (diminish 'rainbow-mode)
-  (diminish 'helm-mode)
-  (diminish 'flycheck-mode)
-  (diminish 'which-key-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'org-roam-ui-mode "ORUI")
-  (diminish 'auto-revert-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'company-mode))
 
 (use-package diminish
   :ensure t

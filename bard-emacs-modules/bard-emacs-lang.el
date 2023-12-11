@@ -31,7 +31,11 @@
 
 (add-hook 'emacs-lisp-mode-hook 'bard/common-modes-hook)
 (add-hook 'haskell-mode-hook 'bard/common-modes-hook)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'haskell-indent-mode)
 (add-hook 'clojure-mode-hook 'bard/common-modes-hook)
+(add-hook 'tuareg-mode-hook 'bard/common-modes-hook)
 
 ;; CPP Mode
 (defun bard/c++-mode-keybindings ()
@@ -41,9 +45,12 @@
 (add-hook 'c++-mode 'bard/common-modes-hook)
 
 ;; Haskell
-(setq exec-path (append exec-path '("/home/bard/.ghcup/bin/haskell-language-server-wrapper")))
-(setq exec-path (append exec-path '("/home/bard/.ghcup/bin/haskell-language-server-9.0.2")))
+;; (add-to-list 'company-backends 'company-dabbrev-code)
+;; (add-to-list 'company-backends 'company-yasnippet)
+;; (add-to-list 'company-backends 'company-files)
+
 (add-to-list 'exec-path "/home/bard/.ghcup/bin")
+(add-to-list 'exec-path "/home/bard/.cabal/bin")
 
 (provide 'bard-emacs-lang.el)
 ;;; bard-emacs-lang.el ends here

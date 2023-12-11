@@ -12,9 +12,10 @@
 
 ;; Making org mode look nice
 (setq org-startup-indented t
-        org-hide-emphasis-markers t
-        org-startup-with-inline-images t
-        org-image-actual-width '(600))
+      org-hide-emphasis-markers t
+      org-startup-with-inline-images t
+      org-image-actual-width '(600)
+      org-insert-heading-respect-content t)
 
 ;; Org todo keywords
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)"))
@@ -82,7 +83,7 @@
 
 (require 'org-protocol)
 (setq org-capture-templates
-      '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Homework")
+      '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Important Stuff")
          "* TODO %?")
 	("e" "Extra/Coding" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Extra/Coding")
          "* TODO %?")
@@ -110,11 +111,11 @@
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
          :unnarrowed t)
         ("b" "bio" plain
-         "#+ANKI_DECK: Bio \n\n* Tags :: [[id:cfe7bda9-b154-4d6b-989f-6af778a98cbd][Biology]] \n\n* %? \n"
+         "#+ANKI_DECK: Bio \n\n* Tags :: [[id:cfe7bda9-b154-4d6b-989f-6af778a98cbd][Biology]] \n\n* ${title}%? \n"
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
          :unnarrowed t)
         ("u" "apush" plain
-         "#+ANKI_DECK: APUSH \n\n* Tags :: [[id:06334c1d-5c06-4b70-bfd8-a074c0c36706][APUSH]] \n\n* %? \n"
+         "#+ANKI_DECK: APUSH \n\n* Tags :: [[id:06334c1d-5c06-4b70-bfd8-a074c0c36706][APUSH]] \n\n* ${title}%? \n"
          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
          :unnarrowed t)
         ("s" "snapshot" plain

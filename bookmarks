@@ -8,10 +8,10 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Notes/Org-Roam/todo.org")
- (front-context-string . "*** TODO write s")
- (rear-context-string . "esharing server\n")
- (position . 980))
+ (filename . "~/Notes/Org-Roam/20231208050212-election_of_1860_and_secession.org")
+ (front-context-string . "#+ANKI_DECK: APU")
+ (rear-context-string . "0 and Secession\n")
+ (position . 108))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")

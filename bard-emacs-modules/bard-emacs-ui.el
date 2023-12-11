@@ -44,14 +44,21 @@
 (setq display-time-mail-file nil)
 (display-time-mode 1)
 
-
 ;; Fonts
 (set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
 (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy" :height 140)
-(set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Wide" :height 140)
-;; (set-face-attribute 'variable-pitch nil :font "FreeSans" :height 140)
+(set-face-attribute 'variable-pitch nil :font "Gentium Plus" :height 140)
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
+
+;; Switching themes
+(defun bard/disable-all-themes ()
+  "disable all active themes."
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
+
+(defadvice load-theme (before disable-themes-first activate)
+  (bard/disable-all-themes))
 
 ;; olivetti
 (use-package olivetti
@@ -63,11 +70,13 @@
         (progn
           (text-scale-set 0.2)
           (setq olivetti-body-width 100)
+	  (set-fringe-mode 0)
           (olivetti-mode t))
       (progn
         (olivetti-mode 0)
         (text-scale-set 0)
         (mixed-pitch-mode 0)
+	(fringe-mode nil)
         (setq cursor-type 'box))))
   :bind
   (("<f9>" . bard/olivetti-toggle)))
