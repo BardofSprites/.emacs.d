@@ -34,25 +34,26 @@
 (setq use-package-always-ensure t)
 
 ;; Ef-themes
-;; (use-package ef-themes
-;;   :ensure t
-;;   :config
-;;   ;; (load-theme 'ef-cyprus t)
-;;   (load-theme 'ef-winter t)
-;;   (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
-;;   (setq ef-themes-to-toggle '(ef-winter ef-frost)))
+(use-package ef-themes
+  :ensure t
+  :config
+  ;; (load-theme 'ef-cyprus t)
+  ;; (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
+  ;; (setq ef-themes-to-toggle '(ef-winter ef-frost))
+  )
 
-;; (use-package modus-themes
-;;   :ensure t
-;;   :config
-;;   ;; (load-theme 'modus-operandi-tinted t)
-;;   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
-;;   (define-key global-map (kbd "M-<f5>") #'modus-themes-toggle))
+(use-package modus-themes
+  :ensure t
+  :config
+  ;; (load-theme 'modus-operandi-tinted t)
+  (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
+  (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 (use-package zenburn-theme
   :ensure t
   :config
-  (load-theme 'zenburn t))
+  ;;(load-theme 'zenburn t)
+  )
 
 (use-package gruvbox-theme
   :ensure t)
@@ -75,47 +76,47 @@
 (use-package magit
   :ensure t)
 
-;; ;; Vertico completion
-;; (use-package vertico
-;;   :ensure t
-;;   :init
-;;   (vertico-mode 1))
+;; Vertico completion
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode 1))
 
-;; ;; Marginalia - works with vertico
-;; (use-package marginalia
-;;   :ensure t
-;;   :init
-;;   (marginalia-mode))
+;; Marginalia - works with vertico
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
 
 (use-package company
   :ensure t
   :init
   (global-company-mode 1))
 
-(use-package helm
-  :ensure t
-  :init
-  (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
-	 ("C-x C-f" . helm-find-files)
-	 ("C-x b" . helm-mini)
-	 ("M-s" . helm-occur))
-  :config
-  (define-key helm-map (kbd "C-<backspace>") 'backward-kill-word)
-  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-  (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-  (define-key helm-map (kbd "C-z")  'helm-select-action))
+;; (use-package helm
+;;   :ensure t
+;;   :init
+;;   (helm-mode 1)
+;;   :bind (("M-x" . helm-M-x)
+;; 	 ("C-x C-f" . helm-find-files)
+;; 	 ("C-x b" . helm-mini)
+;; 	 ("M-s" . helm-occur))
+;;   :config
+;;   (define-key helm-map (kbd "C-<backspace>") 'backward-kill-word)
+;;   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+;;   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+;;   (define-key helm-map (kbd "C-z")  'helm-select-action))
 
-(use-package helm-rg
-  :ensure t
-  :config
-  (setq helm-rg-default-extra-args '("--hidden" "--smart-case"))
-  (setq helm-rg-prompt "Search for: ")
-  (setq helm-rg-result-file-action
-        (lambda (path)
-          (find-file path)))
-  (setq helm-rg-use-fuzzy-match t)
-  :bind (("C-c s" . 'helm-rg)))
+;; (use-package helm-rg
+;;   :ensure t
+;;   :config
+;;   (setq helm-rg-default-extra-args '("--hidden" "--smart-case"))
+;;   (setq helm-rg-prompt "Search for: ")
+;;   (setq helm-rg-result-file-action
+;;         (lambda (path)
+;;           (find-file path)))
+;;   (setq helm-rg-use-fuzzy-match t)
+;;   :bind (("C-c s" . 'helm-rg)))
 
 (use-package orderless
   :ensure t)
@@ -260,25 +261,25 @@
   ("C-M-a"     . sp-beginning-of-sexp)
   ("C-M-e"     . sp-end-of-sexp))
 
-(use-package helm-gtags
-  :ensure t
-  :config
-  (add-hook 'dired-mode-hook 'helm-gtags-mode)
-  (add-hook 'eshell-mode-hook 'helm-gtags-mode)
-  (add-hook 'c-mode-hook 'helm-gtags-mode)
-  (add-hook 'c++-mode-hook 'helm-gtags-mode)
+;; (use-package helm-gtags
+;;   :ensure t
+;;   :config
+;;   (add-hook 'dired-mode-hook 'helm-gtags-mode)
+;;   (add-hook 'eshell-mode-hook 'helm-gtags-mode)
+;;   (add-hook 'c-mode-hook 'helm-gtags-mode)
+;;   (add-hook 'c++-mode-hook 'helm-gtags-mode)
 
-  (setq
-   helm-gtags-ignore-case t
-   helm-gtags-auto-update t
-   helm-gtags-use-input-at-cursor t
-   helm-gtags-pulse-at-cursor t
-   helm-gtags-prefix-key "\C-cg"
-   helm-gtags-suggested-key-mapping t)
+;;   (setq
+;;    helm-gtags-ignore-case t
+;;    helm-gtags-auto-update t
+;;    helm-gtags-use-input-at-cursor t
+;;    helm-gtags-pulse-at-cursor t
+;;    helm-gtags-prefix-key "\C-cg"
+;;    helm-gtags-suggested-key-mapping t)
   
-  (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-  (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-  (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim))
+;;   (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+;;   (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
+;;   (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim))
 
 (use-package emacs-everywhere
   :ensure t)
@@ -287,7 +288,7 @@
   :ensure t
   :config
   (diminish 'rainbow-mode)
-  (diminish 'helm-mode)
+  ;; (diminish 'helm-mode)
   (diminish 'flycheck-mode)
   (diminish 'which-key-mode)
   (diminish 'yas-minor-mode)

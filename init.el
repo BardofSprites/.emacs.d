@@ -83,7 +83,7 @@
    '(:foreground default :background default :scale 1.0 :html-foreground "Black" :html-background "Transparent" :html-scale 1.6 :matchers
 		 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(package-selected-packages
-   '(zenburn-theme gruber-darker-theme gruber-darker org-bullets org-bullet gruvbox-theme tuareg emacs-everywhere helm-gtags helm-rg helm smartparens smart-parens flycheck vterm yasnippet-snippets which-key vertico use-package toc-org tao-theme sly rainbow-mode projectile pdf-tools org-roam-ui org-cliplink orderless olivetti multiple-cursors modus-themes mixed-pitch marginalia magit hl-todo haskell-mode expand-region elfeed-org elfeed-goodies ef-themes dashboard counsel company clojure-snippets cider)))
+   '(zenburn-theme gruber-darker-theme gruber-darker org-bullets org-bullet gruvbox-theme tuareg emacs-everywhere smartparens smart-parens flycheck vterm yasnippet-snippets which-key vertico use-package toc-org tao-theme sly rainbow-mode projectile pdf-tools org-roam-ui org-cliplink orderless olivetti multiple-cursors modus-themes mixed-pitch marginalia magit hl-todo haskell-mode expand-region elfeed-org elfeed-goodies ef-themes dashboard counsel company clojure-snippets cider)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

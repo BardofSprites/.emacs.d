@@ -29,13 +29,10 @@
   (display-line-numbers-mode 1)
   (hl-todo-mode 1))
 
-(add-hook 'emacs-lisp-mode-hook 'bard/common-modes-hook)
-(add-hook 'haskell-mode-hook 'bard/common-modes-hook)
+(add-hook 'prog-mode-hook 'bard/common-modes-
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'haskell-indent-mode)
-(add-hook 'clojure-mode-hook 'bard/common-modes-hook)
-(add-hook 'tuareg-mode-hook 'bard/common-modes-hook)
 
 ;; CPP Mode
 (defun bard/c++-mode-keybindings ()
