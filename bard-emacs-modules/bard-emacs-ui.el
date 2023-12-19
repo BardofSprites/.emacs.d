@@ -47,7 +47,7 @@
 ;; Fonts
 (set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
 (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy" :height 140)
-(set-face-attribute 'variable-pitch nil :font "Gentium Plus" :height 140)
+(set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Motion" :height 140)
 
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
 

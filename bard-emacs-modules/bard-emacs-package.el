@@ -37,15 +37,27 @@
 (use-package ef-themes
   :ensure t
   :config
+  (setq ef-themes-headings
+      '((1 variable-pitch 1.5)
+        (2 regular 1.3)
+        (3 1.1)
+        (agenda-date 1.3)
+        (agenda-structure variable-pitch light 1.8)
+        (t variable-pitch)))
   ;; (load-theme 'ef-cyprus t)
-  ;; (define-key global-map (kbd "<f5>") #'ef-themes-toggle)
-  ;; (setq ef-themes-to-toggle '(ef-winter ef-frost))
-  )
+  (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
+  (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light)))
 
 (use-package modus-themes
   :ensure t
   :config
-  ;; (load-theme 'modus-operandi-tinted t)
+  (load-theme 'modus-operandi-tinted t)
+  (setq modus-themes-headings
+      '((1 . (variable-pitch 1.5))
+        (2 . (1.3))
+        (agenda-date . (1.3))
+        (agenda-structure . (variable-pitch light 1.8))
+        (t . (1.1))))
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
