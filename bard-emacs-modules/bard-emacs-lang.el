@@ -29,7 +29,7 @@
   (display-line-numbers-mode 1)
   (hl-todo-mode 1))
 
-(add-hook 'prog-mode-hook 'bard/common-modes-
+(add-hook 'prog-mode-hook 'bard/common-modes-hook)
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'haskell-indent-mode)
@@ -45,6 +45,9 @@
 ;; (add-to-list 'company-backends 'company-dabbrev-code)
 ;; (add-to-list 'company-backends 'company-yasnippet)
 ;; (add-to-list 'company-backends 'company-files)
+
+;; disable ghci popups
+(setq haskell-interactive-popup-errors nil)
 
 (add-to-list 'exec-path "/home/bard/.ghcup/bin")
 (add-to-list 'exec-path "/home/bard/.cabal/bin")
