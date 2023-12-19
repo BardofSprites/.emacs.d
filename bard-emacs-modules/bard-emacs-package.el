@@ -44,6 +44,30 @@
         (agenda-date 1.3)
         (agenda-structure variable-pitch light 1.8)
         (t variable-pitch)))
+  (defun bard/ef-themes-hl-todo-faces ()
+  "Configure `hl-todo-keyword-faces' with Ef themes colors. The exact color values are taken from the active Ef theme."
+    (ef-themes-with-colors
+    (setq hl-todo-keyword-faces
+          `(("WAIT" . ,yellow)
+            ("TODO" . ,red)
+            ("NEXT" . ,blue)
+            ("THEM" . ,magenta)
+            ("PROG" . ,cyan-warmer)
+            ("OKAY" . ,green-warmer)
+            ("DONT" . ,yellow-warmer)
+            ("FAIL" . ,red-warmer)
+            ("BUG" . ,red-warmer)
+            ("DONE" . ,green)
+            ("NOTE" . ,blue-warmer)
+            ("KLUDGE" . ,cyan)
+            ("HACK" . ,cyan)
+            ("TEMP" . ,red)
+            ("FIXME" . ,red-warmer)
+            ("XXX+" . ,red-warmer)
+            ("REVIEW" . ,red)
+            ("DEPRECATED" . ,yellow)))))
+
+  (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
   ;; (load-theme 'ef-cyprus t)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
   (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light)))
@@ -58,6 +82,29 @@
         (agenda-date . (1.3))
         (agenda-structure . (variable-pitch light 1.8))
         (t . (1.1))))
+  (defun bard/modus-themes-hl-todo-faces ()
+  "Configure `hl-todo-keyword-faces' with Modus themes colors. The exact color values are taken from the active Modus theme."
+    (modus-themes-with-colors
+    (setq hl-todo-keyword-faces
+          `(("WAIT" . ,yellow)
+            ("TODO" . ,red)
+            ("NEXT" . ,blue)
+            ("THEM" . ,magenta)
+            ("PROG" . ,cyan-warmer)
+            ("OKAY" . ,green-warmer)
+            ("DONT" . ,yellow-warmer)
+            ("FAIL" . ,red-warmer)
+            ("BUG" . ,red-warmer)
+            ("DONE" . ,green)
+            ("NOTE" . ,blue-warmer)
+            ("KLUDGE" . ,cyan)
+            ("HACK" . ,cyan)
+            ("TEMP" . ,red)
+            ("FIXME" . ,red-warmer)
+            ("XXX+" . ,red-warmer)
+            ("REVIEW" . ,red)
+            ("DEPRECATED" . ,yellow)))))
+  (add-hook 'ef-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
@@ -221,14 +268,15 @@
   :init
   (global-hl-todo-mode t)
   :config
-  (setq hl-todo-keyword-faces
-        '(("TODO"        error bold)
-          ("FIXME"       error bold)
-          ("WAIT"        warning bold)
-          ("HACK"        completions-common-part bold)
-          ("DEPRECATED"  completions-annotations bold)
-	  ("DONE"        font-lock-doc-face bold)
-          ("BUG"         error bold))))
+  ;; (setq hl-todo-keyword-faces
+  ;;       '(("TODO"        error bold)
+  ;;         ("FIXME"       error bold)
+  ;;         ("WAIT"        warning bold)
+  ;;         ("HACK"        completions-common-part bold)
+  ;;         ("DEPRECATED"  completions-annotations bold)
+  ;; 	  ("DONE"        font-lock-doc-face bold)
+  ;;         ("BUG"         error bold)))
+  )
 
 (use-package pdf-tools
   :ensure t)

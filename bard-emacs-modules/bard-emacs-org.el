@@ -17,12 +17,17 @@
       org-image-actual-width '(600)
       org-insert-heading-respect-content t)
 
-;; Org todo keywords
-(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)"))
-      org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
-			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
-			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
-			       ("KILLED" . (:weight bold :weight bold :foreground "#656555"))))
+;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
+;; (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)"))
+;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
+;; 			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
+;; 			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
+;; 			       ("KILLED" . (:weight bold :weight bold :foreground "#656555")))
+;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#ff5f59" :weight bold))
+;; 			       ("WAIT"   . (:weight bold :foreground "#fec43f" :weight bold))
+;; 			       ("DONE"   . (:weight bold :weight bold :foreground "#44bc44"))
+;; 			       ("KILLED" . (:weight bold :weight bold :foreground "#989898")))
+;;       )
 
 ;; Org Mode Key map
 (defun bard/org-mode-keybindings ()
