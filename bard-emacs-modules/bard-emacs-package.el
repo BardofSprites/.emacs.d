@@ -357,4 +357,9 @@
   (diminish 'eldoc-mode)
   (diminish 'company-mode))
 
+(use-package eshell-git-prompt
+  :ensure t
+  :config
+  (eshell-git-prompt-use-theme 'robbyrussell))
+
 (provide 'bard-emacs-package.el)
