@@ -18,7 +18,7 @@
       org-insert-heading-respect-content t)
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
-;; (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)"))
+(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)")))
 ;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
 ;; 			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
 ;; 			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
@@ -38,7 +38,7 @@
 ;; (add-hook 'org-mode-hook 'fly-spell-mode)
 
 ;; Org Agenda Faces
-(custom-set-faces '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))
+;; (custom-set-faces '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))
 
 ;; Org Agenda
 (defun bard/choose-agenda ()
