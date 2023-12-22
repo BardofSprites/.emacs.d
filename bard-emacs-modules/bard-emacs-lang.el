@@ -35,11 +35,12 @@
 (add-hook 'haskell-mode-hook 'haskell-indent-mode)
 
 ;; CPP Mode
-(defun bard/c++-mode-keybindings ()
-  (define-key 'c++-mode-map (kbd "C-c C-c") 'compile))
+;; (defun bard/c++-mode-keybindings ()
+;;   (define-key 'c++-mode-map (kbd "C-c C-c") 'compile))
 
-(add-hook 'c++-mode-hook 'bard/c++-mode-keybindings)
+;; (add-hook 'c++-mode-hook 'bard/c++-mode-keybindings)
 (add-hook 'c++-mode 'bard/common-modes-hook)
+(setq-default c-basic-offset 4)
 
 ;; Haskell
 ;; (add-to-list 'company-backends 'company-dabbrev-code)
@@ -51,6 +52,7 @@
 
 (add-to-list 'exec-path "/home/bard/.ghcup/bin")
 (add-to-list 'exec-path "/home/bard/.cabal/bin")
+(add-to-list 'exec-path "/home/bard/.local/bin")
 
 (provide 'bard-emacs-lang.el)
 ;;; bard-emacs-lang.el ends here
