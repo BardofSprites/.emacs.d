@@ -75,7 +75,6 @@
 (use-package modus-themes
   :ensure t
   :config
-  (load-theme 'modus-operandi-tinted t)
   (setq modus-themes-headings
       '((1 . (variable-pitch 1.5))
         (2 . (1.3))
@@ -105,6 +104,7 @@
             ("REVIEW" . ,red)
             ("DEPRECATED" . ,yellow)))))
   (add-hook 'ef-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
+  (load-theme 'modus-operandi-tinted t)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
@@ -151,6 +151,13 @@
   :ensure t
   :init
   (global-company-mode 1))
+
+(use-package consult
+  :ensure t
+  :config
+  (global-set-key (kbd "C-x b") nil)
+  (global-set-key (kbd "C-x b") #'consult-buffer)
+  )
 
 ;; (use-package helm
 ;;   :ensure t
@@ -321,6 +328,14 @@
   ("C-M-a"     . sp-beginning-of-sexp)
   ("C-M-e"     . sp-end-of-sexp))
 
+(use-package ggtags
+  :ensure t
+  :config
+  (add-hook 'c-mode-common-hook
+	    (lambda ()
+	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+		(ggtags-mode 1)))))
+
 ;; (use-package helm-gtags
 ;;   :ensure t
 ;;   :config
@@ -361,5 +376,9 @@
   :ensure t
   :config
   (eshell-git-prompt-use-theme 'robbyrussell))
+
+(use-package vterm-toggle
+  :ensure t
+  :bind (("C-z RET" . vterm-toggle)))
 
 (provide 'bard-emacs-package.el)

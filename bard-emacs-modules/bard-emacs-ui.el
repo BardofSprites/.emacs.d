@@ -52,13 +52,13 @@
 (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
 
 ;; Switching themes
-(defun bard/disable-all-themes ()
-  "disable all active themes."
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
+;; (defun bard/disable-all-themes ()
+;;   "disable all active themes."
+;;   (dolist (i custom-enabled-themes)
+;;     (disable-theme i)))
 
-(defadvice load-theme (before disable-themes-first activate)
-  (bard/disable-all-themes))
+;; (defadvice load-theme (before disable-themes-first activate)
+;;   (bard/disable-all-themes))
 
 ;; olivetti
 (use-package olivetti
