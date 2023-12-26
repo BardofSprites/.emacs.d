@@ -17,6 +17,10 @@
       org-image-actual-width '(600)
       org-insert-heading-respect-content t)
 
+(with-eval-after-load "org-mode"
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6)))
+    
+
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)")))
 ;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
