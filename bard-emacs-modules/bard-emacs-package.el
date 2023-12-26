@@ -7,20 +7,7 @@
 
 (setq package-archives '(("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")
-			 ("melpa" . "https://melpa.org/packages/")
-			 ("quelpa" . "https://")))
-
-;; (unless (package-installed-p 'quelpa)
-;;   (with-temp-buffer
-;;     (url-insert-file-contents "https://raw.githubusercontent.com/quelpa/quelpa/master/quelpa.el")
-;;     (eval-buffer)
-;;     (quelpa-self-upgrade)))
-
-;; (quelpa
-;;  '(quelpa-use-package
-;;    :fetcher git
-;;    :url "https://github.com/quelpa/quelpa-use-package.git"))
-;; (require 'quelpa-use-package)
+			 ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
 (unless package-archive-contents
@@ -68,7 +55,7 @@
             ("DEPRECATED" . ,yellow)))))
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-  ;; (load-theme 'ef-cyprus t)
+  (load-theme 'ef-melissa-dark t)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
   (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light)))
 
@@ -104,18 +91,9 @@
             ("REVIEW" . ,red)
             ("DEPRECATED" . ,yellow)))))
   (add-hook 'ef-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
-  (load-theme 'modus-operandi-tinted t)
+  ;; (load-theme 'modus-operandi-tinted t)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
-
-(use-package zenburn-theme
-  :ensure t
-  :config
-  ;;(load-theme 'zenburn t)
-  )
-
-(use-package gruvbox-theme
-  :ensure t)
 
 (use-package rainbow-mode
   :ensure t)
@@ -126,6 +104,9 @@
   (olivetti-mode . mixed-pitch-mode)
   :config
   (setq mixed-pitch-cursor-type 'box))
+
+(use-package xclip
+  :ensure t)
 
 ;; Multiple Cursors
 (use-package multiple-cursors
@@ -157,32 +138,9 @@
   :config
   (global-set-key (kbd "C-x b") nil)
   (global-set-key (kbd "C-x b") #'consult-buffer)
-  )
-
-;; (use-package helm
-;;   :ensure t
-;;   :init
-;;   (helm-mode 1)
-;;   :bind (("M-x" . helm-M-x)
-;; 	 ("C-x C-f" . helm-find-files)
-;; 	 ("C-x b" . helm-mini)
-;; 	 ("M-s" . helm-occur))
-;;   :config
-;;   (define-key helm-map (kbd "C-<backspace>") 'backward-kill-word)
-;;   (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
-;;   (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
-;;   (define-key helm-map (kbd "C-z")  'helm-select-action))
-
-;; (use-package helm-rg
-;;   :ensure t
-;;   :config
-;;   (setq helm-rg-default-extra-args '("--hidden" "--smart-case"))
-;;   (setq helm-rg-prompt "Search for: ")
-;;   (setq helm-rg-result-file-action
-;;         (lambda (path)
-;;           (find-file path)))
-;;   (setq helm-rg-use-fuzzy-match t)
-;;   :bind (("C-c s" . 'helm-rg)))
+  (global-set-key (kbd "C-c s") #'consult-line)
+  (global-set-key (kbd "C-c C-s") nil)
+  (global-set-key (kbd "C-c C-s") #'consult-ripgrep))
 
 (use-package orderless
   :ensure t)
@@ -216,20 +174,14 @@
 (use-package org-roam-ui
   :ensure t)
 
+(use-package org-fragtog
+  :ensure t)
+
 (use-package orderless
   :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package projectile
-  :ensure t)
-
-(use-package counsel
-  :ensure t
-  :config
-  (setq councel-rg-base-command "rg --no-heading --colors always %s .")
-  (setq counsel-rg-command-prefix "rg --no-heading --color always %s ."))
 
 (use-package dashboard
   :ensure t
@@ -241,8 +193,7 @@
   (setq dashboard-banner-logo-height 50)
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents   . 5)
-			  (bookmarks . 5)
-			  (projects  . 5)))
+			  (bookmarks . 5)))
   (setq dashboard-banner-logo-title "An Old Farmer's Smile")
   (setq dashboard-set-footer nil))
 
@@ -273,17 +224,7 @@
 (use-package hl-todo
   :ensure t
   :init
-  (global-hl-todo-mode t)
-  :config
-  ;; (setq hl-todo-keyword-faces
-  ;;       '(("TODO"        error bold)
-  ;;         ("FIXME"       error bold)
-  ;;         ("WAIT"        warning bold)
-  ;;         ("HACK"        completions-common-part bold)
-  ;;         ("DEPRECATED"  completions-annotations bold)
-  ;; 	  ("DONE"        font-lock-doc-face bold)
-  ;;         ("BUG"         error bold)))
-  )
+  (global-hl-todo-mode t))
 
 (use-package pdf-tools
   :ensure t)
@@ -336,26 +277,6 @@
 	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
 		(ggtags-mode 1)))))
 
-;; (use-package helm-gtags
-;;   :ensure t
-;;   :config
-;;   (add-hook 'dired-mode-hook 'helm-gtags-mode)
-;;   (add-hook 'eshell-mode-hook 'helm-gtags-mode)
-;;   (add-hook 'c-mode-hook 'helm-gtags-mode)
-;;   (add-hook 'c++-mode-hook 'helm-gtags-mode)
-
-;;   (setq
-;;    helm-gtags-ignore-case t
-;;    helm-gtags-auto-update t
-;;    helm-gtags-use-input-at-cursor t
-;;    helm-gtags-pulse-at-cursor t
-;;    helm-gtags-prefix-key "\C-cg"
-;;    helm-gtags-suggested-key-mapping t)
-  
-;;   (define-key helm-gtags-mode-map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-;;   (define-key helm-gtags-mode-map (kbd "C-j") 'helm-gtags-select)
-;;   (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim))
-
 (use-package emacs-everywhere
   :ensure t)
 
@@ -376,9 +297,5 @@
   :ensure t
   :config
   (eshell-git-prompt-use-theme 'robbyrussell))
-
-(use-package vterm-toggle
-  :ensure t
-  :bind (("C-z RET" . vterm-toggle)))
 
 (provide 'bard-emacs-package.el)
