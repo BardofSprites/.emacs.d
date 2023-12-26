@@ -41,6 +41,8 @@
 ;; (add-hook 'c++-mode-hook 'bard/c++-mode-keybindings)
 (add-hook 'c++-mode 'bard/common-modes-hook)
 (setq-default c-basic-offset 4)
+(with-eval-after-load "c++-mode"
+  (define-key c++-mode-map (kbd "C-c C-s") #'consult-ripgrep))
 
 ;; Haskell
 ;; (add-to-list 'company-backends 'company-dabbrev-code)
