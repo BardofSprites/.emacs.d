@@ -32,30 +32,32 @@
         (agenda-structure variable-pitch light 1.8)
         (t variable-pitch)))
   (defun bard/ef-themes-hl-todo-faces ()
-  "Configure `hl-todo-keyword-faces' with Ef themes colors. The exact color values are taken from the active Ef theme."
+    "Configure `hl-todo-keyword-faces' with Ef themes colors.
+The exact color values are taken from the active Ef theme."
     (ef-themes-with-colors
-    (setq hl-todo-keyword-faces
-          `(("WAIT" . ,yellow)
-            ("TODO" . ,red)
-            ("NEXT" . ,blue)
-            ("THEM" . ,magenta)
-            ("PROG" . ,cyan-warmer)
-            ("OKAY" . ,green-warmer)
-            ("DONT" . ,yellow-warmer)
-            ("FAIL" . ,red-warmer)
-            ("BUG" . ,red-warmer)
-            ("DONE" . ,green)
-            ("NOTE" . ,blue-warmer)
-            ("KLUDGE" . ,cyan)
-            ("HACK" . ,cyan)
-            ("TEMP" . ,red)
-            ("FIXME" . ,red-warmer)
-            ("XXX+" . ,red-warmer)
-            ("REVIEW" . ,red)
-            ("DEPRECATED" . ,yellow)))))
+      (setq hl-todo-keyword-faces
+            `(("WAIT" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("REVIEW" . ,red)
+              ("DEPRECATED" . ,yellow)))))
 
-  (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-  (load-theme 'ef-melissa-dark t)
+(add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
+
+  (load-theme 'ef-spring t)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
   (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light)))
 
@@ -69,29 +71,31 @@
         (agenda-structure . (variable-pitch light 1.8))
         (t . (1.1))))
   (defun bard/modus-themes-hl-todo-faces ()
-  "Configure `hl-todo-keyword-faces' with Modus themes colors. The exact color values are taken from the active Modus theme."
+    "Configure `hl-todo-keyword-faces' with Modus themes colors.
+The exact color values are taken from the active Ef theme."
     (modus-themes-with-colors
-    (setq hl-todo-keyword-faces
-          `(("WAIT" . ,yellow)
-            ("TODO" . ,red)
-            ("NEXT" . ,blue)
-            ("THEM" . ,magenta)
-            ("PROG" . ,cyan-warmer)
-            ("OKAY" . ,green-warmer)
-            ("DONT" . ,yellow-warmer)
-            ("FAIL" . ,red-warmer)
-            ("BUG" . ,red-warmer)
-            ("DONE" . ,green)
-            ("NOTE" . ,blue-warmer)
-            ("KLUDGE" . ,cyan)
-            ("HACK" . ,cyan)
-            ("TEMP" . ,red)
-            ("FIXME" . ,red-warmer)
-            ("XXX+" . ,red-warmer)
-            ("REVIEW" . ,red)
-            ("DEPRECATED" . ,yellow)))))
-  (add-hook 'ef-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
-  ;; (load-theme 'modus-operandi-tinted t)
+      (setq hl-todo-keyword-faces
+            `(("WAIT" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("REVIEW" . ,red)
+              ("DEPRECATED" . ,yellow)))))
+
+  (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
+  ;; (load-theme 'modus-vivendi t)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
@@ -106,7 +110,9 @@
   (setq mixed-pitch-cursor-type 'box))
 
 (use-package xclip
-  :ensure t)
+  :ensure t
+  :config
+  (xclip-mode 1))
 
 ;; Multiple Cursors
 (use-package multiple-cursors
