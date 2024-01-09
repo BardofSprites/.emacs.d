@@ -52,14 +52,14 @@ The exact color values are taken from the active Ef theme."
               ("TEMP" . ,red)
               ("FIXME" . ,red-warmer)
               ("XXX+" . ,red-warmer)
+	      ("KILLED" . ,cyan)
               ("REVIEW" . ,red)
               ("DEPRECATED" . ,yellow)))))
 
-(add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-
-  (load-theme 'ef-spring t)
+  (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
-  (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light)))
+  (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light))
+  (load-theme 'ef-melissa-dark t))
 
 (use-package modus-themes
   :ensure t
@@ -92,6 +92,7 @@ The exact color values are taken from the active Ef theme."
               ("FIXME" . ,red-warmer)
               ("XXX+" . ,red-warmer)
               ("REVIEW" . ,red)
+	      ("KILLED" . ,cyan)
               ("DEPRECATED" . ,yellow)))))
 
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
@@ -121,6 +122,11 @@ The exact color values are taken from the active Ef theme."
 ;; Magit
 (use-package magit
   :ensure t)
+
+(use-package magit-todos
+  :ensure t
+  :config
+  (magit-todos-mode 1))
 
 ;; Vertico completion
 (use-package vertico
@@ -297,11 +303,21 @@ The exact color values are taken from the active Ef theme."
   (diminish 'org-roam-ui-mode "ORUI")
   (diminish 'auto-revert-mode)
   (diminish 'eldoc-mode)
-  (diminish 'company-mode))
+  (diminish 'company-mode)
+  (diminish 'whitespace-mode))
 
 (use-package eshell-git-prompt
   :ensure t
   :config
   (eshell-git-prompt-use-theme 'robbyrussell))
+
+(use-package shell-pop
+  :ensure t)
+
+(use-package circe
+  :ensure t
+  :bind (("C-t" . shell-pop))
+  :config
+  (setq shell-pop-term-shell "/bin/bash"))
 
 (provide 'bard-emacs-package.el)

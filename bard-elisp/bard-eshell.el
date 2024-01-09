@@ -46,10 +46,10 @@
             ((not in-eshellp) (switch-to-buffer (car buffers)))
             (t (select-or-create (completing-read "Select Shell:" (cons "New eshell" names)))))))
 
+(global-set-key (kbd "C-z") nil)
+(define-key global-map (kbd "C-z e") #'eshell-switcher)
 (with-eval-after-load "esh-mode"
   (define-key eshell-mode-map (kbd "C-c f") #'bard/eshell-find-file-at-point)
   (define-key eshell-mode-map (kbd "C-c h") #'bard/eshell-narrow-ouput-highlight-regexp)
   (define-key eshell-mode-map (kbd "C-c d") #'bard/eshell-complete-recent-dir)
-  (define-key eshell-mode-map (kbd "M-k") #'eshell-kill-input)
-  (global-set-key (kbd "C-z") nil)
-  (define-key global-map (kbd "C-z e") #'eshell-switcher))
+  (define-key eshell-mode-map (kbd "M-k") #'eshell-kill-input))

@@ -38,6 +38,13 @@
 (menu-bar-mode -1)
 (tool-bar-mode 0)
 
+;; Whitespace, used in bard-emacs-lang.el
+(defun bard/set-up-whitespace-handling ()
+  (interactive)
+  (whitespace-mode 1))
+
+(setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
+
 ;; Modeline
 (setq display-time-format "%Y-%m-%d %H:%M")
 (setq display-time-default-load-average nil)
@@ -70,13 +77,13 @@
         (progn
           (text-scale-set 0.2)
           (setq olivetti-body-width 100)
-	  (set-fringe-mode 0)
+          (set-fringe-mode 0)
           (olivetti-mode t))
       (progn
         (olivetti-mode 0)
         (text-scale-set 0)
         (mixed-pitch-mode 0)
-	(fringe-mode nil)
+        (fringe-mode nil)
         (setq cursor-type 'box))))
   :bind
   (("<f9>" . bard/olivetti-toggle)))

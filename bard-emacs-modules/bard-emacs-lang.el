@@ -24,9 +24,14 @@
 ;;; Commentary:
 
 ;;; Code:
+
+;; Snippet directories
+(setq yasnippet-snippets-dir '("/home/bard/.emacs.d/elpa/yasnippet-snippets-20231219.1505/snippets" "/home/bard/.emacs.d/snippets/"))
+
 (defun bard/common-modes-hook ()
   "Commonly used modes, bundled in one hook."
   (display-line-numbers-mode 1)
+  (bard/set-up-whitespace-handling)
   (hl-todo-mode 1))
 
 (add-hook 'prog-mode-hook 'bard/common-modes-hook)
@@ -55,6 +60,11 @@
 (add-to-list 'exec-path "/home/bard/.ghcup/bin")
 (add-to-list 'exec-path "/home/bard/.cabal/bin")
 (add-to-list 'exec-path "/home/bard/.local/bin")
+
+;; GGTAGS
+(with-eval-after-load 'ggtags
+  (define-key ggtags-mode-map (kbd "M->") nil)
+  (define-key ggtags-mode-map (kbd "M-<") nil))
 
 (provide 'bard-emacs-lang.el)
 ;;; bard-emacs-lang.el ends here

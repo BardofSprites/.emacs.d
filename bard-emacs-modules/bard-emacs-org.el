@@ -3,6 +3,8 @@
 ;; |------------------------------------|
 
 (require 'bard-emacs-ui)
+(require 'org)
+(require 'ox)
 
 ;; Org Variables
 (setq org-directory "~/Notes/Org-Roam/")
@@ -18,11 +20,12 @@
       org-insert-heading-respect-content t)
 
 (with-eval-after-load "org-mode"
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6)))
-    
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
+  )
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)")))
+(add-hook 'org-mode-hook 'hl-todo-mode)
 ;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
 ;; 			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
 ;; 			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
@@ -42,7 +45,7 @@
 ;; (add-hook 'org-mode-hook 'fly-spell-mode)
 
 ;; Org Agenda Faces
-;; (custom-set-faces '(org-agenda-structure ((t (:inherit bold :foreground "#70a89f" :height 1.5 :family "Iosevka Comfy Motion Duo")))))
+(custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5 :family "Iosevka Comfy Motion")))))
 
 ;; Org Agenda
 (defun bard/choose-agenda ()
@@ -135,3 +138,17 @@
          "\n* Tags: \n%? \n\n"
          :if-new (file+head "Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
          :unnarrowed t)))
+
+;; Blogging with Jekyll
+(setq org-publish-project-alist
+      '(("bardmandev" ;; my blog project (just a name)
+         ;; Path to org files.
+         :base-directory "~/Code/bardmandev/_org/"
+         :base-extension "org"
+         ;; Path to Jekyll Posts
+         :publishing-directory "~/Code/bardmandev/_posts/"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :html-extension "html"
+         :body-only t)))
