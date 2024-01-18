@@ -80,9 +80,17 @@
          :default-family "Monospace"
          )))
 
+;; save file
+(setq fontaine-latest-state-file
+      (locate-user-emacs-file "fontaine-latest-state.eld"))
 ;; Mixed pitch on modus and ef themes
 (setq modus-themes-mixed-fonts t)
 (setq ef-themes-mixed-fonts t)
+;; preserve fonts when switching themes
+(dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
+  (add-hook hook #'fontaine-apply-current-preset))
+
+(define-key global-map (kbd "<f6>") #'fontaine-set-preset)
 
 ;; Switching themes
 ;; (defun bard/disable-all-themes ()
