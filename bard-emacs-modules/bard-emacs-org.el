@@ -24,7 +24,7 @@
   )
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
-(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "|" "DONE(d)" "KILLED(k)")))
+(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "NEXT (n)" "|" "DONE(d)" "KILLED(k)")))
 (add-hook 'org-mode-hook 'hl-todo-mode)
 ;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
 ;; 			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
