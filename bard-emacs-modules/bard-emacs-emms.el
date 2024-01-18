@@ -2,8 +2,8 @@
 ;; |             EMMS                   |
 ;; |------------------------------------|
 
-(require 'emms-info-mediainfo)
-(add-to-list 'emms-info-functions 'emms-info-mediainfo)
+(require 'emms)
+(require 'emms-mpris)
 
 (emms-all)
 (emms-default-players)
@@ -18,6 +18,7 @@
 (define-key global-map (kbd "M-<f8>") #'emms-browser)
 (define-key emms-playlist-mode-map (kbd "A") #'emms-add-directory)
 (define-key emms-playlist-mode-map (kbd "T") #'emms-add-directory-tree)
+(define-key emms-playlist-mode-map (kbd "F") #'emms-add-file)
 (define-key emms-playlist-mode-map (kbd "L") #'emms-toggle-repeat-track)
 (define-key emms-playlist-mode-map (kbd "<mouse-3>") #'emms-pause)
 
