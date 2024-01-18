@@ -90,7 +90,7 @@
 (dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
   (add-hook hook #'fontaine-apply-current-preset))
 
-(define-key global-map (kbd "<f6>") #'fontaine-set-preset)
+(define-key global-map (kbd "<f7>") #'fontaine-set-preset)
 
 ;; Switching themes
 ;; (defun bard/disable-all-themes ()
