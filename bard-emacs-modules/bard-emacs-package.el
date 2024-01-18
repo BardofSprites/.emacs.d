@@ -58,8 +58,8 @@ The exact color values are taken from the active Ef theme."
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
-  (setq ef-themes-to-toggle '(ef-melissa-dark ef-melissa-light))
-  (load-theme 'ef-melissa-dark t))
+  (setq ef-themes-to-toggle '(ef-winter ef-frost))
+  (load-theme 'ef-winter t))
 
 (use-package modus-themes
   :ensure t
@@ -96,9 +96,12 @@ The exact color values are taken from the active Ef theme."
               ("DEPRECATED" . ,yellow)))))
 
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
-  ;; (load-theme 'modus-vivendi t)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
-  (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+  (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
+  (load-theme 'modus-vivendi t))
+
+(use-package fontaine
+  :ensure t)
 
 (use-package rainbow-mode
   :ensure t)
@@ -152,7 +155,7 @@ The exact color values are taken from the active Ef theme."
   (global-set-key (kbd "C-x b") #'consult-buffer)
   (global-set-key (kbd "C-c s") #'consult-line)
   (global-set-key (kbd "C-c C-s") nil)
-  (global-set-key (kbd "C-c C-s") #'consult-ripgrep))
+  (global-set-key (kbd "C-z s") #'consult-ripgrep))
 
 (use-package orderless
   :ensure t)
@@ -311,10 +314,13 @@ The exact color values are taken from the active Ef theme."
   :config
   (eshell-git-prompt-use-theme 'robbyrussell))
 
-(use-package shell-pop
+(use-package tramp
   :ensure t)
 
 (use-package circe
+  :ensure t)
+
+(use-package shell-pop
   :ensure t
   :bind (("C-t" . shell-pop))
   :config

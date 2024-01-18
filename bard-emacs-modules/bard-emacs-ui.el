@@ -52,11 +52,37 @@
 (display-time-mode 1)
 
 ;; Fonts
-(set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
-(set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy" :height 140)
-(set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Motion" :height 140)
 
-(add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
+;; Removed in favour of fontaine package
+;; (set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
+;; (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy" :height 140)
+;; (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Motion" :height 140)
+
+;; (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
+(setq fontaine-presets
+      '((regular
+         :default-height 140
+	 :default-family "Iosevka Comfy"
+	 :variable-pitch-family "Iosevka Comfy Motion"
+	 :variable-pitch-height 1.0
+	 :fixed-pitch-family "Iosevka Comfy"
+	 :fixed-pitch-height 1.0
+	 :bold-weight bold
+	 )
+        (code-demo
+	 :inherit regular
+	 :default-height 170
+	 )
+        (prose
+         :inherit regular ; copy the `code-demo' properties
+         :default-height 220)
+        (t
+         :default-family "Monospace"
+         )))
+
+;; Mixed pitch on modus and ef themes
+(setq modus-themes-mixed-fonts t)
+(setq ef-themes-mixed-fonts t)
 
 ;; Switching themes
 ;; (defun bard/disable-all-themes ()
