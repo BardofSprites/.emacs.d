@@ -59,7 +59,8 @@ The exact color values are taken from the active Ef theme."
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
   (setq ef-themes-to-toggle '(ef-winter ef-frost))
-  (load-theme 'ef-winter t))
+  ;; (load-theme 'ef-winter)
+  )
 
 (use-package modus-themes
   :ensure t
@@ -236,6 +237,17 @@ The exact color values are taken from the active Ef theme."
 (use-package org-cliplink
   :ensure t)
 
+;; (use-package org-alert
+;;   :ensure t
+;;   :custom (alert-default-style 'notifications)
+;;   :config
+;;   (setq org-alert-interval 300
+;; 	org-alert-notifications-title "Org Reminder"))
+
+;; (use-package org-notifications
+;;   :ensure t
+;;   :config)
+
 (use-package hl-todo
   :ensure t
   :init
@@ -244,7 +256,7 @@ The exact color values are taken from the active Ef theme."
 (use-package pdf-tools
   :ensure t)
 
-(use-package toc-org
+(use-package russian-holidays
   :ensure t)
 
 (use-package expand-region

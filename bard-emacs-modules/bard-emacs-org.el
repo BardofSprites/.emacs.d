@@ -23,6 +23,13 @@
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
   )
 
+;; Calendar
+
+(with-eval-after-load 'calendar-mode
+  (setq calendar-holidays (append calendar-holidays russian-holidays))
+  (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
+  (add-hook 'calendar-today-visible-hook 'calendar-mark-holidays))
+
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "NEXT (n)" "|" "DONE(d)" "KILLED(k)")))
 (add-hook 'org-mode-hook 'hl-todo-mode)

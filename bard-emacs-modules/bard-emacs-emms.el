@@ -3,6 +3,7 @@
 ;; |------------------------------------|
 
 (require 'emms)
+(require 'emms-setup)
 (require 'emms-mpris)
 
 (emms-all)
