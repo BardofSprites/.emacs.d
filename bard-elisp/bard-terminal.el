@@ -2,7 +2,7 @@
   "Open a terminal in the current working directory."
   (interactive)
   (let ((default-directory default-directory))
-    (start-process "urxvt-terminal" nil "urxvtc")))
+    (start-process "st-terminal" nil "st")))
 
 (global-set-key (kbd "C-c t") 'open-terminal-in-current-directory)
 
