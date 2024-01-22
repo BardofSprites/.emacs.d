@@ -275,13 +275,13 @@ The exact color values are taken from the active Ef theme."
 (use-package haskell-mode
   :ensure t)
 
+(use-package rust-mode
+  :ensure t)
+
 (use-package flycheck
   :ensure t
   :init
   (global-flycheck-mode t))
-
-(use-package tuareg
-  :ensure t)
 
 (use-package smartparens
   :ensure t

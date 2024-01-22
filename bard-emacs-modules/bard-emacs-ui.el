@@ -109,13 +109,13 @@
     "Distraction-free writing environment"
     (if (equal olivetti-mode nil)
         (progn
-          (text-scale-set 0.2)
-          (setq olivetti-body-width 100)
+          (fontaine-set-preset 'prose)
+          (setq olivetti-body-width 75)
           (set-fringe-mode 0)
           (olivetti-mode t))
       (progn
         (olivetti-mode 0)
-        (text-scale-set 0)
+        (fontaine-set-preset 'regular)
         (mixed-pitch-mode 0)
         (fringe-mode nil)
         (setq cursor-type 'box))))
