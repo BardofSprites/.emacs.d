@@ -114,11 +114,6 @@ The exact color values are taken from the active Ef theme."
   :config
   (setq mixed-pitch-cursor-type 'box))
 
-(use-package xclip
-  :ensure t
-  :config
-  (xclip-mode 1))
-
 ;; Multiple Cursors
 (use-package multiple-cursors
   :ensure t)
@@ -237,16 +232,16 @@ The exact color values are taken from the active Ef theme."
 (use-package org-cliplink
   :ensure t)
 
-;; (use-package org-alert
-;;   :ensure t
-;;   :custom (alert-default-style 'notifications)
-;;   :config
-;;   (setq org-alert-interval 300
-;; 	org-alert-notifications-title "Org Reminder"))
-
-;; (use-package org-notifications
-;;   :ensure t
-;;   :config)
+(use-package tmr
+  :ensure t
+  :config
+    ;; Set to nil to disable the sound
+  (setq tmr-sound-file "/usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga")
+  ;; Desktop notification urgency level
+  (setq tmr-notification-urgency 'normal)
+  (setq tmr-descriptions-list 'tmr-description-history)
+  (define-key global-map (kbd "M-<f8>") 'tmr-tabulated-view)
+  (define-key global-map (kbd "<f8>") 'tmr-with-description))
 
 (use-package hl-todo
   :ensure t
@@ -306,20 +301,6 @@ The exact color values are taken from the active Ef theme."
 
 (use-package emacs-everywhere
   :ensure t)
-
-(use-package diminish
-  :ensure t
-  :config
-  (diminish 'rainbow-mode)
-  ;; (diminish 'helm-mode)
-  (diminish 'flycheck-mode)
-  (diminish 'which-key-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'org-roam-ui-mode "ORUI")
-  (diminish 'auto-revert-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'company-mode)
-  (diminish 'whitespace-mode))
 
 (use-package eshell-git-prompt
   :ensure t
