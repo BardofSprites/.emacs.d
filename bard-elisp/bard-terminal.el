@@ -1,9 +1,9 @@
-(defun open-terminal-in-current-directory ()
+(defun bard/open-terminal-in-current-directory ()
   "Open a terminal in the current working directory."
   (interactive)
   (let ((default-directory default-directory))
-    (start-process "st-terminal" nil "st")))
+    (term "/bin/bash")))
 
-(global-set-key (kbd "C-c t") 'open-terminal-in-current-directory)
+(global-set-key (kbd "C-c t") 'bard/open-terminal-in-current-directory)
 
 (provide 'bard-terminal.el)
