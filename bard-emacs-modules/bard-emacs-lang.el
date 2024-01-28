@@ -25,6 +25,9 @@
 
 ;;; Code:
 
+;; Input methods
+(global-set-key (kbd "<f10>") 'toggle-input-method)
+
 ;; Snippet directories
 (setq yasnippet-snippets-dir '("/home/bard/.emacs.d/elpa/yasnippet-snippets-20231219.1505/snippets" "/home/bard/.emacs.d/snippets/"))
 
@@ -47,7 +50,7 @@
 (add-hook 'c++-mode 'bard/common-modes-hook)
 (setq-default c-basic-offset 4)
 (with-eval-after-load "c++-mode"
-  (define-key c++-mode-map (kbd "C-c C-s") #'consult-ripgrep))
+  (define-key c++-mode-map (kbd "C-z s") #'consult-ripgrep))
 
 ;; Haskell
 ;; (add-to-list 'company-backends 'company-dabbrev-code)
