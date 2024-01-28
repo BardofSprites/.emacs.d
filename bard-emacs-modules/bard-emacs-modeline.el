@@ -1,4 +1,4 @@
-3;;; bard-emacs-modeline.el --- My customizations for the Emacs Modeline -*- lexical-binding: t -*-
+;;; bard-emacs-modeline.el --- My customizations for the Emacs Modeline -*- lexical-binding: t -*-
 
 ;; Author: BardofSprites
 ;; Maintainer: BardofSprites
@@ -32,7 +32,6 @@
 
 ;; Face customization
 
-
 (defun bard/modus-themes-faces ()
   (modus-themes-with-colors
     (custom-set-faces
@@ -40,18 +39,16 @@
     (custom-set-faces
      `(mode-line-inactive ((t :background ,bg-magenta-nuanced :foreground ,fg-dim :box ,border))))))
 
-(add-hook 'modus-themes-post-load-hook #'bard/modus-themes-faces)
+(add-hook 'modus-themes-after-load-theme-hook #'bard/modus-themes-faces)
 
 ;;; Mode line
 (setq mode-line-compact nil) ; Emacs 28
-(setq mode-line-right-align-edge 'right-margin) ; Emacs 30
 (setq-default mode-line-format
               '("%e"
-                prot-modeline-kbd-macro
+		"  "
                 prot-modeline-narrow
                 prot-modeline-buffer-status
                 prot-modeline-input-method
-                prot-modeline-evil
                 prot-modeline-buffer-identification
                 "  "
                 prot-modeline-major-mode
@@ -59,11 +56,8 @@
                 "  "
                 prot-modeline-vc-branch
                 "  "
-                prot-modeline-eglot
-                "  "
                 prot-modeline-flymake
                 "  "
-                mode-line-format-right-align ; Emacs 30
                 prot-modeline-notmuch-indicator
                 "  "
                 prot-modeline-misc-info))
