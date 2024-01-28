@@ -32,12 +32,32 @@
 
 ;; Face customization
 
-(defun bard/modus-themes-faces ()
+(defun bard/modus-light-faces ()
+  (modus-themes-with-colors
+	    (custom-set-faces
+	     `(mode-line ((t :background ,bg-ochre :foreground ,fg-main :box ,yellow-warmer))))
+	    (custom-set-faces
+	     `(mode-line-inactive ((t :background ,bg-ochre :foreground ,fg-dim :box ,yellow-cooler))))))
+
+(defun bard/modus-dark-faces ()
   (modus-themes-with-colors
     (custom-set-faces
-     `(mode-line ((t :background ,bg-magenta-subtle :foreground ,fg-main :box ,border))))
+     `(mode-line ((t :background ,bg-magenta-subtle :foreground ,fg-main :box ,magenta-cooler))))
     (custom-set-faces
-     `(mode-line-inactive ((t :background ,bg-magenta-nuanced :foreground ,fg-dim :box ,border))))))
+     `(mode-line-inactive ((t :background ,bg-magenta-subtle :foreground ,fg-dim :box ,magenta-faint))))))
+
+(defun bard/modus-themes-faces ()
+  (if (or (memq 'modus-operandi custom-enabled-themes)
+          (memq 'modus-operandi-tinted custom-enabled-themes))
+      (bard/modus-light-faces)
+    (bard/modus-dark-faces)
+    ))
+
+;; (modus-themes-with-colors
+;;      (custom-set-faces
+;;       `(mode-line ((t :background ,bg-purple-subtle :foreground ,fg-main :box (:line-width 3 :color ,purple-cooler)))))
+;;      (custom-set-faces
+;;       `(mode-line-inactive ((t :background ,bg-purple-nuanced :foreground ,fg-dim :box (:line-width 3 :color ,purple-faint))))))
 
 (add-hook 'modus-themes-after-load-theme-hook #'bard/modus-themes-faces)
 
