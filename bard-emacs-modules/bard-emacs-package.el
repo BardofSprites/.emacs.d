@@ -302,21 +302,10 @@ The exact color values are taken from the active Ef theme."
 (use-package emacs-everywhere
   :ensure t)
 
-(use-package eshell-git-prompt
-  :ensure t
-  :config
-  (eshell-git-prompt-use-theme 'robbyrussell))
-
 (use-package tramp
   :ensure t)
 
 (use-package circe
   :ensure t)
-
-(use-package shell-pop
-  :ensure t
-  :bind (("C-t" . shell-pop))
-  :config
-  (setq shell-pop-term-shell "/bin/bash"))
 
 (provide 'bard-emacs-package.el)
