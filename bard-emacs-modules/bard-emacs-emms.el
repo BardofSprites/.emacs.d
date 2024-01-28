@@ -22,5 +22,6 @@
 (define-key emms-playlist-mode-map (kbd "F") #'emms-add-file)
 (define-key emms-playlist-mode-map (kbd "L") #'emms-toggle-repeat-track)
 (define-key emms-playlist-mode-map (kbd "<mouse-3>") #'emms-pause)
+(define-key emms-playlist-mode-map (kbd "<SPC>") #'emms-pause)
 
 (provide 'bard-emacs-emms)
