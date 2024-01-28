@@ -106,8 +106,6 @@
          "* TODO %?")
 	("e" "Extra/Coding" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Extra/Coding")
          "* TODO %?")
-        ("r" "Reading List" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Immediate Reading List")
-         "* %?")
 	("p" "Protocol" entry (file+olp "~/Notes/Org-Roam/media.org" "Quotes")
          "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
 	("L" "Protocol Link" entry (file+olp "~/Notes/Org-Roam/media.org" "Watch/Read List")
@@ -115,9 +113,7 @@
         ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
          "* %U %^{Title}\n  %?")
         ("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
-         "* %^{Appointment}\n  %^t\n  %?")
-	("c" "Archive" entry (file+olp "~/Notes/Org-Roam/archive.org" "Archive")
-	 "* %^{Task}\nCaptured On: %U")))
+         "* %^{Appointment}\n  %^t\n  %?")))
 
 ;; Org Roam capture templates
 (setq org-roam-capture-templates
@@ -159,3 +155,5 @@
          :headline-levels 4
          :html-extension "html"
          :body-only t)))
+
+(provide 'bard-emacs-org.el)
