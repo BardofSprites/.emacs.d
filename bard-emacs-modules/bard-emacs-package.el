@@ -254,6 +254,11 @@ The exact color values are taken from the active Ef theme."
 (use-package russian-holidays
   :ensure t)
 
+(use-package org-timeblock
+  :ensure t
+  :config
+  (define-key global-map (kbd "M-<f6>") 'org-timeblock))
+
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
