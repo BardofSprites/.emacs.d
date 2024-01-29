@@ -78,8 +78,6 @@
                 "  "
                 prot-modeline-flymake
                 "  "
-                prot-modeline-notmuch-indicator
-                "  "
                 prot-modeline-misc-info))
 
 (provide 'bard-emacs-modeline)
