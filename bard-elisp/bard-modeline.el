@@ -281,7 +281,7 @@ Specific to the current window's mode line.")
      ((and (mode-line-window-selected-p)
            file
            (buffer-modified-p))
-      '(italic mode-line-buffer-id))
+      '(error italic mode-line-buffer-id))
      ((and file (buffer-modified-p))
       'italic)
      ((mode-line-window-selected-p)
