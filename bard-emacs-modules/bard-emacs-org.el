@@ -17,7 +17,8 @@
       org-hide-emphasis-markers t
       org-startup-with-inline-images t
       org-image-actual-width '(600)
-      org-insert-heading-respect-content t)
+      org-insert-heading-respect-content t
+      org-special-ctrl-a/e t)
 
 (with-eval-after-load "org-mode"
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
