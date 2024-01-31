@@ -69,13 +69,13 @@
 	 :fixed-pitch-height 1.0
 	 :bold-weight bold
 	 )
-        (code-demo
+        (large
 	 :inherit regular
 	 :default-height 170
 	 )
-        (prose
-         :inherit regular ; copy the `code-demo' properties
-         :default-height 220)
+	(small
+	 :inherit regular
+	 :default-height 130)
         (t
          :default-family "Monospace"
          )))
