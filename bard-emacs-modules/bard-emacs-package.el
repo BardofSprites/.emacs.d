@@ -313,4 +313,15 @@ The exact color values are taken from the active Ef theme."
 (use-package circe
   :ensure t)
 
+(use-package spacious-padding
+  :ensure t
+  :config
+  (setq spacious-padding-widths
+      '( :internal-border-width 10
+         :header-line-width 4
+         :mode-line-width 6
+         :tab-width 4
+         :right-divider-width 30
+         :scroll-bar-width 8)))
+
 (provide 'bard-emacs-package.el)
