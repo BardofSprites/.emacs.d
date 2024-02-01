@@ -109,8 +109,8 @@
     "Distraction-free writing environment"
     (if (equal olivetti-mode nil)
         (progn
-          (fontaine-set-preset 'prose)
-          (setq olivetti-body-width 75)
+          (fontaine-set-preset 'large)
+          (setq olivetti-body-width 80)
           (set-fringe-mode 0)
           (olivetti-mode t))
       (progn
