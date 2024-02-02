@@ -34,17 +34,17 @@
 
 (defun bard/modus-light-faces ()
   (modus-themes-with-colors
-	    (custom-set-faces
-	     `(mode-line ((t :background ,bg-ochre :foreground ,fg-main :box ,yellow-warmer))))
-	    (custom-set-faces
-	     `(mode-line-inactive ((t :background ,bg-ochre :foreground ,fg-dim :box ,yellow-cooler))))))
+    (custom-set-faces
+     `(mode-line ((t :background ,bg-ochre :foreground ,fg-main :box (:line-width 6 :color ,bg-ochre :style nil)))))
+    (custom-set-faces
+     `(mode-line-inactive ((t :background ,bg-mode-line-inactive :foreground ,fg-dim :box (:line-width 6 :color ,bg-mode-line-inactive :style nil)))))))
 
 (defun bard/modus-dark-faces ()
   (modus-themes-with-colors
     (custom-set-faces
-     `(mode-line ((t :background ,bg-magenta-subtle :foreground ,fg-main :box ,magenta-cooler))))
+     `(mode-line ((t :background ,bg-magenta-subtle :foreground ,fg-main :box (:line-width 6 :color ,bg-magenta-subtle :style nil)))))
     (custom-set-faces
-     `(mode-line-inactive ((t :background ,bg-magenta-subtle :foreground ,fg-dim :box ,magenta-faint))))))
+     `(mode-line-inactive ((t :background ,bg-mode-line-inactive :foreground ,fg-dim :box (:line-width 6 :color ,bg-mode-line-inactive :style nil)))))))
 
 (defun bard/modus-themes-faces ()
   (if (or (memq 'modus-operandi custom-enabled-themes)
