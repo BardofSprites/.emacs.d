@@ -12,6 +12,7 @@
   (let ((default-directory default-directory))
     (start-process "st terminal" nil "st")))
 
-(define-key dired-mode-map (kbd "C-c C-t") 'bard/open-terminal-emulator)
+(with-eval-after-load "dired-mode"
+  (define-key dired-mode-map (kbd "C-c C-t") 'bard/open-terminal-emulator))
 
 (provide 'bard-terminal.el)
