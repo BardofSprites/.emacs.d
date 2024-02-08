@@ -250,7 +250,7 @@ Specific to the current window's mode line.")
       (when (and (mode-line-window-selected-p)
                  (buffer-narrowed-p)
                  (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
-        (propertize " Narrow  " 'face 'prot-modeline-indicator-cyan-bg)))
+        (propertize " Narrow " 'face 'prot-modeline-indicator-cyan-bg)))
   "Mode line construct to report the multilingual environment.")
 
 ;;;; Input method

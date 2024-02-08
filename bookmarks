@@ -8,10 +8,11 @@
  (rear-context-string)
  (position . 1))
 ("org-capture-last-stored"
- (filename . "~/Notes/Org-Roam/20231208050212-election_of_1860_and_secession.org")
+ (filename . "~/Notes/Org-Roam/20240130100558-developing_middle_class.org")
  (front-context-string . "#+ANKI_DECK: APU")
- (rear-context-string . "0 and Secession\n")
- (position . 108))
+ (rear-context-string . "ng Middle Class\n")
+ (position . 101)
+ (last-modified 26041 4183 811339 905000))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")
