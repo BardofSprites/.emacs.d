@@ -21,46 +21,46 @@
 (setq use-package-always-ensure t)
 
 ;; Ef-themes
-(use-package ef-themes
-  :ensure t
-  :config
-  (setq ef-themes-headings
-      '((1 variable-pitch 1.5)
-        (2 regular 1.3)
-        (3 1.1)
-        (agenda-date 1.3)
-        (agenda-structure variable-pitch light 1.8)
-        (t variable-pitch)))
-  (defun bard/ef-themes-hl-todo-faces ()
-    "Configure `hl-todo-keyword-faces' with Ef themes colors.
-The exact color values are taken from the active Ef theme."
-    (ef-themes-with-colors
-      (setq hl-todo-keyword-faces
-            `(("WAIT" . ,yellow)
-              ("TODO" . ,red)
-              ("NEXT" . ,blue)
-              ("THEM" . ,magenta)
-              ("PROG" . ,cyan-warmer)
-              ("OKAY" . ,green-warmer)
-              ("DONT" . ,yellow-warmer)
-              ("FAIL" . ,red-warmer)
-              ("BUG" . ,red-warmer)
-              ("DONE" . ,green)
-              ("NOTE" . ,blue-warmer)
-              ("KLUDGE" . ,cyan)
-              ("HACK" . ,cyan)
-              ("TEMP" . ,red)
-              ("FIXME" . ,red-warmer)
-              ("XXX+" . ,red-warmer)
-	      ("KILLED" . ,cyan)
-              ("REVIEW" . ,red)
-              ("DEPRECATED" . ,yellow)))))
+;; (use-package ef-themes
+;;   :ensure t
+;;   :config
+;;   (setq ef-themes-headings
+;;       '((1 variable-pitch 1.5)
+;;         (2 regular 1.3)
+;;         (3 1.1)
+;;         (agenda-date 1.3)
+;;         (agenda-structure variable-pitch light 1.8)
+;;         (t variable-pitch)))
+;;   (defun bard/ef-themes-hl-todo-faces ()
+;;     "Configure `hl-todo-keyword-faces' with Ef themes colors.
+;; The exact color values are taken from the active Ef theme."
+;;     (ef-themes-with-colors
+;;       (setq hl-todo-keyword-faces
+;;             `(("WAIT" . ,yellow)
+;;               ("TODO" . ,red)
+;;               ("NEXT" . ,blue)
+;;               ("THEM" . ,magenta)
+;;               ("PROG" . ,cyan-warmer)
+;;               ("OKAY" . ,green-warmer)
+;;               ("DONT" . ,yellow-warmer)
+;;               ("FAIL" . ,red-warmer)
+;;               ("BUG" . ,red-warmer)
+;;               ("DONE" . ,green)
+;;               ("NOTE" . ,blue-warmer)
+;;               ("KLUDGE" . ,cyan)
+;;               ("HACK" . ,cyan)
+;;               ("TEMP" . ,red)
+;;               ("FIXME" . ,red-warmer)
+;;               ("XXX+" . ,red-warmer)
+;; 	      ("KILLED" . ,cyan)
+;;               ("REVIEW" . ,red)
+;;               ("DEPRECATED" . ,yellow)))))
 
-  (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-  (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
-  (setq ef-themes-to-toggle '(ef-winter ef-frost))
-  ;; (load-theme 'ef-winter)
-  )
+;;   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
+;;   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
+;;   (setq ef-themes-to-toggle '(ef-winter ef-frost))
+;;   ;; (load-theme 'ef-winter)
+;;   )
 
 (use-package modus-themes
   :ensure t
@@ -109,8 +109,8 @@ The exact color values are taken from the active Ef theme."
 
 (use-package mixed-pitch
   :ensure t
-  :hook
-  (olivetti-mode . mixed-pitch-mode)
+  ;; :hook
+  ;; (olivetti-mode . mixed-pitch-mode)
   :config
   (setq mixed-pitch-cursor-type 'box))
 
@@ -229,9 +229,6 @@ The exact color values are taken from the active Ef theme."
   :config
   (setq elfeed-goodies/powerline-default-separator 'box))
 
-(use-package org-cliplink
-  :ensure t)
-
 (use-package tmr
   :ensure t
   :config
@@ -249,9 +246,6 @@ The exact color values are taken from the active Ef theme."
   (global-hl-todo-mode t))
 
 (use-package pdf-tools
-  :ensure t)
-
-(use-package russian-holidays
   :ensure t)
 
 (use-package org-timeblock
@@ -304,9 +298,6 @@ The exact color values are taken from the active Ef theme."
 	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
 		(ggtags-mode 1)))))
 
-(use-package emacs-everywhere
-  :ensure t)
-
 (use-package tramp
   :ensure t)
 
@@ -323,5 +314,29 @@ The exact color values are taken from the active Ef theme."
          :tab-width 4
          :right-divider-width 30
          :scroll-bar-width 8)))
+
+(use-package darkroom
+  :ensure t
+  :bind
+  (("<f9>" . bard/darkroom-toggle))
+  :config
+  (setq darkroom-margins 'darkroom-guess-margins)
+  (setq darkroom-text-scale-increase 0)
+  (defun bard/darkroom-toggle ()
+    (interactive)
+    (if (equal darkroom-tentative-mode nil)
+        (progn
+          (fontaine-set-preset 'large)
+	  (visual-line-mode t)
+          (darkroom-tentative-mode t)
+	  (setq cursor-type 'bar))
+      (progn
+        (darkroom-tentative-mode 0)
+        (fontaine-set-preset 'regular)
+        (mixed-pitch-mode 0)
+	(visual-line-mode nil)
+        ;; (fringe-mode nil)
+        (setq cursor-type 'box))))
+  )
 
 (provide 'bard-emacs-package.el)
