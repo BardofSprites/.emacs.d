@@ -17,6 +17,7 @@
       org-hide-emphasis-markers t
       org-startup-with-inline-images t
       org-image-actual-width '(600)
+      org-list-allow-alphabetical t
       org-insert-heading-respect-content t
       org-special-ctrl-a/e t)
 
