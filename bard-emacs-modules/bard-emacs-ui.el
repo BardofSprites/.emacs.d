@@ -102,25 +102,25 @@
 ;;   (bard/disable-all-themes))
 
 ;; olivetti
-(use-package olivetti
-  :config
-  (defun bard/olivetti-toggle ()
-    (interactive)
-    "Distraction-free writing environment"
-    (if (equal olivetti-mode nil)
-        (progn
-          (fontaine-set-preset 'large)
-          (setq olivetti-body-width 80)
-          (set-fringe-mode 0)
-          (olivetti-mode t))
-      (progn
-        (olivetti-mode 0)
-        (fontaine-set-preset 'regular)
-        (mixed-pitch-mode 0)
-        (fringe-mode nil)
-        (setq cursor-type 'box))))
-  :bind
-  (("<f9>" . bard/olivetti-toggle)))
+;; (use-package olivetti
+;;   :config
+;;   (defun bard/olivetti-toggle ()
+;;     (interactive)
+;;     "Distraction-free writing environment"
+;;     (if (equal olivetti-mode nil)
+;;         (progn
+;;           (fontaine-set-preset 'large)
+;;           (setq olivetti-body-width 80)
+;;           ;; (set-fringe-mode 0)
+;;           (olivetti-mode t))
+;;       (progn
+;;         (olivetti-mode 0)
+;;         (fontaine-set-preset 'regular)
+;;         (mixed-pitch-mode 0)
+;;         ;; (fringe-mode nil)
+;;         (setq cursor-type 'box))))
+;;   :bind
+;;   (("<f9>" . bard/olivetti-toggle)))
 
 (provide 'bard-emacs-ui)
 
