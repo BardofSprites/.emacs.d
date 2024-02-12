@@ -7,6 +7,7 @@
 
 (setq package-archives '(("org" . "https://orgmode.org/elpa/")
                          ("elpa" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
@@ -112,7 +113,8 @@ The exact color values are taken from the active Ef theme."
   ;; :hook
   ;; (olivetti-mode . mixed-pitch-mode)
   :config
-  (setq mixed-pitch-cursor-type 'box))
+  (with-eval-after-load mixed-pitch-mode
+    (setq mixed-pitch-cursor-type 'box)))
 
 ;; Multiple Cursors
 (use-package multiple-cursors
@@ -152,9 +154,6 @@ The exact color values are taken from the active Ef theme."
   (global-set-key (kbd "C-c s") #'consult-line)
   (global-set-key (kbd "C-c C-s") nil)
   (global-set-key (kbd "C-z s") #'consult-ripgrep))
-
-(use-package orderless
-  :ensure t)
 
 (use-package yasnippet
   :init
@@ -255,7 +254,7 @@ The exact color values are taken from the active Ef theme."
 
 (use-package expand-region
   :ensure t
-  :bind ("C-=" . er/expand-region))
+  :bind ("M--" . er/expand-region))
 
 (use-package clojure-mode
   :ensure t)
@@ -321,22 +320,28 @@ The exact color values are taken from the active Ef theme."
   (("<f9>" . bard/darkroom-toggle))
   :config
   (setq darkroom-margins 'darkroom-guess-margins)
-  (setq darkroom-text-scale-increase 0)
+  (setq darkroom-text-scale-increase 1.2)
   (defun bard/darkroom-toggle ()
     (interactive)
     (if (equal darkroom-tentative-mode nil)
         (progn
-          (fontaine-set-preset 'large)
 	  (visual-line-mode t)
           (darkroom-tentative-mode t)
 	  (setq cursor-type 'bar))
       (progn
         (darkroom-tentative-mode 0)
-        (fontaine-set-preset 'regular)
         (mixed-pitch-mode 0)
 	(visual-line-mode nil)
         ;; (fringe-mode nil)
-        (setq cursor-type 'box))))
-  )
+        (setq cursor-type 'box)))))
+
+(use-package xah-fly-keys
+  :ensure t
+  :config
+  (require 'xah-fly-keys)
+  (define-key xah-fly-command-map (kbd "M-<") #'beginning-of-buffer)
+  (define-key xah-fly-command-map (kbd "M->") #'end-of-buffer)
+  (define-key xah-fly-command-map (kbd "q") #'beginning-of-line)
+  (define-key xah-fly-command-map (kbd "Q") #'end-of-line))
 
 (provide 'bard-emacs-package.el)
