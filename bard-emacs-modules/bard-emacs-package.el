@@ -114,7 +114,7 @@ The exact color values are taken from the active Ef theme."
   ;; (olivetti-mode . mixed-pitch-mode)
   :config
   (with-eval-after-load mixed-pitch-mode
-    (setq mixed-pitch-cursor-type 'box)))
+    (setq mixed-pitch-cursor-type nil)))
 
 ;; Multiple Cursors
 (use-package multiple-cursors
@@ -327,13 +327,15 @@ The exact color values are taken from the active Ef theme."
         (progn
 	  (visual-line-mode t)
           (darkroom-tentative-mode t)
-	  (setq cursor-type 'bar))
+	  ;; (setq cursor-type 'bar)
+	  )
       (progn
         (darkroom-tentative-mode 0)
         (mixed-pitch-mode 0)
 	(visual-line-mode nil)
         ;; (fringe-mode nil)
-        (setq cursor-type 'box)))))
+        ;; (setq cursor-type 'box)
+	))))
 
 (use-package xah-fly-keys
   :ensure t
@@ -342,6 +344,7 @@ The exact color values are taken from the active Ef theme."
   (define-key xah-fly-command-map (kbd "M-<") #'beginning-of-buffer)
   (define-key xah-fly-command-map (kbd "M->") #'end-of-buffer)
   (define-key xah-fly-command-map (kbd "q") #'beginning-of-line)
-  (define-key xah-fly-command-map (kbd "Q") #'end-of-line))
+  (define-key xah-fly-command-map (kbd "Q") #'end-of-line)
+  (define-key xah-fly-command-map (kbd "C-a") #'beginning-of-line))
 
 (provide 'bard-emacs-package.el)
