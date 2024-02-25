@@ -38,6 +38,10 @@
 (menu-bar-mode -1)
 (tool-bar-mode 0)
 
+;; settings for windows
+(setq focus-follows-mouse t)
+(setq mouse-autoselect-window t)
+
 ;; Whitespace, used in bard-emacs-lang.el
 (defun bard/set-up-whitespace-handling ()
   (interactive)
