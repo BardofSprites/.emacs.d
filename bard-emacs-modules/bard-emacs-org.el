@@ -158,4 +158,21 @@
          :html-extension "html"
          :body-only t)))
 
+;; Text Scratch buffers
+(defun bard/new-org-buffer ()
+  (interactive)
+  (let ((xbuf (generate-new-buffer "*org*")))
+    (switch-to-buffer xbuf)
+    (funcall (quote org-mode))
+    xbuf))
+
+(defun bard/new-plain-buffer ()
+  (interactive)
+  (let ((xbuf (generate-new-buffer "*plain*")))
+    (switch-to-buffer xbuf)
+    xbuf))
+
+(define-key global-map (kbd "M--") #'bard/new-plain-buffer)
+(define-key global-map (kbd "M-=") #'bard/new-org-buffer)
+
 (provide 'bard-emacs-org.el)
