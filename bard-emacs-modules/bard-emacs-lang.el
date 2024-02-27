@@ -63,6 +63,7 @@
 (add-to-list 'exec-path "/home/bard/.ghcup/bin")
 (add-to-list 'exec-path "/home/bard/.cabal/bin")
 (add-to-list 'exec-path "/home/bard/.local/bin")
+(add-to-list 'exec-path "/home/bard/.cargo/bin")
 
 ;; GGTAGS
 (with-eval-after-load 'ggtags
