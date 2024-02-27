@@ -254,7 +254,7 @@ The exact color values are taken from the active Ef theme."
 
 (use-package expand-region
   :ensure t
-  :bind ("M--" . er/expand-region))
+  :bind ("C-=" . er/expand-region))
 
 (use-package clojure-mode
   :ensure t)
@@ -327,24 +327,29 @@ The exact color values are taken from the active Ef theme."
         (progn
 	  (visual-line-mode t)
           (darkroom-tentative-mode t)
-	  ;; (setq cursor-type 'bar)
+	  (setq cursor-type 'bar)
 	  )
       (progn
         (darkroom-tentative-mode 0)
         (mixed-pitch-mode 0)
 	(visual-line-mode nil)
         ;; (fringe-mode nil)
-        ;; (setq cursor-type 'box)
+        (setq cursor-type 'box)
 	))))
 
-(use-package xah-fly-keys
-  :ensure t
-  :config
-  (require 'xah-fly-keys)
-  (define-key xah-fly-command-map (kbd "M-<") #'beginning-of-buffer)
-  (define-key xah-fly-command-map (kbd "M->") #'end-of-buffer)
-  (define-key xah-fly-command-map (kbd "q") #'beginning-of-line)
-  (define-key xah-fly-command-map (kbd "Q") #'end-of-line)
-  (define-key xah-fly-command-map (kbd "C-a") #'beginning-of-line))
+;; (use-package xah-fly-keys
+;;   :ensure t
+;;   :config
+;;   (require 'xah-fly-keys)
+;;   (define-key xah-fly-command-map (kbd "M-<") #'beginning-of-buffer)
+;;   (define-key xah-fly-command-map (kbd "M->") #'end-of-buffer)
+;;   (define-key xah-fly-command-map (kbd "q") #'beginning-of-line)
+;;   (define-key xah-fly-command-map (kbd "Q") #'end-of-line)
+;;   (define-key xah-fly-command-map (kbd "C-a") #'beginning-of-line)
+;;   (define-key global-map (kbd "<f8>") #'tmr-with-description)
+;;   (define-key xah-fly-command-map (kbd "<f8>") #'tmr-with-description)
+;;   (define-key xah-fly-insert-map (kbd "<f8>") #'tmr-with-description)
+;;   (define-key xah-fly-command-map (kbd "O") #'bard/new-org-buffer)
+;;   (define-key xah-fly-command-map (kbd "P") #'bard/new-plain-buffer))
 
 (provide 'bard-emacs-package.el)
