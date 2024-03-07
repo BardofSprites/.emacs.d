@@ -5,6 +5,7 @@
 (require 'emms)
 (require 'emms-setup)
 (require 'emms-mpris)
+(require 'emms-mode-line-icon)
 
 (emms-all)
 (emms-default-players)
@@ -13,6 +14,12 @@
       emms-info-functions '(emms-info-native))
 
 (setq emms-browser-covers 'emms-browser-cache-thumbnail)
+
+(setq emms-volume-amixer-card 1)
+
+;; modeline
+(emms-mode-line-disable)
+(emms-playing-time-disable-display)
 
 ;; Keymaps
 (define-key global-map (kbd "<f8>") #'emms)
