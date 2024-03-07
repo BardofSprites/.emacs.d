@@ -6,7 +6,7 @@
 (require 'package)
 
 (setq package-archives '(("org" . "https://orgmode.org/elpa/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")
 			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
 			 ("melpa" . "https://melpa.org/packages/")))
 
@@ -27,35 +27,35 @@
   :config
   (setq ef-themes-headings
       '((1 variable-pitch 1.5)
-        (2 regular 1.3)
-        (3 1.1)
-        (agenda-date 1.3)
-        (agenda-structure variable-pitch light 1.8)
-        (t variable-pitch)))
+	(2 regular 1.3)
+	(3 1.1)
+	(agenda-date 1.3)
+	(agenda-structure variable-pitch light 1.8)
+	(t variable-pitch)))
   (defun bard/ef-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Ef themes colors.
 The exact color values are taken from the active Ef theme."
     (ef-themes-with-colors
       (setq hl-todo-keyword-faces
-            `(("WAIT" . ,yellow)
-              ("TODO" . ,red)
-              ("NEXT" . ,blue)
-              ("THEM" . ,magenta)
-              ("PROG" . ,cyan-warmer)
-              ("OKAY" . ,green-warmer)
-              ("DONT" . ,yellow-warmer)
-              ("FAIL" . ,red-warmer)
-              ("BUG" . ,red-warmer)
-              ("DONE" . ,green)
-              ("NOTE" . ,blue-warmer)
-              ("KLUDGE" . ,cyan)
-              ("HACK" . ,cyan)
-              ("TEMP" . ,red)
-              ("FIXME" . ,red-warmer)
-              ("XXX+" . ,red-warmer)
+	    `(("WAIT" . ,yellow)
+	      ("TODO" . ,red)
+	      ("NEXT" . ,blue)
+	      ("THEM" . ,magenta)
+	      ("PROG" . ,cyan-warmer)
+	      ("OKAY" . ,green-warmer)
+	      ("DONT" . ,yellow-warmer)
+	      ("FAIL" . ,red-warmer)
+	      ("BUG" . ,red-warmer)
+	      ("DONE" . ,green)
+	      ("NOTE" . ,blue-warmer)
+	      ("KLUDGE" . ,cyan)
+	      ("HACK" . ,cyan)
+	      ("TEMP" . ,red)
+	      ("FIXME" . ,red-warmer)
+	      ("XXX+" . ,red-warmer)
 	      ("KILLED" . ,cyan)
-              ("REVIEW" . ,red)
-              ("DEPRECATED" . ,yellow)))))
+	      ("REVIEW" . ,red)
+	      ("DEPRECATED" . ,yellow)))))
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
@@ -68,34 +68,34 @@ The exact color values are taken from the active Ef theme."
   :config
   (setq modus-themes-headings
       '((1 . (variable-pitch 1.5))
-        (2 . (regular 1.3))
-        (agenda-date . (1.3))
-        (agenda-structure . (variable-pitch light 1.8))
-        (t . (1.1))))
+	(2 . (regular 1.3))
+	(agenda-date . (1.3))
+	(agenda-structure . (variable-pitch light 1.8))
+	(t . (1.1))))
   (defun bard/modus-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Modus themes colors.
 The exact color values are taken from the active Ef theme."
     (modus-themes-with-colors
       (setq hl-todo-keyword-faces
-            `(("WAIT" . ,yellow)
-              ("TODO" . ,red)
-              ("NEXT" . ,blue)
-              ("THEM" . ,magenta)
-              ("PROG" . ,cyan-warmer)
-              ("OKAY" . ,green-warmer)
-              ("DONT" . ,yellow-warmer)
-              ("FAIL" . ,red-warmer)
-              ("BUG" . ,red-warmer)
-              ("DONE" . ,green)
-              ("NOTE" . ,blue-warmer)
-              ("KLUDGE" . ,cyan)
-              ("HACK" . ,cyan)
-              ("TEMP" . ,red)
-              ("FIXME" . ,red-warmer)
-              ("XXX+" . ,red-warmer)
-              ("REVIEW" . ,red)
+	    `(("WAIT" . ,yellow)
+	      ("TODO" . ,red)
+	      ("NEXT" . ,blue)
+	      ("THEM" . ,magenta)
+	      ("PROG" . ,cyan-warmer)
+	      ("OKAY" . ,green-warmer)
+	      ("DONT" . ,yellow-warmer)
+	      ("FAIL" . ,red-warmer)
+	      ("BUG" . ,red-warmer)
+	      ("DONE" . ,green)
+	      ("NOTE" . ,blue-warmer)
+	      ("KLUDGE" . ,cyan)
+	      ("HACK" . ,cyan)
+	      ("TEMP" . ,red)
+	      ("FIXME" . ,red-warmer)
+	      ("XXX+" . ,red-warmer)
+	      ("REVIEW" . ,red)
 	      ("KILLED" . ,cyan)
-              ("DEPRECATED" . ,yellow)))))
+	      ("DEPRECATED" . ,yellow)))))
 
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
@@ -173,11 +173,11 @@ The exact color values are taken from the active Ef theme."
   :custom
   (org-roam-directory (file-truename "~/Notes/Org-Roam"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n j" . org-roam-dailies-capture-today))
+	 ("C-c n f" . org-roam-node-find)
+	 ("C-c n g" . org-roam-graph)
+	 ("C-c n i" . org-roam-node-insert)
+	 ("C-c n c" . org-roam-capture)
+	 ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (org-roam-db-autosync-mode 1))
 
@@ -203,9 +203,10 @@ The exact color values are taken from the active Ef theme."
   (setq dashboard-banner-logo-height 50)
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents   . 5)
-			  (bookmarks . 5)))
-  (setq dashboard-banner-logo-title "An Old Farmer's Smile")
-  (setq dashboard-set-footer nil))
+			  (agenda . 5)))
+  (setq dashboard-banner-logo-title "Слава богу ты вернулся")
+  (setq dashboard-set-footer nil)
+  (setq dashboard-set-init-info nil))
 
 (use-package elfeed
   :ensure t
@@ -227,6 +228,15 @@ The exact color values are taken from the active Ef theme."
   (elfeed-goodies/setup)
   :config
   (setq elfeed-goodies/powerline-default-separator 'box))
+
+(use-package notmuch
+  :ensure t
+  :config
+  (define-key global-map (kbd "C-c m") #'notmuch))
+
+(use-package notmuch-indicator
+  :ensure t
+  :config)
 
 (use-package tmr
   :ensure t
@@ -305,14 +315,16 @@ The exact color values are taken from the active Ef theme."
 
 (use-package spacious-padding
   :ensure t
+  :init
+  ;; (spacious-padding-mode 1)
   :config
   (setq spacious-padding-widths
       '( :internal-border-width 10
-         :header-line-width 4
-         :mode-line-width 6
-         :tab-width 4
-         :right-divider-width 30
-         :scroll-bar-width 8)))
+	 :header-line-width 4
+	 :mode-line-width 6
+	 :tab-width 4
+	 :right-divider-width 30
+	 :scroll-bar-width 8)))
 
 (use-package darkroom
   :ensure t
@@ -324,32 +336,16 @@ The exact color values are taken from the active Ef theme."
   (defun bard/darkroom-toggle ()
     (interactive)
     (if (equal darkroom-tentative-mode nil)
-        (progn
+	(progn
 	  (visual-line-mode t)
-          (darkroom-tentative-mode t)
+	  (darkroom-tentative-mode t)
 	  (setq cursor-type 'bar)
 	  )
       (progn
-        (darkroom-tentative-mode 0)
-        (mixed-pitch-mode 0)
+	(darkroom-tentative-mode 0)
+	(mixed-pitch-mode 0)
 	(visual-line-mode nil)
-        ;; (fringe-mode nil)
-        (setq cursor-type 'box)
-	))))
-
-;; (use-package xah-fly-keys
-;;   :ensure t
-;;   :config
-;;   (require 'xah-fly-keys)
-;;   (define-key xah-fly-command-map (kbd "M-<") #'beginning-of-buffer)
-;;   (define-key xah-fly-command-map (kbd "M->") #'end-of-buffer)
-;;   (define-key xah-fly-command-map (kbd "q") #'beginning-of-line)
-;;   (define-key xah-fly-command-map (kbd "Q") #'end-of-line)
-;;   (define-key xah-fly-command-map (kbd "C-a") #'beginning-of-line)
-;;   (define-key global-map (kbd "<f8>") #'tmr-with-description)
-;;   (define-key xah-fly-command-map (kbd "<f8>") #'tmr-with-description)
-;;   (define-key xah-fly-insert-map (kbd "<f8>") #'tmr-with-description)
-;;   (define-key xah-fly-command-map (kbd "O") #'bard/new-org-buffer)
-;;   (define-key xah-fly-command-map (kbd "P") #'bard/new-plain-buffer))
+	;; (fringe-mode nil)
+	(setq cursor-type 'box)))))
 
 (provide 'bard-emacs-package.el)
