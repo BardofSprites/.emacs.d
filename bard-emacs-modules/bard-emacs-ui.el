@@ -51,8 +51,19 @@
 
 ;; Modeline
 (setq display-time-format "%Y-%m-%d %H:%M")
+(setq display-time-interval 60)
 (setq display-time-default-load-average nil)
-(setq display-time-mail-file nil)
+(setq display-time-mail-directory nil)
+(setq display-time-mail-function nil)
+(setq display-time-use-mail-icon nil)
+(setq display-time-mail-string nil)
+(setq display-time-mail-face nil)
+(setq display-time-string-forms
+      '((propertize
+         (format-time-string display-time-format now)
+         'face 'display-time-date-and-time
+         'help-echo (format-time-string "%a %b %e, %Y" now))
+        " "))
 (display-time-mode 1)
 
 ;; Fonts
@@ -97,10 +108,11 @@
 (define-key global-map (kbd "<f7>") #'fontaine-set-preset)
 
 ;; Switching themes
-;; (defun bard/disable-all-themes ()
-;;   "disable all active themes."
-;;   (dolist (i custom-enabled-themes)
-;;     (disable-theme i)))
+(defun bard/disable-all-themes ()
+  "disable all active themes."
+  (interactive)
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
 
 ;; (defadvice load-theme (before disable-themes-first activate)
 ;;   (bard/disable-all-themes))
