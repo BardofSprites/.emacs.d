@@ -115,7 +115,8 @@
         ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
          "* %U %^{Title}\n  %?")
         ("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
-         "* %^{Appointment}\n  %^t\n  %?")))
+         "* %^{Appointment}\n  %^t\n  %?")
+	("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
 
 ;; Org Roam capture templates
 (setq org-roam-capture-templates
