@@ -32,26 +32,26 @@
 
 ;; Face customization
 
-(defun bard/modus-light-faces ()
-  (modus-themes-with-colors
-    (custom-set-faces
-     `(mode-line ((t :background ,bg-ochre :foreground ,fg-main :box (:line-width 6 :color ,bg-ochre :style nil)))))
-    (custom-set-faces
-     `(mode-line-inactive ((t :background ,bg-mode-line-inactive :foreground ,fg-dim :box (:line-width 6 :color ,bg-mode-line-inactive :style nil)))))))
+;; (defun bard/modus-light-faces ()
+;;   (modus-themes-with-colors
+;;     (custom-set-faces
+;;      `(mode-line ((t :background ,bg-ochre :foreground ,fg-main :box (:line-width 6 :color ,bg-ochre :style nil)))))
+;;     (custom-set-faces
+;;      `(mode-line-inactive ((t :background ,bg-mode-line-inactive :foreground ,fg-dim :box (:line-width 6 :color ,bg-mode-line-inactive :style nil)))))))
 
-(defun bard/modus-dark-faces ()
-  (modus-themes-with-colors
-    (custom-set-faces
-     `(mode-line ((t :background ,bg-magenta-subtle :foreground ,fg-main :box (:line-width 6 :color ,bg-magenta-subtle :style nil)))))
-    (custom-set-faces
-     `(mode-line-inactive ((t :background ,bg-mode-line-inactive :foreground ,fg-dim :box (:line-width 6 :color ,bg-mode-line-inactive :style nil)))))))
+;; (defun bard/modus-dark-faces ()
+;;   (modus-themes-with-colors
+;;     (custom-set-faces
+;;      `(mode-line ((t :background ,bg-magenta-subtle :foreground ,fg-main :box (:line-width 6 :color ,bg-magenta-subtle :style nil)))))
+;;     (custom-set-faces
+;;      `(mode-line-inactive ((t :background ,bg-mode-line-inactive :foreground ,fg-dim :box (:line-width 6 :color ,bg-mode-line-inactive :style nil)))))))
 
-(defun bard/modus-themes-faces ()
-  (if (or (memq 'modus-operandi custom-enabled-themes)
-          (memq 'modus-operandi-tinted custom-enabled-themes))
-      (bard/modus-light-faces)
-    (bard/modus-dark-faces)
-    ))
+;; (defun bard/modus-themes-faces ()
+;;   (if (or (memq 'modus-operandi custom-enabled-themes)
+;;           (memq 'modus-operandi-tinted custom-enabled-themes))
+;;       (bard/modus-light-faces)
+;;     (bard/modus-dark-faces)
+;;     ))
 
 ;; (modus-themes-with-colors
 ;;      (custom-set-faces
@@ -59,10 +59,11 @@
 ;;      (custom-set-faces
 ;;       `(mode-line-inactive ((t :background ,bg-purple-nuanced :foreground ,fg-dim :box (:line-width 3 :color ,purple-faint))))))
 
-(add-hook 'modus-themes-after-load-theme-hook #'bard/modus-themes-faces)
+;; (add-hook 'modus-themes-after-load-theme-hook #'bard/modus-themes-faces)
 
 ;;; Mode line
 (setq mode-line-compact nil) ; Emacs 28
+(setq mode-line-right-align-edge 'right-margin)
 (setq-default mode-line-format
               '("%e"
                 prot-modeline-narrow
@@ -79,6 +80,7 @@
                 "  "
                 prot-modeline-flymake
                 "  "
+		prot-modeline-align-right
                 prot-modeline-misc-info))
 
 (with-eval-after-load 'spacious-padding
