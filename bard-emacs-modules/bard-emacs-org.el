@@ -164,12 +164,14 @@
   (let ((xbuf (generate-new-buffer "*org*")))
     (switch-to-buffer xbuf)
     (funcall (quote org-mode))
+    (text-scale-increase 1.5)
     xbuf))
 
 (defun bard/new-plain-buffer ()
   (interactive)
   (let ((xbuf (generate-new-buffer "*plain*")))
     (switch-to-buffer xbuf)
+    (text-scale-increase 1.5)
     xbuf))
 
 (define-key global-map (kbd "M--") #'bard/new-plain-buffer)
