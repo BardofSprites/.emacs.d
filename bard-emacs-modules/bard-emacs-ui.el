@@ -98,6 +98,17 @@
 ;; save file
 (setq fontaine-latest-state-file
       (locate-user-emacs-file "fontaine-latest-state.eld"))
+
+;; Set last preset or fall back to desired style from `fontaine-presets'.
+(fontaine-set-preset (or (fontaine-restore-latest-preset) 'small))
+
+;; The other side of `fontaine-restore-latest-preset'.
+(add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+
+;; Persist font configurations while switching themes.  The
+;; `enable-theme-functions' is from Emacs 29.
+(add-hook 'enable-theme-functions #'fontaine-apply-current-preset)
+
 ;; Mixed pitch on modus and ef themes
 (setq modus-themes-mixed-fonts t)
 (setq ef-themes-mixed-fonts t)
@@ -113,30 +124,6 @@
   (interactive)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
-
-;; (defadvice load-theme (before disable-themes-first activate)
-;;   (bard/disable-all-themes))
-
-;; olivetti
-;; (use-package olivetti
-;;   :config
-;;   (defun bard/olivetti-toggle ()
-;;     (interactive)
-;;     "Distraction-free writing environment"
-;;     (if (equal olivetti-mode nil)
-;;         (progn
-;;           (fontaine-set-preset 'large)
-;;           (setq olivetti-body-width 80)
-;;           ;; (set-fringe-mode 0)
-;;           (olivetti-mode t))
-;;       (progn
-;;         (olivetti-mode 0)
-;;         (fontaine-set-preset 'regular)
-;;         (mixed-pitch-mode 0)
-;;         ;; (fringe-mode nil)
-;;         (setq cursor-type 'box))))
-;;   :bind
-;;   (("<f9>" . bard/olivetti-toggle)))
 
 (use-package nerd-icons
   :ensure t)
