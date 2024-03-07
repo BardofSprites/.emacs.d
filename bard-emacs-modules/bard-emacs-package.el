@@ -262,6 +262,15 @@ The exact color values are taken from the active Ef theme."
   :config
   (define-key global-map (kbd "M-<f6>") 'org-timeblock))
 
+(use-package orthodox-christian-new-calendar-holidays
+  :ensure t
+  :config
+  (setq holiday-other-holidays (append holiday-other-holidays orthodox-christian-new-calendar-holidays))
+
+  (setq holiday-bahai-holidays nil
+	holiday-christian-holidays nil
+	holiday-islamic-holidays nil))
+
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
