@@ -100,7 +100,7 @@
                       (org-agenda-overriding-header "Upcoming this month\n")))))))
 
 ;; Org capture templates
-(define-key global-map (kbd "C-`") #'org-capture)
+(define-key global-map (kbd "C-c c") #'org-capture)
 
 (require 'org-protocol)
 (setq org-capture-templates

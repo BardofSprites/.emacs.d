@@ -211,7 +211,7 @@ The exact color values are taken from the active Ef theme."
 (use-package elfeed
   :ensure t
   :config
-  (global-set-key (kbd "C-x w") 'elfeed)
+  (global-set-key (kbd "C-c e") 'elfeed)
   (setq elfeed-search-filter "+unread -academia"))
 
 (use-package elfeed-org
