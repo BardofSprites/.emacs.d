@@ -105,10 +105,6 @@
 ;; The other side of `fontaine-restore-latest-preset'.
 (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
 
-;; Persist font configurations while switching themes.  The
-;; `enable-theme-functions' is from Emacs 29.
-(add-hook 'enable-theme-functions #'fontaine-apply-current-preset)
-
 ;; Mixed pitch on modus and ef themes
 (setq modus-themes-mixed-fonts t)
 (setq ef-themes-mixed-fonts t)
@@ -116,7 +112,7 @@
 (dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
   (add-hook hook #'fontaine-apply-current-preset))
 
-(define-key global-map (kbd "<f7>") #'fontaine-set-preset)
+(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
 
 ;; Switching themes
 (defun bard/disable-all-themes ()
