@@ -2,17 +2,34 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("todo.org"
+(("operandi-startpage"
+ (filename . "~/Code/operandi-startpage/index.html")
+ (front-context-string . "	  <li> <a href=")
+ (rear-context-string . "ark></h2>\n	<ul>\n")
+ (position . 659)
+ (last-modified 26092 50947 573541 911000))
+("vivendi-startpage"
+ (filename . "~/Code/vivendi-startpage/index.html")
+ (front-context-string . "<!DOCTYPE html>\n")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26090 26019 67486 657000))
+("org-capture-last-stored"
+ (filename . "~/Notes/Org-Roam/20240305193736-causes_of_wwi_in_europe.org")
+ (front-context-string . "#+ANKI_DECK: APU")
+ (rear-context-string . "f WWI in Europe\n")
+ (position . 101)
+ (last-modified 26087 47825 352303 245000))
+("robozo"
+ (filename . "~/Code/robozo/")
+ (front-context-string . "bin\n  -rw-r--r--")
+ (rear-context-string . "96 Jan 31 05:17 ")
+ (position . 216))
+("todo.org"
  (filename . "~/Notes/Org-Roam/todo.org")
  (front-context-string . ":PROPERTIES:\n:ID")
  (rear-context-string)
  (position . 1))
-("org-capture-last-stored"
- (filename . "~/Notes/Org-Roam/20240130100558-developing_middle_class.org")
- (front-context-string . "#+ANKI_DECK: APU")
- (rear-context-string . "ng Middle Class\n")
- (position . 101)
- (last-modified 26041 4183 811339 905000))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")
