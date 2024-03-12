@@ -49,23 +49,6 @@
 
 (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
 
-;; Modeline
-(setq display-time-format "%Y-%m-%d %H:%M")
-(setq display-time-interval 60)
-(setq display-time-default-load-average nil)
-(setq display-time-mail-directory nil)
-(setq display-time-mail-function nil)
-(setq display-time-use-mail-icon nil)
-(setq display-time-mail-string nil)
-(setq display-time-mail-face nil)
-(setq display-time-string-forms
-      '((propertize
-         (format-time-string display-time-format now)
-         'face 'display-time-date-and-time
-         'help-echo (format-time-string "%a %b %e, %Y" now))
-        " "))
-(display-time-mode 1)
-
 ;; Fonts
 
 ;; Removed in favour of fontaine package
