@@ -1,6 +1,7 @@
 (define-key global-map (kbd "C-j") #'dired-jump)
-(with-eval-after-load "org-mode"
-  (define-key org-mode-map (kbd "C-j") nil))
+(add-hook 'org-mode-hook
+          (lambda()
+            (local-unset-key (kbd "C-j"))))
 
   (setq dired-guess-shell-alist-user ; those are the suggestions for ! and & in Dired
         '(("\\.\\(png\\|jpe?g\\|tiff\\)" "feh" "xdg-open")
