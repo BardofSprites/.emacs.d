@@ -287,7 +287,13 @@ The exact color values are taken from the active Ef theme."
 (use-package haskell-mode
   :ensure t)
 
-(use-package rust-mode
+(use-package ada-mode
+  :ensure t)
+
+(use-package gpr-mode
+  :ensure t)
+
+(use-package gpr-query
   :ensure t)
 
 (use-package flycheck
