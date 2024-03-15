@@ -79,6 +79,7 @@
                 prot-modeline-vc-branch
                 "  "
                 prot-modeline-flymake
+		prot-modeline-eglot
                 "  "
 		prot-modeline-align-right
                 prot-modeline-misc-info))

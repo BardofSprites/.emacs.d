@@ -406,6 +406,7 @@ face.  Let other buffers have no face.")
                     ((derived-mode-p 'text-mode) "§")
                     ((derived-mode-p 'prog-mode) "λ")
                     ((derived-mode-p 'comint-mode) ">_")
+		    ((derived-mode-p 'emms-playlist-mode) "♪")
                     (t "◦"))))
     (propertize indicator 'face 'shadow)))
 
@@ -589,6 +590,17 @@ TYPE is usually keyword `:error', `:warning' or `:note'."
          '(:eval (prot-modeline-flymake-warning))
          '(:eval (prot-modeline-flymake-note)))))
   "Mode line construct displaying `flymake-mode-line-format'.
+Specific to the current window's mode line.")
+
+(with-eval-after-load 'eglot
+  (setq mode-line-misc-info
+        (delete '(eglot--managed-mode (" [" eglot--mode-line-format "] ")) mode-line-misc-info)))
+
+(defvar-local prot-modeline-eglot
+    `(:eval
+      (when (and (featurep 'eglot) (mode-line-window-selected-p))
+        '(eglot--managed-mode eglot--mode-line-format)))
+  "Mode line construct displaying Eglot information.
 Specific to the current window's mode line.")
 
 ;;;; Miscellaneous
