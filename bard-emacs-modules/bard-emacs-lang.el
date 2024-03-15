@@ -70,5 +70,13 @@
   (define-key ggtags-mode-map (kbd "M->") nil)
   (define-key ggtags-mode-map (kbd "M-<") nil))
 
+(add-hook 'clojure-mode-hook
+          (lambda()
+            (define-key clojure-mode-map (kbd "C-<tab>") #'cider-switch-to-repl-buffer)))
+
+(add-hook 'cider-repl-mode-hook
+          (lambda()
+            (define-key cider-repl-mode-map (kbd "C-<tab>") #'cider-switch-to-last-clojure-buffer)))
+
 (provide 'bard-emacs-lang.el)
 ;;; bard-emacs-lang.el ends here
