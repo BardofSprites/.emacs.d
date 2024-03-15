@@ -55,6 +55,7 @@
 
 ;; Org Agenda Faces
 (custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5 :family "Iosevka Comfy Motion")))))
+(setq org-ellipsis "↲")
 
 ;; Org Agenda
 (defun bard/choose-agenda ()
@@ -144,20 +145,6 @@
          "\n* Tags: \n%? \n\n"
          :if-new (file+head "Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
          :unnarrowed t)))
-
-;; Blogging with Jekyll
-(setq org-publish-project-alist
-      '(("bardmandev" ;; my blog project (just a name)
-         ;; Path to org files.
-         :base-directory "~/Code/bardmandev/_org/"
-         :base-extension "org"
-         ;; Path to Jekyll Posts
-         :publishing-directory "~/Code/bardmandev/_posts/"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :html-extension "html"
-         :body-only t)))
 
 ;; Text Scratch buffers
 (defun bard/new-org-buffer ()
