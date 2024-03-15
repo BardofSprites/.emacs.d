@@ -153,7 +153,8 @@ The exact color values are taken from the active Ef theme."
   (global-set-key (kbd "C-x b") #'consult-buffer)
   (global-set-key (kbd "C-c s") #'consult-line)
   (global-set-key (kbd "C-c C-s") nil)
-  (global-set-key (kbd "C-z s") #'consult-ripgrep))
+  (global-set-key (kbd "C-z s") #'consult-ripgrep)
+  (global-set-key (kbd "M-s M-o") #'consult-outline))
 
 (use-package yasnippet
   :init
@@ -198,7 +199,7 @@ The exact color values are taken from the active Ef theme."
   :config
   (setq initial-buffer-choice 'dashboard-open)
   (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "~/.emacs.d/img/catwithscarf.jpg")
+  (setq dashboard-startup-banner "~/.emacs.d/img/emacslogo.png")
   (setq dashboard-banner-logo-width 50)
   (setq dashboard-banner-logo-height 50)
   (setq dashboard-center-content t)
@@ -287,15 +288,6 @@ The exact color values are taken from the active Ef theme."
 (use-package haskell-mode
   :ensure t)
 
-(use-package ada-mode
-  :ensure t)
-
-(use-package gpr-mode
-  :ensure t)
-
-(use-package gpr-query
-  :ensure t)
-
 (use-package flycheck
   :ensure t
   :init
@@ -331,7 +323,7 @@ The exact color values are taken from the active Ef theme."
 (use-package spacious-padding
   :ensure t
   :init
-  ;; (spacious-padding-mode 1)
+  (spacious-padding-mode 1)
   :config
   (setq spacious-padding-widths
       '( :internal-border-width 10
