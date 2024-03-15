@@ -9,3 +9,5 @@
           (".*" "xdg-open")))
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+
+(define-key dired-mode-map (kbd "E") #'emms-add-dired)
