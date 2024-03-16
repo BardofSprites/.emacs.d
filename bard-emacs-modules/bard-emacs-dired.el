@@ -10,4 +10,6 @@
 
 (add-hook 'dired-mode-hook #'dired-hide-details-mode)
 
-(define-key dired-mode-map (kbd "E") #'emms-add-dired)
+(add-hook 'dired-mode-hook
+          (lambda()
+            (define-key dired-mode-map (kbd "E") #'emms-add-dired)))
