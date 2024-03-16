@@ -104,20 +104,6 @@
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
 
-(use-package nerd-icons
-  :ensure t)
-
-(use-package nerd-icons-completion
-  :ensure t
-  :config
-  (nerd-icons-completion-marginalia-setup)
-  (nerd-icons-completion-mode 1))
-
-(use-package nerd-icons-dired
-  :ensure t
-  :config
-  (add-hook 'dired-mode-hook #'nerd-icons-dired-mode))
-
 (provide 'bard-emacs-ui)
 
 ;;; bard-emacs-ui.el ends here
