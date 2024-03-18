@@ -1,3 +1,8 @@
+(use-package dired-subtree
+  :ensure t
+  :config
+  (setq dired-subtree-use-backgrounds nil))
+
 (define-key global-map (kbd "C-j") #'dired-jump)
 (add-hook 'org-mode-hook
           (lambda()
@@ -12,4 +17,6 @@
 
 (add-hook 'dired-mode-hook
           (lambda()
-            (define-key dired-mode-map (kbd "E") #'emms-add-dired)))
+            (define-key dired-mode-map (kbd "E") #'emms-add-dired)
+	    (define-key dired-mode-map (kbd "<tab>") #'dired-subtree-toggle)
+	    (define-key dired-mode-map (kbd "<backtab>") #'dired-subtree-cycle)))

@@ -205,7 +205,7 @@ The exact color values are taken from the active Ef theme."
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents   . 5)
 			  (agenda . 5)))
-  (setq dashboard-banner-logo-title "Слава богу ты вернулся")
+  (setq dashboard-banner-logo-title "Time for another recreational programming session")
   (setq dashboard-set-footer nil)
   (setq dashboard-set-init-info nil))
 
@@ -247,8 +247,15 @@ The exact color values are taken from the active Ef theme."
   ;; Desktop notification urgency level
   (setq tmr-notification-urgency 'normal)
   (setq tmr-descriptions-list 'tmr-description-history)
-  (define-key global-map (kbd "M-<f8>") 'tmr-tabulated-view)
-  (define-key global-map (kbd "<f8>") 'tmr-with-description))
+  (define-key global-map (kbd "C-c t l") 'tmr-tabulated-view)
+  (define-key global-map (kbd "C-c t T") #'tmr-with-description)
+  (define-key global-map (kbd "C-c t l") #'tmr-tabulated-view)
+  (define-key global-map (kbd "C-c t c") #'tmr-clone)
+  (define-key global-map (kbd "C-c t k") #'tmr-cancel)
+  (define-key global-map (kbd "C-c t s") #'tmr-reschedule)
+  (define-key global-map (kbd "C-c t e") #'tmr-edit-description)
+  (define-key global-map (kbd "C-c t r") #'tmr-remove)
+  (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
 
 (use-package hl-todo
   :ensure t
