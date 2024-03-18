@@ -26,7 +26,17 @@
 (setq display-line-numbers-type 'relative)
 (setq inhibit-startup-message t)
 (setq inhibit-startup-screen t)
-(setq frame-title-format "GNU Emacs")
+
+(setq frame-resize-pixelwise t
+      frame-inhibit-implied-resize t
+      frame-title-format '("%b")
+      use-dialog-box t ; only for mouse events, which I seldom use
+      use-file-dialog nil
+      use-short-answers t
+      inhibit-x-resources t
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-startup-buffer-menu t)
+
 (setq mode-line-misc-info
       (delete (assoc 'minor-mode-alist mode-line-misc-info) mode-line-misc-info))
 
