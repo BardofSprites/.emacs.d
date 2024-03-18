@@ -1,5 +1,6 @@
 (require 'bard-window)
 
+;; settings for prot-
 (setq window-combination-resize t)
 (setq even-window-sizes 'height-only)
 (setq window-sides-vertical nil)
@@ -8,6 +9,15 @@
 (setq split-width-threshold 125)
 (setq window-min-height 3)
 (setq window-min-width 30)
+
+(define-key global-map (kbd "C-M-<up>") #'windmove-up)
+(define-key global-map (kbd "C-M-<right>") #'windmove-right)
+(define-key global-map (kbd "C-M-<down>") #'windmove-down)
+(define-key global-map (kbd "C-M-<left>") #'windmove-left)
+(define-key global-map (kbd "C-M-S-<up>") #'windmove-swap-states-up)
+(define-key global-map (kbd "C-M-S-<right>") #'windmove-swap-states-right)
+(define-key (kbd "C-M-S-<down>") #'windmove-swap-states-down)
+(define-key (kbd "C-M-S-<left>") #'windmove-swap-states-left)
 
 (use-package beframe
   :ensure t
@@ -33,7 +43,6 @@
 	 (window-height . fit-window-to-buffer))
 	("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
 	 (display-buffer-reuse-mode-window display-buffer-below-selected))
-
 	;; error stuff
 	((or . ((derived-mode . flymake-diagnostics-buffer-mode)
                 (derived-mode . flymake-project-diagnostics-mode)
@@ -58,11 +67,9 @@
 	))
 
 (winner-mode 1)
-(define-key global-map (kbd "C-c <right>") #'nil)
-(define-key global-map (kbd "C-c <left>") #'nil)
 (define-key global-map (kbd "C-x <right>") #'winner-redo)
-(define-key global-map (kbd "C-x <right>") #'winner-undo)
+(define-key global-map (kbd "C-x <left>") #'winner-undo)
 (define-key global-map (kbd "C-x C-n") #'next-buffer)
 (define-key global-map (kbd "C-x C-p") #'previous-buffer)
-(define-key global-map (kbd "C-x <right>") #'next-buffer)
-(define-key global-map (kbd "C-x <left>") #'previous-buffer)
+(define-key global-map (kbd "C-x <up>") #'next-buffer)
+(define-key global-map (kbd "C-x <down>") #'previous-buffer)
