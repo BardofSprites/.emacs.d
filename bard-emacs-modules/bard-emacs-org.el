@@ -72,6 +72,15 @@
        (org-agenda nil "D")))))
 
 (global-set-key (kbd "<f6>") 'bard/choose-agenda)
+(global-set-key (kbd "C-z C-a") 'bard/choose-agenda)
+
+(defun bard/default-agenda ()
+  "For viewing my custom agenda"
+  (interactive)
+  (org-agenda nil "D"))
+
+(global-set-key (kbd "<f1>") 'bard/default-agenda)
+(global-set-key (kbd "C-z a") 'bard/default-agenda)
 
 ;; Org Agenda
 (setq org-agenda-custom-commands

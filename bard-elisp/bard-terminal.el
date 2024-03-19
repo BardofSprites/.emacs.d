@@ -12,6 +12,6 @@
   (let ((default-directory default-directory))
     (start-process "st terminal" nil "st")))
 
-(define-key global-map (kbd "<f1>") 'bard/open-terminal-emulator)
+(define-key global-map (kbd "C-z C-t") 'bard/open-terminal-emulator)
 
 (provide 'bard-terminal.el)

@@ -173,7 +173,7 @@
 (use-package org-timeblock
   :ensure t
   :config
-  (define-key global-map (kbd "M-<f6>") 'org-timeblock))
+  (define-key global-map (kbd "C-z c") 'org-timeblock))
 
 (use-package orthodox-christian-new-calendar-holidays
   :ensure t
