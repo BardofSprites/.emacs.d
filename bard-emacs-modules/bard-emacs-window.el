@@ -16,8 +16,8 @@
 (define-key global-map (kbd "C-M-<left>") #'windmove-left)
 (define-key global-map (kbd "C-M-S-<up>") #'windmove-swap-states-up)
 (define-key global-map (kbd "C-M-S-<right>") #'windmove-swap-states-right)
-(define-key (kbd "C-M-S-<down>") #'windmove-swap-states-down)
-(define-key (kbd "C-M-S-<left>") #'windmove-swap-states-left)
+(define-key global-map (kbd "C-M-S-<down>") #'windmove-swap-states-down)
+(define-key global-map (kbd "C-M-S-<left>") #'windmove-swap-states-left)
 
 (use-package beframe
   :ensure t
