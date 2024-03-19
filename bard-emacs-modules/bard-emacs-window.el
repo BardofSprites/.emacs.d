@@ -41,6 +41,14 @@
 	 (display-buffer-reuse-mode-window display-buffer-below-selected)
 	 (dedicated . t)
 	 (window-height . fit-window-to-buffer))
+	("\\magit: .*"
+	 (display-buffer-same-window)
+	 (inhibit-same-window . nil)
+	 (dedicated . t))
+	("\\*Org Agenda\\*"
+	 (display-buffer-same-window)
+	 (inhibit-same-window . nil)
+	 (dedicated . t))
 	("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
 	 (display-buffer-reuse-mode-window display-buffer-below-selected))
 	;; error stuff
