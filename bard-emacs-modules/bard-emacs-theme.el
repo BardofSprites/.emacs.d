@@ -1,0 +1,167 @@
+;;; bard-emacs-theme.el --- My theme customizations -*- lexical-binding: t -*-
+
+;; Author: Daniel Pinkston
+;; Maintainer: Daniel Pinkston
+;; Version: 0.1.0
+;; Package-Requires: ((emacs 29.2))
+;; Homepage: https://github.com/BardofSprites/.emacs.d
+;; Keywords: theme fonts emacs
+
+
+;; This file is not part of GNU Emacs
+
+;; This program is free software: you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+;;; Commentary:
+
+;; commentary
+
+;;; Code:
+
+;; Ef-themes
+(use-package ef-themes
+  :ensure t
+  :config
+  (setq ef-themes-headings
+      '((1 variable-pitch 1.5)
+	(2 regular 1.3)
+	(3 1.1)
+	(agenda-date 1.3)
+	(agenda-structure variable-pitch light 1.8)
+	(t variable-pitch)))
+  (defun bard/ef-themes-hl-todo-faces ()
+    "Configure `hl-todo-keyword-faces' with Ef themes colors.
+The exact color values are taken from the active Ef theme."
+    (ef-themes-with-colors
+      (setq hl-todo-keyword-faces
+	    `(("WAIT" . ,yellow)
+	      ("TODO" . ,red)
+	      ("NEXT" . ,blue)
+	      ("THEM" . ,magenta)
+	      ("PROG" . ,cyan-warmer)
+	      ("OKAY" . ,green-warmer)
+	      ("DONT" . ,yellow-warmer)
+	      ("FAIL" . ,red-warmer)
+	      ("BUG" . ,red-warmer)
+	      ("DONE" . ,green)
+	      ("NOTE" . ,blue-warmer)
+	      ("KLUDGE" . ,cyan)
+	      ("HACK" . ,cyan)
+	      ("TEMP" . ,red)
+	      ("FIXME" . ,red-warmer)
+	      ("XXX+" . ,red-warmer)
+	      ("KILLED" . ,cyan)
+	      ("REVIEW" . ,red)
+	      ("DEPRECATED" . ,yellow)))))
+
+  (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
+  (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
+  (setq ef-themes-to-toggle '(ef-winter ef-frost))
+  (setq ef-themes-mixed-fonts t)
+  ;; (load-theme 'ef-winter)
+  )
+
+(use-package modus-themes
+  :ensure t
+  :config
+  (setq modus-themes-headings
+      '((1 . (variable-pitch 1.5))
+	(2 . (regular 1.3))
+	(agenda-date . (1.3))
+	(agenda-structure . (variable-pitch light 1.8))
+	(t . (1.1))))
+  (defun bard/modus-themes-hl-todo-faces ()
+    "Configure `hl-todo-keyword-faces' with Modus themes colors.
+The exact color values are taken from the active Ef theme."
+    (modus-themes-with-colors
+      (setq hl-todo-keyword-faces
+	    `(("WAIT" . ,yellow)
+	      ("TODO" . ,red)
+	      ("NEXT" . ,blue)
+	      ("THEM" . ,magenta)
+	      ("PROG" . ,cyan-warmer)
+	      ("OKAY" . ,green-warmer)
+	      ("DONT" . ,yellow-warmer)
+	      ("FAIL" . ,red-warmer)
+	      ("BUG" . ,red-warmer)
+	      ("DONE" . ,green)
+	      ("NOTE" . ,blue-warmer)
+	      ("KLUDGE" . ,cyan)
+	      ("HACK" . ,cyan)
+	      ("TEMP" . ,red)
+	      ("FIXME" . ,red-warmer)
+	      ("XXX+" . ,red-warmer)
+	      ("REVIEW" . ,red)
+	      ("KILLED" . ,cyan)
+	      ("DEPRECATED" . ,yellow)))))
+
+  (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
+  (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
+  (setq modus-themes-mixed-fonts t)
+  (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
+  (load-theme 'modus-vivendi t))
+
+;;;; Fonts
+(use-package fontaine
+  :ensure t)
+
+(setq fontaine-presets
+      '((regular
+         :default-height 140
+	 :default-family "Iosevka Comfy"
+	 :variable-pitch-family "Iosevka Comfy Motion"
+	 :variable-pitch-height 1.0
+	 :fixed-pitch-family "Iosevka Comfy"
+	 :fixed-pitch-height 1.0
+	 :bold-weight bold
+	 )
+        (large
+	 :inherit regular
+	 :default-height 170
+	 )
+	(small
+	 :inherit regular
+	 :default-height 130)
+        (t
+         :default-family "Monospace"
+         )))
+
+;; save file
+(setq fontaine-latest-state-file
+      (locate-user-emacs-file "fontaine-latest-state.eld"))
+
+;; Set last preset or fall back to desired style from `fontaine-presets'.
+(fontaine-set-preset (or (fontaine-restore-latest-preset) 'small))
+
+;; The other side of `fontaine-restore-latest-preset'.
+(add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+
+;; preserve fonts when switching themes
+(dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
+  (add-hook hook #'fontaine-apply-current-preset))
+
+(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
+
+;; Switching themes
+(defun bard/disable-all-themes ()
+  "disable all active themes."
+  (interactive)
+  (dolist (i custom-enabled-themes)
+    (disable-theme i)))
+
+
+(provide 'bard-emacs-theme)
+
+;;; bard-emacs-theme.el ends here

@@ -59,61 +59,6 @@
 
 (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
 
-;; Fonts
-
-;; Removed in favour of fontaine package
-;; (set-face-attribute 'default nil :font "Iosevka Comfy" :height 140)
-;; (set-face-attribute 'fixed-pitch nil :font "Iosevka Comfy" :height 140)
-;; (set-face-attribute 'variable-pitch nil :font "Iosevka Comfy Motion" :height 140)
-
-;; (add-to-list 'default-frame-alist '(font . "Iosevka Comfy-14.5"))
-(setq fontaine-presets
-      '((regular
-         :default-height 140
-	 :default-family "Iosevka Comfy"
-	 :variable-pitch-family "Iosevka Comfy Motion"
-	 :variable-pitch-height 1.0
-	 :fixed-pitch-family "Iosevka Comfy"
-	 :fixed-pitch-height 1.0
-	 :bold-weight bold
-	 )
-        (large
-	 :inherit regular
-	 :default-height 170
-	 )
-	(small
-	 :inherit regular
-	 :default-height 130)
-        (t
-         :default-family "Monospace"
-         )))
-
-;; save file
-(setq fontaine-latest-state-file
-      (locate-user-emacs-file "fontaine-latest-state.eld"))
-
-;; Set last preset or fall back to desired style from `fontaine-presets'.
-(fontaine-set-preset (or (fontaine-restore-latest-preset) 'small))
-
-;; The other side of `fontaine-restore-latest-preset'.
-(add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
-
-;; Mixed pitch on modus and ef themes
-(setq modus-themes-mixed-fonts t)
-(setq ef-themes-mixed-fonts t)
-;; preserve fonts when switching themes
-(dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
-  (add-hook hook #'fontaine-apply-current-preset))
-
-(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
-
-;; Switching themes
-(defun bard/disable-all-themes ()
-  "disable all active themes."
-  (interactive)
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
-
 (provide 'bard-emacs-ui)
 
 ;;; bard-emacs-ui.el ends here
