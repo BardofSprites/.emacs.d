@@ -32,6 +32,8 @@
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
   (add-hook 'calendar-today-visible-hook 'calendar-mark-holidays))
 
+(define-key global-map (kbd "C-z c") #'calendar)
+
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "NEXT (n)" "|" "DONE(d)" "KILLED(k)")))
 (add-hook 'org-mode-hook 'hl-todo-mode)
@@ -47,8 +49,7 @@
 
 ;; Org Mode Key map
 (defun bard/org-mode-keybindings ()
-  (define-key org-mode-map (kbd "C-c a") 'org-table-align)
-  (define-key org-mode-map (kbd "C-x p i") 'org-cliplink))
+  (define-key org-mode-map (kbd "C-c a") 'org-table-align))
 
 (add-hook 'org-mode-hook 'bard/org-mode-keybindings)
 ;; (add-hook 'org-mode-hook 'fly-spell-mode)
@@ -71,7 +72,7 @@
       ((string= chosen-view "Default")
        (org-agenda nil "D")))))
 
-(global-set-key (kbd "<f6>") 'bard/choose-agenda)
+(global-set-key (kbd "M-<f1>") 'bard/choose-agenda)
 (global-set-key (kbd "C-z C-a") 'bard/choose-agenda)
 
 (defun bard/default-agenda ()

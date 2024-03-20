@@ -5,6 +5,7 @@
     (term "/bin/bash")))
 
 (define-key global-map (kbd "C-t") #'bard/open-terminal-in-current-directory)
+(define-key global-map (kbd "C-z t") #'bard/open-terminal-in-current-directory)
 
 (defun bard/open-terminal-emulator ()
   "Open a terminal in the current working directory."
