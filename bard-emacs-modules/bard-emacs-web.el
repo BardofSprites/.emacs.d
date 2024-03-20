@@ -20,6 +20,7 @@
 
 ;; librewolf open browser
 
+;; TODO fix this to work with librewolf-bin on Gentoo
 (defun browse-url-librewolf (url &optional new-window)
   "Ask the Librewolf WWW browser to load URL.
 Defaults to the URL around or before point.  Passes the strings

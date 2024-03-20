@@ -58,8 +58,7 @@
   (global-set-key (kbd "C-x b") #'consult-buffer)
   (global-set-key (kbd "C-c s") #'consult-line)
   (global-set-key (kbd "C-c C-s") nil)
-  (global-set-key (kbd "C-z s") #'consult-ripgrep)
-  (global-set-key (kbd "M-s M-o") #'consult-outline))
+  (global-set-key (kbd "C-z s") #'consult-ripgrep))
 
 (use-package yasnippet
   :init
@@ -98,21 +97,6 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
-
-(use-package dashboard
-  :ensure t
-  :config
-  (setq initial-buffer-choice 'dashboard-open)
-  (dashboard-setup-startup-hook)
-  (setq dashboard-startup-banner "~/.emacs.d/img/emacslogo.png")
-  (setq dashboard-banner-logo-width 50)
-  (setq dashboard-banner-logo-height 50)
-  (setq dashboard-center-content t)
-  (setq dashboard-items '((recents   . 5)
-			  (agenda . 5)))
-  (setq dashboard-banner-logo-title "Time for another recreational programming session")
-  (setq dashboard-set-footer nil)
-  (setq dashboard-set-init-info nil))
 
 (use-package elfeed
   :ensure t
