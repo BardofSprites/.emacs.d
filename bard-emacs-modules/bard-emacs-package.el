@@ -21,8 +21,12 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Multiple Cursors
-(use-package multiple-cursors
+;; writeable grep buffers
+(use-package wgrep
+  :ensure t)
+
+;; preview replace
+(use-package iedit
   :ensure t)
 
 ;; Magit
