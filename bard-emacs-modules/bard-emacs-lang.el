@@ -28,9 +28,6 @@
 ;; Input methods
 (global-set-key (kbd "<f10>") 'toggle-input-method)
 
-;; Snippet directories
-(setq yasnippet-snippets-dir '("/home/bard/.emacs.d/elpa/yasnippet-snippets-20231219.1505/snippets" "/home/bard/.emacs.d/snippets/"))
-
 (defun bard/common-modes-hook ()
   "Commonly used modes, bundled in one hook."
   (display-line-numbers-mode 1)
