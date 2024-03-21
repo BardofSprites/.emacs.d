@@ -32,7 +32,7 @@
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
   (add-hook 'calendar-today-visible-hook 'calendar-mark-holidays))
 
-(define-key global-map (kbd "C-z c") #'calendar)
+(define-key global-map (kbd "C-z C-c") #'calendar)
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "NEXT (n)" "|" "DONE(d)" "KILLED(k)")))
