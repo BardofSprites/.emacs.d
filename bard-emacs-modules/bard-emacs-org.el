@@ -86,8 +86,9 @@
 ;; Org Agenda
 (setq org-agenda-custom-commands
       `(("D" "Daily agenda and top priority tasks"
-         ((tags-todo "-SCHEDULED/!TODO"
-                     ((org-agenda-overriding-header "Unscheduled Tasks \n")))
+         ((tags-todo "!TODO/-WAIT"
+                     ((org-agenda-overriding-header "Unscheduled Tasks \n")
+		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
                       (org-deadline-warning-days 0)
@@ -98,7 +99,10 @@
           (agenda "" ((org-agenda-span 7)
                       (org-deadline-warning-days 0)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this week \n")))))
+                      (org-agenda-overriding-header "Upcoming this week \n")))
+	  (tags-todo "-TODO/!WAIT"
+                     ((org-agenda-overriding-header "Low Priority Tasks\n")
+		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
         ("Y" "Yearly view for all tasks"
          ((agenda "" ((org-agenda-span 365)
                       (org-deadline-warning-days 2)
