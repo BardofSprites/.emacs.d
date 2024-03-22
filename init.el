@@ -54,6 +54,20 @@
 (setq make-backup-files nil)
 (setq confirm-kill-emacs 'y-or-n-p)
 
+;; enable/disable commands
+(mapc
+ (lambda (command)
+   (put command 'disabled nil))
+ '(list-timers narrow-to-region narrow-to-page upcase-region downcase-region))
+
+(mapc
+ (lambda (command)
+   (put command 'disabled t))
+ '(eshell project-eshell overwrite-mode iconify-frame diary))
+
+;; Package cache
+(setq package-enable-at-startup t)
+
 ;; Desktop mode/session saving
 (setq desktop-path '("~/.emacs.d/desktop")
       desktop-dirname "~/.emacs.d/desktop/"
