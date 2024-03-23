@@ -24,4 +24,6 @@
 
 (setq world-clock-time-format "%Y-%m-%d %B (%A) %R %Z")
 
+(define-key global-map (kbd "C-c C-w") #'world-clock)
+
 (provide 'bard-emacs-time)
