@@ -1,7 +1,7 @@
  (defun dashboard-insert-custom (list-size)
 	"Insert custom itemes LIST-SIZE."
 	(interactive)
-	(insert "  TODOs (A)   Cal: (c)   Mail: (m)   Emacs: (e)"))
+	(insert "  TODOs (A)   Cal: (c) ♪ Music: (m)   Mail: (M)   Emacs: (e)"))
 
 (add-hook 'dashboard-mode-hook
           (lambda()
@@ -9,8 +9,9 @@
 	    ;; FIXME look at browse url for explanation
 	    ;; (define-key global-map (kbd "g") #')
 	    (define-key dashboard-mode-map (kbd "c") #'calendar)
-	    (define-key dashboard-mode-map (kbd "m") #'notmuch)
+	    (define-key dashboard-mode-map (kbd "M") #'notmuch)
 	    (define-key dashboard-mode-map (kbd "e") #'(lambda ()(interactive)(dired user-emacs-directory)))
+	    (define-key dashboard-mode-map (kbd "m") #'(lambda ()(interactive)(emms)))
 	    ))
 
 (defvar dashboard-recover-layout-p nil
