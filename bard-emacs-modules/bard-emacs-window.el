@@ -37,7 +37,7 @@
 	("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
 	 (display-buffer-no-window)
 	 (allow-no-window . t))
-	("\\*\\(Calendar\\).*"
+	("\\*\\(Calendar\\|wclock\\).*"
 	 (display-buffer-reuse-mode-window display-buffer-below-selected)
 	 (dedicated . t)
 	 (window-height . fit-window-to-buffer))
@@ -64,10 +64,11 @@
 
 	((or . ((derived-mode . occur-mode)
                 (derived-mode . grep-mode)
+		(derived-mode . Man-mode)
                 (derived-mode . Buffer-menu-mode)
                 (derived-mode . log-view-mode)
                 (derived-mode . help-mode) ; See the hooks for `visual-line-mode'
-                "\\*\\(|Buffer List\\|Occur\\|vc-change-log\\|eldoc.*\\).*"
+                "\\*\\(|Buffer List\\|Occur\\|Man.*\\|vc-change-log\\|eldoc.*\\).*"
                 prot-window-shell-or-term-p
                 ,world-clock-buffer-name))
          (prot-window-display-buffer-below-or-pop)
