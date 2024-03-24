@@ -25,6 +25,10 @@
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
   )
 
+;; latex editing niceness
+(use-package org-fragtog
+  :ensure t)
+
 ;; Calendar
 
 (with-eval-after-load 'calendar-mode
@@ -114,6 +118,20 @@
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                       (org-agenda-overriding-header "Upcoming this month\n")))))))
 
+(use-package org-timeblock
+  :ensure t
+  :config
+  (define-key global-map (kbd "C-z c") 'org-timeblock))
+
+(use-package orthodox-christian-new-calendar-holidays
+  :ensure t
+  :config
+  (setq holiday-other-holidays (append holiday-other-holidays orthodox-christian-new-calendar-holidays))
+
+  (setq holiday-bahai-holidays nil
+	holiday-christian-holidays nil
+	holiday-islamic-holidays nil))
+
 ;; Org capture templates
 (define-key global-map (kbd "C-c c") #'org-capture)
 
@@ -132,6 +150,23 @@
         ("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
          "* %^{Appointment}\n  %^t\n  %?")
 	("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
+
+;;;; Org Roam
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/Notes/Org-Roam"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	 ("C-c n f" . org-roam-node-find)
+	 ("C-c n g" . org-roam-graph)
+	 ("C-c n i" . org-roam-node-insert)
+	 ("C-c n c" . org-roam-capture)
+	 ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (org-roam-db-autosync-mode 1))
+
+(use-package org-roam-ui
+  :ensure t)
 
 ;; Org Roam capture templates
 (setq org-roam-capture-templates
