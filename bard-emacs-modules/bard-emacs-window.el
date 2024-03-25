@@ -32,7 +32,7 @@
   (define-key global-map (kbd "C-x B") #'select-frame-by-name))
 
 (setq display-buffer-alist
-      `(("\\`\\*\\(Async Shell Command\\|Async Shell Command\\*\\<.\\>\\)\\*\\'"
+      `(("\\`\\*Async Shell Command\\*\\'"
 	 (display-buffer-no-window))
 	("\\`\\*\\(Warnings\\|Compile-Log\\)\\*\\'"
 	 (display-buffer-no-window)
