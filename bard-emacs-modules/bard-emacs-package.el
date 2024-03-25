@@ -28,7 +28,9 @@
 (use-package iedit)
 
 ;; Magit
-(use-package magit)
+(use-package magit
+  :config
+  (define-key global-map (kbd "C-c g") #'magit))
 
 (use-package magit-todos
   :config
