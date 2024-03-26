@@ -54,8 +54,6 @@
   :config
   (global-set-key (kbd "C-x b") nil)
   (global-set-key (kbd "C-x b") #'consult-buffer)
-  (global-set-key (kbd "C-c s") #'consult-line)
-  (global-set-key (kbd "C-c C-s") nil)
   (global-set-key (kbd "C-z s") #'consult-ripgrep))
 
 (use-package yasnippet
