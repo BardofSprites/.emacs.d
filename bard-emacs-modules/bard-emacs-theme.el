@@ -67,7 +67,7 @@ The exact color values are taken from the active Ef theme."
 	      ("DEPRECATED" . ,yellow)))))
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-  (define-key global-map (kbd "M-<f5>") #'ef-themes-toggle)
+  (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
   (setq ef-themes-to-toggle '(ef-winter ef-frost))
   (setq ef-themes-mixed-fonts t)
   ;; (load-theme 'ef-winter)
@@ -107,10 +107,20 @@ The exact color values are taken from the active Ef theme."
 	      ("KILLED" . ,cyan)
 	      ("DEPRECATED" . ,yellow)))))
 
+  (setq modus-operandi-palette-overrides
+      '((bg-mode-line-active bg-blue-intense)
+        (fg-mode-line-active fg-main)
+        (border-mode-line-active blue-intense)))
+
+  (setq modus-vivendi-palette-overrides
+      '((bg-mode-line-active bg-blue-subtle)
+        (fg-mode-line-active fg-main)
+        (border-mode-line-active blue)))
+
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (setq modus-themes-mixed-fonts t)
-  (define-key global-map (kbd "<f5>") #'modus-themes-toggle)
+  (define-key global-map (kbd "<f5>") #'modus-themes-select)
   (load-theme 'modus-vivendi t))
 
 ;;;; Fonts
