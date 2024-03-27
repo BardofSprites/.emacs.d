@@ -27,6 +27,6 @@
     (text-scale-increase 1.5)
     xbuf))
 
-(define-key global-map (kbd "C-z C-s") #'bard-new-elisp-buffer)
+(define-key global-map (kbd "C-z C-s") #'bard/new-elisp-buffer)
 
 (provide 'bard-scratch.el)
