@@ -117,6 +117,12 @@ The exact color values are taken from the active Ef theme."
         (fg-mode-line-active fg-main)
         (border-mode-line-active blue)))
 
+  ;; org customization
+  (setq org-priority-faces
+           '((?A . (:inherit (bold org-priority)))
+             (?B . org-priority)
+             (?C . (:inherit (shadow org-priority)))))
+
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (setq modus-themes-mixed-fonts t)
