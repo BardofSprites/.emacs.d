@@ -48,16 +48,9 @@
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "NEXT (n)" "|" "DONE(d)" "KILLED(k)")))
-(add-hook 'org-mode-hook 'hl-todo-mode)
-;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#CC9393" :weight bold))
-;; 			       ("WAIT"   . (:weight bold :foreground "#DFAF8F" :weight bold))
-;; 			       ("DONE"   . (:weight bold :weight bold :foreground "#AFD8AF"))
-;; 			       ("KILLED" . (:weight bold :weight bold :foreground "#656555")))
-;;       org-todo-keyword-faces '(("TODO"   . (:weight bold :foreground "#ff5f59" :weight bold))
-;; 			       ("WAIT"   . (:weight bold :foreground "#fec43f" :weight bold))
-;; 			       ("DONE"   . (:weight bold :weight bold :foreground "#44bc44"))
-;; 			       ("KILLED" . (:weight bold :weight bold :foreground "#989898")))
-;;       )
+     (setq org-todo-keywords
+           '((sequence "TODO(t)" "|" "DONE(D)" "KILLED(k)")
+             (sequence "MEET(m)" "|" "MET(M)")))
 
 ;; Org Mode Key map
 (defun bard/org-mode-keybindings ()
