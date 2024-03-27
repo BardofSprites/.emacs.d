@@ -51,6 +51,7 @@
   (global-company-mode 1))
 
 (use-package consult
+  :defer 2
   :config
   (global-set-key (kbd "C-x b") nil)
   (global-set-key (kbd "C-x b") #'consult-buffer)
@@ -147,26 +148,53 @@
 	 :tab-width 4
 	 :right-divider-width 30
 	 :scroll-bar-width 8)))
-
-(use-package darkroom
-  :bind
-  (("<f9>" . bard/darkroom-toggle))
+;; olivetti
+(use-package olivetti
   :config
-  (setq darkroom-margins 'darkroom-guess-margins)
-  (setq darkroom-text-scale-increase 1.2)
-  (defun bard/darkroom-toggle ()
-    (interactive)
-    (if (equal darkroom-tentative-mode nil)
-	(progn
-	  (visual-line-mode t)
-	  (darkroom-tentative-mode t)
-	  (setq cursor-type 'bar)
-	)
-      (progn
-	(darkroom-tentative-mode 0)
-	(mixed-pitch-mode 0)
-	(visual-line-mode nil)
-	;; (fringe-mode nil)
-	(setq cursor-type 'box)))))
+  (setq olivetti-body-width 120
+        olivetti-recall-visual-line-mode-entry-state t))
+
+(use-package logos
+  :config
+  (defun logos-reveal-entry ()
+    "Reveal Org or Outline entry."
+    (cond
+     ((and (eq major-mode 'org-mode)
+           (org-at-heading-p))
+      (org-show-subtree))
+     ((or (eq major-mode 'outline-mode)
+          (bound-and-true-p outline-minor-mode))
+      (outline-show-subtree))))
+
+  (setq logos-outlines-are-pages t)
+
+  (setq logos-outline-regexp-alist
+      `((emacs-lisp-mode . "^;;;+ ")
+        (org-mode . "^\\* +")
+        (t . ,(or outline-regexp logos--page-delimiter))))
+
+  (setq-default logos-hide-cursor nil
+              logos-hide-mode-line t
+              logos-hide-header-line t
+              logos-hide-buffer-boundaries t
+              logos-hide-fringe t
+              logos-variable-pitch t
+              logos-buffer-read-only nil
+              logos-scroll-lock nil
+              logos-olivetti t)
+  (let ((map global-map))
+    (define-key map [remap narrow-to-region] #'logos-narrow-dwim)
+    (define-key map [remap forward-page] #'logos-forward-page-dwim)
+    (define-key map [remap backward-page] #'logos-backward-page-dwim)
+    (define-key map (kbd "M-]") #'logos-forward-page-dwim)
+    (define-key map (kbd "M-[") #'logos-backward-page-dwim)
+    (define-key map (kbd "<f9>") #'logos-focus-mode))
+
+  (defun bard/logos--recenter-top ()
+    "Use `recenter' to reposition the view at the top."
+    (unless (derived-mode-p 'prog-mode)
+      (recenter 1))) ; Use 0 for the absolute top
+
+  (add-hook 'logos-page-motion-hook #'bard/logos--recenter-top))
 
 (provide 'bard-emacs-package.el)
