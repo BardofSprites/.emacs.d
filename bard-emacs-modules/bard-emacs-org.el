@@ -25,6 +25,14 @@
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
   )
 
+;; Org Babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(;; other Babel languages
+   (plantuml . t)))
+
+(setq org-plantuml-jar-path "/home/bard/opt/plantuml/plantuml-1.2024.3.jar")
+
 ;; latex editing niceness
 (use-package org-fragtog
   :ensure t)
