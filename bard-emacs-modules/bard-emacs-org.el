@@ -47,10 +47,9 @@
 (define-key global-map (kbd "C-z C-c") #'calendar)
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
-(setq org-todo-keywords '((sequence "TODO(t)" "WAIT(w)" "NEXT (n)" "|" "DONE(d)" "KILLED(k)")))
-     (setq org-todo-keywords
-           '((sequence "TODO(t)" "|" "DONE(D)" "KILLED(k)")
-             (sequence "MEET(m)" "|" "MET(M)")))
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "|" "DONE(D)" "KILLED(k)")
+	(sequence "MEET(m)" "|" "MET(M)")))
 
 ;; Org Mode Key map
 (defun bard/org-mode-keybindings ()
@@ -91,33 +90,33 @@
 ;; Org Agenda
 (setq org-agenda-custom-commands
       `(("D" "Daily agenda and top priority tasks"
-         ((tags-todo "!TODO/-WAIT"
-                     ((org-agenda-overriding-header "Unscheduled Tasks \n")
+	 ((tags-todo "!TODO"
+		     ((org-agenda-overriding-header "Unscheduled Tasks \n")
 		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
-          (agenda "" ((org-agenda-span 1)
-                      (org-agenda-start-day nil)
-                      (org-deadline-warning-days 0)
-                      (org-scheduled-past-days 0)
-                      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                      (org-agenda-format-date "%A %-e %B %Y")
-                      (org-agenda-overriding-header "Today's agenda \n")))
-          (agenda "" ((org-agenda-span 7)
-                      (org-deadline-warning-days 0)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this week \n")))
-	  (tags-todo "-TODO/!WAIT"
-                     ((org-agenda-overriding-header "Low Priority Tasks\n")
+	  (agenda "" ((org-agenda-span 1)
+		      (org-agenda-start-day nil)
+		      (org-deadline-warning-days 0)
+		      (org-scheduled-past-days 0)
+		      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+		      (org-agenda-format-date "%A %-e %B %Y")
+		      (org-agenda-overriding-header "Today's agenda \n")))
+	  (agenda "" ((org-agenda-span 7)
+		      (org-deadline-warning-days 0)
+		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+		      (org-agenda-overriding-header "Upcoming this week \n")))
+	  (tags "+wait"
+		     ((org-agenda-overriding-header "Low Priority Tasks\n")
 		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
-        ("Y" "Yearly view for all tasks"
-         ((agenda "" ((org-agenda-span 365)
-                      (org-deadline-warning-days 2)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this Year\n")))))
-        ("M" "Monthly view for all tasks"
-         ((agenda "" ((org-agenda-span 31)
-                      (org-deadline-warning-days 2)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this month\n")))))))
+	("Y" "Yearly view for all tasks"
+	 ((agenda "" ((org-agenda-span 365)
+		      (org-deadline-warning-days 2)
+		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+		      (org-agenda-overriding-header "Upcoming this Year\n")))))
+	("M" "Monthly view for all tasks"
+	 ((agenda "" ((org-agenda-span 31)
+		      (org-deadline-warning-days 2)
+		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+		      (org-agenda-overriding-header "Upcoming this month\n")))))))
 
 (use-package org-timeblock
   :ensure t
@@ -139,17 +138,17 @@
 (require 'org-protocol)
 (setq org-capture-templates
       '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Important Stuff")
-         "* TODO %?")
+	 "* TODO %?")
 	("e" "Extra/Coding" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Extra/Coding")
-         "* TODO %?")
+	 "* TODO %?")
 	("p" "Protocol" entry (file+olp "~/Notes/Org-Roam/media.org" "Quotes")
-         "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
+	 "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
 	("L" "Protocol Link" entry (file+olp "~/Notes/Org-Roam/media.org" "Watch/Read List")
-         "* [[%:link][%:description]] \nCaptured On: %U \n%?")
-        ("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
-         "* %U %^{Title}\n  %?")
-        ("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
-         "* %^{Appointment}\n  %^t\n  %?")
+	 "* [[%:link][%:description]] \nCaptured On: %U \n%?")
+	("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
+	 "* %U %^{Title}\n  %?")
+	("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
+	 "* %^{Appointment}\n  %^t\n  %?")
 	("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
 
 ;;;; Org Roam
@@ -172,28 +171,42 @@
 ;; Org Roam capture templates
 (setq org-roam-capture-templates
       '(("d" "default" plain
-         "\n* Tags: \n%? \n\n"
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-         :unnarrowed t)
-        ("n" "notes" plain
-         "\n\n\n* Tags :: %? \n\n* ${title} \n"
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-         :unnarrowed t)
-        ("b" "bio" plain
-         "#+ANKI_DECK: Bio \n\n* Tags :: [[id:cfe7bda9-b154-4d6b-989f-6af778a98cbd][Biology]] \n\n* ${title}%? \n"
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-         :unnarrowed t)
-        ("u" "apush" plain
-         "#+ANKI_DECK: APUSH \n\n* Tags :: [[id:06334c1d-5c06-4b70-bfd8-a074c0c36706][APUSH]] \n\n* ${title}%? \n"
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-         :unnarrowed t)
-        ("s" "snapshot" plain
-         (file "~/Notes/Org/snapshot_template.org")
-         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-         :unnarrowed t)
-        ("i" "idea" plain
-         "\n* Tags: \n%? \n\n"
-         :if-new (file+head "Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-         :unnarrowed t)))
+	 "\n* Tags: \n%? \n\n"
+	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+	 :unnarrowed t)
+	("n" "notes" plain
+	 "\n\n\n* Tags :: %? \n\n* ${title} \n"
+	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+	 :unnarrowed t)
+	("b" "bio" plain
+	 "#+ANKI_DECK: Bio \n\n* Tags :: [[id:cfe7bda9-b154-4d6b-989f-6af778a98cbd][Biology]] \n\n* ${title}%? \n"
+	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+	 :unnarrowed t)
+	("u" "apush" plain
+	 "#+ANKI_DECK: APUSH \n\n* Tags :: [[id:06334c1d-5c06-4b70-bfd8-a074c0c36706][APUSH]] \n\n* ${title}%? \n"
+	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+	 :unnarrowed t)
+	("s" "snapshot" plain
+	 (file "~/Notes/Org/snapshot_template.org")
+	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+	 :unnarrowed t)
+	("i" "idea" plain
+	 "\n* Tags: \n%? \n\n"
+	 :if-new (file+head "Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+	 :unnarrowed t)))
+
+(use-package denote
+  :config
+  (setq denote-directory "~/Notes/denote/")
+  (setq denote-known-keywords
+	'("emacs"
+	  "linux"
+	  "programming"
+	  "org"
+	  "school"
+	  "language"
+	  "history"
+	  "biology"
+	  )))
 
 (provide 'bard-emacs-org.el)
