@@ -25,6 +25,12 @@
 
 ;;; Code:
 
+;; fix keymap
+(global-set-key (kbd "C-z") nil)
+
+;; pixel scrolling
+(pixel-scroll-precision-mode 1)
+
 ;; Add the directories to the load path
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 (add-to-list 'load-path (expand-file-name "bard-elisp" user-emacs-directory))

@@ -3,7 +3,6 @@
   :config
   (setq eshell-banner-message "Time for another recreational programming session.\n\n"))
 
-(global-set-key (kbd "C-z") nil)
 (define-key global-map (kbd "C-z e") #'eshell-switcher)
 (with-eval-after-load "esh-mode"
   (define-key eshell-mode-map (kbd "C-c f") #'bard/eshell-find-file-at-point)
