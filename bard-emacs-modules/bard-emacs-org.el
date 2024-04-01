@@ -7,9 +7,10 @@
 (require 'ox)
 
 ;; Org Variables
-(setq org-directory "~/Notes/Org-Roam/")
-(setq org-agenda-files (list "~/Notes/Org-Roam/todo.org"))
-(setq org-archive-location "~/Notes/Org-Roam/archive.org::* Archive")
+(setq org-directory "~/Notes/denote/")
+;; symlinked file to shorten denote file name in agenda buffers
+(setq org-agenda-files (list "~/Notes/denote/todo.org"))
+(setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
 
 ;; Making org mode look nice
@@ -48,7 +49,7 @@
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(D)" "KILLED(k)")
+      '((sequence "TODO(t)" "|" "DONE(d)" "KILLED(k)")
 	(sequence "MEET(m)" "|" "MET(M)")))
 
 ;; Org Mode Key map
@@ -137,67 +138,24 @@
 
 (require 'org-protocol)
 (setq org-capture-templates
-      '(("h" "Homework" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Important Stuff")
+      '(("i" "Important Stuff" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Important Stuff")
 	 "* TODO %?")
-	("e" "Extra/Coding" entry (file+olp "~/Notes/Org-Roam/todo.org" "Inbox" "Extra/Coding")
+	("e" "Extra/Coding" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
 	 "* TODO %?")
-	("p" "Protocol" entry (file+olp "~/Notes/Org-Roam/media.org" "Quotes")
-	 "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
-	("L" "Protocol Link" entry (file+olp "~/Notes/Org-Roam/media.org" "Watch/Read List")
-	 "* [[%:link][%:description]] \nCaptured On: %U \n%?")
-	("j" "Journal" entry (file+datetree "~/Notes/Org-Roam/journal.org")
+	("j" "Journal" entry (file+datetree "~/Notes/denote/20240328T215351--journal__journal_self.org")
 	 "* %U %^{Title}\n  %?")
-	("a" "Appointments" entry (file+olp "~/Notes/Org-Roam/todo.org" "Appointments")
-	 "* %^{Appointment}\n  %^t\n  %?")
+	("a" "Appointments" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Appointments" "General")
+	 "* MEET %^{Appointment}\nSCHEDULED: %^t\n%?")
+	("p" "Protocol" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
+	 "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
+	("L" "Protocol Link" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
+	 "* [[%:link][%:description]] \nCaptured On: %U \n%?")
 	("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
-
-;;;; Org Roam
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/Notes/Org-Roam"))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-	 ("C-c n f" . org-roam-node-find)
-	 ("C-c n g" . org-roam-graph)
-	 ("C-c n i" . org-roam-node-insert)
-	 ("C-c n c" . org-roam-capture)
-	 ("C-c n j" . org-roam-dailies-capture-today))
-  :config
-  (org-roam-db-autosync-mode 1))
-
-(use-package org-roam-ui
-  :ensure t)
-
-;; Org Roam capture templates
-(setq org-roam-capture-templates
-      '(("d" "default" plain
-	 "\n* Tags: \n%? \n\n"
-	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-	 :unnarrowed t)
-	("n" "notes" plain
-	 "\n\n\n* Tags :: %? \n\n* ${title} \n"
-	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-	 :unnarrowed t)
-	("b" "bio" plain
-	 "#+ANKI_DECK: Bio \n\n* Tags :: [[id:cfe7bda9-b154-4d6b-989f-6af778a98cbd][Biology]] \n\n* ${title}%? \n"
-	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-	 :unnarrowed t)
-	("u" "apush" plain
-	 "#+ANKI_DECK: APUSH \n\n* Tags :: [[id:06334c1d-5c06-4b70-bfd8-a074c0c36706][APUSH]] \n\n* ${title}%? \n"
-	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-	 :unnarrowed t)
-	("s" "snapshot" plain
-	 (file "~/Notes/Org/snapshot_template.org")
-	 :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-	 :unnarrowed t)
-	("i" "idea" plain
-	 "\n* Tags: \n%? \n\n"
-	 :if-new (file+head "Ideas/%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-	 :unnarrowed t)))
 
 (use-package denote
   :config
   (setq denote-directory "~/Notes/denote/")
+  (setq denote-journal-extras-directory "~/Notes/journal")
   (setq denote-known-keywords
 	'("emacs"
 	  "linux"
@@ -207,6 +165,25 @@
 	  "language"
 	  "history"
 	  "biology"
-	  )))
+	  ))
+  (denote-rename-buffer-mode 1)
+  (add-hook 'dired-mode-hook #'denote-dired-mode)
+
+  ;; journalling with timer
+  (add-hook 'denote-journal-extras-hook (lambda ()
+                                          (tmr "10" "Journaling")))
+
+  :bind
+  (("C-c n n" . denote-open-or-create)
+   ("C-c n N" . denote)
+   ("C-c n d" . denote-date)
+   ("C-c n o" . denote-sort-dired)
+   ("C-c n j" . denote-journal-extras-new-entry)
+   ("C-c n r" . denote-rename-file)
+   ("C-c n i" . denote-link)
+   ("C-c n I" . denote-add-links)
+   ("C-c n b" . denote-backlinks)
+   ("C-c n f" . denote-find-link)
+   ("C-c n F" . denote-find-backlink)))
 
 (provide 'bard-emacs-org.el)
