@@ -82,7 +82,6 @@
                 prot-modeline-flymake
 		prot-modeline-eglot
                 "  "
-		prot-modeline-align-right
                 prot-modeline-misc-info))
 
 (with-eval-after-load 'spacious-padding
