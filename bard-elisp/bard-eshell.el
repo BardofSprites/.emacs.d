@@ -79,4 +79,4 @@ open the directory in a `dired' buffer."
             ((not in-eshellp) (switch-to-buffer (car buffers)))
             (t (select-or-create (completing-read "Select Shell:" (cons "New eshell" names)))))))
 
-(provide 'bard-eshell.el)
+(provide 'bard-eshell)

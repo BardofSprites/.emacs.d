@@ -30,17 +30,21 @@
 
 ;;; Code:
 
+;; declare all themes as safe (i trust developers)
+(setq custom-safe-themes t)
+
 ;; Ef-themes
 (use-package ef-themes
   :ensure t
   :config
   (setq ef-themes-headings
-      '((1 variable-pitch 1.5)
-	(2 regular 1.3)
-	(3 1.1)
-	(agenda-date 1.3)
-	(agenda-structure variable-pitch light 1.8)
-	(t variable-pitch)))
+	'((0 variable-pitch bold light 1.75)
+	  (1 variable-pitch 1.5)
+	  (2 regular 1.3)
+	  (3 1.1)
+	  (agenda-date 1.3)
+	  (agenda-structure variable-pitch light 1.8)
+	  (t variable-pitch)))
   (defun bard/ef-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Ef themes colors.
 The exact color values are taken from the active Ef theme."
@@ -77,11 +81,12 @@ The exact color values are taken from the active Ef theme."
   :ensure t
   :config
   (setq modus-themes-headings
-      '((1 . (variable-pitch 1.5))
-	(2 . (regular 1.3))
-	(agenda-date . (1.3))
-	(agenda-structure . (variable-pitch light 1.8))
-	(t . (1.1))))
+	'((0 variable-pitch bold light 1.75)
+	  (1 . (variable-pitch 1.5))
+	  (2 . (regular 1.3))
+	  (agenda-date . (1.3))
+	  (agenda-structure . (variable-pitch light 1.8))
+	  (t . (1.1))))
   (defun bard/modus-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Modus themes colors.
 The exact color values are taken from the active Ef theme."
@@ -108,22 +113,23 @@ The exact color values are taken from the active Ef theme."
 	      ("DEPRECATED" . ,yellow)))))
 
   (setq modus-operandi-palette-overrides
-      '((bg-mode-line-active bg-blue-intense)
-        (fg-mode-line-active fg-main)
-        (border-mode-line-active blue-intense)))
+	'((bg-mode-line-active bg-blue-intense)
+          (fg-mode-line-active fg-main)
+          (border-mode-line-active blue-intense)))
 
   (setq modus-vivendi-palette-overrides
-      '((bg-mode-line-active bg-blue-subtle)
-        (fg-mode-line-active fg-main)
-        (border-mode-line-active blue)))
+	'((bg-mode-line-active bg-blue-subtle)
+          (fg-mode-line-active fg-main)
+          (border-mode-line-active blue)))
 
   ;; org customization
   (setq org-priority-faces
-           '((?A . (:inherit (bold org-priority)))
-             (?B . org-priority)
-             (?C . (:inherit (shadow org-priority)))))
+        '((?A . (:inherit (bold org-priority)))
+          (?B . org-priority)
+          (?C . (:inherit (shadow org-priority)))))
 
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
+
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (setq modus-themes-mixed-fonts t)
   (define-key global-map (kbd "<f5>") #'modus-themes-select)
@@ -145,6 +151,7 @@ The exact color values are taken from the active Ef theme."
 	 )
         (large
 	 :inherit regular
+	 :variable-pitch-family "Iosevka Comfy Wide Motion"
 	 :default-height 170
 	 )
 	(small
@@ -176,7 +183,6 @@ The exact color values are taken from the active Ef theme."
   (interactive)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
-
 
 (provide 'bard-emacs-theme)
 

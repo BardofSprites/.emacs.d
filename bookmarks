@@ -2,7 +2,31 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("operandi-startpage"
+(("bard-emacs.org"
+ (filename . "~/Code/test/emacs/bard-emacs.org")
+ (front-context-string . "#+TITLE: My Emac")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26128 18859 419352 491000))
+("notes"
+ (filename . "~/Notes/denote/")
+ (front-context-string . "20230202T104500-")
+ (rear-context-string . "21 Apr  3 20:54 ")
+ (position . 168)
+ (last-modified 26126 2004 739066 838000))
+("aliases"
+ (filename . "~/.bash_aliases")
+ (front-context-string . "alias pyenv=\"sou")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26121 63716 79324 288000))
+("prot-emacs.org"
+ (filename . "~/Repositories/prot/emacs/.emacs.d/prot-emacs.org")
+ (front-context-string . "#+title: GNU Ema")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26109 60400 247785 79000))
+("operandi-startpage"
  (filename . "~/Code/operandi-startpage/index.html")
  (front-context-string . "	  <li> <a href=")
  (rear-context-string . "ark></h2>\n	<ul>\n")
@@ -14,22 +38,17 @@
  (rear-context-string)
  (position . 1)
  (last-modified 26090 26019 67486 657000))
-("org-capture-last-stored"
- (filename . "~/Notes/Org-Roam/20240305193736-causes_of_wwi_in_europe.org")
- (front-context-string . "#+ANKI_DECK: APU")
- (rear-context-string . "f WWI in Europe\n")
- (position . 101)
- (last-modified 26087 47825 352303 245000))
 ("robozo"
  (filename . "~/Code/robozo/")
  (front-context-string . "bin\n  -rw-r--r--")
  (rear-context-string . "96 Jan 31 05:17 ")
  (position . 216))
 ("todo.org"
- (filename . "~/Notes/Org-Roam/todo.org")
- (front-context-string . ":PROPERTIES:\n:ID")
- (rear-context-string)
- (position . 1))
+ (filename . "~/Notes/denote/todo.org")
+ (front-context-string . "<2024-03-29 Fri>")
+ (rear-context-string . "roj:\nSCHEDULED: ")
+ (position . 600)
+ (last-modified 26118 65194 434854 378000))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")

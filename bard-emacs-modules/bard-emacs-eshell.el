@@ -10,4 +10,4 @@
   (define-key eshell-mode-map (kbd "C-c d") #'prot-eshell-complete-recent-dir)
   (define-key eshell-mode-map (kbd "M-k") #'eshell-kill-input))
 
-(provide 'bard-emacs-eshell.el)
+(provide 'bard-emacs-eshell)

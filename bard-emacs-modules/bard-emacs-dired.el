@@ -24,3 +24,17 @@
 
 ;; hook for attaching emails mode
 (add-hook 'dired-mode-hook #'turn-on-gnus-dired-mode)
+
+(setq dired-dwim-target t)
+
+;; Image dired
+(setq image-dired-thumbnail-storage 'standard)
+(setq image-dired-external-viewer "nsxiv")
+(setq image-dired-thumb-size 80)
+(setq image-dired-thumb-margin 2)
+(setq image-dired-thumb-relief 0)
+(setq image-dired-thumbs-per-row 4)
+
+
+;; (define-key image-dired-thumbnail-mode-map
+;; 	    (kbd "<return>") #'image-dired-thumbnail-display-external)

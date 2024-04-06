@@ -28,9 +28,6 @@
 ;; fix keymap
 (global-set-key (kbd "C-z") nil)
 
-;; pixel scrolling
-(pixel-scroll-precision-mode 1)
-
 ;; Add the directories to the load path
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 (add-to-list 'load-path (expand-file-name "bard-elisp" user-emacs-directory))
@@ -53,12 +50,19 @@
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Clipboard saving
-(setq x-select-enable-clipboard t)
+(setq select-enable-clipboard t)
+
+;; custom file is evil
+(setq custom-file (make-temp-file "emacs-custom-"))
 
 ;; No Backups
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 (setq confirm-kill-emacs 'y-or-n-p)
+
+;; native comp enabled
+(when (native-comp-available-p)
+  (setq native-compile-prune-cache t))
 
 ;; enable/disable commands
 (mapc
@@ -71,41 +75,48 @@
    (put command 'disabled t))
  '(eshell project-eshell overwrite-mode iconify-frame diary))
 
+(add-to-list 'load-path "~/.emacs.d/elisp/")
+(require 'package)
+
+(setq package-archives '(("org" . "https://orgmode.org/elpa/")
+			 ("elpa" . "https://elpa.gnu.org/packages/")
+			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			 ("melpa" . "https://melpa.org/packages/")))
+
+(package-initialize)
+(unless package-archive-contents
+ (package-refresh-contents))
+
+;; Initialize use-package on non-Linux platforms
+(unless (package-installed-p 'use-package)
+   (package-install 'use-package))
+
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 ;; Package cache
 (setq package-enable-at-startup t)
 
-;; Desktop mode/session saving
-(setq desktop-path '("~/.emacs.d/desktop")
-      desktop-dirname "~/.emacs.d/desktop/"
-      desktop-base-file-name "emacs-desktop"
-      desktop-save t
-      desktop-restore-eager t
-      desktop-restore-=frams t
-      desktop-restory-in-current-display t
-      desktop-files-not-to-save "\(^$\\|\\*scratch\\*\\|\\*Messages\\*\\|\\*dashboard\\*\\|\\*Async-native-compile-log\\*|\\*Music\\*)")
+;;; MACROS
 
-;; Savehist
-(setq savehist-file (locate-user-emacs-file "savehist"))
-(setq history-length 100)
-(setq history-delete-duplicates t)
-(setq savehist-save-minibuffer-history t)
-(setq savehist-additional-variables '(register-alist kill-ring))
-(savehist-mode 1)
-
-;; |------------------------------------|
-;; |          General Keybinds          |
-;; |------------------------------------|
-;; Buffer switching
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; Desktop/session save
-(global-set-key (kbd "C-' s") 'desktop-save-in-desktop-dir)
-(global-set-key (kbd "C-' r") 'desktop-read)
-
-(electric-pair-mode t)
-
-(setq custom-safe-themes t)
+(defmacro bard/make-abbrev (table &rest definitions)
+  "Expand abbrev DEFINITIONS for the given TABLE.
+DEFINITIONS is a sequence of (i) string pairs mapping the
+abbreviation to its expansion or (ii) a string and symbol pair
+making an abbreviation to a function."
+  (declare (indent 1))
+  (unless (zerop (% (length definitions) 2))
+    (error "Uneven number of key+command pairs"))
+  `(if (abbrev-table-p ,table)
+       (progn
+         ,@(mapcar
+            (lambda (pair)
+              (let ((abbrev (nth 0 pair))
+                    (expansion (nth 1 pair)))
+                (if (stringp expansion)
+                    `(define-abbrev ,table ,abbrev ,expansion)
+                  `(define-abbrev ,table ,abbrev "" ,expansion))))
+            (seq-split definitions 2)))
+     (error "%s is not an abbrev table" ,table)))
 
 (provide 'init)
-
-;;; init.el ends here

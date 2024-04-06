@@ -12,6 +12,18 @@
 (setq org-agenda-files (list "~/Notes/denote/todo.org"))
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
+(setq org-structure-template-alist
+      '(("c" . "center")
+	("x" . "example")
+	("q" . "quote")
+	("v" . "verse")
+	("s" . "src")
+        ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
+        ("t" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
+        ("T" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
+
+;; mainly for denote, org throws away a link that i might reuse later
+(setq org-link-keep-stored-after-insertion nil)
 
 ;; Making org mode look nice
 (setq org-startup-indented t
@@ -63,7 +75,16 @@
 (custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5 :family "Iosevka Comfy Motion")))))
 (setq org-ellipsis "↲")
 
-;; Org Agenda
+;;; Org Agenda
+
+;; clock tables
+(setq org-clock-clocktable-default-properties '(:maxlevel 7
+						:scope agenda))
+(defun bard/org-clock-report ()
+  (interactive)
+  (bard/new-org-buffer)
+  (org-clock-report))
+
 (defun bard/choose-agenda ()
   "For viewing my custom agenda"
   (interactive)
@@ -133,7 +154,9 @@
 	holiday-christian-holidays nil
 	holiday-islamic-holidays nil))
 
-;; Org capture templates
+;;; Org capture
+(setq org-capture-bookmark nil)
+
 (define-key global-map (kbd "C-c c") #'org-capture)
 
 (require 'org-protocol)
@@ -152,38 +175,4 @@
 	 "* [[%:link][%:description]] \nCaptured On: %U \n%?")
 	("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
 
-(use-package denote
-  :config
-  (setq denote-directory "~/Notes/denote/")
-  (setq denote-journal-extras-directory "~/Notes/journal")
-  (setq denote-known-keywords
-	'("emacs"
-	  "linux"
-	  "programming"
-	  "org"
-	  "school"
-	  "language"
-	  "history"
-	  "biology"
-	  ))
-  (denote-rename-buffer-mode 1)
-  (add-hook 'dired-mode-hook #'denote-dired-mode)
-
-  ;; journalling with timer
-  (add-hook 'denote-journal-extras-hook (lambda ()
-                                          (tmr "10" "Journaling")))
-
-  :bind
-  (("C-c n n" . denote-open-or-create)
-   ("C-c n N" . denote)
-   ("C-c n d" . denote-date)
-   ("C-c n o" . denote-sort-dired)
-   ("C-c n j" . denote-journal-extras-new-entry)
-   ("C-c n r" . denote-rename-file)
-   ("C-c n i" . denote-link)
-   ("C-c n I" . denote-add-links)
-   ("C-c n b" . denote-backlinks)
-   ("C-c n f" . denote-find-link)
-   ("C-c n F" . denote-find-backlink)))
-
-(provide 'bard-emacs-org.el)
+;; (provide 'bard-emacs-org)

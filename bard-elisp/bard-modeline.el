@@ -554,4 +554,4 @@ Specific to the current window's mode line.")
                      prot-modeline-misc-info))
   (put construct 'risky-local-variable t))
 
-(provide 'bard-modeline.el)
+(provide 'bard-modeline)

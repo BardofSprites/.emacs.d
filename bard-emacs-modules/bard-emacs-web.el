@@ -1,4 +1,6 @@
 ;;; IRC
+(use-package circe)
+
 (setq auth-sources '("~/.authinfo.gpg"))
 
 (defun my-fetch-password (&rest params)
@@ -20,6 +22,25 @@
          :channels ("#emacs" "##anime" "#gentoo")
          :nickserv-password my-nickserv-password)))
 
+;;; RSS Feeds
+(use-package elfeed
+  :config
+  (global-set-key (kbd "C-c e") 'elfeed)
+  (setq elfeed-search-filter "+unread -academia"))
+
+(use-package elfeed-org
+  :init
+  (elfeed-org)
+  :config
+  (setq rmh-elfeed-org-files (list "~/.emacs.d/feeds.org"
+				   "~/.emacs.d/youtube.org")))
+
+(use-package elfeed-goodies
+  :init
+  (elfeed-goodies/setup)
+  :config
+  (setq elfeed-goodies/powerline-default-separator 'box))
+
 ;;; Web Browsing (EWW and Firefox/Librewolf)
 
 (setq browse-url-browser-function 'eww-browse-url)
@@ -30,6 +51,7 @@
  '(("wikipedia\\.org" . eww-browse-url)
    ;; ("github" . browse-url-chromium)
    ("github" . browse-url-default-browser)
+   ("youtube.com" . browse-url-default-browser)
    ("reddit.com" . browse-url-default-browser)))
 
 ;; shr optimizations
@@ -75,3 +97,9 @@ instead of `browse-url-new-window-flag'."
            (concat "librewolf " url) nil
            "librewolf"
             (list url))))
+
+;; remote connections with emacs
+(use-package tramp)
+
+(provide 'bard-emacs-web)
+;;; bard-emacs-web.el ends here

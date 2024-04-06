@@ -24,33 +24,6 @@
 
 ;; Variables
 (setq display-line-numbers-type 'relative)
-(setq inhibit-startup-message t)
-(setq inhibit-startup-screen t)
-
-(setq frame-resize-pixelwise t
-      frame-inhibit-implied-resize t
-      frame-title-format '("%b")
-      use-dialog-box t ; only for mouse events, which I seldom use
-      use-file-dialog nil
-      use-short-answers t
-      inhibit-x-resources t
-      inhibit-startup-echo-area-message user-login-name
-      inhibit-startup-buffer-menu t)
-
-(setq mode-line-misc-info
-      (delete (assoc 'minor-mode-alist mode-line-misc-info) mode-line-misc-info))
-
-;; Modes
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(tooltip-mode -1)
-(set-fringe-mode 10)
-(menu-bar-mode -1)
-(tool-bar-mode 0)
-
-;; settings for windows
-(setq focus-follows-mouse t)
-(setq mouse-autoselect-window t)
 
 ;; Whitespace, used in bard-emacs-lang.el
 (defun bard/set-up-whitespace-handling ()
@@ -58,6 +31,43 @@
   (whitespace-mode 1))
 
 (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
+
+;; display line numbers custom mode
+(define-minor-mode bard/display-line-numbers-mode
+  "Toggle `display-line-numbers-mode' and  `hl-line-mode' in tandem"
+  :init-value nil
+  :global nil
+  (if (bard/display-line-numbers-mode
+       (progn
+	 (display-line-numbers-mode 1)
+	 (hl-line-mode 1))
+       (display-line-numbers-mode -1)
+       (hl-line-mode -1))))
+
+;; padding for everything
+(use-package spacious-padding
+  :init
+  (spacious-padding-mode 1)
+  :config
+  (setq spacious-padding-widths
+      '( :internal-border-width 10
+	 :header-line-width 4
+	 :mode-line-width 6
+	 :tab-width 4
+	 :right-divider-width 1
+	 :left-fringe-width 10
+	 :right-fringe-width 10
+	 :scroll-bar-width 8)))
+
+;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
+(use-package hl-todo
+  :init
+  (global-hl-todo-mode t))
+
+;; Show avaiable key chords
+(use-package which-key
+  :init
+  (which-key-mode 1))
 
 (provide 'bard-emacs-ui)
 

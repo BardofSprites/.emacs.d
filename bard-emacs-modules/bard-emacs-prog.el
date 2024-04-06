@@ -1,4 +1,4 @@
-;;; bard-emacs-lang.el --- configuration for specific languages -*- lexical-binding: t -*-
+;;; bard-emacs-prog.el --- configuration for progamming environment -*- lexical-binding: t -*-
 
 ;; Author: Bardman
 ;; Maintainer: Bardman
@@ -40,19 +40,13 @@
 (add-hook 'haskell-mode-hook 'haskell-indent-mode)
 
 ;; CPP Mode
-;; (defun bard/c++-mode-keybindings ()
-;;   (define-key 'c++-mode-map (kbd "C-c C-c") 'compile))
 
-;; (add-hook 'c++-mode-hook 'bard/c++-mode-keybindings)
 (add-hook 'c++-mode 'bard/common-modes-hook)
 (setq-default c-basic-offset 4)
 (with-eval-after-load "c++-mode"
   (define-key c++-mode-map (kbd "C-z s") #'consult-ripgrep))
 
-;; Haskell
-;; (add-to-list 'company-backends 'company-dabbrev-code)
-;; (add-to-list 'company-backends 'company-yasnippet)
-;; (add-to-list 'company-backends 'company-files)
+;;; Haskell
 
 ;; disable ghci popups
 (setq haskell-interactive-popup-errors nil)
@@ -62,18 +56,51 @@
 (add-to-list 'exec-path "/home/bard/.local/bin")
 (add-to-list 'exec-path "/home/bard/opt/")
 
-;; GGTAGS
-(with-eval-after-load 'ggtags
-  (define-key ggtags-mode-map (kbd "M->") nil)
-  (define-key ggtags-mode-map (kbd "M-<") nil))
+;; Packages
+(use-package clojure-mode
+  :bind
+  (:map clojure-mode-map
+	("C-<tab>" . cider-switch-to-repl-buffer)))
 
-(add-hook 'clojure-mode-hook
-          (lambda()
-            (define-key clojure-mode-map (kbd "C-<tab>") #'cider-switch-to-repl-buffer)))
+(use-package cider
+  :bind
+  (:map cider-repl-mode-map
+	("C-<tab>" . cider-switch-to-last-clojure-buffer)))
 
-(add-hook 'cider-repl-mode-hook
-          (lambda()
-            (define-key cider-repl-mode-map (kbd "C-<tab>") #'cider-switch-to-last-clojure-buffer)))
+(use-package haskell-mode)
 
-(provide 'bard-emacs-lang.el)
-;;; bard-emacs-lang.el ends here
+(use-package flycheck
+  :init
+  (global-flycheck-mode t))
+
+(use-package smartparens
+  :config
+  (smartparens-global-mode t)
+  (show-smartparens-global-mode t)
+  :bind
+  (("C-<down>" . sp-down-sexp))
+  ("C-<up>"    . sp-up-sexp)
+  ("M-<down>"  . sp-backward-up-sexp)
+  ("M-<up>"    . sp-backward-up-sexp)
+  ("C-M-a"     . sp-beginning-of-sexp)
+  ("C-M-e"     . sp-end-of-sexp))
+
+(use-package ggtags
+  :config
+  (add-hook 'c-mode-common-hook
+	    (lambda ()
+	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+		(ggtags-mode 1)))))
+
+;; Version control
+(use-package magit
+  :config
+  (define-key global-map (kbd "C-c g") #'magit))
+
+(use-package magit-todos
+  :config
+  (magit-todos-mode 1))
+
+
+(provide 'bard-emacs-prog)
+;;; bard-emacs-prog.el ends here
