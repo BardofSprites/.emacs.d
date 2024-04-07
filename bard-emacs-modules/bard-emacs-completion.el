@@ -50,8 +50,6 @@
   :defer 2
   :bind
   ("C-x b" . consult-buffer)
-  ("C-s" . consult-line)
-  ("C-S-s" . consult-line-multi)
   ("C-z s" . consult-ripgrep))
 
 ;; (use-package embark
@@ -72,6 +70,9 @@
 ;;     )
 
 (use-package imenu-list
+  :config
+  (setq imenu-list-idle-update-delay 0.0)
+  (setq org-imenu-depth 3)
   :bind
   (("C-`" . imenu-list-smart-toggle)))
 
@@ -82,6 +83,41 @@
 (setq savehist-save-minibuffer-history t)
 (setq savehist-additional-variables '(register-alist kill-ring))
 (savehist-mode 1)
+
+:;; abbrev-mode
+(setq abbrev-file-name (locate-user-emacs-file "abbrevs"))
+(setq only-global-abbrevs nil)
+
+(bard/make-abbrev global-abbrev-table
+  "meweb" "https://bardman.dev"
+  "megit" "https://github.com/BardofSprites"
+  "protweb" "https://protesilaos.com/")
+
+(bard/make-abbrev text-mode-abbrev-table
+    "asciidoc"       "AsciiDoc"
+    "auctex"         "AUCTeX"
+    "cafe"           "café"
+    "cliche"         "cliché"
+    "clojurescript"  "ClojureScript"
+    "emacsconf"      "EmacsConf"
+    "github"         "GitHub"
+    "gitlab"         "GitLab"
+    "javascript"     "JavaScript"
+    "latex"          "LaTeX"
+    "libreplanet"    "LibrePlanet"
+    "linkedin"       "LinkedIn"
+    "paypal"         "PayPal"
+    "sourcehut"      "SourceHut"
+    "texmacs"        "TeXmacs"
+    "typescript"     "TypeScript"
+    "visavis"        "vis-à-vis"
+    "vscode"         "Visual Studio Code"
+    "youtube"        "YouTube")
+
+(dolist (hook '(text-mode-hook prog-mode-hook git-commit-mode-hook))
+  (add-hook hook #'abbrev-mode))
+
+(remove-hook 'save-some-buffers-functions #'abbrev--possibly-save)
 
 (provide 'bard-emacs-completion)
 ;;; bard-emacs-completion.el ends here
