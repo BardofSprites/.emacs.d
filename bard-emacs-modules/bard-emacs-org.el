@@ -138,12 +138,6 @@
 		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
 		      (org-agenda-overriding-header "Upcoming this month\n")))))))
 
-(use-package org-alert
-  :init
-  (org-alert-enable)
-  :config
-  (setq alert-default-style 'libnotify))
-
 (use-package orthodox-christian-new-calendar-holidays
   :ensure t
   :config
