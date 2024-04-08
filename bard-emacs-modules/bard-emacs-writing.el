@@ -27,6 +27,7 @@
   :bind
   (("C-c n n" . denote-open-or-create)
    ("C-c n N" . denote)
+   ("C-c R" . denote-region)
    ("C-c n d" . denote-date)
    ("C-c n o" . denote-sort-dired)
    ("C-c n j" . denote-journal-extras-new-entry)
