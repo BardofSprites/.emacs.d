@@ -84,7 +84,7 @@
 (setq savehist-additional-variables '(register-alist kill-ring))
 (savehist-mode 1)
 
-:;; abbrev-mode
+;;; abbrev-mode
 (setq abbrev-file-name (locate-user-emacs-file "abbrevs"))
 (setq only-global-abbrevs nil)
 
