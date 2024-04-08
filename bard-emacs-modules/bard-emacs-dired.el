@@ -3,6 +3,8 @@
   :config
   (setq dired-subtree-use-backgrounds nil))
 
+(use-package wdired)
+
 (define-key global-map (kbd "C-j") #'dired-jump)
 (add-hook 'org-mode-hook
           (lambda()
