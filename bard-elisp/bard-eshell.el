@@ -36,6 +36,44 @@ open the directory in a `dired' buffer."
 	(find-file file)
       (user-error "No file at point"))))
 
+(defcustom prot-eshell-output-buffer "*Exported Eshell output*"
+  "Name of buffer with the last output of Eshell command.
+Used by `prot-eshell-export'."
+  :type 'string
+  :group 'prot-eshell)
+
+(defcustom prot-eshell-output-delimiter "* * *"
+  "Delimiter for successive `prot-eshell-export' outputs.
+This is formatted internally to have newline characters before
+and after it."
+  :type 'string
+  :group 'prot-eshell)
+
+(defun prot-eshell--command-prompt-output ()
+  "Capture last command prompt and its output."
+  (let ((beg (save-excursion
+               (goto-char (eshell-beginning-of-input))
+               (goto-char (point-at-bol)))))
+    (when (derived-mode-p 'eshell-mode)
+      (buffer-substring-no-properties beg (eshell-end-of-output)))))
+
+;;;###autoload
+(defun prot-eshell-export ()
+  "Produce a buffer with output of the last Eshell command.
+If `prot-eshell-output-buffer' does not exist, create it.  Else
+append to it, while separating multiple outputs with
+`prot-eshell-output-delimiter'."
+  (interactive)
+  (let ((eshell-output (prot-eshell--command-prompt-output)))
+    (with-current-buffer (get-buffer-create prot-eshell-output-buffer)
+      (let ((inhibit-read-only t))
+        (goto-char (point-max))
+        (unless (eq (point-min) (point-max))
+          (insert (format "\n%s\n\n" prot-eshell-output-delimiter)))
+        (goto-char (point-at-bol))
+        (insert eshell-output)
+        (switch-to-buffer-other-window (current-buffer))))))
+
 (defgroup bard-eshell-faces nil
   "Faces for my custom modeline."
   :group 'prot-eshell-faces)
