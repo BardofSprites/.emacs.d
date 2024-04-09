@@ -77,6 +77,11 @@
 	 (display-buffer-same-window)
 	 (inhibit-same-window . nil)
 	 (dedicated . t))
+	("\\*Embark Actions\\*"
+         (display-buffer-reuse-mode-window display-buffer-below-selected)
+         (window-height . fit-window-to-buffer)
+         (window-parameters . ((no-other-window . t)
+                               (mode-line-format . none))))
 	("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
 	 (display-buffer-reuse-mode-window display-buffer-below-selected))
 	;; error stuff

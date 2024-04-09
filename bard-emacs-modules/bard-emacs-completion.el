@@ -52,22 +52,56 @@
   ("C-x b" . consult-buffer)
   ("C-z s" . consult-ripgrep))
 
-;; (use-package embark
-;;   :ensure t
-;;   :config
-;;   (setq embark-confirm-act-all nil)
-;;     ;; The prot-embark.el has an advice to further simplify the
-;;     ;; minimal indicator.  It shows cycling, which I never want to see
-;;     ;; or do.
-;;     (setq embark-mixed-indicator-both nil)
-;;     (setq embark-mixed-indicator-delay 1.0)
-;;     (setq embark-indicators '(embark-mixed-indicator embark-highlight-indicator))
-;;     (setq embark-verbose-indicator-nested nil) ; I think I don't have them, but I do not want them either
-;;     (setq embark-verbose-indicator-buffer-sections '(bindings))
-;;     (setq embark-verbose-indicator-excluded-actions
-;;           '(embark-cycle embark-act-all embark-collect embark-export embark-insert))
+(use-package embark
+  :ensure t
+  :bind
+  (("C-," . bard-embark-act-no-quit)
+   ("C-." . bard-embark-act-quit))
+  :config
 
-;;     )
+  (setq embark-keymap-alist
+          '((buffer bard-embark-buffer-map)
+            (command bard-embark-command-map)
+            (expression bard-embark-expression-map)
+            (file bard-embark-file-map)
+            (function bard-embark-function-map)
+            (identifier bard-embark-identifier-map)
+            (package bard-embark-package-map)
+            (region bard-embark-region-map)
+            (symbol bard-embark-symbol-map)
+            (url bard-embark-url-map)
+            (variable bard-embark-variable-map)
+            (t embark-general-map)))
+
+
+  (defun bard-embark-act-no-quit ()
+    "Call `embark-act' but do not quit after the action."
+    (interactive)
+    (let ((embark-quit-after-action nil))
+      (call-interactively #'embark-act)))
+
+  (defun bard-embark-act-quit ()
+    "Call `embark-act' and quit after the action."
+    (interactive)
+    (let ((embark-quit-after-action t))
+      (call-interactively #'embark-act))
+    (when (and (> (minibuffer-depth) 0)
+               (derived-mode-p 'completion-list-mode))
+      (abort-recursive-edit)))
+
+
+  (setq embark-confirm-act-all nil)
+  ;; The prot-embark.el has an advice to further simplify the
+  ;; minimal indicator.  It shows cycling, which I never want to see
+  ;; or do.
+  (setq embark-mixed-indicator-both nil)
+  (setq embark-mixed-indicator-delay 1.0)
+  (setq embark-indicators '(embark-mixed-indicator embark-highlight-indicator))
+  (setq embark-verbose-indicator-nested nil) ; I think I don't have them, but I do not want them either
+  (setq embark-verbose-indicator-buffer-sections '(bindings))
+  (setq embark-verbose-indicator-excluded-actions
+        '(embark-cycle embark-act-all embark-collect embark-export embark-insert))
+    )
 
 (use-package imenu-list
   :config
