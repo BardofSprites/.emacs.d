@@ -41,6 +41,8 @@
    ("C-c n f" . denote-find-link)
    ("C-c n F" . denote-find-backlink)))
 
+(use-package denote-explore)
+
 ;;; Focus mode for wrigin
 
 ;; Center line scrolling for focused writing
@@ -90,7 +92,7 @@
           (t . ,(or outline-regexp logos--page-delimiter))))
 
   (setq-default logos-hide-cursor nil
-		;; logos-hide-mode-line t
+		logos-hide-mode-line nil
 		logos-hide-header-line t
 		logos-hide-buffer-boundaries t
 		logos-hide-fringe t
