@@ -40,12 +40,6 @@
     (message "Loading file: %s" file)
     (load file)))
 
-;; Load all .el files in the bard-elisp directory
-(load-directory (expand-file-name "bard-elisp" user-emacs-directory))
-
-;; Load all .el files in the bard-emacs-modules directory
-(load-directory (expand-file-name "bard-emacs-modules" user-emacs-directory))
-
 ;; Esc key quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -118,5 +112,11 @@ making an abbreviation to a function."
                   `(define-abbrev ,table ,abbrev "" ,expansion))))
             (seq-split definitions 2)))
      (error "%s is not an abbrev table" ,table)))
+
+;; Load all .el files in the bard-elisp directory
+(load-directory (expand-file-name "bard-elisp" user-emacs-directory))
+
+;; Load all .el files in the bard-emacs-modules directory
+(load-directory (expand-file-name "bard-emacs-modules" user-emacs-directory))
 
 (provide 'init)
