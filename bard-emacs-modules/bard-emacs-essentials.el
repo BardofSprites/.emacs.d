@@ -135,5 +135,10 @@
   (define-key global-map (kbd "C-c t r") #'tmr-remove)
   (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
 
+;; running emacs as server
+(require 'server)
+(setq server-client-instructions nil)
+(unless (server-running-p)
+  (server-start))
 
 (provide 'bard-emacs-essentials)
