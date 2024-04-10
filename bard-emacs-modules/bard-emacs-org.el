@@ -55,19 +55,12 @@
   (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
   (add-hook 'calendar-today-visible-hook 'calendar-mark-holidays))
 
-(define-key global-map (kbd "C-z C-c") #'calendar)
+(define-key global-map (kbd "C-c C") #'calendar)
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d)" "KILLED(k)")
 	(sequence "MEET(m)" "|" "MET(M)")))
-
-;; Org Mode Key map
-(defun bard/org-mode-keybindings ()
-  (define-key org-mode-map (kbd "C-c a") 'org-table-align))
-
-(add-hook 'org-mode-hook 'bard/org-mode-keybindings)
-;; (add-hook 'org-mode-hook 'fly-spell-mode)
 
 ;; Org Agenda Faces
 (custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5 :family "Iosevka Comfy Motion")))))
@@ -97,7 +90,7 @@
        (org-agenda nil "D")))))
 
 (global-set-key (kbd "M-<f1>") 'bard/choose-agenda)
-(global-set-key (kbd "C-z C-a") 'bard/choose-agenda)
+(global-set-key (kbd "C-c a c") 'bard/choose-agenda)
 
 (defun bard/default-agenda ()
   "For viewing my custom agenda"
@@ -105,7 +98,7 @@
   (org-agenda nil "D"))
 
 (global-set-key (kbd "<f1>") 'bard/default-agenda)
-(global-set-key (kbd "C-z a") 'bard/default-agenda)
+(global-set-key (kbd "C-c a a") 'bard/default-agenda)
 
 ;; Org Agenda
 (setq org-agenda-custom-commands
