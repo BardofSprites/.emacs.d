@@ -1,3 +1,8 @@
+;;; Sentence size
+(setq sentence-end-double-space nil)
+(define-key org-mode-map (kbd "C-M-a") #'backward-paragraph)
+(define-key org-mode-map (kbd "C-M-e") #'forward-paragraph)
+
 ;;; Keyboard things
 (setq default-input-method "cyrillic-yawerty")
 (setq default-transient-input-method "cyrillic-yawerty")
@@ -112,5 +117,7 @@
       (recenter 1))) ; Use 0 for the absolute top
 
   (add-hook 'logos-page-motion-hook #'bard/logos--recenter-top))
+
+(use-package pdf-tools)
 
 (provide 'bard-emacs-writing)

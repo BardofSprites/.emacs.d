@@ -22,6 +22,7 @@
 
 ;; mainly for denote, org throws away a link that i might reuse later
 (setq org-link-keep-stored-after-insertion nil)
+(define-key org-mode-map (kbd "C-c l") #'org-store-link)
 
 ;; Making org mode look nice
 (setq org-startup-indented t
