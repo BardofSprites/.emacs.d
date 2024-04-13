@@ -1,6 +1,20 @@
 (require 'cl-lib)
 (require 'eshell)
 
+;; aliases
+(setq bard/eshell-aliases
+      '((g  . magit)
+	(gl . magit-log)
+	(d  . dired)
+	(o  . find-file)
+	(oo . find-file-other-window)
+	(l  . (lambda () (eshell/ls '-la)))
+	(eshell/clear . eshell/clear-scrollback)))
+
+(mapc (lambda (alias)
+	(defalias (car alias) (cdr alias)))
+      bard/eshell-aliases)
+
 (defun prot-eshell--cd (dir)
   "Routine to cd into DIR."
   (delete-region eshell-last-output-end (point-max))
@@ -116,5 +130,45 @@ append to it, while separating multiple outputs with
       (cond ((eq num-buffers 0) (eshell (or arg t)))
             ((not in-eshellp) (switch-to-buffer (car buffers)))
             (t (select-or-create (completing-read "Select Shell:" (cons "New eshell" names)))))))
+
+;; taken from https://github.com/karthink/.emacs.d/blob/master/lisp/setup-shells.el
+(use-package eshell
+  :defer
+  :config
+  (setq eshell-prompt-regexp "^.* λ "
+          eshell-prompt-function #'bard/eshell-default-prompt-fn)
+
+  (defun bard/eshell-default-prompt-fn ()
+    "Generate the prompt string for eshell. Use for `eshell-prompt-function'."
+    (concat (if (bobp) "" "\n")
+            (let ((pwd (eshell/pwd)))
+              (propertize (if (equal pwd "~")
+                              pwd
+                            (abbreviate-file-name pwd))
+                          'face 'bard/eshell-prompt-pwd))
+            (propertize (bard/eshell--current-git-branch)
+                        'face 'bard/eshell-prompt-git-branch)
+            (propertize " λ" 'face (if (zerop eshell-last-command-status) 'success 'error))
+            " "))
+
+  (defsubst bard/eshell--current-git-branch ()
+    ;; TODO Refactor me
+    (cl-destructuring-bind (status . output)
+        (with-temp-buffer (cons
+                           (or (call-process "git" nil t nil "symbolic-ref" "-q" "--short" "HEAD")
+                               (call-process "git" nil t nil "describe" "--all" "--always" "HEAD")
+                               -1)
+                           (string-trim (buffer-string))))
+      (if (equal status 0)
+          (format " [%s]" output)
+        "")))
+
+  (defface bard/eshell-prompt-pwd '((t (:inherit font-lock-keyword-face)))
+    "TODO"
+    :group 'eshell)
+
+  (defface bard/eshell-prompt-git-branch '((t (:inherit font-lock-builtin-face)))
+    "TODO"
+    :group 'eshell))
 
 (provide 'bard-eshell)

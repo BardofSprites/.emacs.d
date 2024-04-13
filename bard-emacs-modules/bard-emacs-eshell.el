@@ -1,7 +1,15 @@
 (use-package eshell
   :ensure t
   :config
-  (setq eshell-banner-message "Time for another recreational programming session.\n\n"))
+  ;; (setq eshell-banner-message "Time for another recreational programming session.\n\n")
+  (setq eshell-banner-message
+        '(format "%s %s\n %s\n"
+                 (propertize (format " %s " (string-trim (buffer-name)))
+                             'face 'mode-line-highlight)
+                 (propertize (current-time-string)
+                             'face 'font-lock-keyword-face)
+		 (propertize "Time for another recreational programming session."
+			     'face 'warning))))
 
 (define-key global-map (kbd "C-z e") #'eshell-switcher)
 (with-eval-after-load "esh-mode"
