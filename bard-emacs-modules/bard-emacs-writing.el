@@ -7,6 +7,11 @@
 (setq default-input-method "cyrillic-yawerty")
 (setq default-transient-input-method "cyrillic-yawerty")
 
+;;; Altcaps
+(use-package altcaps
+  :config
+  (define-key global-map (kbd "C-x C-a") #'altcaps-dwim))
+
 (use-package denote
   :config
   (setq denote-directory "~/Notes/denote/")
