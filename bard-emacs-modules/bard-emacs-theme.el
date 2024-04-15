@@ -69,7 +69,12 @@ The exact color values are taken from the active Ef theme."
 	      ("KILLED" . ,cyan)
 	      ("REVIEW" . ,red)
 	      ("DEPRECATED" . ,yellow)))))
+
+  ;; verbatim need higher contrast for org mode
   (setq ef-elea-dark-palette-overrides
+	'((prose-verbatim yellow-cooler)))
+
+  (setq ef-elea-light-palette-overrides
 	'((prose-verbatim yellow-cooler)))
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
