@@ -68,10 +68,9 @@
               '("%e"
 		prot-modeline-kbd-macro
                 prot-modeline-narrow
-		" "
+		prot-modeline-input-method
                 prot-modeline-buffer-status
 		" "
-                prot-modeline-input-method
                 prot-modeline-buffer-identification
                 "  "
                 prot-modeline-major-mode
