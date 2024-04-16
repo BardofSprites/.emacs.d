@@ -147,23 +147,38 @@ The exact color values are taken from the active Ef theme."
   :ensure t)
 
 (setq fontaine-presets
-      '((regular
-         :default-height 140
+      '((small
+         :default-height 130
 	 :default-family "Iosevka Comfy"
 	 :variable-pitch-family "Iosevka Comfy Motion"
 	 :variable-pitch-height 1.0
 	 :fixed-pitch-family "Iosevka Comfy"
 	 :fixed-pitch-height 1.0
 	 :bold-weight bold
+	 :mode-line-active-family "Iosevka Comfy"
+	 :mode-line-active-height 130
+	 :mode-line-inactive-height 130
 	 )
-        (large
-	 :inherit regular
+        (medium
+	 :inherit small
+	 :default-height 140
+	 :mode-line-active-height 140
+	 :mode-line-inactive-height 140)
+	(large
+	 :inherit small
 	 :variable-pitch-family "Iosevka Comfy Wide Motion"
 	 :default-height 170
+	 :mode-line-active-height 140
+	 :mode-line-inactive-height 140
 	 )
-	(small
-	 :inherit regular
-	 :default-height 130)
+	(presentation
+	 :inherit small
+	 :default-height 170
+	 :default-family "Iosevka Comfy Wide"
+	 :variable-pitch-family "Iosevka Comfy Wide Motion"
+	 :default-height 170
+	 :mode-line-active-height 150
+	 :mode-line-inactive-height 150)
         (t
          :default-family "Monospace"
          )))
