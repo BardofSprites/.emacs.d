@@ -146,7 +146,8 @@
     "typescript"     "TypeScript"
     "visavis"        "vis-à-vis"
     "vscode"         "Visual Studio Code"
-    "youtube"        "YouTube")
+    "youtube"        "YouTube"
+    "Результат"      "=Результат Сегодняшний Битвый=")
 
 (dolist (hook '(text-mode-hook prog-mode-hook git-commit-mode-hook))
   (add-hook hook #'abbrev-mode))
