@@ -70,6 +70,7 @@
    (put command 'disabled t))
  '(eshell project-eshell overwrite-mode iconify-frame diary))
 
+;;; Packages
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 (require 'package)
 
@@ -119,5 +120,7 @@ making an abbreviation to a function."
 
 ;; Load all .el files in the bard-emacs-modules directory
 (load-directory (expand-file-name "bard-emacs-modules" user-emacs-directory))
+
+(load-directory (expand-file-name "old-ada" user-emacs-directory))
 
 (provide 'init)
