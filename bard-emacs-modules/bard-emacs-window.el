@@ -109,12 +109,15 @@
 	))
 
 (winner-mode 1)
-(define-key global-map (kbd "C-x <right>") #'winner-redo)
-(define-key global-map (kbd "C-x <left>") #'winner-undo)
-(define-key global-map (kbd "C-x C-n") #'next-buffer)
-(define-key global-map (kbd "C-x C-p") #'previous-buffer)
-(define-key global-map (kbd "C-x <up>") #'next-buffer)
-(define-key global-map (kbd "C-x <down>") #'previous-buffer)
+(let ((map global-map))
+     (define-key map (kbd "C-x <right>") #'winner-redo)
+     (define-key map (kbd "C-x <left>") #'winner-undo)
+     (define-key map (kbd "C-x C-n") #'next-buffer)
+     (define-key map (kbd "C-x C-p") #'previous-buffer)
+     (define-key map (kbd "C-x <up>") #'next-buffer)
+     (define-key map (kbd "C-x <down>") #'previous-buffer))
+
+(define-key global-map (kbd "C-x w") #'delete-frame)
 
 (provide 'bard-emacs-window)
 ;;; bard-emacs-window.el ends here
