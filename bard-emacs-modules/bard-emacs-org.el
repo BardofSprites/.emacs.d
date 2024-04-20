@@ -3,6 +3,7 @@
 ;; |------------------------------------|
 (require 'org)
 (require 'ox)
+(require 'org-habit)
 
 ;; Org Variables
 (setq org-directory "~/Notes/denote/")
