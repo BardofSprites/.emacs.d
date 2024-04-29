@@ -1,8 +1,5 @@
 (require 'bard-search)
 
-;; Nice scrolling
-(pixel-scroll-precision-mode 1)
-
 ;;; Editing niceties
 
 (electric-pair-mode t)
@@ -34,8 +31,9 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Desktop/session save
-(global-set-key (kbd "C-' s") 'desktop-save-in-desktop-dir)
-(global-set-key (kbd "C-' r") 'desktop-read)
+(desktop-save-mode t)
+(global-set-key (kbd "C-z s") 'desktop-save-in-desktop-dir)
+(global-set-key (kbd "C-z r") 'desktop-read)
 
 ;;; Scratch buffers
 ;; Text Scratch buffers
@@ -84,7 +82,6 @@
     (start-process "st terminal" nil "st")))
 
 (define-key global-map (kbd "C-z C-t") 'bard/open-terminal-emulator)
-
 
 (define-key global-map (kbd "C-z C-s") #'bard/new-elisp-buffer)
 
