@@ -59,6 +59,9 @@
 
        (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
+(use-package ace-window
+  :bind* (("M-;" . ace-window)))
+
 (setq display-buffer-alist
       `(("\\`\\*Async Shell Command\\*\\'"
 	 (display-buffer-no-window))
