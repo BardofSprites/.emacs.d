@@ -42,15 +42,51 @@
   :config
   (setq completion-styles '(orderless basic)))
 
-(use-package company
-  :init
-  (global-company-mode 1))
+(use-package corfu
+    :hook (after-init . global-corfu-mode)
+  ;; I also have (setq tab-always-indent 'complete) for TAB to complete
+  ;; when it does not need to perform an indentation change.
+  :bind (:map corfu-map ("<tab>" . corfu-complete))
+  :config
+  (setq corfu-preview-current nil)
+  (setq corfu-min-width 20)
+
+  (setq corfu-popupinfo-delay nil)
+  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
+
+  ;; Sort by input history (no need to modify `corfu-sort-function').
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1)
+    (add-to-list 'savehist-additional-variables 'corfu-history)))
+
+(use-package minibuffer
+  :ensure nil
+  :config
+;;;; Completion styles
+  (setq completion-styles '(basic substring initials flex orderless))
+
+  (setq completion-category-defaults nil)
+
+  (setq completion-category-overridesd
+        '((file (styles . (basic partial-completion orderless)))
+          (bookmark (styles . (basic substring)))
+          (library (styles . (basic substring)))
+          (embark-keybinding (styles . (basic substring)))
+          (imenu (styles . (basic substring orderless)))
+          (consult-location (styles . (basic substring orderless)))
+          (kill-ring (styles . (emacs22 orderless)))
+          (eglot (styles . (emacs22 substring orderless))))))
 
 (use-package consult
   :defer 2
   :bind
+  ("M-g M-g" . consult-goto-line)
   ("C-x b" . consult-buffer)
-  ("C-z s" . consult-ripgrep))
+  ("M-s M-f" . consult-find)
+  ("M-s M-g" . consult-grep)
+  ("M-s M-h" . consult-history)
+  ("M-s M-y" . consult-yank-pop)
+  ("M-s M-s" . consult-outline))
 
 (use-package embark
   :ensure t
@@ -72,7 +108,6 @@
             (url bard-embark-url-map)
             (variable bard-embark-variable-map)
             (t embark-general-map)))
-
 
   (defun bard-embark-act-no-quit ()
     "Call `embark-act' but do not quit after the action."
