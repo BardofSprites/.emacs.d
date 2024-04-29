@@ -43,8 +43,6 @@
 
 (add-hook 'c++-mode 'bard/common-modes-hook)
 (setq-default c-basic-offset 4)
-(with-eval-after-load "c++-mode"
-  (define-key c++-mode-map (kbd "C-z s") #'consult-ripgrep))
 
 ;;; Haskell
 
@@ -56,7 +54,6 @@
 (add-to-list 'exec-path "/home/bard/.local/bin")
 (add-to-list 'exec-path "/home/bard/opt/")
 
-;; Packages
 (use-package clojure-mode
   :bind
   (:map clojure-mode-map
@@ -100,7 +97,6 @@
 (use-package magit-todos
   :config
   (magit-todos-mode 1))
-
 
 (provide 'bard-emacs-prog)
 ;;; bard-emacs-prog.el ends here
