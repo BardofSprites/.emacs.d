@@ -45,6 +45,6 @@
     (goto-line line)
     (run-hooks 'prot-search-outline-hook)))
 
-(define-key global-map (kbd "M-s M-o") #'prot-search-outline)
+;; (define-key global-map (kbd "M-s M-o") #'prot-search-outline)
 
 (provide 'bard-search)
