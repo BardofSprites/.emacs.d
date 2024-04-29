@@ -7,6 +7,29 @@
 (setq default-input-method "cyrillic-yawerty")
 (setq default-transient-input-method "cyrillic-yawerty")
 
+;; Tab settings
+(setq tab-always-indent 'complete)
+(setq tab-first-completion 'word-or-paren-or-punct)
+(setq-default tab-width 4
+              indent-tabs-mode nil)
+
+(use-package electric
+  :hook
+  (prog-mode . electric-indent-local-mode)
+  :config
+  ;; only indents for programming
+  (electric-pair-mode -1)
+  (electric-quote-mode -1)
+  (electric-indent-mode -1))
+
+(use-package paren
+  :hook (prog-mode . show-paren-local-mode)
+  :config
+  (setq show-paren-style 'parenthesis)
+  (setq show-paren-when-point-in-periphery nil)
+  (setq show-paren-when-point-inside-paren nil)
+  (setq show-paren-context-when-offscreen 'overlay))
+
 ;;; Altcaps
 (use-package altcaps
   :config
@@ -32,7 +55,7 @@
   ;; journalling with timer
   (add-hook 'denote-journal-extras-hook (lambda ()
                                           (tmr "10" "Journalling")
-					  (bard/scroll-center-cursor-mode t)))
+                                          (bard/scroll-center-cursor-mode t)))
 
   :bind
   (("C-c n n" . denote-open-or-create)
