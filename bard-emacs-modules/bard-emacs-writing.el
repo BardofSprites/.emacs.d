@@ -76,7 +76,10 @@
 
 (use-package denote-explore)
 
-;;; Focus mode for wrigin
+;;; Hyperbole for hyper linking
+(use-package hyperbole)
+
+;;; Focus mode for writing
 
 ;; Center line scrolling for focused writing
 (define-minor-mode bard/scroll-center-cursor-mode
@@ -146,6 +149,8 @@
 
   (add-hook 'logos-page-motion-hook #'bard/logos--recenter-top))
 
-(use-package pdf-tools)
+(use-package pdf-tools
+  :config
+  (pdf-tools-install))
 
 (provide 'bard-emacs-writing)
