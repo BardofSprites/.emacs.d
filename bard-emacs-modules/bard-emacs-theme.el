@@ -119,16 +119,6 @@ The exact color values are taken from the active Ef theme."
 	      ("KILLED" . ,cyan)
 	      ("DEPRECATED" . ,yellow)))))
 
-  (setq modus-operandi-palette-overrides
-	'((bg-mode-line-active bg-blue-intense)
-          (fg-mode-line-active fg-main)
-          (border-mode-line-active blue-intense)))
-
-  (setq modus-vivendi-palette-overrides
-	'((bg-mode-line-active bg-blue-subtle)
-          (fg-mode-line-active fg-main)
-          (border-mode-line-active blue)))
-
   ;; org customization
   (setq org-priority-faces
         '((?A . (:inherit (bold org-priority)))
