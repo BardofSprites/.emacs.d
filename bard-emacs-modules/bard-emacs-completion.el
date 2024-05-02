@@ -86,7 +86,12 @@
   ("M-s M-g" . consult-grep)
   ("M-s M-h" . consult-history)
   ("M-s M-y" . consult-yank-pop)
-  ("M-s M-s" . consult-outline))
+  ("M-s M-o" . consult-outline)
+  :config
+  (setq consult-find-args
+        (concat "find . -not ( "
+                "-path */.git* -prune "
+                "-or -path */.cache* -prune )")))
 
 (use-package embark
   :ensure t

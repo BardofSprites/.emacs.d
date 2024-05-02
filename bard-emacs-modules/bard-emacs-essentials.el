@@ -7,7 +7,10 @@
 (use-package wgrep
   :bind
   (:map wgrep-mode-map
-	("C-x C-s" . wgrep-save-all-buffers)))
+	    ("C-x C-s" . wgrep-save-all-buffers)
+        ("e" . wgrep-change-to-wgrep-mode)
+        ("C-x C-q" . wgrep-change-to-wgrep-mode)
+        ("C-c C-c" . wgrep-finish-edit)))
 
 ;; preview replace
 (use-package iedit)

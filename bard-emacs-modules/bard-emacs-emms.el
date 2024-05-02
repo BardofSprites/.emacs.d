@@ -15,7 +15,7 @@
 
 (setq emms-browser-covers 'emms-browser-cache-thumbnail)
 
-(setq emms-volume-amixer-card 1)
+(setq emms-volume-amixer-card 0)
 
 ;; center line function
 (defun bard/emms-recenter ()
@@ -33,6 +33,7 @@
 (define-key emms-playlist-mode-map (kbd "A") #'emms-add-directory)
 (define-key emms-playlist-mode-map (kbd "T") #'emms-add-directory-tree)
 (define-key emms-playlist-mode-map (kbd "F") #'emms-add-file)
+(define-key emms-playlist-mode-map (kbd "U") #'emms-add-url)
 (define-key emms-playlist-mode-map (kbd "L") #'emms-toggle-repeat-track)
 (define-key emms-playlist-mode-map (kbd "<mouse-3>") #'emms-pause)
 (define-key emms-playlist-mode-map (kbd "<SPC>") #'emms-pause)

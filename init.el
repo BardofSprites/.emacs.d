@@ -27,6 +27,7 @@
 
 ;; fix keymap
 (global-set-key (kbd "C-z") nil)
+(global-set-key (kbd "M-z") nil)
 
 ;; Add the directories to the load path
 (add-to-list 'load-path "~/.emacs.d/elisp/")
