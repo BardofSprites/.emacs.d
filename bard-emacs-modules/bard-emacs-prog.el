@@ -64,6 +64,10 @@
   (:map cider-repl-mode-map
 	("C-<tab>" . cider-switch-to-last-clojure-buffer)))
 
+(use-package sly
+  :config
+  (setq inferior-lisp-program (executable-find "sbcl")))
+
 (use-package haskell-mode)
 
 (use-package flycheck
@@ -94,9 +98,12 @@
   :config
   (define-key global-map (kbd "C-c g") #'magit))
 
-(use-package magit-todos
-  :config
-  (magit-todos-mode 1))
+(use-package ada-mode
+  :after dired
+  :load-path "~/.emacs.d/old-ada/"
+  :bind
+  (:map ada-mode-map
+	("C-j" . dired-jump)))
 
 (provide 'bard-emacs-prog)
 ;;; bard-emacs-prog.el ends here
