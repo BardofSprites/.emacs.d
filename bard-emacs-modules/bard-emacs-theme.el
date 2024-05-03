@@ -78,6 +78,7 @@ The exact color values are taken from the active Ef theme."
 	'((prose-verbatim yellow-cooler)))
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
+  (add-hook 'ef-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
   (setq ef-themes-to-toggle '(ef-winter ef-frost))
   (setq ef-themes-mixed-fonts t)
@@ -126,6 +127,7 @@ The exact color values are taken from the active Ef theme."
           (?C . (:inherit (shadow org-priority)))))
 
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
+  (add-hook 'modus-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
 
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (setq modus-themes-mixed-fonts t)
