@@ -87,6 +87,7 @@
   ("M-s M-h" . consult-history)
   ("M-s M-y" . consult-yank-pop)
   ("M-s M-o" . consult-outline)
+  ("M-s M-l" . consult-line)
   :config
   (setq consult-find-args
         (concat "find . -not ( "
@@ -146,7 +147,7 @@
 (use-package imenu-list
   :config
   (setq imenu-list-idle-update-delay 0.0)
-  (setq org-imenu-depth 3)
+  (setq org-imenu-depth 2)
   :bind
   (("C-`" . imenu-list-smart-toggle)))
 
