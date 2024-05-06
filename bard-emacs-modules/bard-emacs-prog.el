@@ -105,5 +105,10 @@
   (:map ada-mode-map
 	("C-j" . dired-jump)))
 
+(use-package diff-hl
+  :after magit
+  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
 (provide 'bard-emacs-prog)
 ;;; bard-emacs-prog.el ends here
