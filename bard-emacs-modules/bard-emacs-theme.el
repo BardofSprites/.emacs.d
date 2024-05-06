@@ -38,13 +38,13 @@
   :ensure t
   :config
   (setq ef-themes-headings
-	'((0 variable-pitch bold light 1.75)
-	  (1 variable-pitch 1.5)
+	'((0 variable-pitch light 2.00)
+	  (1 variable-pitch light 1.5)
 	  (2 regular 1.3)
 	  (3 1.1)
-	  (agenda-date 1.3)
-	  (agenda-structure variable-pitch light 1.8)
-	  (t variable-pitch)))
+      (agenda-date . (variable-pitch regular 1.3))
+	  (agenda-structure . (variable-pitch light 1.9))
+	  (t . 1.1)))
   (defun bard/ef-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Ef themes colors.
 The exact color values are taken from the active Ef theme."
@@ -89,12 +89,13 @@ The exact color values are taken from the active Ef theme."
   :ensure t
   :config
   (setq modus-themes-headings
-	'((0 variable-pitch bold light 1.75)
-	  (1 . (variable-pitch 1.5))
-	  (2 . (regular 1.3))
-	  (agenda-date . (1.3))
-	  (agenda-structure . (variable-pitch light 1.8))
-	  (t . (1.1))))
+	'((0 variable-pitch light 2.00)
+	  (1 variable-pitch light 1.5)
+	  (2 regular 1.3)
+	  (3 1.1)
+      (agenda-date . (variable-pitch regular 1.3))
+	  (agenda-structure . (variable-pitch light 1.9))
+	  (t . 1.1)))
   (defun bard/modus-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Modus themes colors.
 The exact color values are taken from the active Ef theme."
