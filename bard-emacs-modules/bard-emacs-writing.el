@@ -30,11 +30,40 @@
   (setq show-paren-when-point-inside-paren nil)
   (setq show-paren-context-when-offscreen 'overlay))
 
-;;; Altcaps
+;; Altcaps
 (use-package altcaps
   :config
   (define-key global-map (kbd "C-x C-a") #'altcaps-dwim))
 
+;; snippets
+
+(use-package tempel
+  ;; Require trigger prefix before template name when completing.
+  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+         ("M-*" . tempel-insert))
+
+  :init
+
+  ;; Setup completion at point
+  (defun tempel-setup-capf ()
+    ;; Add the Tempel Capf to `completion-at-point-functions'.
+    ;; `tempel-expand' only triggers on exact matches. Alternatively use
+    ;; `tempel-complete' if you want to see all matches, but then you
+    ;; should also configure `tempel-trigger-prefix', such that Tempel
+    ;; does not trigger too often when you don't expect it. NOTE: We add
+    ;; `tempel-expand' *before* the main programming mode Capf, such
+    ;; that it will be tried first.
+    (setq-local completion-at-point-functions
+                (cons #'tempel-expand
+                      completion-at-point-functions)))
+
+  (add-hook 'conf-mode-hook 'tempel-setup-capf)
+  (add-hook 'prog-mode-hook 'tempel-setup-capf)
+  (add-hook 'text-mode-hook 'tempel-setup-capf)
+  :config
+  (setq tempel-path "~/.emacs.d/tempel-snippets.el"))
+
+;;; Notes
 (use-package denote
   :config
   (setq denote-directory "~/Notes/denote/")
@@ -75,6 +104,8 @@
    ("C-c n F" . denote-find-backlink)))
 
 (use-package denote-explore)
+
+(use-package denote-menu)
 
 ;;; Hyperbole for hyper linking
 (use-package hyperbole)
