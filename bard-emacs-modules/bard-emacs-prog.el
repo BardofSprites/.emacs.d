@@ -68,23 +68,30 @@
   :config
   (setq inferior-lisp-program (executable-find "sbcl")))
 
+(use-package geiser)
+
+(use-package geiser-racket)
+
+;; parens packages
+(use-package paredit)
+
+(use-package scheme-mode
+  :init
+  (paredit-mode t))
+
+(use-package common-lisp-mode
+  :init
+  (paredit-mode t))
+
+(use-package emacs-lisp-mode
+  :init
+  (paredit-mode t))
+
 (use-package haskell-mode)
 
 (use-package flycheck
   :init
   (global-flycheck-mode t))
-
-(use-package smartparens
-  :config
-  (smartparens-global-mode t)
-  (show-smartparens-global-mode t)
-  :bind
-  (("C-<down>" . sp-down-sexp))
-  ("C-<up>"    . sp-up-sexp)
-  ("M-<down>"  . sp-backward-up-sexp)
-  ("M-<up>"    . sp-backward-up-sexp)
-  ("C-M-a"     . sp-beginning-of-sexp)
-  ("C-M-e"     . sp-end-of-sexp))
 
 (use-package ggtags
   :config

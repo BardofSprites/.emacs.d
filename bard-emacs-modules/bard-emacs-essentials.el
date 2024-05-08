@@ -2,7 +2,6 @@
 
 ;;; Editing niceties
 
-(electric-pair-mode t)
 ;; writeable grep buffers
 (use-package wgrep
   :bind
@@ -34,7 +33,7 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Desktop/session save
-(desktop-save-mode t)
+;; (desktop-save-mode t)
 (global-set-key (kbd "C-z s") 'desktop-save-in-desktop-dir)
 (global-set-key (kbd "C-z r") 'desktop-read)
 
@@ -75,7 +74,7 @@
   (let ((default-directory default-directory))
     (term "/bin/bash")))
 
-(define-key global-map (kbd "C-t") #'bard/open-terminal-in-current-directory)
+;; (define-key global-map (kbd "C-t") #'bard/open-terminal-in-current-directory)
 (define-key global-map (kbd "C-z t") #'bard/open-terminal-in-current-directory)
 
 (defun bard/open-terminal-emulator ()
