@@ -11,14 +11,16 @@
 (setq window-min-height 3)
 (setq window-min-width 30)
 
-(define-key global-map (kbd "C-M-<up>") #'windmove-up)
-(define-key global-map (kbd "C-M-<right>") #'windmove-right)
-(define-key global-map (kbd "C-M-<down>") #'windmove-down)
-(define-key global-map (kbd "C-M-<left>") #'windmove-left)
-(define-key global-map (kbd "C-M-S-<up>") #'windmove-swap-states-up)
-(define-key global-map (kbd "C-M-S-<right>") #'windmove-swap-states-right)
-(define-key global-map (kbd "C-M-S-<down>") #'windmove-swap-states-down)
-(define-key global-map (kbd "C-M-S-<left>") #'windmove-swap-states-left)
+(use-package emacs
+  :bind*
+  (("C-M-<up>" . windmove-up)
+   ("C-M-<right>" . windmove-right)
+   ("C-M-<down>" . windmove-down)
+   ("C-M-<left>" . windmove-left)
+   ("C-M-S-<up>" . windmove-swap-states-up)
+   ("C-M-S-<right>" . windmove-swap-states-right)
+   ("C-M-S-<down>" . windmove-swap-states-down)
+   ("C-M-S-<left>" . windmove-swap-states-left)))
 
 (use-package beframe
   :ensure t
