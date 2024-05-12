@@ -107,9 +107,6 @@
 
 (use-package denote-menu)
 
-;;; Hyperbole for hyper linking
-(use-package hyperbole)
-
 ;;; Focus mode for writing
 
 ;; Center line scrolling for focused writing
