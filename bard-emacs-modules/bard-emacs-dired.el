@@ -37,6 +37,18 @@
 (setq image-dired-thumb-relief 0)
 (setq image-dired-thumbs-per-row 4)
 
+;; Taken from https://superuser.com/a/176629
+(defun bard/dired-do-command (command)
+  "Run COMMAND on marked files. Any files not already open will be opened.
+After this command has been run, any buffers it's modified will remain
+open and unsaved."
+  (interactive "CRun on marked files M-x ")
+  (save-window-excursion
+    (mapc (lambda (filename)
+            (find-file filename)
+            (call-interactively command))
+          (dired-get-marked-files))))
+
 
 ;; (define-key image-dired-thumbnail-mode-map
 ;; 	    (kbd "<return>") #'image-dired-thumbnail-display-external)
