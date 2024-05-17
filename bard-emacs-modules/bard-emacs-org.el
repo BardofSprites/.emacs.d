@@ -22,8 +22,13 @@
         ("T" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
 
 ;; mainly for denote, org throws away a link that i might reuse later
+(setq org-id-link-to-org-use-id t)
 (setq org-link-keep-stored-after-insertion nil)
 (define-key org-mode-map (kbd "C-c l") #'org-store-link)
+
+(use-package org-cliplink
+  :bind
+  ("C-c p" . org-cliplink))
 
 ;; Making org mode look nice
 (setq org-startup-indented t

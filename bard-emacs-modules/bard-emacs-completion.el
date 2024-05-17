@@ -79,7 +79,7 @@
 
 (use-package consult
   :defer 2
-  :bind
+  :bind*
   ("M-g M-g" . consult-goto-line)
   ("C-x b" . consult-buffer)
   ("M-s M-f" . consult-find)
@@ -188,7 +188,8 @@
     "visavis"        "vis-à-vis"
     "vscode"         "Visual Studio Code"
     "youtube"        "YouTube"
-    "Результат"      "=Результат Сегодняшний Битвый=")
+    "Результат"      "=Результат Сегодняшний Битвый="
+    "asf"           "and so on and so forth")
 
 (dolist (hook '(text-mode-hook prog-mode-hook git-commit-mode-hook))
   (add-hook hook #'abbrev-mode))
