@@ -72,20 +72,19 @@
 
 (use-package geiser-racket)
 
+(use-package geiser-gauche)
+
 ;; parens packages
 (use-package paredit)
 
 (use-package scheme-mode
-  :init
-  (paredit-mode t))
+  :hook (scheme-mode-hook . paredit))
 
-(use-package common-lisp-mode
-  :init
-  (paredit-mode t))
+(use-package lisp-mode
+  :hook (lisp-mode-hook . paredit))
 
 (use-package emacs-lisp-mode
-  :init
-  (paredit-mode t))
+  :hook (emacs-lisp-mode-hook . paredit))
 
 (use-package haskell-mode)
 
