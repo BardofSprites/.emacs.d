@@ -62,6 +62,7 @@
        (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
 (use-package ace-window
+  :ensure t
   :bind* (("M-;" . ace-window)))
 
 (setq display-buffer-alist

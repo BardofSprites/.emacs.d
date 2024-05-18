@@ -27,6 +27,7 @@
 (define-key org-mode-map (kbd "C-c l") #'org-store-link)
 
 (use-package org-cliplink
+  :ensure t
   :bind
   ("C-c p" . org-cliplink))
 
@@ -174,6 +175,7 @@
 (use-package org-download
   :after org
   :defer nil
+  :ensure t
   :custom
   (org-download-method 'directory)
   (org-download-image-dir "~/Notes/denote/Images")

@@ -32,12 +32,14 @@
 
 ;; Altcaps
 (use-package altcaps
+  :ensure t
   :config
   (define-key global-map (kbd "C-x C-a") #'altcaps-dwim))
 
 ;; snippets
 
 (use-package tempel
+  :ensure t
   ;; Require trigger prefix before template name when completing.
   :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
          ("M-*" . tempel-insert))
@@ -65,6 +67,7 @@
 
 ;;; Notes
 (use-package denote
+  :ensure t
   :config
   (setq denote-directory "~/Notes/denote/")
   (setq denote-journal-extras-directory "~/Notes/journal")
@@ -103,9 +106,11 @@
    ("C-c n f" . denote-find-link)
    ("C-c n F" . denote-find-backlink)))
 
-(use-package denote-explore)
+(use-package denote-explore
+  :ensure t)
 
-(use-package denote-menu)
+(use-package denote-menu
+  :ensure t)
 
 ;;; Focus mode for writing
 
@@ -128,6 +133,7 @@
 (define-key global-map (kbd "C-c L") #'bard/scroll-center-cursor-mode)
 
 (use-package olivetti
+  :ensure t
   :config
   (setq olivetti-minimum-body-width 100)
   (setq olivetti-recall-visual-line-mode-entry-state t)
@@ -137,6 +143,7 @@
 
 ;; narrowing and focus mode
 (use-package logos
+  :ensure t
   :config
   (defun logos-reveal-entry ()
     "Reveal Org or Outline entry."
@@ -178,6 +185,7 @@
   (add-hook 'logos-page-motion-hook #'bard/logos--recenter-top))
 
 (use-package pdf-tools
+  :ensure t
   :config
   (pdf-tools-install))
 

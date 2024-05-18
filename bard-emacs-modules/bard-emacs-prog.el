@@ -101,6 +101,7 @@
 
 ;; Version control
 (use-package magit
+  :ensure t
   :config
   (define-key global-map (kbd "C-c g") #'magit))
 
@@ -112,9 +113,12 @@
 	("C-j" . dired-jump)))
 
 (use-package diff-hl
+  :ensure t
   :after magit
   (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+  :init
+  (add-hook 'prog-mode-hook 'diff-hl-mode))
 
 (provide 'bard-emacs-prog)
 ;;; bard-emacs-prog.el ends here

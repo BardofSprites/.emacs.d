@@ -5,9 +5,11 @@
   :config
   (define-key global-map (kbd "C-c m") #'notmuch))
 
-(use-package notmuch-indicator)
+(use-package notmuch-indicator
+  :ensure t)
 
-(use-package mbsync)
+(use-package mbsync
+  :ensure t)
 
 (setq notmuch-show-logo nil
       notmuch-column-control 1.0

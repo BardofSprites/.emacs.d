@@ -31,19 +31,23 @@
 
 ;; minibuffer completion
 (use-package vertico
+  :ensure t
   :init
   (vertico-mode 1))
 
 (use-package marginalia
+  :ensure t
   :init
   (marginalia-mode 1))
 
 (use-package orderless
+  :ensure t
   :config
   (setq completion-styles '(orderless basic)))
 
 (use-package corfu
-    :hook (after-init . global-corfu-mode)
+  :ensure t
+  :hook (after-init . global-corfu-mode)
   ;; I also have (setq tab-always-indent 'complete) for TAB to complete
   ;; when it does not need to perform an indentation change.
   :bind (:map corfu-map ("<tab>" . corfu-complete))
@@ -145,6 +149,7 @@
     )
 
 (use-package imenu-list
+  :ensure t
   :config
   (setq imenu-list-idle-update-delay 0.0)
   (setq org-imenu-depth 2)

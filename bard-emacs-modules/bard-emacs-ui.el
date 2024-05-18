@@ -46,6 +46,7 @@
 
 ;; padding for everything
 (use-package spacious-padding
+  :ensure t
   :init
    (spacious-padding-mode t)
   :config
@@ -61,6 +62,7 @@
 
 ;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
 (use-package hl-todo
+  :ensure t
   :init
   (global-hl-todo-mode t))
 

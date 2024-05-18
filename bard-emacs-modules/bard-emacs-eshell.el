@@ -1,5 +1,4 @@
 (use-package eshell
-  :ensure t
   :config
   ;; (setq eshell-banner-message "Time for another recreational programming session.\n\n")
   (setq eshell-banner-message

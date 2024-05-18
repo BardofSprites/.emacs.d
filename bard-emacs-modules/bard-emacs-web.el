@@ -1,5 +1,6 @@
 ;;; IRC
-(use-package circe)
+(use-package circe
+  :ensure t)
 
 (setq auth-sources '("~/.authinfo.gpg"))
 
@@ -24,11 +25,13 @@
 
 ;;; RSS Feeds
 (use-package elfeed
+  :ensure t
   :config
   (global-set-key (kbd "C-c e") 'elfeed)
   (setq elfeed-search-filter "+unread -academia"))
 
 (use-package elfeed-org
+  :ensure t
   :init
   (elfeed-org)
   :config
@@ -36,6 +39,7 @@
 				   "~/.emacs.d/youtube.org")))
 
 (use-package elfeed-goodies
+  :ensure t
   :init
   (elfeed-goodies/setup)
   :config

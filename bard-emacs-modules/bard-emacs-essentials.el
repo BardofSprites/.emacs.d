@@ -4,6 +4,7 @@
 
 ;; writeable grep buffers
 (use-package wgrep
+  :ensure t
   :bind
   (:map wgrep-mode-map
 	    ("C-x C-s" . wgrep-save-all-buffers)
@@ -12,9 +13,11 @@
         ("C-c C-c" . wgrep-finish-edit)))
 
 ;; preview replace
-(use-package iedit)
+(use-package iedit
+  :ensure t)
 
 (use-package expand-region
+  :ensure t
   :bind ("C-=" . er/expand-region))
 
 ;; Desktop mode/session saving
