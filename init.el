@@ -75,10 +75,9 @@
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 (require 'package)
 
-(setq package-archives '(("org" . "https://orgmode.org/elpa/")
-			 ("elpa" . "https://elpa.gnu.org/packages/")
-			 ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			 ("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+			             ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+			             ("melpa" . "https://melpa.org/packages/")))
 
 (package-initialize)
 (unless package-archive-contents
@@ -89,7 +88,6 @@
    (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t)
 
 ;; Package cache
 (setq package-enable-at-startup t)
