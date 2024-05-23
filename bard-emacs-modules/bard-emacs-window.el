@@ -11,6 +11,23 @@
 (setq window-min-height 3)
 (setq window-min-width 30)
 
+(define-key global-map (kbd "C-x f") #'other-frame-prefix)
+
+(use-package eyebrowse
+  :ensure t
+  :bind*
+  (("M-0" . eyebrowse-switch-to-window-config-0)
+   ("M-1" . eyebrowse-switch-to-window-config-1)
+   ("M-2" . eyebrowse-switch-to-window-config-2)
+   ("M-3" . eyebrowse-switch-to-window-config-3)
+   ("M-4" . eyebrowse-switch-to-window-config-4)
+   ("M-5" . eyebrowse-switch-to-window-config-5)
+   ("M-6" . eyebrowse-switch-to-window-config-6)
+   ("M-7" . eyebrowse-switch-to-window-config-7)
+   ("M-8" . eyebrowse-switch-to-window-config-8)
+   ("M-9" . eyebrowse-switch-to-window-config-9))
+  )
+
 (use-package emacs
   :bind*
   (("C-M-<up>" . windmove-up)
@@ -21,49 +38,6 @@
    ("C-M-S-<right>" . windmove-swap-states-right)
    ("C-M-S-<down>" . windmove-swap-states-down)
    ("C-M-S-<left>" . windmove-swap-states-left)))
-
-(use-package beframe
-  :ensure t
-  :config
-  (setq beframe-functions-in-frames '(project-prompt-project-dir))
-  (setq beframe-create-frame-scratch-buffer nil)
-  (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
-  (beframe-mode 1)
-
-  (define-key global-map (kbd "C-x f") #'other-frame-prefix)
-  (define-key global-map (kbd "C-c b") beframe-prefix-map)
-  (define-key global-map (kbd "C-x C-b") #'beframe-buffer-menu)
-  (define-key global-map (kbd "C-x B") #'select-frame-by-name)
-
-  ;; Consult integration
-  (defvar consult-buffer-sources)
-     (declare-function consult--buffer-state "consult")
-
-     (with-eval-after-load 'consult
-       (defface beframe-buffer
-         '((t :inherit font-lock-string-face))
-         "Face for `consult' framed buffers.")
-
-       (defun my-beframe-buffer-names-sorted (&optional frame)
-         "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
-     With optional argument FRAME, return the list of buffers of FRAME."
-         (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
-
-       (defvar beframe-consult-source
-         `( :name     "Frame-specific buffers (current frame)"
-            :narrow   ?F
-            :category buffer
-            :face     beframe-buffer
-            :history  beframe-history
-            :items    ,#'my-beframe-buffer-names-sorted
-            :action   ,#'switch-to-buffer
-            :state    ,#'consult--buffer-state))
-
-       (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
-
-(use-package ace-window
-  :ensure t
-  :bind* (("M-;" . ace-window)))
 
 (setq display-buffer-alist
       `(("\\`\\*Async Shell Command\\*\\'"
