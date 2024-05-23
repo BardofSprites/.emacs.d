@@ -78,7 +78,7 @@ The exact color values are taken from the active Ef theme."
 	'((prose-verbatim yellow-cooler)))
 
   (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-  (add-hook 'ef-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
+  ;; (add-hook 'ef-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
   (setq ef-themes-to-toggle '(ef-winter ef-frost))
   (setq ef-themes-mixed-fonts t)
@@ -128,7 +128,7 @@ The exact color values are taken from the active Ef theme."
           (?C . (:inherit (shadow org-priority)))))
 
   (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
-  (add-hook 'modus-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
+  ;; (add-hook 'modus-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
 
   (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (setq modus-themes-mixed-fonts t)
@@ -137,60 +137,60 @@ The exact color values are taken from the active Ef theme."
 
 ;;;; Fonts
 (use-package fontaine
-  :ensure t)
+  :ensure t
+  :config
+  (setq fontaine-presets
+        '((small
+           :default-height 130
+	       :default-family "Iosevka Comfy"
+	       :variable-pitch-family "Iosevka Comfy Motion"
+	       :variable-pitch-height 1.0
+	       :fixed-pitch-family "Iosevka Comfy"
+	       :fixed-pitch-height 1.0
+	       :bold-weight bold
+	       :mode-line-active-family "Iosevka Comfy"
+	       :mode-line-active-height 130
+	       :mode-line-inactive-height 130
+	       )
+          (medium
+	       :inherit small
+	       :default-height 140
+	       :mode-line-active-height 140
+	       :mode-line-inactive-height 140)
+	      (large
+	       :inherit small
+	       :variable-pitch-family "Iosevka Comfy Wide Motion"
+	       :default-height 170
+	       :mode-line-active-height 140
+	       :mode-line-inactive-height 140
+	       )
+	      (presentation
+	       :inherit small
+	       :default-height 170
+	       :default-family "Iosevka Comfy Wide"
+	       :variable-pitch-family "Iosevka Comfy Wide Motion"
+	       :default-height 170
+	       :mode-line-active-height 150
+	       :mode-line-inactive-height 150)
+          (t
+           :default-family "Monospace"
+           )))
 
-(setq fontaine-presets
-      '((small
-         :default-height 130
-	 :default-family "Iosevka Comfy"
-	 :variable-pitch-family "Iosevka Comfy Motion"
-	 :variable-pitch-height 1.0
-	 :fixed-pitch-family "Iosevka Comfy"
-	 :fixed-pitch-height 1.0
-	 :bold-weight bold
-	 :mode-line-active-family "Iosevka Comfy"
-	 :mode-line-active-height 130
-	 :mode-line-inactive-height 130
-	 )
-        (medium
-	 :inherit small
-	 :default-height 140
-	 :mode-line-active-height 140
-	 :mode-line-inactive-height 140)
-	(large
-	 :inherit small
-	 :variable-pitch-family "Iosevka Comfy Wide Motion"
-	 :default-height 170
-	 :mode-line-active-height 140
-	 :mode-line-inactive-height 140
-	 )
-	(presentation
-	 :inherit small
-	 :default-height 170
-	 :default-family "Iosevka Comfy Wide"
-	 :variable-pitch-family "Iosevka Comfy Wide Motion"
-	 :default-height 170
-	 :mode-line-active-height 150
-	 :mode-line-inactive-height 150)
-        (t
-         :default-family "Monospace"
-         )))
+  ;; save file
+  (setq fontaine-latest-state-file
+        (locate-user-emacs-file "fontaine-latest-state.eld"))
 
-;; save file
-(setq fontaine-latest-state-file
-      (locate-user-emacs-file "fontaine-latest-state.eld"))
+  ;; Set last preset or fall back to desired style from `fontaine-presets'.
+  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'small))
 
-;; Set last preset or fall back to desired style from `fontaine-presets'.
-(fontaine-set-preset (or (fontaine-restore-latest-preset) 'small))
+  ;; The other side of `fontaine-restore-latest-preset'.
+  (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
 
-;; The other side of `fontaine-restore-latest-preset'.
-(add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
+  ;; preserve fonts when switching themes
+  (dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
+    (add-hook hook #'fontaine-apply-current-preset))
 
-;; preserve fonts when switching themes
-(dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
-  (add-hook hook #'fontaine-apply-current-preset))
-
-(define-key global-map (kbd "C-c f") #'fontaine-set-preset)
+  (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
 
 ;; Switching themes
 (defun bard/disable-all-themes ()

@@ -72,64 +72,64 @@
   (which-key-mode 1))
 
 ;;; Tab bars
-;; taken from https://www.jamescherti.com/emacs-tab-bar-vim-style-colors/
-(defun bard/tab-bar-vim-name-format-function (tab i)
-  "Add a space on the sides of every tab."
-  (let ((current-p (eq (car tab) 'current-tab)))
-    (propertize
-     (concat " "
-             (if tab-bar-tab-hints (format "%d " i) "")
-             (alist-get 'name tab)
-             (or (and tab-bar-close-button-show
-                      (not (eq tab-bar-close-button-show
-                               (if current-p 'non-selected 'selected)))
-                      tab-bar-close-button)
-                 "")
-             " ")
-     'face (funcall tab-bar-tab-face-function tab))))
+;; ;; taken from https://www.jamescherti.com/emacs-tab-bar-vim-style-colors/
+;; (defun bard/tab-bar-vim-name-format-function (tab i)
+;;   "Add a space on the sides of every tab."
+;;   (let ((current-p (eq (car tab) 'current-tab)))
+;;     (propertize
+;;      (concat " "
+;;              (if tab-bar-tab-hints (format "%d " i) "")
+;;              (alist-get 'name tab)
+;;              (or (and tab-bar-close-button-show
+;;                       (not (eq tab-bar-close-button-show
+;;                                (if current-p 'non-selected 'selected)))
+;;                       tab-bar-close-button)
+;;                  "")
+;;              " ")
+;;      'face (funcall tab-bar-tab-face-function tab))))
 
-(defun bard/tab-bar-vim-like-colors ()
-  "Apply Vim-like color themes to Emacs tab bars."
-  (let* ((fallback-light "white")
-         (fallback-dark "#333333")
-         (bg-default (or (face-attribute 'default :background) fallback-light))
-         (fg-default (or (face-attribute 'default :foreground) fallback-dark))
-         (bg-modeline-inactive (or (face-attribute 'mode-line-inactive :background)
-                                   fallback-dark))
-         (fg-modeline-inactive (or (face-attribute 'mode-line-inactive :foreground)
-                                   fallback-light))
-         (bg-tab-inactive bg-modeline-inactive)
-         (fg-tab-inactive fg-modeline-inactive)
-         (fg-tab-active fg-default)
-         (bg-tab-active bg-default))
-    (setq tab-bar-tab-name-format-function #'bard/tab-bar-vim-name-format-function)
-    (setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
-    (setq tab-bar-separator "\u200B")  ;; Zero width space to fix color bleeding
-    (setq tab-bar-tab-hints nil)  ;; Tab numbers of the left of the label
-    (setq tab-bar-new-button-show nil)
-    (setq tab-bar-close-button-show nil)
-    (setq tab-bar-auto-width nil)
-    (custom-set-faces
-     ;; The tab bar's appearance
-     `(tab-bar
-       ((t (:background ,bg-tab-inactive
-                        :foreground ,fg-tab-inactive
-                        :box (:line-width 3 :color ,bg-tab-inactive :style nil)))))
-     ;; Inactive tabs
-     `(tab-bar-tab-inactive
-       ((t (:background ,bg-tab-inactive
-                        :foreground ,fg-tab-inactive
-                        :box (:line-width 3 :color ,bg-tab-inactive :style nil)))))
-     ;; Active tab
-     `(tab-bar-tab
-       ((t (:background ,bg-tab-active :foreground ,fg-tab-active
-                        :box (:line-width 3 :color ,bg-tab-active :style nil))))))))
+;; (defun bard/tab-bar-vim-like-colors ()
+;;   "Apply Vim-like color themes to Emacs tab bars."
+;;   (let* ((fallback-light "white")
+;;          (fallback-dark "#333333")
+;;          (bg-default (or (face-attribute 'default :background) fallback-light))
+;;          (fg-default (or (face-attribute 'default :foreground) fallback-dark))
+;;          (bg-modeline-inactive (or (face-attribute 'mode-line-inactive :background)
+;;                                    fallback-dark))
+;;          (fg-modeline-inactive (or (face-attribute 'mode-line-inactive :foreground)
+;;                                    fallback-light))
+;;          (bg-tab-inactive bg-modeline-inactive)
+;;          (fg-tab-inactive fg-modeline-inactive)
+;;          (fg-tab-active fg-default)
+;;          (bg-tab-active bg-default))
+;;     (setq tab-bar-tab-name-format-function #'bard/tab-bar-vim-name-format-function)
+;;     (setq tab-bar-format '(tab-bar-format-tabs tab-bar-separator))
+;;     (setq tab-bar-separator "\u200B")  ;; Zero width space to fix color bleeding
+;;     (setq tab-bar-tab-hints nil)  ;; Tab numbers of the left of the label
+;;     (setq tab-bar-new-button-show nil)
+;;     (setq tab-bar-close-button-show nil)
+;;     (setq tab-bar-auto-width nil)
+;;     (custom-set-faces
+;;      ;; The tab bar's appearance
+;;      `(tab-bar
+;;        ((t (:background ,bg-tab-inactive
+;;                         :foreground ,fg-tab-inactive
+;;                         :box (:line-width 3 :color ,bg-tab-inactive :style nil)))))
+;;      ;; Inactive tabs
+;;      `(tab-bar-tab-inactive
+;;        ((t (:background ,bg-tab-inactive
+;;                         :foreground ,fg-tab-inactive
+;;                         :box (:line-width 3 :color ,bg-tab-inactive :style nil)))))
+;;      ;; Active tab
+;;      `(tab-bar-tab
+;;        ((t (:background ,bg-tab-active :foreground ,fg-tab-active
+;;                         :box (:line-width 3 :color ,bg-tab-active :style nil))))))))
 
-;; Customize the appearance of the tab bar
-;; Make sure to load your theme using 'load-theme' before
-;; calling 'bard/tab-bar-vim-like-colors'.
-(tab-bar-mode 1)
-(bard/tab-bar-vim-like-colors)
+;; ;; Customize the appearance of the tab bar
+;; ;; Make sure to load your theme using 'load-theme' before
+;; ;; calling 'bard/tab-bar-vim-like-colors'.
+;; (tab-bar-mode 1)
+;; (bard/tab-bar-vim-like-colors)
 
 (provide 'bard-emacs-ui)
 
