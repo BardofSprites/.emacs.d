@@ -111,9 +111,9 @@
 ;; world clock
 (setq world-clock-list
       '(("America/New_York" "New York")
-	("Europe/Moscow" "Moscow")
-	("Europe/London" "London")
-	("Asia/Tokyo" "Tokyo")))
+	    ("Europe/Moscow" "Moscow")
+	    ("Europe/London" "London")
+	    ("Asia/Tokyo" "Tokyo")))
 
 (setq world-clock-time-format "%Y-%m-%d %B (%A) %R %Z")
 

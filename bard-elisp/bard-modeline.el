@@ -549,7 +549,6 @@ Specific to the current window's mode line.")
                      prot-modeline-vc-branch
                      prot-modeline-flymake
                      prot-modeline-eglot
-                     prot-modeline-align-right
                      prot-modeline-notmuch-indicator
                      prot-modeline-misc-info))
   (put construct 'risky-local-variable t))
