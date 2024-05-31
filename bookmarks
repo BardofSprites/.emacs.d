@@ -45,10 +45,10 @@
  (position . 216))
 ("todo.org"
  (filename . "~/Notes/denote/todo.org")
- (front-context-string . "<2024-03-29 Fri>")
- (rear-context-string . "roj:\nSCHEDULED: ")
- (position . 600)
- (last-modified 26118 65194 434854 378000))
+ (front-context-string . "#+title:      to")
+ (rear-context-string . "56a1d0fc4\n:END:\n")
+ (position . 71)
+ (last-modified 26182 31193 101876 329000))
 ("School"
  (filename . "~/Documents/School/")
  (front-context-string . "APUSH.pdf\n  -rw-")

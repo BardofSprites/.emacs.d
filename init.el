@@ -122,4 +122,6 @@ making an abbreviation to a function."
 
 (load-directory (expand-file-name "old-ada" user-emacs-directory))
 
+(load-file (expand-file-name "private.el" user-emacs-directory))
+
 (provide 'init)
