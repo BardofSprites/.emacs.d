@@ -36,90 +36,94 @@
 ;; Ef-themes
 (use-package ef-themes
   :ensure t
+  :hook
+  ((ef-themes-post-load . bard/ef-themes-hl-todo-faces)
+   (ef-themes-post-load . logos-update-fringe-in-buffers))
   :config
-  (setq ef-themes-headings
-	'((0 variable-pitch light 2.00)
-	  (1 variable-pitch light 1.5)
-	  (2 regular 1.3)
-	  (3 1.1)
-      (agenda-date . (variable-pitch regular 1.3))
-	  (agenda-structure . (variable-pitch light 1.9))
-	  (t . 1.1)))
   (defun bard/ef-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Ef themes colors.
 The exact color values are taken from the active Ef theme."
     (ef-themes-with-colors
       (setq hl-todo-keyword-faces
-	    `(("WAIT" . ,yellow)
-	      ("TODO" . ,red)
-	      ("NEXT" . ,blue)
-	      ("THEM" . ,magenta)
-	      ("PROG" . ,cyan-warmer)
-	      ("OKAY" . ,green-warmer)
-	      ("DONT" . ,yellow-warmer)
-	      ("FAIL" . ,red-warmer)
-	      ("BUG" . ,red-warmer)
-	      ("DONE" . ,green)
-	      ("NOTE" . ,blue-warmer)
-	      ("KLUDGE" . ,cyan)
-	      ("HACK" . ,cyan)
-	      ("TEMP" . ,red)
-	      ("FIXME" . ,red-warmer)
-	      ("XXX+" . ,red-warmer)
-	      ("KILLED" . ,cyan)
-	      ("REVIEW" . ,red)
-	      ("DEPRECATED" . ,yellow)))))
+	        `(("WAIT" . ,yellow)
+	          ("TODO" . ,red)
+	          ("NEXT" . ,blue)
+	          ("THEM" . ,magenta)
+	          ("PROG" . ,cyan-warmer)
+	          ("OKAY" . ,green-warmer)
+	          ("DONT" . ,yellow-warmer)
+	          ("FAIL" . ,red-warmer)
+	          ("BUG" . ,red-warmer)
+	          ("DONE" . ,green)
+	          ("NOTE" . ,blue-warmer)
+	          ("KLUDGE" . ,cyan)
+	          ("HACK" . ,cyan)
+	          ("TEMP" . ,red)
+	          ("FIXME" . ,red-warmer)
+	          ("XXX+" . ,red-warmer)
+	          ("KILLED" . ,cyan)
+	          ("REVIEW" . ,red)
+	          ("DEPRECATED" . ,yellow)))))
+
+  (setq ef-themes-headings
+	    '((0 variable-pitch light 2.00)
+	      (1 variable-pitch light 1.5)
+	      (2 regular 1.3)
+	      (3 1.1)
+          (agenda-date . (variable-pitch regular 1.3))
+	      (agenda-structure . (variable-pitch light 1.9))
+	      (t . 1.1)))
 
   ;; verbatim need higher contrast for org mode
   (setq ef-elea-dark-palette-overrides
-	'((prose-verbatim yellow-cooler)))
+	    '((prose-verbatim yellow-cooler)))
 
   (setq ef-elea-light-palette-overrides
-	'((prose-verbatim yellow-cooler)))
+	    '((prose-verbatim yellow-cooler)))
 
-  (add-hook 'ef-themes-post-load-hook #'bard/ef-themes-hl-todo-faces)
-  ;; (add-hook 'ef-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
   (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
   (setq ef-themes-to-toggle '(ef-winter ef-frost))
-  (setq ef-themes-mixed-fonts t)
-  ;; (load-theme 'ef-winter)
-  )
+  (setq ef-themes-mixed-fonts t))
 
 (use-package modus-themes
   :ensure t
+  :bind
+  (("<f5>" . modus-themes-select))
+  :hook ((modus-themes-post-load . bard/modus-themes-hl-todo-faces)
+         (modus-themes-post-load . logos-update-fringe-in-buffers))
   :config
-  (setq modus-themes-headings
-	'((0 variable-pitch light 2.00)
-	  (1 variable-pitch light 1.5)
-	  (2 regular 1.3)
-	  (3 1.1)
-      (agenda-date . (variable-pitch regular 1.3))
-	  (agenda-structure . (variable-pitch light 1.9))
-	  (t . 1.1)))
   (defun bard/modus-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Modus themes colors.
 The exact color values are taken from the active Ef theme."
     (modus-themes-with-colors
       (setq hl-todo-keyword-faces
-	    `(("WAIT" . ,yellow)
-	      ("TODO" . ,red)
-	      ("NEXT" . ,blue)
-	      ("THEM" . ,magenta)
-	      ("PROG" . ,cyan-warmer)
-	      ("OKAY" . ,green-warmer)
-	      ("DONT" . ,yellow-warmer)
-	      ("FAIL" . ,red-warmer)
-	      ("BUG" . ,red-warmer)
-	      ("DONE" . ,green)
-	      ("NOTE" . ,blue-warmer)
-	      ("KLUDGE" . ,cyan)
-	      ("HACK" . ,cyan)
-	      ("TEMP" . ,red)
-	      ("FIXME" . ,red-warmer)
-	      ("XXX+" . ,red-warmer)
-	      ("REVIEW" . ,red)
-	      ("KILLED" . ,cyan)
-	      ("DEPRECATED" . ,yellow)))))
+	        `(("WAIT" . ,yellow)
+	          ("TODO" . ,red)
+	          ("NEXT" . ,blue)
+	          ("THEM" . ,magenta)
+	          ("PROG" . ,cyan-warmer)
+	          ("OKAY" . ,green-warmer)
+	          ("DONT" . ,yellow-warmer)
+	          ("FAIL" . ,red-warmer)
+	          ("BUG" . ,red-warmer)
+	          ("DONE" . ,green)
+	          ("NOTE" . ,blue-warmer)
+	          ("KLUDGE" . ,cyan)
+	          ("HACK" . ,cyan)
+	          ("TEMP" . ,red)
+	          ("FIXME" . ,red-warmer)
+	          ("XXX+" . ,red-warmer)
+	          ("REVIEW" . ,red)
+	          ("KILLED" . ,cyan)
+	          ("DEPRECATED" . ,yellow)))))
+  (setq modus-themes-headings
+	    '((0 variable-pitch light 2.00)
+	      (1 variable-pitch light 1.5)
+	      (2 regular 1.3)
+	      (3 1.1)
+          (agenda-date . (variable-pitch regular 1.3))
+	      (agenda-structure . (variable-pitch light 1.9))
+	      (t . 1.1)))
 
   ;; org customization
   (setq org-priority-faces
@@ -127,13 +131,21 @@ The exact color values are taken from the active Ef theme."
           (?B . org-priority)
           (?C . (:inherit (shadow org-priority)))))
 
-  (add-hook 'modus-themes-post-load-hook #'bard/modus-themes-hl-todo-faces)
-  ;; (add-hook 'modus-themes-post-load-hook #'bard/tab-bar-vim-like-colors)
-
-  (setq modus-themes-to-toggle '(modus-vivendi modus-operandi-tinted))
   (setq modus-themes-mixed-fonts t)
-  (define-key global-map (kbd "<f5>") #'modus-themes-select)
   (load-theme 'modus-vivendi t))
+
+(use-package theme-buffet
+  :ensure t
+  :bind
+  (("<f6>" . theme-buffet-a-la-carte))
+  :config
+  (setq theme-buffet-menu 'end-user)
+  (setq theme-buffet--end-user
+        '( :night (modus-vivendi ef-autumn ef-winter ef-dream ef-symbiosis)
+           :morning (modus-operandi ef-cyprus ef-spring ef-frost)
+           :afternoon (modus-operandi-tinted ef-arbutus ef-day ef-kassio ef-summer ef-elea-dark)
+           :evening (modus-vivendi ef-elea-dark ef-melissa-dark ef-night ef-winter)))
+  (theme-buffet-timer-hours 1))
 
 ;;;; Fonts
 (use-package fontaine
