@@ -42,7 +42,30 @@
 
 (with-eval-after-load "org-mode"
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
-  )
+  (setq org-latex-to-pdf-process
+        '("xelatex -interaction nonstopmode %f"
+          "xelatex -interaction nonstopmode %f"))
+  (add-to-list 'org-latex-packages-alist
+               '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
+  (add-to-list 'org-latex-packages-alist
+               '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+
+  (with-eval-after-load 'org-ctags (setq org-open-link-functions nil)))
+
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes
+               '("org-plain-latex"
+                 "\\documentclass{article}
+           [NO-DEFAULT-PACKAGES]
+           [PACKAGES]
+           [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+
 
 ;; Org Babel
 (org-babel-do-load-languages
