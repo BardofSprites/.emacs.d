@@ -121,9 +121,9 @@
 		      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
 		      (org-agenda-format-date "%A %-e %B %Y")
 		      (org-agenda-overriding-header "Today's agenda \n")))
-	  (agenda "" ((org-agenda-span 7)
+	  (agenda "" ((org-agenda-span 8)
 		      (org-deadline-warning-days 0)
-		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
 		      (org-agenda-overriding-header "Upcoming this week \n")))
 	  (tags "+wait"
 		     ((org-agenda-overriding-header "Low Priority Tasks\n")
