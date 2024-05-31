@@ -54,10 +54,13 @@
 (add-to-list 'exec-path "/home/bard/.local/bin")
 (add-to-list 'exec-path "/home/bard/opt/")
 
+;;; Lisp
 (use-package clojure-mode
   :bind
   (:map clojure-mode-map
-	("C-<tab>" . cider-switch-to-repl-buffer)))
+	    ("C-<tab>" . cider-switch-to-repl-buffer))
+  :hook
+  (clojure-mode . paredit-mode))
 
 (use-package cider
   :bind
@@ -68,31 +71,35 @@
   :config
   (setq inferior-lisp-program (executable-find "sbcl")))
 
-(use-package geiser)
+(use-package geiser
+  :ensure t)
 
-(use-package geiser-racket)
-
-(use-package geiser-gauche)
+(use-package geiser-gauche
+  :ensure t)
 
 ;; parens packages
-(use-package paredit)
+(use-package paredit
+  :ensure t)
 
 (use-package scheme-mode
-  :hook (scheme-mode-hook . paredit))
+  :hook (scheme-mode . paredit-mode))
 
 (use-package lisp-mode
-  :hook (lisp-mode-hook . paredit))
+  :hook (lisp-mode . paredit-mode))
 
 (use-package emacs-lisp-mode
-  :hook (emacs-lisp-mode-hook . paredit))
+  :hook (emacs-lisp-mode . paredit-mode))
 
-(use-package haskell-mode)
+(use-package haskell-mode
+  :ensure t)
 
 (use-package flycheck
+  :ensure t
   :init
   (global-flycheck-mode t))
 
 (use-package ggtags
+  :ensure t
   :config
   (add-hook 'c-mode-common-hook
 	    (lambda ()
