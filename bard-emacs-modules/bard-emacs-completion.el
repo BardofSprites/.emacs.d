@@ -194,7 +194,8 @@
     "vscode"         "Visual Studio Code"
     "youtube"        "YouTube"
     "Результат"      "=Результат Сегодняшний Битвый="
-    "asf"           "and so on and so forth")
+    "asf"            "and so on and so forth"
+    "paragraph"      "¶")
 
 (dolist (hook '(text-mode-hook prog-mode-hook git-commit-mode-hook))
   (add-hook hook #'abbrev-mode))
