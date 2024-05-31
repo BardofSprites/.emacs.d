@@ -1,17 +1,16 @@
 #+TITLE: .emacs.d
 #+AUTHOR: BardofSprites
 
-This is my vanilla Emacs configuration. It works for my purposes, feel free to modify it for your needs. The themes are from the =ef-themes= package made by [[https://protesilaos.com/emacs/ef-themes][Prot]].
+This is my vanilla Emacs configuration. It works for my purposes, feel free to modify it for your needs. The themes are from the =modus-themes= and =ef-themes= package made by [[https://protesilaos.com/emacs/ef-themes][Prot]].
 
-I mainly program in Haskell and Clojure, so those are the only modes I have installed. If you would like to add your own, take a look at [[https://github.com/emacs-tw/awesome-emacs#programming-language][Awesome Emacs]]. It has many useful resources and packages to get started with.
+I program in various languages for fun, so I have many different modes installed. If you would like to add your own, take a look at [[https://github.com/emacs-tw/awesome-emacs#programming-language][Awesome Emacs]]. It has many useful resources and packages to get started with.
 
 ** Screenshots
-I often tend to change themes with the season, so the screenshots may not reflect the end-product.
+I never use the same theme for an extended period of time, I just rotate through =modus= and =ef= themes depending on my mood for the day. The following screenshots are themed with =modus-operandi-tinted=, because it was the theme I was when revising this README.
 
-*** Dashboard
-[[file:img/dashboard.png]]
-
-[[file:img/dashboard-light.png]]
-
+*** Magit
+[[file:img/magit.png]]
+*** Org Agenda
+[[file:img/agenda.png]]
 *** Org Document
 [[file:img/orgdocument.png]]
