@@ -110,7 +110,9 @@
   :ensure t)
 
 (use-package denote-menu
-  :ensure t)
+  :ensure t
+  :bind
+  (("C-c n l" . denote-menu-list-notes)))
 
 ;;; Focus mode for writing
 
@@ -188,5 +190,8 @@
   :ensure t
   :config
   (pdf-tools-install))
+
+(use-package org-noter-pdftools
+  :ensure t)
 
 (provide 'bard-emacs-writing)
