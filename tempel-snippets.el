@@ -8,7 +8,7 @@ fundamental-mode ;; Available everywhere
 
 emacs-lisp-mode
 
-(up "(use-package "p n> (s configuration)")")
+(up "(use-package "p n> ":ensure t" n> (s configuration)")")
 
 (key "(define-key " p " (kbd \""p "\") #'"p")")
 
