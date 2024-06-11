@@ -1,26 +1,21 @@
 ;;; Sentence size
 (setq sentence-end-double-space nil)
-(define-key org-mode-map (kbd "C-M-a") #'backward-paragraph)
-(define-key org-mode-map (kbd "C-M-e") #'forward-paragraph)
 
 ;;; Keyboard things
 (setq default-input-method "cyrillic-yawerty")
 (setq default-transient-input-method "cyrillic-yawerty")
 
 ;; Tab settings
-(setq tab-always-indent 'complete)
-(setq tab-first-completion 'word-or-paren-or-punct)
-(setq-default tab-width 4
-              indent-tabs-mode nil)
+(use-package emacs
+  :config
+  (setq tab-always-indent 'complete)
+  (setq tab-first-completion 'word-or-paren-or-punct)
+  (setq-default tab-width 4
+                indent-tabs-mode nil))
 
 (use-package electric
   :hook
-  (prog-mode . electric-indent-local-mode)
-  :config
-  ;; only indents for programming
-  (electric-pair-mode -1)
-  (electric-quote-mode -1)
-  (electric-indent-mode -1))
+  (prog-mode . electric-indent-local-mode))
 
 (use-package paren
   :hook (prog-mode . show-paren-local-mode)
@@ -33,8 +28,8 @@
 ;; Altcaps
 (use-package altcaps
   :ensure t
-  :config
-  (define-key global-map (kbd "C-x C-a") #'altcaps-dwim))
+  :bind
+  (("C-x C-a" . altcaps-dwim)))
 
 ;; snippets
 
@@ -59,9 +54,10 @@
                 (cons #'tempel-expand
                       completion-at-point-functions)))
 
-  (add-hook 'conf-mode-hook 'tempel-setup-capf)
-  (add-hook 'prog-mode-hook 'tempel-setup-capf)
-  (add-hook 'text-mode-hook 'tempel-setup-capf)
+  :hook
+  ((conf-mode . tempel-setup-capf)
+   (prog-mode . tempel-setup-capf)
+   (text-mode . tempel-setup-capf))
   :config
   (setq tempel-path "~/.emacs.d/tempel-snippets.el"))
 
@@ -72,22 +68,23 @@
   (setq denote-directory "~/Notes/denote/")
   (setq denote-journal-extras-directory "~/Notes/journal")
   (setq denote-known-keywords
-	'("emacs"
-	  "linux"
-	  "programming"
-	  "org"
-	  "school"
-	  "language"
-	  "history"
-	  "biology"
-	  ))
+	    '("emacs"
+	      "linux"
+	      "programming"
+	      "org"
+	      "school"
+	      "language"
+	      "history"
+	      "biology"
+	      ))
   (denote-rename-buffer-mode 1)
-  (add-hook 'dired-mode-hook #'denote-dired-mode)
+  :hook
+  ((dired-mode . denote-dired-mode)
 
-  ;; journalling with timer
-  (add-hook 'denote-journal-extras-hook (lambda ()
-                                          (tmr "10" "Journalling")
-                                          (bard/scroll-center-cursor-mode t)))
+   ;; journalling with timer
+   (denote-journal-extras-hook . (lambda ()
+                                   (tmr "10" "Journalling")
+                                   (bard/scroll-center-cursor-mode t))))
 
   :bind
   (("C-c n n" . denote-open-or-create)
@@ -117,22 +114,24 @@
 ;;; Focus mode for writing
 
 ;; Center line scrolling for focused writing
-(define-minor-mode bard/scroll-center-cursor-mode
-  "Toggle centered cursor scrolling behavior."
-  :init-value nil
-  :lighter " S="
-  :global nil
-  (if bard/scroll-center-cursor-mode
-      (setq-local scroll-margin (* (frame-height) 2)
-		  scroll-conservatively 0
-		  maximum-scroll-margin 0.5)
-    (dolist (local '(scroll-preserve-screen-position
-		     scroll-conservatively
-		     maximum-scroll-margin
-		     scroll-margin))
-      (kill-local-variable `,local))))
-
-(define-key global-map (kbd "C-c L") #'bard/scroll-center-cursor-mode)
+(use-package emacs
+  :config
+  (define-minor-mode bard/scroll-center-cursor-mode
+    "Toggle centered cursor scrolling behavior."
+    :init-value nil
+    :lighter " S="
+    :global nil
+    (if bard/scroll-center-cursor-mode
+        (setq-local scroll-margin (* (frame-height) 2)
+		            scroll-conservatively 0
+		            maximum-scroll-margin 0.5)
+      (dolist (local '(scroll-preserve-screen-position
+		               scroll-conservatively
+		               maximum-scroll-margin
+		               scroll-margin))
+        (kill-local-variable `,local))))
+  :bind
+  (("C-c L" . bard/scroll-center-cursor-mode)))
 
 (use-package olivetti
   :ensure t
@@ -140,8 +139,9 @@
   (setq olivetti-minimum-body-width 100)
   (setq olivetti-recall-visual-line-mode-entry-state t)
   :hook
-  ((olivetti-mode-on-hook . (lambda () (olivetti-set-width 100)))
-   (olivetti-mode-hook . (lambda () (bard/scroll-center-cursor-mode t)))))
+  ((olivetti-mode-on . (lambda () (olivetti-set-width 100)))
+   ;; (olivetti-mode . (lambda () (bard/scroll-center-cursor-mode t)))
+   ))
 
 ;; narrowing and focus mode
 (use-package logos
@@ -160,17 +160,17 @@
   (setq logos-outlines-are-pages t)
 
   (setq logos-outline-regexp-alist
-	`((emacs-lisp-mode . "^;;;+ ")
+	    `((emacs-lisp-mode . "^;;;+ ")
           (org-mode . "^\\* +")
           (t . ,(or outline-regexp logos--page-delimiter))))
 
   (setq-default logos-hide-cursor nil
-		logos-hide-mode-line nil
-		logos-hide-header-line t
-		logos-hide-buffer-boundaries t
-		logos-hide-fringe t
-		logos-variable-pitch t
-		logos-olivetti t)
+		        logos-hide-mode-line nil
+		        logos-hide-header-line t
+		        logos-hide-buffer-boundaries t
+		        logos-hide-fringe t
+		        logos-variable-pitch t
+		        logos-olivetti t)
   (let ((map global-map))
     (define-key map [remap narrow-to-region] #'logos-narrow-dwim)
     (define-key map [remap forward-page] #'logos-forward-page-dwim)
@@ -184,10 +184,12 @@
     (unless (derived-mode-p 'prog-mode)
       (recenter 1))) ; Use 0 for the absolute top
 
-  (add-hook 'logos-page-motion-hook #'bard/logos--recenter-top))
+  :hook
+  ((logos-page-motion . bard/logos--recenter-top)))
 
 (use-package pdf-tools
   :ensure t
+  :defer t
   :config
   (pdf-tools-install))
 

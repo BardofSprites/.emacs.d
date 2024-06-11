@@ -5,6 +5,16 @@
 (require 'ox)
 (require 'org-habit)
 
+(use-package org-mode
+  :bind
+  (:map org-mode-map
+        ("C-M-a" . backward-paragraph)
+        ("C-M-e" . forward-paragraph)
+        ("C-c l" . org-store-link)
+        )
+  :bind
+  (("C-c c" . org-capture)))
+
 ;; Org Variables
 (setq org-directory "~/Notes/denote/")
 ;; symlinked file to shorten denote file name in agenda buffers
@@ -13,10 +23,10 @@
 (setq org-log-done 'time)
 (setq org-structure-template-alist
       '(("c" . "center")
-	("x" . "example")
-	("q" . "quote")
-	("v" . "verse")
-	("s" . "src")
+	    ("x" . "example")
+	    ("q" . "quote")
+	    ("v" . "verse")
+	    ("s" . "src")
         ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
         ("t" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
         ("T" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
@@ -24,7 +34,6 @@
 ;; mainly for denote, org throws away a link that i might reuse later
 (setq org-id-link-to-org-use-id t)
 (setq org-link-keep-stored-after-insertion nil)
-(define-key org-mode-map (kbd "C-c l") #'org-store-link)
 
 (use-package org-cliplink
   :ensure t
@@ -65,8 +74,6 @@
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-
-
 ;; Org Babel
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -80,18 +87,17 @@
   :ensure t)
 
 ;; Calendar
-
-(with-eval-after-load 'calendar-mode
+(use-package calendar-mode
+  :config
   (setq calendar-holidays (append calendar-holidays russian-holidays))
-  (add-hook 'calendar-today-visible-hook 'calendar-mark-today)
-  (add-hook 'calendar-today-visible-hook 'calendar-mark-holidays))
-
-(define-key global-map (kbd "C-c C") #'calendar)
+  :hook
+  (calendar-today-visible . calendar-mark-today)
+  (calendar-today-visible . calendar-mark-holidays))
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d)" "KILLED(k)")
-	(sequence "MEET(m)" "|" "MET(M)")))
+	    (sequence "MEET(m)" "|" "MET(M)")))
 
 ;; Org Agenda Faces
 (custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5 :family "Iosevka Comfy Motion")))))
@@ -134,33 +140,33 @@
 ;; Org Agenda
 (setq org-agenda-custom-commands
       `(("D" "Daily agenda and top priority tasks"
-	 ((tags-todo "!TODO"
-		     ((org-agenda-overriding-header "Unscheduled Tasks \n")
-		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
-	  (agenda "" ((org-agenda-span 1)
-		      (org-agenda-start-day nil)
-		      (org-deadline-warning-days 0)
-		      (org-scheduled-past-days 0)
-		      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-		      (org-agenda-format-date "%A %-e %B %Y")
-		      (org-agenda-overriding-header "Today's agenda \n")))
-	  (agenda "" ((org-agenda-span 8)
-		      (org-deadline-warning-days 0)
-		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
-		      (org-agenda-overriding-header "Upcoming this week \n")))
-	  (tags "+wait"
-		     ((org-agenda-overriding-header "Low Priority Tasks\n")
-		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
-	("Y" "Yearly view for all tasks"
-	 ((agenda "" ((org-agenda-span 365)
-		      (org-deadline-warning-days 2)
-		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-		      (org-agenda-overriding-header "Upcoming this Year\n")))))
-	("M" "Monthly view for all tasks"
-	 ((agenda "" ((org-agenda-span 31)
-		      (org-deadline-warning-days 2)
-		      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-		      (org-agenda-overriding-header "Upcoming this month\n")))))))
+         ((tags-todo "!TODO"
+                     ((org-agenda-overriding-header "Unscheduled Tasks \n")
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
+          (agenda "" ((org-agenda-span 1)
+                      (org-agenda-start-day nil)
+                      (org-deadline-warning-days 0)
+                      (org-scheduled-past-days 0)
+                      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
+                      (org-agenda-format-date "%A %-e %B %Y")
+                      (org-agenda-overriding-header "Today's agenda \n")))
+          (agenda "" ((org-agenda-span 8)
+                      (org-deadline-warning-days 0)
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
+                      (org-agenda-overriding-header "Upcoming this week \n")))
+          (tags "+wait"
+                ((org-agenda-overriding-header "Low Priority Tasks\n")
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
+        ("Y" "Yearly view for all tasks"
+         ((agenda "" ((org-agenda-span 365)
+                      (org-deadline-warning-days 2)
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                      (org-agenda-overriding-header "Upcoming this Year\n")))))
+        ("M" "Monthly view for all tasks"
+         ((agenda "" ((org-agenda-span 31)
+                      (org-deadline-warning-days 2)
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                      (org-agenda-overriding-header "Upcoming this month\n")))))))
 
 (use-package orthodox-christian-new-calendar-holidays
   :ensure t
@@ -168,13 +174,11 @@
   (setq holiday-other-holidays (append holiday-other-holidays orthodox-christian-new-calendar-holidays))
 
   (setq holiday-bahai-holidays nil
-	holiday-christian-holidays nil
-	holiday-islamic-holidays nil))
+	    holiday-christian-holidays nil
+	    holiday-islamic-holidays nil))
 
 ;;; Org capture
 (setq org-capture-bookmark nil)
-
-(define-key global-map (kbd "C-c c") #'org-capture)
 
 (require 'org-protocol)
 (setq org-capture-templates

@@ -26,8 +26,6 @@
 
 ;;; Commentary:
 
-;; commentary
-
 ;;; Code:
 
 ;; declare all themes as safe (i trust developers)
@@ -140,12 +138,21 @@ The exact color values are taken from the active Ef theme."
   (("<f6>" . theme-buffet-a-la-carte))
   :config
   (setq theme-buffet-menu 'end-user)
-  (setq theme-buffet--end-user
-        '( :night (modus-vivendi ef-autumn ef-winter ef-dream ef-symbiosis)
-           :morning (modus-operandi ef-cyprus ef-spring ef-frost)
-           :afternoon (modus-operandi-tinted ef-arbutus ef-day ef-kassio ef-summer ef-elea-dark)
-           :evening (modus-vivendi ef-elea-dark ef-melissa-dark ef-night ef-winter)))
-  (theme-buffet-timer-hours 1))
+  (setq theme-buffet-end-user
+        '(:night
+          (ef-autumn ef-duo-dark ef-night ef-winter ef-dark)
+          :twilight
+          (ef-bio ef-cherie modus-vivendi)
+          :morning
+          (ef-elea-light ef-maris-light ef-spring)
+          :day
+          (ef-frost ef-light ef-trio-light modus-operandi)
+          :afternoon
+          (ef-cyprus ef-arbutus ef-day ef-duo-light ef-kassio ef-melissa-light ef-summer modus-operandi-tinted)
+          :evening
+          (ef-elea-dark ef-maris-dark ef-melissa-dark ef-symbiosis ef-trio-dark)))
+  (theme-buffet-timer-hours 1)
+  (theme-buffet-mode t))
 
 ;;;; Fonts
 (use-package fontaine
@@ -164,6 +171,12 @@ The exact color values are taken from the active Ef theme."
 	       :mode-line-active-height 130
 	       :mode-line-inactive-height 130
 	       )
+          (super-small
+           :inherit small
+           :default-family "Unifont"
+           :default-height 100
+           :mode-line-active-height 100
+           :mode-line-inactive-height 100)
           (medium
 	       :inherit small
 	       :default-height 140

@@ -26,33 +26,45 @@
 ;;; Code:
 
 ;; Input methods
-(global-set-key (kbd "<f10>") 'toggle-input-method)
+(use-package emacs
+  :bind
+  (("<f10>" . toggle-input-method)))
 
-(defun bard/common-modes-hook ()
-  "Commonly used modes, bundled in one hook."
-  (display-line-numbers-mode 1)
-  (bard/set-up-whitespace-handling)
-  (hl-todo-mode 1))
+(use-package prog-mode
+  :hook
+  ((prog-mode . display-line-numbers-mode)
+   (prog-mode . whitespace-mode)
+   (prog-mode . hl-todo-mode)))
 
-(add-hook 'prog-mode-hook 'bard/common-modes-hook)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'haskell-indent-mode)
+(use-package haskell-mode
+  :hook
+  ((haskell-mode . interactive-haskell-mode)
+   (haskell-mode . haskell-doc-mode)
+   (haskell-mode . haskell-indent-mode))
+  :bind
+  (:map haskell-mode-map ("C-`" . complete)))
 
 ;; CPP Mode
-
-(add-hook 'c++-mode 'bard/common-modes-hook)
-(setq-default c-basic-offset 4)
+(use-package prog-mode
+  :config
+  (setq-default c-basic-offset 4))
 
 ;;; Haskell
 
 ;; disable ghci popups
-(setq haskell-interactive-popup-errors nil)
+(use-package haskell-mode
+  :config
+  (setq haskell-interactive-popup-errors nil))
 
-(add-to-list 'exec-path "/home/bard/.ghcup/bin")
-(add-to-list 'exec-path "/home/bard/.cabal/bin")
-(add-to-list 'exec-path "/home/bard/.local/bin")
-(add-to-list 'exec-path "/home/bard/opt/")
+(use-package emacs
+  :config
+  (add-to-list 'exec-path "$HOME/.ghcup/bin")
+  (add-to-list 'exec-path "/home/bard/.cabal/bin")
+  (add-to-list 'exec-path "/home/bard/.local/bin")
+  (add-to-list 'exec-path "/home/bard/opt/")
+  (let ((bard/ghcup-path (expand-file-name "~/.ghcup/bin")))
+    (setenv "PATH" (concat bard/ghcup-path ":" (getenv "PATH")))
+    (add-to-list 'exec-path bard/ghcup-path)))
 
 ;;; Lisp
 (use-package clojure-mode

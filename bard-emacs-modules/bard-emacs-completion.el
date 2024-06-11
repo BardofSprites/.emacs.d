@@ -32,7 +32,7 @@
 ;; minibuffer completion
 (use-package vertico
   :ensure t
-  :init
+  :config
   (vertico-mode 1))
 
 (use-package marginalia
@@ -64,7 +64,6 @@
     (add-to-list 'savehist-additional-variables 'corfu-history)))
 
 (use-package minibuffer
-  :ensure nil
   :config
 ;;;; Completion styles
   (setq completion-styles '(basic substring initials flex orderless))
@@ -82,6 +81,7 @@
           (eglot (styles . (emacs22 substring orderless))))))
 
 (use-package consult
+  :ensure t
   :defer 2
   :bind*
   ("M-g M-g" . consult-goto-line)
@@ -92,6 +92,7 @@
   ("M-s M-y" . consult-yank-pop)
   ("M-s M-o" . consult-outline)
   ("M-s M-l" . consult-line)
+  ("M-s M-k" . consult-kmacro)
   :config
   (setq consult-find-args
         (concat "find . -not ( "
