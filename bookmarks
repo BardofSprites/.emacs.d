@@ -3,11 +3,11 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("bard-emacs.org"
- (filename . "~/Code/test/emacs/bard-emacs.org")
+ (filename . "~/Notes/emacs/bard-emacs.org")
  (front-context-string . "#+TITLE: My Emac")
  (rear-context-string)
  (position . 1)
- (last-modified 26128 18859 419352 491000))
+ (last-modified 26225 37953 947395 70000))
 ("notes"
  (filename . "~/Notes/denote/")
  (front-context-string . "20230202T104500-")
