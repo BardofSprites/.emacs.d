@@ -129,11 +129,11 @@ The exact color values are taken from the active Ef theme."
           (?B . org-priority)
           (?C . (:inherit (shadow org-priority)))))
 
-  (setq modus-themes-mixed-fonts t)
-  (load-theme 'modus-vivendi t))
+  (setq modus-themes-mixed-fonts t))
 
 (use-package theme-buffet
   :ensure t
+  :defer nil
   :bind
   (("<f6>" . theme-buffet-a-la-carte))
   :config
@@ -151,6 +151,7 @@ The exact color values are taken from the active Ef theme."
           (ef-cyprus ef-arbutus ef-day ef-duo-light ef-kassio ef-melissa-light ef-summer modus-operandi-tinted)
           :evening
           (ef-elea-dark ef-maris-dark ef-melissa-dark ef-symbiosis ef-trio-dark)))
+  (theme-buffet-a-la-carte)
   (theme-buffet-timer-hours 1)
   (theme-buffet-mode t))
 
@@ -171,18 +172,12 @@ The exact color values are taken from the active Ef theme."
 	       :mode-line-active-height 130
 	       :mode-line-inactive-height 130
 	       )
-          (super-small
-           :inherit small
-           :default-family "Unifont"
-           :default-height 100
-           :mode-line-active-height 100
-           :mode-line-inactive-height 100)
           (medium
 	       :inherit small
 	       :default-height 140
 	       :mode-line-active-height 140
 	       :mode-line-inactive-height 140)
-	      (large
+          (large
 	       :inherit small
 	       :variable-pitch-family "Iosevka Comfy Wide Motion"
 	       :default-height 170
@@ -197,6 +192,12 @@ The exact color values are taken from the active Ef theme."
 	       :default-height 170
 	       :mode-line-active-height 150
 	       :mode-line-inactive-height 150)
+	      (essay
+           :inherit small
+           :default-family "Monospace"
+           :fixed-pitch-family "Monospace"
+           :mode-line-active-family "Monospace"
+           :variable-pitch-family "Helvetic Neue")
           (t
            :default-family "Monospace"
            )))
