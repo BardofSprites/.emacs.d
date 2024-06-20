@@ -2,6 +2,10 @@
 
 ;;; Editing niceties
 
+(use-package emacs
+  :bind
+  (("C-c r" . jump-to-register)))
+
 ;; writeable grep buffers
 (use-package wgrep
   :ensure t
@@ -19,6 +23,14 @@
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
+
+(use-package substitute
+  :ensure t
+  :bind
+  (("C-c s b" . substitute-target-below-point)
+   ("C-c s a" . substitute-target-above-point)
+   ("C-c s d" . substitute-target-in-defun)
+   ("C-c s s" . substitute-target-in-buffer)))
 
 ;; Desktop mode/session saving
 (setq desktop-path '("~/.emacs.d/desktop")
