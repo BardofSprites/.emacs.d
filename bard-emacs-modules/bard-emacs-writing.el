@@ -171,13 +171,6 @@
 		        logos-hide-fringe t
 		        logos-variable-pitch t
 		        logos-olivetti t)
-  (let ((map global-map))
-    (define-key map [remap narrow-to-region] #'logos-narrow-dwim)
-    (define-key map [remap forward-page] #'logos-forward-page-dwim)
-    (define-key map [remap backward-page] #'logos-backward-page-dwim)
-    (define-key map (kbd "M-]") #'logos-forward-page-dwim)
-    (define-key map (kbd "M-[") #'logos-backward-page-dwim)
-    (define-key map (kbd "<f9>") #'logos-focus-mode))
 
   (defun bard/logos--recenter-top ()
     "Use `recenter' to reposition the view at the top."
@@ -185,7 +178,11 @@
       (recenter 1))) ; Use 0 for the absolute top
 
   :hook
-  ((logos-page-motion . bard/logos--recenter-top)))
+  ((logos-page-motion . bard/logos--recenter-top))
+  :bind
+  (("M-]" . logos-forward-page-dwim)
+     ("M-[" . logos-backward-page-dwim)
+     ("<f9>" . logos-focus-mode)))
 
 (use-package pdf-tools
   :ensure t
