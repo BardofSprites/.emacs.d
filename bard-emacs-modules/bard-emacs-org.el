@@ -183,21 +183,21 @@
 (require 'org-protocol)
 (setq org-capture-templates
       '(("i" "Important Stuff" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Important Stuff")
-	 "* TODO %?")
-	("e" "Extra/Coding" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
-	 "* TODO %?")
-	("j" "Journal" entry (file+datetree "~/Notes/denote/20240328T215351--journal__journal_self.org")
-	 "* %U %^{Title}\n  %?")
-	("a" "Appointments" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Appointments" "General")
-	 "* MEET %^{Appointment}\nSCHEDULED: %^t\n%?")
-	("p" "Protocol" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
-	 "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
-	("L" "Protocol Link" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
-	 "* [[%:link][%:description]] \nCaptured On: %U \n%?")
-	("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
+	     "* TODO %?")
+	    ("e" "Extra/Coding" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
+	     "* TODO %?")
+	    ("j" "Journal" entry (file+datetree "~/Notes/denote/20240328T215351--journal__journal_self.org")
+	     "* %U %^{Title}\n  %?")
+	    ("a" "Appointments" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Appointments" "General")
+	     "* MEET %^{Appointment}\nSCHEDULED: %^t\n%?")
+	    ("p" "Protocol" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
+	     "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
+	    ("L" "Protocol Link" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
+	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
+	    ("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
 
 ;;; Managing media
-  ;; inspired by https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
+;; inspired by https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
 
 (use-package org-download
   :after org

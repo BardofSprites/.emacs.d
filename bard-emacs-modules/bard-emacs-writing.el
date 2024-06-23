@@ -181,8 +181,9 @@
   ((logos-page-motion . bard/logos--recenter-top))
   :bind
   (("M-]" . logos-forward-page-dwim)
-     ("M-[" . logos-backward-page-dwim)
-     ("<f9>" . logos-focus-mode)))
+   ("M-[" . logos-backward-page-dwim)
+   ("<f9>" . logos-focus-mode)
+   ("C-x n n" . logos-narrow-dwim)))
 
 (use-package pdf-tools
   :ensure t
