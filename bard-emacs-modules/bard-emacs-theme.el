@@ -92,7 +92,7 @@ The exact color values are taken from the active Ef theme."
   :config
   (defun bard/modus-themes-hl-todo-faces ()
     "Configure `hl-todo-keyword-faces' with Modus themes colors.
-The exact color values are taken from the active Ef theme."
+The exact color values are taken from the active Modus theme."
     (modus-themes-with-colors
       (setq hl-todo-keyword-faces
 	        `(("WAIT" . ,yellow)
@@ -161,37 +161,29 @@ The exact color values are taken from the active Ef theme."
   :config
   (setq fontaine-presets
         '((small
-           :default-height 130
+           :default-height 150
 	       :default-family "Iosevka Comfy"
-	       :variable-pitch-family "Iosevka Comfy Motion"
+	       :variable-pitch-family "Iosevka Comfy Motion Duo"
 	       :variable-pitch-height 1.0
 	       :fixed-pitch-family "Iosevka Comfy"
 	       :fixed-pitch-height 1.0
 	       :bold-weight bold
 	       :mode-line-active-family "Iosevka Comfy"
-	       :mode-line-active-height 130
-	       :mode-line-inactive-height 130
+	       :mode-line-active-height 150
+	       :mode-line-inactive-height 150
 	       )
           (medium
 	       :inherit small
-	       :default-height 140
-	       :mode-line-active-height 140
-	       :mode-line-inactive-height 140)
+	       :default-height 180
+	       :mode-line-active-height 180
+	       :mode-line-inactive-height 180)
           (large
 	       :inherit small
 	       :variable-pitch-family "Iosevka Comfy Wide Motion"
-	       :default-height 170
-	       :mode-line-active-height 140
-	       :mode-line-inactive-height 140
+	       :default-height 200
+	       :mode-line-active-height 180
+	       :mode-line-inactive-height 180
 	       )
-	      (presentation
-	       :inherit small
-	       :default-height 170
-	       :default-family "Iosevka Comfy Wide"
-	       :variable-pitch-family "Iosevka Comfy Wide Motion"
-	       :default-height 170
-	       :mode-line-active-height 150
-	       :mode-line-inactive-height 150)
 	      (essay
            :inherit small
            :default-family "Monospace"
@@ -217,6 +209,39 @@ The exact color values are taken from the active Ef theme."
     (add-hook hook #'fontaine-apply-current-preset))
 
   (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
+
+
+
+;;; Cursor appearance (cursory)
+;; Read the manual: <https://protesilaos.com/emacs/cursory>.
+(use-package cursory
+  :ensure t
+  :if (display-graphic-p)
+  :config
+  (setq cursory-presets
+        '((box
+           :blink-cursor-interval 1.0)
+          (bar
+           :cursor-type (bar . 2)
+           :blink-cursor-interval 1.0)
+          (bar-global
+           :inherit bar
+           :cursor-in-non-selected-windows t)
+          (box-no-blink
+           :blink-cursor-mode -1)
+          (t ; the default values
+           :cursor-type box
+           :cursor-in-non-selected-windows hollow
+           :blink-cursor-mode 1
+           :blink-cursor-blinks 10
+           :blink-cursor-interval 0.2
+           :blink-cursor-delay 0.2)))
+
+  (cursory-set-preset (or (cursory-restore-latest-preset) 'box))
+  :hook
+  (kill-emacs . cursory-store-latest-preset)
+  :bind
+  (("C-c p" . cursory-set-preset)))
 
 ;; Switching themes
 (defun bard/disable-all-themes ()
