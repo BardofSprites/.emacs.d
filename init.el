@@ -26,6 +26,7 @@
 ;;; Code:
 
 ;; fix keymap
+(repeat-mode t)
 (global-set-key (kbd "C-z") nil)
 (global-set-key (kbd "M-z") nil)
 
