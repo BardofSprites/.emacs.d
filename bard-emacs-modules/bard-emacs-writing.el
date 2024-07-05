@@ -1,9 +1,16 @@
-;;; Sentence size
-(setq sentence-end-double-space nil)
+;;; Input related settings
+
+(use-package emacs
+  :ensure t
+  :bind
+  (("C-x i" . insert-char))
+  :config
+  ;;; Sentence size
+  (setq sentence-end-double-space nil)
 
 ;;; Keyboard things
-(setq default-input-method "cyrillic-yawerty")
-(setq default-transient-input-method "cyrillic-yawerty")
+  (setq default-input-method "cyrillic-yawerty")
+  (setq default-transient-input-method "cyrillic-yawerty"))
 
 ;; Tab settings
 (use-package emacs
@@ -36,8 +43,8 @@
 (use-package tempel
   :ensure t
   ;; Require trigger prefix before template name when completing.
-  :bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
-         ("M-*" . tempel-insert))
+  :bind (("M-i" . tempel-complete) ;; Alternative tempel-expand
+         ("M-S-i" . tempel-insert))
 
   :init
 
@@ -95,21 +102,12 @@
    ("C-c n j" . denote-journal-extras-new-entry)
    ("C-c n r" . denote-rename-file)
    ("C-c n r" . denote-rename-file-using-front-matter)
-   ("C-c n k" . denote-keywords-add)
-   ("C-c n K" . denote-keywords-remove)
+   ("C-c n k" . denote-rename-file-keywords)
    ("C-c n i" . denote-link)
    ("C-c n I" . denote-add-links)
    ("C-c n b" . denote-backlinks)
    ("C-c n f" . denote-find-link)
    ("C-c n F" . denote-find-backlink)))
-
-(use-package denote-explore
-  :ensure t)
-
-(use-package denote-menu
-  :ensure t
-  :bind
-  (("C-c n l" . denote-menu-list-notes)))
 
 ;;; Focus mode for writing
 
@@ -190,8 +188,5 @@
   :defer t
   :config
   (pdf-tools-install))
-
-(use-package org-noter-pdftools
-  :ensure t)
 
 (provide 'bard-emacs-writing)

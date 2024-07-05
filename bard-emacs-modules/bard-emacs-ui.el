@@ -24,6 +24,8 @@
 
 ;; Generic variables for modes
 (use-package emacs
+  :bind
+  (("<f12>" . display-line-numbers-mode))
   :config
   (setq display-line-numbers-type 'relative)
   (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark)))

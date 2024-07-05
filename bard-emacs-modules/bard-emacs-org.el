@@ -18,7 +18,7 @@
 ;; Org Variables
 (setq org-directory "~/Notes/denote/")
 ;; symlinked file to shorten denote file name in agenda buffers
-(setq org-agenda-files (list "~/Notes/denote/todo.org"))
+(setq org-agenda-files (list "~/Notes/denote/todo.org" "~/Notes/denote/khan.org"))
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
 (setq org-structure-template-alist

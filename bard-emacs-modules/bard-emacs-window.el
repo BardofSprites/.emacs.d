@@ -14,11 +14,6 @@
   (setq window-min-height 3)
   (setq window-min-width 30))
 
-(use-package emacs
-  :bind
-  (("C-x f" . other-window-prefix)
-   ("C-c TAB" . other-frame-prefix)))
-
 (use-package eyebrowse
   :ensure t
   :init

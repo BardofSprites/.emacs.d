@@ -99,8 +99,8 @@ instead of `browse-url-new-window-flag'."
   (setq url (browse-url-encode-url url))
   (let* ((process-environment (browse-url-process-environment)))
     (apply #'start-process
-           (concat "librewolf " url) nil
-           "librewolf"
+           (concat "librewolf-bin " url) nil
+           "librewolf-bin"
             (list url))))
 
 (provide 'bard-emacs-web)

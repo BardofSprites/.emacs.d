@@ -30,14 +30,34 @@
 (use-package image-dired
   :bind
   (:map dired-mode-map
-        ((")" . image-dired-dired-display-external)))
+        ((")" . image-dired-dired-display-external)
+         ("B" . bard/dired-set-background-with-feh)))
+  :bind
+  ("C-x C-d" . image-dired)
+  :bind
+  (:map image-dired-thumbnail-mode-map ("B" . bard/image-dired-set-background-with-feh))
   :config
   (setq image-dired-thumbnail-storage 'standard)
   (setq image-dired-external-viewer "nsxiv")
   (setq image-dired-thumb-size 80)
   (setq image-dired-thumb-margin 2)
   (setq image-dired-thumb-relief 0)
-  (setq image-dired-thumbs-per-row 4))
+  (setq image-dired-thumbs-per-row 4)
+
+  (defun bard/dired-set-background-with-feh ()
+    "Set the selected image as the background using feh."
+    (interactive)
+    (let ((image-file (dired-get-file-for-visit)))
+      (start-process "feh" nil "feh" "--bg-fill" image-file)
+      (message "Background set to %s" image-file)))
+
+  (defun bard/image-dired-set-background-with-feh ()
+    "Set the selected image as the background using feh."
+    (interactive)
+    (let ((image-file (image-dired-original-file-name)))
+      (start-process "feh" nil "feh" "--bg-fill" image-file)
+      (message "Background set to %s" image-file))))
+
 
 ;; Taken from https://superuser.com/a/176629
 (defun bard/dired-do-command (command)

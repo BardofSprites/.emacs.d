@@ -64,13 +64,13 @@ The exact color values are taken from the active Ef theme."
 	          ("DEPRECATED" . ,yellow)))))
 
   (setq ef-themes-headings
-	    '((0 variable-pitch light 2.00)
-	      (1 variable-pitch light 1.5)
-	      (2 regular 1.3)
-	      (3 1.1)
+        '((0 variable-pitch light 2.00)
+          (1 variable-pitch light 1.5)
+          (2 regular 1.3)
+          (3 1.1)
           (agenda-date . (variable-pitch regular 1.3))
-	      (agenda-structure . (variable-pitch light 1.9))
-	      (t . 1.1)))
+          (agenda-structure . (variable-pitch light 1.9))
+          (t . 1.1)))
 
   ;; verbatim need higher contrast for org mode
   (setq ef-elea-dark-palette-overrides
@@ -85,6 +85,7 @@ The exact color values are taken from the active Ef theme."
 
 (use-package modus-themes
   :ensure t
+  :demand t
   :bind
   (("<f5>" . modus-themes-select))
   :hook ((modus-themes-post-load . bard/modus-themes-hl-todo-faces)
@@ -115,21 +116,20 @@ The exact color values are taken from the active Modus theme."
 	          ("KILLED" . ,cyan)
 	          ("DEPRECATED" . ,yellow)))))
   (setq modus-themes-headings
-	    '((0 variable-pitch light 2.00)
-	      (1 variable-pitch light 1.5)
-	      (2 regular 1.3)
-	      (3 1.1)
+        '((0 variable-pitch light 2.00)
+          (1 variable-pitch light 1.5)
+          (2 regular 1.3)
+          (3 1.1)
           (agenda-date . (variable-pitch regular 1.3))
-	      (agenda-structure . (variable-pitch light 1.9))
-	      (t . 1.1)))
-
+          (agenda-structure . (variable-pitch light 1.9))
+          (t . 1.1)))
   ;; org customization
   (setq org-priority-faces
         '((?A . (:inherit (bold org-priority)))
           (?B . org-priority)
           (?C . (:inherit (shadow org-priority)))))
-
-  (setq modus-themes-mixed-fonts t))
+  (setq modus-themes-mixed-fonts t)
+  (load-theme 'modus-vivendi t))
 
 (use-package theme-buffet
   :ensure t
@@ -151,9 +151,10 @@ The exact color values are taken from the active Modus theme."
           (ef-cyprus ef-arbutus ef-day ef-duo-light ef-kassio ef-melissa-light ef-summer modus-operandi-tinted)
           :evening
           (ef-elea-dark ef-maris-dark ef-melissa-dark ef-symbiosis ef-trio-dark)))
-  (theme-buffet-a-la-carte)
-  (theme-buffet-timer-hours 1)
-  (theme-buffet-mode t))
+  ;; (theme-buffet-a-la-carte)
+  ;; (theme-buffet-timer-hours 1)
+  ;; (theme-buffet-mode t)
+  )
 
 ;;;; Fonts
 (use-package fontaine
@@ -161,35 +162,32 @@ The exact color values are taken from the active Modus theme."
   :config
   (setq fontaine-presets
         '((small
-           :default-height 150
+           :default-height 130
 	       :default-family "Iosevka Comfy"
-	       :variable-pitch-family "Iosevka Comfy Motion Duo"
+	       :variable-pitch-family "Iosevka Comfy Motion"
 	       :variable-pitch-height 1.0
 	       :fixed-pitch-family "Iosevka Comfy"
 	       :fixed-pitch-height 1.0
 	       :bold-weight bold
 	       :mode-line-active-family "Iosevka Comfy"
-	       :mode-line-active-height 150
-	       :mode-line-inactive-height 150
+	       :mode-line-active-height 130
+	       :mode-line-inactive-height 130
 	       )
           (medium
 	       :inherit small
-	       :default-height 180
-	       :mode-line-active-height 180
-	       :mode-line-inactive-height 180)
+	       :default-height 150
+	       :mode-line-active-height 150
+	       :mode-line-inactive-height 150)
           (large
 	       :inherit small
 	       :variable-pitch-family "Iosevka Comfy Wide Motion"
-	       :default-height 200
-	       :mode-line-active-height 180
-	       :mode-line-inactive-height 180
+	       :default-height 170
+	       :mode-line-active-height 150
+	       :mode-line-inactive-height 150
 	       )
 	      (essay
            :inherit small
-           :default-family "Monospace"
-           :fixed-pitch-family "Monospace"
-           :mode-line-active-family "Monospace"
-           :variable-pitch-family "Helvetic Neue")
+           :variable-pitch-family "Helvetica Neue")
           (t
            :default-family "Monospace"
            )))
