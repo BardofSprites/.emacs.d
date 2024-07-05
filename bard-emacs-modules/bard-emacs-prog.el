@@ -114,9 +114,9 @@
   :ensure t
   :config
   (add-hook 'c-mode-common-hook
-	    (lambda ()
-	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-		(ggtags-mode 1)))))
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                (ggtags-mode 1)))))
 
 ;; Version control
 (use-package magit
@@ -129,7 +129,7 @@
   :load-path "~/.emacs.d/old-ada/"
   :bind
   (:map ada-mode-map
-	("C-j" . dired-jump)))
+        ("C-j" . dired-jump)))
 
 (use-package diff-hl
   :ensure t

@@ -33,7 +33,8 @@
 (use-package vertico
   :ensure t
   :config
-  (vertico-mode 1))
+  (vertico-mode t)
+  (vertico-flat-mode t))
 
 (use-package marginalia
   :ensure t
@@ -62,42 +63,6 @@
   (with-eval-after-load 'savehist
     (corfu-history-mode 1)
     (add-to-list 'savehist-additional-variables 'corfu-history)))
-
-(use-package minibuffer
-  :config
-;;;; Completion styles
-  (setq completion-styles '(basic substring initials flex orderless))
-
-  (setq completion-category-defaults nil)
-
-  (setq completion-category-overridesd
-        '((file (styles . (basic partial-completion orderless)))
-          (bookmark (styles . (basic substring)))
-          (library (styles . (basic substring)))
-          (embark-keybinding (styles . (basic substring)))
-          (imenu (styles . (basic substring orderless)))
-          (consult-location (styles . (basic substring orderless)))
-          (kill-ring (styles . (emacs22 orderless)))
-          (eglot (styles . (emacs22 substring orderless))))))
-
-(use-package consult
-  :ensure t
-  :defer 2
-  :bind*
-  ("M-g M-g" . consult-goto-line)
-  ("C-x b" . consult-buffer)
-  ("M-s M-f" . consult-find)
-  ("M-s M-g" . consult-grep)
-  ("M-s M-h" . consult-history)
-  ("M-s M-y" . consult-yank-pop)
-  ("M-s M-o" . consult-outline)
-  ("M-s M-l" . consult-line)
-  ("M-s M-k" . consult-kmacro)
-  :config
-  (setq consult-find-args
-        (concat "find . -not ( "
-                "-path */.git* -prune "
-                "-or -path */.cache* -prune )")))
 
 (use-package embark
   :ensure t
@@ -148,6 +113,42 @@
   (setq embark-verbose-indicator-excluded-actions
         '(embark-cycle embark-act-all embark-collect embark-export embark-insert))
     )
+
+(use-package minibuffer
+  :config
+;;;; Completion styles
+  (setq completion-styles '(basic substring initials flex orderless))
+
+  (setq completion-category-defaults nil)
+
+  (setq completion-category-overridesd
+        '((file (styles . (basic partial-completion orderless)))
+          (bookmark (styles . (basic substring)))
+          (library (styles . (basic substring)))
+          (embark-keybinding (styles . (basic substring)))
+          (imenu (styles . (basic substring orderless)))
+          (consult-location (styles . (basic substring orderless)))
+          (kill-ring (styles . (emacs22 orderless)))
+          (eglot (styles . (emacs22 substring orderless))))))
+
+(use-package consult
+  :ensure t
+  :defer 2
+  :bind*
+  ("M-g M-g" . consult-goto-line)
+  ("C-x b" . consult-buffer)
+  ("M-s M-f" . consult-find)
+  ("M-s M-g" . consult-grep)
+  ("M-s M-h" . consult-history)
+  ("M-s M-y" . consult-yank-pop)
+  ("M-s M-o" . consult-outline)
+  ("M-s M-l" . consult-line)
+  ("M-s M-k" . consult-kmacro)
+  :config
+  (setq consult-find-args
+        (concat "find . -not ( "
+                "-path */.git* -prune "
+                "-or -path */.cache* -prune )")))
 
 (use-package imenu-list
   :ensure t

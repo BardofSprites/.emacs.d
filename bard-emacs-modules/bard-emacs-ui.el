@@ -37,8 +37,8 @@
   :global nil
   (if (bard/display-line-numbers-mode
        (progn
-	 (display-line-numbers-mode 1)
-	 (hl-line-mode 1))
+         (display-line-numbers-mode 1)
+         (hl-line-mode 1))
        (display-line-numbers-mode -1)
        (hl-line-mode -1))))
 
