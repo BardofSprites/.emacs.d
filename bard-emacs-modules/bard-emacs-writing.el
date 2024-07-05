@@ -32,12 +32,6 @@
   (setq show-paren-when-point-inside-paren nil)
   (setq show-paren-context-when-offscreen 'overlay))
 
-;; Altcaps
-(use-package altcaps
-  :ensure t
-  :bind
-  (("C-x C-a" . altcaps-dwim)))
-
 ;; snippets
 
 (use-package tempel
@@ -90,8 +84,7 @@
 
    ;; journalling with timer
    (denote-journal-extras-hook . (lambda ()
-                                   (tmr "10" "Journalling")
-                                   (bard/scroll-center-cursor-mode t))))
+                                   (tmr "10" "Journalling"))))
 
   :bind
   (("C-c n n" . denote-open-or-create)
@@ -109,84 +102,5 @@
    ("C-c n f" . denote-find-link)
    ("C-c n F" . denote-find-backlink)))
 
-;;; Focus mode for writing
-
-;; Center line scrolling for focused writing
-(use-package emacs
-  :config
-  (define-minor-mode bard/scroll-center-cursor-mode
-    "Toggle centered cursor scrolling behavior."
-    :init-value nil
-    :lighter " S="
-    :global nil
-    (if bard/scroll-center-cursor-mode
-        (setq-local scroll-margin (* (frame-height) 2)
-		            scroll-conservatively 0
-		            maximum-scroll-margin 0.5)
-      (dolist (local '(scroll-preserve-screen-position
-		               scroll-conservatively
-		               maximum-scroll-margin
-		               scroll-margin))
-        (kill-local-variable `,local))))
-  :bind
-  (("C-c L" . bard/scroll-center-cursor-mode)))
-
-(use-package olivetti
-  :ensure t
-  :config
-  (setq olivetti-minimum-body-width 100)
-  (setq olivetti-recall-visual-line-mode-entry-state t)
-  :hook
-  ((olivetti-mode-on . (lambda () (olivetti-set-width 100)))
-   ;; (olivetti-mode . (lambda () (bard/scroll-center-cursor-mode t)))
-   ))
-
-;; narrowing and focus mode
-(use-package logos
-  :ensure t
-  :config
-  (defun logos-reveal-entry ()
-    "Reveal Org or Outline entry."
-    (cond
-     ((and (eq major-mode 'org-mode)
-           (org-at-heading-p))
-      (org-show-subtree))
-     ((or (eq major-mode 'outline-mode)
-          (bound-and-true-p outline-minor-mode))
-      (outline-show-subtree))))
-
-  (setq logos-outlines-are-pages t)
-
-  (setq logos-outline-regexp-alist
-	    `((emacs-lisp-mode . "^;;;+ ")
-          (org-mode . "^\\* +")
-          (t . ,(or outline-regexp logos--page-delimiter))))
-
-  (setq-default logos-hide-cursor nil
-		        logos-hide-mode-line nil
-		        logos-hide-header-line t
-		        logos-hide-buffer-boundaries t
-		        logos-hide-fringe t
-		        logos-variable-pitch t
-		        logos-olivetti t)
-
-  (defun bard/logos--recenter-top ()
-    "Use `recenter' to reposition the view at the top."
-    (unless (derived-mode-p 'prog-mode)
-      (recenter 1))) ; Use 0 for the absolute top
-
-  :hook
-  ((logos-page-motion . bard/logos--recenter-top))
-  :bind
-  (("M-]" . logos-forward-page-dwim)
-   ("M-[" . logos-backward-page-dwim)
-   ("<f9>" . logos-focus-mode)
-   ("C-x n n" . logos-narrow-dwim)))
-
-(use-package pdf-tools
-  :ensure t
-  :defer t
-  :config
-  (pdf-tools-install))
 
 (provide 'bard-emacs-writing)
