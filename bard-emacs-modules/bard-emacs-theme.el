@@ -43,25 +43,25 @@
 The exact color values are taken from the active Ef theme."
     (ef-themes-with-colors
       (setq hl-todo-keyword-faces
-	        `(("WAIT" . ,yellow)
-	          ("TODO" . ,red)
-	          ("NEXT" . ,blue)
-	          ("THEM" . ,magenta)
-	          ("PROG" . ,cyan-warmer)
-	          ("OKAY" . ,green-warmer)
-	          ("DONT" . ,yellow-warmer)
-	          ("FAIL" . ,red-warmer)
-	          ("BUG" . ,red-warmer)
-	          ("DONE" . ,green)
-	          ("NOTE" . ,blue-warmer)
-	          ("KLUDGE" . ,cyan)
-	          ("HACK" . ,cyan)
-	          ("TEMP" . ,red)
-	          ("FIXME" . ,red-warmer)
-	          ("XXX+" . ,red-warmer)
-	          ("KILLED" . ,cyan)
-	          ("REVIEW" . ,red)
-	          ("DEPRECATED" . ,yellow)))))
+            `(("WAIT" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("KILLED" . ,cyan)
+              ("REVIEW" . ,red)
+              ("DEPRECATED" . ,yellow)))))
 
   (setq ef-themes-headings
         '((0 variable-pitch light 2.00)
@@ -74,10 +74,10 @@ The exact color values are taken from the active Ef theme."
 
   ;; verbatim need higher contrast for org mode
   (setq ef-elea-dark-palette-overrides
-	    '((prose-verbatim yellow-cooler)))
+        '((prose-verbatim yellow-cooler)))
 
   (setq ef-elea-light-palette-overrides
-	    '((prose-verbatim yellow-cooler)))
+        '((prose-verbatim yellow-cooler)))
 
   (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
   (setq ef-themes-to-toggle '(ef-winter ef-frost))
@@ -96,25 +96,25 @@ The exact color values are taken from the active Ef theme."
 The exact color values are taken from the active Modus theme."
     (modus-themes-with-colors
       (setq hl-todo-keyword-faces
-	        `(("WAIT" . ,yellow)
-	          ("TODO" . ,red)
-	          ("NEXT" . ,blue)
-	          ("THEM" . ,magenta)
-	          ("PROG" . ,cyan-warmer)
-	          ("OKAY" . ,green-warmer)
-	          ("DONT" . ,yellow-warmer)
-	          ("FAIL" . ,red-warmer)
-	          ("BUG" . ,red-warmer)
-	          ("DONE" . ,green)
-	          ("NOTE" . ,blue-warmer)
-	          ("KLUDGE" . ,cyan)
-	          ("HACK" . ,cyan)
-	          ("TEMP" . ,red)
-	          ("FIXME" . ,red-warmer)
-	          ("XXX+" . ,red-warmer)
-	          ("REVIEW" . ,red)
-	          ("KILLED" . ,cyan)
-	          ("DEPRECATED" . ,yellow)))))
+            `(("WAIT" . ,yellow)
+              ("TODO" . ,red)
+              ("NEXT" . ,blue)
+              ("THEM" . ,magenta)
+              ("PROG" . ,cyan-warmer)
+              ("OKAY" . ,green-warmer)
+              ("DONT" . ,yellow-warmer)
+              ("FAIL" . ,red-warmer)
+              ("BUG" . ,red-warmer)
+              ("DONE" . ,green)
+              ("NOTE" . ,blue-warmer)
+              ("KLUDGE" . ,cyan)
+              ("HACK" . ,cyan)
+              ("TEMP" . ,red)
+              ("FIXME" . ,red-warmer)
+              ("XXX+" . ,red-warmer)
+              ("REVIEW" . ,red)
+              ("KILLED" . ,cyan)
+              ("DEPRECATED" . ,yellow)))))
   (setq modus-themes-headings
         '((0 variable-pitch light 2.00)
           (1 variable-pitch light 1.5)
@@ -163,31 +163,43 @@ The exact color values are taken from the active Modus theme."
   (setq fontaine-presets
         '((small
            :default-height 130
-	       :default-family "Iosevka Comfy"
-	       :variable-pitch-family "Iosevka Comfy Motion"
-	       :variable-pitch-height 1.0
-	       :fixed-pitch-family "Iosevka Comfy"
-	       :fixed-pitch-height 1.0
-	       :bold-weight bold
-	       :mode-line-active-family "Iosevka Comfy"
-	       :mode-line-active-height 130
-	       :mode-line-inactive-height 130
-	       )
+           :default-family "Iosevka Comfy"
+           :variable-pitch-family "Iosevka Comfy Motion"
+           :variable-pitch-height 1.0
+           :fixed-pitch-family "Iosevka Comfy"
+           :fixed-pitch-height 1.0
+           :bold-weight bold
+           :mode-line-active-family "Iosevka Comfy"
+           :mode-line-active-height 130
+           :mode-line-inactive-height 130
+           )
           (medium
-	       :inherit small
-	       :default-height 150
-	       :mode-line-active-height 150
-	       :mode-line-inactive-height 150)
+           :inherit small
+           :default-height 150
+           :mode-line-active-height 150
+           :mode-line-inactive-height 150)
           (large
-	       :inherit small
-	       :variable-pitch-family "Iosevka Comfy Wide Motion"
-	       :default-height 170
-	       :mode-line-active-height 150
-	       :mode-line-inactive-height 150
-	       )
-	      (essay
+           :inherit small
+           :variable-pitch-family "Iosevka Comfy Wide Motion"
+           :default-height 170
+           :mode-line-active-height 150
+           :mode-line-inactive-height 150
+           )
+          (essay
            :inherit small
            :variable-pitch-family "Helvetica Neue")
+          (bit
+           :default-height 140
+           :default-family "Terminus"
+           :variable-pitch-family "Terminus"
+           :variable-pitch-height 1.0
+           :fixed-pitch-family "Terminus"
+           :fixed-pitch-height 1.0
+           :bold-weight bold
+           :mode-line-active-family "Terminus"
+           :mode-line-active-height 140
+           :mode-line-inactive-height 140
+           )
           (t
            :default-family "Monospace"
            )))
@@ -221,10 +233,10 @@ The exact color values are taken from the active Modus theme."
            :blink-cursor-interval 1.0)
           (bar
            :cursor-type (bar . 2)
-           :blink-cursor-interval 1.0)
+           :blink-cursor-interval 0.8)
           (bar-global
            :inherit bar
-           :cursor-in-non-selected-windows t)
+           :cursor-in-non-selected-windows hollow)
           (box-no-blink
            :blink-cursor-mode -1)
           (t ; the default values
@@ -239,7 +251,20 @@ The exact color values are taken from the active Modus theme."
   :hook
   (kill-emacs . cursory-store-latest-preset)
   :bind
-  (("C-c p" . cursory-set-preset)))
+  ("C-c p" . cursory-set-preset)
+  :config
+  (define-minor-mode bard/bar-cursor-mode
+    "Toggle thin bar cursor."
+    :init-value nil
+    :light " S="
+    :global nil
+    (when derived-mode-p 'org-mode
+      (if bard/bar-cursor-mode
+           (cursory-set-preset 'bar :local)
+         (cursory-set-preset 'box :local)))))
+
+(use-package rainbow-mode
+  :ensure t)
 
 ;; Switching themes
 (defun bard/disable-all-themes ()

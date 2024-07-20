@@ -33,15 +33,14 @@
   (setq show-paren-context-when-offscreen 'overlay))
 
 ;; Altcaps
-(use-package altcaps
-  :ensure t
-  :bind
-  (("C-x C-a" . altcaps-dwim)))
+(use-package captain
+  :ensure t)
 
 ;; snippets
 
 (use-package tempel
   :ensure t
+  :demand t
   ;; Require trigger prefix before template name when completing.
   :bind (("M-i" . tempel-complete) ;; Alternative tempel-expand
          ("M-S-i" . tempel-insert))
@@ -86,12 +85,12 @@
 	      ))
   (denote-rename-buffer-mode 1)
   :hook
-  ((dired-mode . denote-dired-mode)
+  (dired-mode . denote-dired-mode)
 
    ;; journalling with timer
    (denote-journal-extras-hook . (lambda ()
                                    (tmr "10" "Journalling")
-                                   (bard/scroll-center-cursor-mode t))))
+                                   (bard/scroll-center-cursor-mode t)))
 
   :bind
   (("C-c n n" . denote-open-or-create)
@@ -174,9 +173,10 @@
     "Use `recenter' to reposition the view at the top."
     (unless (derived-mode-p 'prog-mode)
       (recenter 1))) ; Use 0 for the absolute top
-
   :hook
   ((logos-page-motion . bard/logos--recenter-top))
+  :hook
+  (org-mode . logos-focus-mode)
   :bind
   (("M-]" . logos-forward-page-dwim)
    ("M-[" . logos-backward-page-dwim)
@@ -185,7 +185,6 @@
 
 (use-package pdf-tools
   :ensure t
-  :defer t
   :config
   (pdf-tools-install))
 

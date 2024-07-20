@@ -38,7 +38,7 @@
 (use-package org-cliplink
   :ensure t
   :bind
-  ("C-c p" . org-cliplink))
+  ("C-c z" . org-cliplink))
 
 ;; Making org mode look nice
 (setq org-startup-indented t
@@ -100,14 +100,13 @@
 	    (sequence "MEET(m)" "|" "MET(M)")))
 
 ;; Org Agenda Faces
-(custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5 :family "Iosevka Comfy Motion")))))
+(custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5)))))
 (setq org-ellipsis "↲")
 
 ;;; Org Agenda
 
 ;; clock tables
-(setq org-clock-clocktable-default-properties '(:maxlevel 7
-						:scope agenda))
+(setq org-clock-clocktable-default-properties '(:maxlevel 7 :scope agenda))
 (defun bard/org-clock-report ()
   (interactive)
   (bard/new-org-buffer)
@@ -208,7 +207,6 @@
   (org-download-image-dir "~/Notes/denote/Images")
   (org-download-heading-lvl 0)
   (org-download-timestamp "org_%Y%m%d-%H%M%S_")
-  (org-image-actual-width 900)
   (org-download-screenshot-method "xclip -selection clipboard -t image/png -o > '%s'")
   :bind
   ("C-M-y" . org-download-screenshot)

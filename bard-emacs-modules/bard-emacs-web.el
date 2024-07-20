@@ -38,12 +38,12 @@
   (setq rmh-elfeed-org-files (list "~/.emacs.d/feeds.org"
 				   "~/.emacs.d/youtube.org")))
 
-(use-package elfeed-goodies
-  :ensure t
-  :init
-  (elfeed-goodies/setup)
-  :config
-  (setq elfeed-goodies/powerline-default-separator 'box))
+;; (use-package elfeed-goodies
+;;   :ensure t
+;;   :init
+;;   (elfeed-goodies/setup)
+;;   :config
+;;   (setq elfeed-goodies/powerline-default-separator 'box))
 
 ;;; Web Browsing (EWW and Firefox/Librewolf)
 

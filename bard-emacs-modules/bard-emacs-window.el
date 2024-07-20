@@ -16,8 +16,8 @@
 
 (use-package eyebrowse
   :ensure t
-  :init
-  (eyebrowse-mode)
+  :config
+  (eyebrowse-mode t)
   :bind*
   (("M-0" . eyebrowse-switch-to-window-config-0)
    ("M-1" . eyebrowse-switch-to-window-config-1)
