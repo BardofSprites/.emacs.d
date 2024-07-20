@@ -107,18 +107,18 @@
   :config
 
   (setq embark-keymap-alist
-          '((buffer bard-embark-buffer-map)
-            (command bard-embark-command-map)
-            (expression bard-embark-expression-map)
-            (file bard-embark-file-map)
-            (function bard-embark-function-map)
-            (identifier bard-embark-identifier-map)
-            (package bard-embark-package-map)
-            (region bard-embark-region-map)
-            (symbol bard-embark-symbol-map)
-            (url bard-embark-url-map)
-            (variable bard-embark-variable-map)
-            (t embark-general-map)))
+        '((buffer bard-embark-buffer-map)
+          (command bard-embark-command-map)
+          (expression bard-embark-expression-map)
+          (file bard-embark-file-map)
+          (function bard-embark-function-map)
+          (identifier bard-embark-identifier-map)
+          (package bard-embark-package-map)
+          (region bard-embark-region-map)
+          (symbol bard-embark-symbol-map)
+          (url bard-embark-url-map)
+          (variable bard-embark-variable-map)
+          (t embark-general-map)))
 
   (defun bard-embark-act-no-quit ()
     "Call `embark-act' but do not quit after the action."
@@ -147,7 +147,7 @@
   (setq embark-verbose-indicator-buffer-sections '(bindings))
   (setq embark-verbose-indicator-excluded-actions
         '(embark-cycle embark-act-all embark-collect embark-export embark-insert))
-    )
+  )
 
 (use-package imenu-list
   :ensure t
