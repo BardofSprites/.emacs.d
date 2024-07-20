@@ -4,7 +4,9 @@
 
 (use-package emacs
   :bind
-  (("C-c r" . jump-to-register)))
+  (("C-c r" . jump-to-register))
+  :config
+  (setq reb-re-syntax 'string))
 
 ;; writeable grep buffers
 (use-package wgrep
@@ -12,13 +14,22 @@
   :bind
   (:map wgrep-mode-map
 	    ("C-x C-s" . wgrep-save-all-buffers)
-        ("e" . wgrep-change-to-wgrep-mode)
         ("C-x C-q" . wgrep-change-to-wgrep-mode)
-        ("C-c C-c" . wgrep-finish-edit)))
+        ("C-c C-c" . wgrep-finish-edit))
+  :bind
+  (:map grep-mode-map
+        ("e" . wgrep-change-to-wgrep-mode)))
 
 ;; preview replace
-(use-package iedit
-  :ensure t)
+(use-package multiple-cursors
+  :ensure t
+  :bind
+  (("C-S-c C-S-c" . mc/edit-lines)
+   ("C->" . mc/mark-next-like-this)
+   ("C-<" . mc/mark-previous-like-this)
+   ("C-c C" . mc/mark-all-like-this)
+   ("C-\"". mc/skip-to-next-like-this)
+   ("C-;" . mc/skip-to-previous-like-this)))
 
 (use-package expand-region
   :ensure t
