@@ -525,6 +525,14 @@ Specific to the current window's mode line.")
   "Mode line construct displaying Eglot information.
 Specific to the current window's mode line.")
 
+(defvar-local prot-modeline-notmuch-indicator
+    '(notmuch-indicator-mode
+      (" "
+       (:eval (when (mode-line-window-selected-p)
+                notmuch-indicator--counters))))
+  "The equivalent of `notmuch-indicator-mode-line-construct'.
+Display the indicator only on the focused window's mode line.")
+
 ;;;; Miscellaneous
 
 (defvar-local prot-modeline-misc-info
@@ -549,8 +557,8 @@ Specific to the current window's mode line.")
                      prot-modeline-vc-branch
                      prot-modeline-flymake
                      prot-modeline-eglot
-                     prot-modeline-notmuch-indicator
-                     prot-modeline-misc-info))
+                     prot-modeline-misc-info
+                     prot-modeline-notmuch-indicator))
   (put construct 'risky-local-variable t))
 
 (provide 'bard-modeline)

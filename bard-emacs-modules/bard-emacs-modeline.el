@@ -66,11 +66,11 @@
 (setq mode-line-right-align-edge 'right-margin)
 (setq-default mode-line-format
               '("%e"
-		prot-modeline-kbd-macro
+                prot-modeline-kbd-macro
                 prot-modeline-narrow
-		prot-modeline-input-method
+                prot-modeline-input-method
                 prot-modeline-buffer-status
-		" "
+                " "
                 prot-modeline-buffer-identification
                 "  "
                 prot-modeline-major-mode
@@ -79,9 +79,10 @@
                 prot-modeline-vc-branch
                 "  "
                 prot-modeline-flymake
-		prot-modeline-eglot
+                prot-modeline-eglot
                 "  "
-                prot-modeline-misc-info))
+                prot-modeline-misc-info
+                prot-modeline-notmuch-indicator))
 
 (with-eval-after-load 'spacious-padding
   (defun prot/modeline-spacious-indicators ()
