@@ -22,7 +22,8 @@
 
 (use-package electric
   :hook
-  (prog-mode . electric-indent-local-mode))
+  (prog-mode . electric-indent-local-mode)
+  (prog-mode . electric-pair-local-mode))
 
 (use-package paren
   :hook (prog-mode . show-paren-local-mode)
@@ -32,7 +33,7 @@
   (setq show-paren-when-point-inside-paren nil)
   (setq show-paren-context-when-offscreen 'overlay))
 
-;; Altcaps
+;; Captain capitalization
 (use-package captain
   :ensure t)
 
