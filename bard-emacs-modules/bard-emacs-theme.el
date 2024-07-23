@@ -162,7 +162,7 @@ The exact color values are taken from the active Modus theme."
   :ensure t
   :config
   (setq fontaine-presets
-        '((small
+        '((laptop
            :default-height 130
            :default-family "Iosevka Comfy"
            :variable-pitch-family "Iosevka Comfy Motion"
@@ -174,20 +174,20 @@ The exact color values are taken from the active Modus theme."
            :mode-line-active-height 130
            :mode-line-inactive-height 130
            )
-          (medium
-           :inherit small
+          (desktop
+           :inherit laptop
            :default-height 150
            :mode-line-active-height 150
            :mode-line-inactive-height 150)
           (large
-           :inherit small
+           :inherit laptop
            :variable-pitch-family "Iosevka Comfy Wide Motion"
            :default-height 170
            :mode-line-active-height 150
            :mode-line-inactive-height 150
            )
           (essay
-           :inherit small
+           :inherit laptop
            :variable-pitch-family "Helvetica Neue")
           (bit
            :default-height 140
@@ -210,7 +210,7 @@ The exact color values are taken from the active Modus theme."
         (locate-user-emacs-file "fontaine-latest-state.eld"))
 
   ;; Set last preset or fall back to desired style from `fontaine-presets'.
-  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'small))
+  (fontaine-set-preset (or (fontaine-restore-latest-preset) 'laptop))
 
   ;; The other side of `fontaine-restore-latest-preset'.
   (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
