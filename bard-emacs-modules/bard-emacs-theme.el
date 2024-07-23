@@ -34,6 +34,7 @@
 ;; Ef-themes
 (use-package ef-themes
   :ensure t
+  :demand t
   :hook
   ((ef-themes-post-load . bard/ef-themes-hl-todo-faces)
    (ef-themes-post-load . logos-update-fringe-in-buffers))
@@ -169,7 +170,7 @@ The exact color values are taken from the active Modus theme."
            :fixed-pitch-family "Iosevka Comfy"
            :fixed-pitch-height 1.0
            :bold-weight bold
-           :mode-line-active-family "Iosevka Comfy"
+           :mode-line-active-family "Iosevka Comfy Motion"
            :mode-line-active-height 130
            :mode-line-inactive-height 130
            )
