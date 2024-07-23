@@ -54,7 +54,8 @@
            :right-divider-width 1
            :left-fringe-width 10
            :right-fringe-width 10
-           :scroll-bar-width 0)))
+           :scroll-bar-width 0))
+  (spacious-padding-mode t))
 
 ;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
 (use-package hl-todo
