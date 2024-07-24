@@ -24,5 +24,3 @@
 
 ;; settings for windows
 (setq focus-follows-mouse t)
-
-(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
