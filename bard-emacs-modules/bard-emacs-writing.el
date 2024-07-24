@@ -45,6 +45,8 @@
   ;; Require trigger prefix before template name when completing.
   :bind (("M-i" . tempel-complete) ;; Alternative tempel-expand
          ("M-S-i" . tempel-insert))
+  :config
+  (setq tempel-trigger-prefix "@")
 
   :init
 
