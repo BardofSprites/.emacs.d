@@ -20,3 +20,12 @@ emacs-lisp-mode
 (key "(define-key " p " (kbd \""p "\") #'"p")")
 
 (hook "(add-hook '"(s hook-name) " #'" (s function-to-add) ")")
+
+sh-mode
+(! & "#!/usr/bin/bash" n q)
+
+perl-mode
+(! & "#!/usr/bin/perl" n "use strict;" n "use warnings;" n n q)
+
+conf-space-mode
+(func "DestroyFunc " p n "AddToFunc " p n q)
