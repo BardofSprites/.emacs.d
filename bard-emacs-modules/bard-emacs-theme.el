@@ -221,8 +221,6 @@ The exact color values are taken from the active Modus theme."
 
   (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
 
-
-
 ;;; Cursor appearance (cursory)
 ;; Read the manual: <https://protesilaos.com/emacs/cursory>.
 (use-package cursory

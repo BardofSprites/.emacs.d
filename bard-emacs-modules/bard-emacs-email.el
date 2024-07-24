@@ -53,7 +53,7 @@
 
 (setq notmuch-show-empty-saved-searches t)
 (setq notmuch-saved-searches
-      `(( :name "📥 inbox"
+      `(( :name "📥 inbox (all-mail)"
           :query "tag:inbox"
           :sort-order newest-first
           :key ,(kbd "i"))
@@ -61,15 +61,19 @@
           :query "tag:unread and tag:inbox"
           :sort-order newest-first
           :key ,(kbd "u"))
-        ( :name "🐃 contrib"
+        ( :name "🚩 flagged"
+          :query "tag:flag"
+          :sort-order newest-first
+          :key ,(kbd "f"))
+        ( :name "🐃 contributions"
           :query "tag:unread and tag:contrib"
           :sort-order newest-first
           :key ,(kbd "c"))
-        ( :name "🐧 linux"
+        ( :name "🐧 linux-related"
           :query "tag:unread and tag:linux"
           :sort-order newest-first
           :key ,(kbd "l"))
-        ( :name "🚂 emacs devel"
+        ( :name "🚂 emacs developement"
           :query "tag:unread and tag:contrib"
           :sort-order newest-first
           :key ,(kbd "ed"))
@@ -77,7 +81,7 @@
           :query "tag:unread and tag:emacs-humanities"
           :sort-order newest-first
           :key ,(kbd "eh"))
-        ( :name "🦄 emacs org"
+        ( :name "🦄 emacs org-mode"
           :query "tag:unread and tag:emacs-org"
           :sort-order newest-first
           :key ,(kbd "eo"))))

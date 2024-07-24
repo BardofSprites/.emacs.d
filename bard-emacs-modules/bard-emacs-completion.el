@@ -84,6 +84,7 @@
   :ensure t
   :defer 2
   :bind*
+  ("C-x r b" . consult-bookmark)
   ("M-g M-g" . consult-goto-line)
   ("C-x b" . consult-buffer)
   ("M-s M-f" . consult-find)

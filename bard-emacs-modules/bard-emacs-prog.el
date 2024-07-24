@@ -121,8 +121,8 @@
 ;; Version control
 (use-package magit
   :ensure t
-  :config
-  (define-key global-map (kbd "C-c g") #'magit))
+  :bind
+  ("C-c g" . magit))
 
 (use-package ada-mode
   :after dired

@@ -28,15 +28,20 @@
 (emms-playing-time-disable-display)
 
 ;; Keymaps
-(define-key global-map (kbd "<f8>") #'emms)
-(define-key global-map (kbd "M-<f8>") #'emms-browser)
-(define-key emms-playlist-mode-map (kbd "A") #'emms-add-directory)
-(define-key emms-playlist-mode-map (kbd "T") #'emms-add-directory-tree)
-(define-key emms-playlist-mode-map (kbd "F") #'emms-add-file)
-(define-key emms-playlist-mode-map (kbd "U") #'emms-add-url)
-(define-key emms-playlist-mode-map (kbd "L") #'emms-toggle-repeat-track)
-(define-key emms-playlist-mode-map (kbd "<mouse-3>") #'emms-pause)
-(define-key emms-playlist-mode-map (kbd "<SPC>") #'emms-pause)
-(define-key emms-playlist-mode-map (kbd "c") #'bard/emms-recenter)
+(use-package emms
+  :bind
+  (:map emms-playlist-mode-map
+   ("M-<f8>" . emms-browser)
+   ("A" . emms-add-directory)
+   ("T" . emms-add-directory-tree)
+   ("F" . emms-add-file)
+   ("U" . emms-add-url)
+   ("L" . emms-toggle-repeat-track)
+   ("<mouse-3>" . emms-pause)
+   ("<SPC>" . emms-pause)
+   ("c" . bard/emms-recenter))
+  :bind ("<f8>" . emms)
+  :hook
+  (emms-playlist-mode . hl-line-mode))
 
 (provide 'bard-emacs-emms)
