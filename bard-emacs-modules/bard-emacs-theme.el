@@ -64,6 +64,11 @@ The exact color values are taken from the active Ef theme."
               ("REVIEW" . ,red)
               ("DEPRECATED" . ,yellow)))))
 
+  (setq org-priority-faces
+        '((?A . (:inherit (bold next-error)))
+          (?B . org-priority)
+          (?C . (:inherit (shadow org-priority)))))
+
   (setq ef-themes-headings
         '((0 variable-pitch light 2.00)
           (1 variable-pitch light 1.5)
@@ -126,7 +131,7 @@ The exact color values are taken from the active Modus theme."
           (t . 1.1)))
   ;; org customization
   (setq org-priority-faces
-        '((?A . (:inherit (bold org-priority)))
+        '((?A . (:inherit (bold next-error)))
           (?B . org-priority)
           (?C . (:inherit (shadow org-priority)))))
   (setq modus-themes-mixed-fonts t)
