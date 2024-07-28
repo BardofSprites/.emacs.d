@@ -86,7 +86,14 @@
 	      "history"
 	      "biology"
 	      ))
+  (setq denote-prompts '(title keywords subdirectory))
   (denote-rename-buffer-mode 1)
+  (defun bard/find-notes-file ()
+    (interactive)
+    (consult-find "~/Notes/denote"))
+   (defun bard/search-notes-directory ()
+     (interactive)
+     (consult-grep "~/Notes/denote"))
   :hook
   (dired-mode . denote-dired-mode)
 
@@ -94,22 +101,20 @@
    (denote-journal-extras-hook . (lambda ()
                                    (tmr "10" "Journalling")
                                    (bard/scroll-center-cursor-mode t)))
-
-  :bind
-  (("C-c n n" . denote-open-or-create)
-   ("C-c n N" . denote)
+   :bind
+  (("C-c n n" . denote)
    ("C-c R" . denote-region)
-   ("C-c n d" . denote-date)
    ("C-c n o" . denote-sort-dired)
    ("C-c n j" . denote-journal-extras-new-entry)
-   ("C-c n r" . denote-rename-file)
    ("C-c n r" . denote-rename-file-using-front-matter)
    ("C-c n k" . denote-rename-file-keywords)
    ("C-c n i" . denote-link)
    ("C-c n I" . denote-add-links)
    ("C-c n b" . denote-backlinks)
-   ("C-c n f" . denote-find-link)
-   ("C-c n F" . denote-find-backlink)))
+   ("C-c n f" . bard/find-notes-file)
+   ("C-c n s" . bard/search-notes-directory)
+   ("C-c n l" . denote-find-link)
+   ("C-c n L" . denote-find-backlink)))
 
 ;;; Focus mode for writing
 
@@ -140,7 +145,6 @@
   (setq olivetti-recall-visual-line-mode-entry-state t)
   :hook
   ((olivetti-mode-on . (lambda () (olivetti-set-width 100)))
-   ;; (olivetti-mode . (lambda () (bard/scroll-center-cursor-mode t)))
    ))
 
 ;; narrowing and focus mode
@@ -190,5 +194,9 @@
   :ensure t
   :config
   (pdf-tools-install))
+
+(use-package nov
+  :ensure t
+  )
 
 (provide 'bard-emacs-writing)
