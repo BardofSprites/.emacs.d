@@ -255,17 +255,7 @@ The exact color values are taken from the active Modus theme."
   :hook
   (kill-emacs . cursory-store-latest-preset)
   :bind
-  ("C-c p" . cursory-set-preset)
-  :config
-  (define-minor-mode bard/bar-cursor-mode
-    "Toggle thin bar cursor."
-    :init-value nil
-    :light " S="
-    :global nil
-    (when derived-mode-p 'org-mode
-      (if bard/bar-cursor-mode
-           (cursory-set-preset 'bar :local)
-         (cursory-set-preset 'box :local)))))
+  ("C-c p" . cursory-set-preset))
 
 (use-package rainbow-mode
   :ensure t)
