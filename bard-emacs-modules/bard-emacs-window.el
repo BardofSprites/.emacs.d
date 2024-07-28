@@ -30,6 +30,21 @@
    ("M-8" . eyebrowse-switch-to-window-config-8)
    ("M-9" . eyebrowse-switch-to-window-config-9)))
 
+(use-package bufferbin
+  :ensure t
+  :bind
+  (("C-c b" . bufferbin))
+  :config
+  (add-to-list 'bufferbin-ignore-regex "^*")
+  (dolist (fonts '((org-mode . prot-modeline-indicator-yellow-bg)
+                   (emacs-lisp-mode . prot-modeline-indicator-magenta-bg)
+                   (lisp-mode . prot-modeline-indicator-magenta-bg)
+                   (scheme-mode . prot-modeline-indicator-magenta-bg)
+                   (haskell-mode . prot-modeline-indicator-magenta-bg)
+                   (c-mode . prot-modeline-indicator-magenta-bg)
+                   (c++-mode . prot-modeline-indicator-magenta-bg)))
+    (add-to-list 'bufferbin-mode-fonts fonts)))
+
 (use-package windmove
   :bind*
   (("C-M-<up>" . windmove-up)
