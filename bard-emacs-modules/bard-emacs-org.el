@@ -19,6 +19,7 @@
 (setq org-directory "~/Notes/denote/")
 ;; symlinked file to shorten denote file name in agenda buffers
 (setq org-agenda-files (list "~/Notes/denote/todo.org" "~/Notes/denote/khan.org"))
+(setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
 (setq org-structure-template-alist
@@ -137,6 +138,7 @@
 (global-set-key (kbd "C-c a a") 'bard/default-agenda)
 
 ;; Org Agenda
+(setq org-agenda-include-diary t)
 (setq org-agenda-custom-commands
       `(("D" "Daily agenda and top priority tasks"
          ((tags-todo "!TODO"
@@ -150,8 +152,9 @@
                       (org-agenda-format-date "%A %-e %B %Y")
                       (org-agenda-overriding-header "Today's agenda \n")))
           (agenda "" ((org-agenda-span 8)
+                      (org-calendar-holiday)
                       (org-deadline-warning-days 0)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                       (org-agenda-overriding-header "Upcoming this week \n")))
           (tags "+wait"
                 ((org-agenda-overriding-header "Low Priority Tasks\n")
@@ -185,12 +188,12 @@
 	     "* TODO %?")
 	    ("e" "Extra/Coding" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
 	     "* TODO %?")
-	    ("j" "Journal" entry (file+datetree "~/Notes/denote/20240328T215351--journal__journal_self.org")
-	     "* %U %^{Title}\n  %?")
-	    ("a" "Appointments" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Appointments" "General")
-	     "* MEET %^{Appointment}\nSCHEDULED: %^t\n%?")
-	    ("p" "Protocol" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
-	     "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
+        ("a" "Anki basic" entry (file+headline bard/org-anki-file "Unsorted")
+         "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n")
+        ("A" "Anki Cloze" entry (file+headline bard/org-anki-file "Unsorted")
+         "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n")
+        ("p" "Protocol" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
+         "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
 	    ("L" "Protocol Link" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
 	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
 	    ("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
@@ -212,5 +215,11 @@
   ("C-M-y" . org-download-screenshot)
   :config
   (require 'org-download))
+
+(use-package org-superstar
+  :ensure t
+  :config
+  (setq org-superstar-headline-bullets-list
+      '("◉" ("🞛" ?◈) "○" "▷")))
 
 ;; (provide 'bard-emacs-org)
