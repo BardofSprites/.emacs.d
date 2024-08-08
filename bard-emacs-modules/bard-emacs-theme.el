@@ -191,6 +191,13 @@ The exact color values are taken from the active Modus theme."
            :mode-line-active-height 150
            :mode-line-inactive-height 150
            )
+          (huge
+           :inherit laptop
+           :variable-pitch-family "Iosevka Comfy Wide Motion"
+           :default-height 200
+           :mode-line-active-height 170
+           :mode-line-inactive-height 170
+           )
           (essay
            :inherit laptop
            :variable-pitch-family "Helvetica Neue")
