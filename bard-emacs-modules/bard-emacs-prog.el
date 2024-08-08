@@ -102,6 +102,11 @@
 (use-package emacs-lisp-mode
   :hook (emacs-lisp-mode . paredit-mode))
 
+(use-package c++-mode
+  :bind
+  (:map c++-mode-map
+        ("C-c C-c" . project-compile)))
+
 (use-package haskell-mode
   :ensure t)
 
