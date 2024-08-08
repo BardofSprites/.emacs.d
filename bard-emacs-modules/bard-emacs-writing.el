@@ -86,6 +86,7 @@
 	      "history"
 	      "biology"
 	      ))
+  (setq denote-save-buffers t)
   (setq denote-prompts '(title keywords subdirectory))
   (denote-rename-buffer-mode 1)
   (defun bard/find-notes-file ()
@@ -115,6 +116,11 @@
    ("C-c n s" . bard/search-notes-directory)
    ("C-c n l" . denote-find-link)
    ("C-c n L" . denote-find-backlink)))
+
+(use-package markdown-mode
+  :ensure t
+  :mode ("README\\.md\\'" . gfm-mode)
+  :init (setq markdown-command "multimarkdown"))
 
 ;;; Focus mode for writing
 
@@ -183,7 +189,8 @@
   :hook
   ((logos-page-motion . bard/logos--recenter-top))
   :hook
-  (org-mode . logos-focus-mode)
+  ((org-mode . logos-focus-mode)
+   (markdown-mode . logos-focus-mode))
   :bind
   (("M-]" . logos-forward-page-dwim)
    ("M-[" . logos-backward-page-dwim)
