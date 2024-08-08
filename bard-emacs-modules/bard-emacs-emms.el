@@ -31,7 +31,6 @@
 (use-package emms
   :bind
   (:map emms-playlist-mode-map
-   ("M-<f8>" . emms-browser)
    ("A" . emms-add-directory)
    ("T" . emms-add-directory-tree)
    ("F" . emms-add-file)
@@ -40,7 +39,8 @@
    ("<mouse-3>" . emms-pause)
    ("<SPC>" . emms-pause)
    ("c" . bard/emms-recenter))
-  :bind ("<f8>" . emms)
+  :bind (("<f8>" . emms)
+         ("M-<f8>" . emms-browser))
   :hook
   (emms-playlist-mode . hl-line-mode))
 
