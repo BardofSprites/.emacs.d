@@ -3,9 +3,6 @@
   :config
   (setq dired-subtree-use-backgrounds nil))
 
-(use-package wdired
-  :ensure t)
-
 (use-package dired
   :bind*
   (("C-j" . dired-jump))
