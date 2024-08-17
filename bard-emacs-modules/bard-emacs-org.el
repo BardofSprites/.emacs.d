@@ -107,24 +107,43 @@
 ;;; Org Agenda
 
 ;; clock tables
-(setq org-clock-clocktable-default-properties '(:maxlevel 7 :scope agenda))
+(setq org-clock-clocktable-default-properties '(:maxlevel 7 :scope agenda)
+      org-clock-persist 'history)
+(org-clock-persistence-insinuate)
 (defun bard/org-clock-report ()
   (interactive)
   (bard/new-org-buffer)
   (org-clock-report))
+
+(use-package org-mode
+  :demand t
+  :config
+  (defun bard/org-clock-update-mode-line ()
+    (setq org-mode-line-string nil)
+    (force-mode-line-update))
+  :hook
+  ((org-clock-out . bard/org-clock-update-mode-line)))
+
+(defun bard/org-clock-task-string ()
+  "Return a simplified org clock task string."
+  (if (and (boundp 'org-mode-line-string)
+           (not (string-equal "" org-mode-line-string))
+           org-mode-line-string)
+      (substring-no-properties org-mode-line-string)
+    "No task clocked in"))
 
 (defun bard/choose-agenda ()
   "For viewing my custom agenda"
   (interactive)
   (let ((agenda-views '("Default" "Monthly" "Yearly")))
     (setq chosen-view (completing-read "Choose an agenda view: " agenda-views))
-  (cond
-      ((string= chosen-view "Yearly")
-       (org-agenda nil "Y"))
-      ((string= chosen-view "Monthly")
-       (org-agenda nil "M"))
-      ((string= chosen-view "Default")
-       (org-agenda nil "D")))))
+    (cond
+     ((string= chosen-view "Yearly")
+      (org-agenda nil "Y"))
+     ((string= chosen-view "Monthly")
+      (org-agenda nil "M"))
+     ((string= chosen-view "Default")
+      (org-agenda nil "D")))))
 
 (global-set-key (kbd "M-<f1>") 'bard/choose-agenda)
 (global-set-key (kbd "C-c a c") 'bard/choose-agenda)
