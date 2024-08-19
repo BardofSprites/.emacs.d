@@ -108,12 +108,13 @@
   (bard/new-org-buffer)
   (org-clock-report))
 
+(defun bard/org-clock-update-mode-line ()
+  (interactive)
+  (setq org-mode-line-string nil)
+  (force-mode-line-update))
+
 (use-package org-mode
   :demand t
-  :config
-  (defun bard/org-clock-update-mode-line ()
-    (setq org-mode-line-string nil)
-    (force-mode-line-update))
   :hook
   ((org-clock-out . bard/org-clock-update-mode-line)))
 
