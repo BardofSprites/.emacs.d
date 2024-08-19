@@ -31,7 +31,7 @@
    ("C-<" . mc/mark-previous-like-this)
    ("C-c C" . mc/mark-all-like-this)
    ("C-\"". mc/skip-to-next-like-this)
-   ("C-;" . mc/skip-to-previous-like-this)))
+   ("C-:" . mc/skip-to-previous-like-this)))
 
 (use-package expand-region
   :ensure t
