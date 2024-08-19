@@ -50,17 +50,18 @@
       org-insert-heading-respect-content t
       org-special-ctrl-a/e t)
 
-(with-eval-after-load "org-mode"
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.6))
-  (setq org-latex-to-pdf-process
-        '("xelatex -interaction nonstopmode %f"
-          "xelatex -interaction nonstopmode %f"))
-  (add-to-list 'org-latex-packages-alist
-               '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
-  (add-to-list 'org-latex-packages-alist
-               '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
-
-  (with-eval-after-load 'org-ctags (setq org-open-link-functions nil)))
+(use-package org-mode
+  :demand t
+  :config
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+  ;; (setq org-latex-to-pdf-process
+  ;;       '("xelatex -interaction nonstopmode %f"
+  ;;         "xelatex -interaction nonstopmode %f"))
+  ;; (add-to-list 'org-latex-packages-alist
+  ;;              '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
+  ;; (add-to-list 'org-latex-packages-alist
+  ;;              '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+)
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -74,14 +75,6 @@
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-
-;; Org Babel
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(;; other Babel languages
-   (plantuml . t)))
-
-(setq org-plantuml-jar-path "/home/bard/opt/plantuml/plantuml-1.2024.3.jar")
 
 ;; latex editing niceness
 (use-package org-fragtog
@@ -235,10 +228,16 @@
   :config
   (require 'org-download))
 
-(use-package org-superstar
+(use-package auctex
+  :ensure t
+  )
+
+(use-package cdlatex
   :ensure t
   :config
-  (setq org-superstar-headline-bullets-list
-      '("◉" ("🞛" ?◈) "○" "▷")))
+  (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
+  :bind
+  (:map org-mode-map
+        ("C-c M-p" . org-cdlatex-environment-indent)))
 
 ;; (provide 'bard-emacs-org)
