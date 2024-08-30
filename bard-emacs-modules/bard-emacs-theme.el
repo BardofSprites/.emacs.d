@@ -198,26 +198,12 @@ The exact color values are taken from the active Modus theme."
            :mode-line-active-height 170
            :mode-line-inactive-height 170
            )
-          (berk-laptop
-           :inherit laptop
-           :default-family "Berkeley Mono"
-           :variable-pitch-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           :mode-line-active-family "Berkeley Mono"
-           )
           (comic-laptop
            :inherit laptop
            :default-family "Comic Code"
            :variable-pitch-family "Comic Code"
            :fixed-pitch-family "Comic Code"
            :mode-line-active-family "Comic Code"
-           )
-          (berk-desktop
-           :inherit desktop
-           :default-family "Berkeley Mono"
-           :variable-pitch-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           :mode-line-active-family "Berkeley Mono"
            )
           (comic-desktop
            :inherit desktop
