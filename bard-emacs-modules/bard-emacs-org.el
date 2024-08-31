@@ -10,6 +10,8 @@
   (:map org-mode-map
         ("C-M-a" . backward-paragraph)
         ("C-M-e" . forward-paragraph)
+        ("C-c M-c" . count-words-region)
+        ("C-c C-M-c" . count-words)
         ("C-c l" . org-store-link)
         )
   :bind
