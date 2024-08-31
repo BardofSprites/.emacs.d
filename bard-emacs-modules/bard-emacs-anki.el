@@ -1,9 +1,11 @@
 (use-package anki-editor
+  :ensure t
   :after org
   :bind (:map org-mode-map
               ("C-c M-i" . bard/anki-editor-cloze-region-auto-incr)
               ("C-c M-I" . bard/anki-editor-cloze-region-dont-incr)
-              ("C-c M-r" . bard/anki-editor-reset-cloze-number))
+              ("C-c M-r" . bard/anki-editor-reset-cloze-number)
+              ("C-c M-p" . anki-editor-push-notes))
 
   :hook (org-capture-after-finalize . bard/anki-editor-reset-cloze-number) ; Reset cloze-number after each capture.
   :config
