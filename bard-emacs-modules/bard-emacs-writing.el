@@ -35,7 +35,12 @@
 
 ;; Captain capitalization
 (use-package captain
-  :ensure t)
+  :ensure t
+  :hook
+  (text-mode . captain-mode)
+  :bind
+  ("M-u" . captain-capitalize-word)
+  ("M-S-u" . captain-capitalize-sentence))
 
 ;; snippets
 
