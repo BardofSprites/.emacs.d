@@ -231,16 +231,4 @@
   :config
   (require 'org-download))
 
-(use-package auctex
-  :ensure t
-  )
-
-(use-package cdlatex
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook #'turn-on-org-cdlatex)
-  :bind
-  (:map org-mode-map
-        ("C-c M-p" . org-cdlatex-environment-indent)))
-
 ;; (provide 'bard-emacs-org)
