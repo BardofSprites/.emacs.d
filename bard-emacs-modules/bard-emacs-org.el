@@ -199,27 +199,42 @@
 
 (require 'org-protocol)
 (setq org-capture-templates
-      '(("i" "Important Stuff" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Important Stuff")
+      '(("i" "Important Stuff" entry
+         (file+olp
+          "~/Notes/denote/20240328T215727--todo__self.org"
+          "Inbox" "Important Stuff")
 	     "* TODO %?")
-	    ("e" "Extra/Coding" entry (file+olp "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
+	    ("e" "Extra/Coding" entry
+         (file+olp
+          "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
 	     "* TODO %?")
-        ("a" "Anki basic" entry (file+headline bard/org-anki-file "Unsorted")
-         "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n")
-        ("A" "Anki Cloze" entry (file+headline bard/org-anki-file "Unsorted")
-         "* %<%Y-%m-%d %H:%M> %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n")
-        ("ks" "Basic Statistics" entry (file+headline "~/Notes/denote/20240827T151011--statistics-flashcards__anki_stats.org" "Unsorted")
-         "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n")
-        ("Ks" "Cloze Statistics" entry (file+headline "~/Notes/denote/20240827T151011--statistics-flashcards__anki_stats.org" "Unsorted")
-         "* %<%Y-%m-%d %H:%M> %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n")
-        ("kp" "Basic Physics" entry (file+headline "20240817T182509--physics-flashcards__anki_physics.org" "Unsorted")
-         "* %<%H:%M>   %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Mega\n:END:\n** Front\n%?\n** Back\n%x\n")
-        ("Kp" "Cloze Physics" entry (file+headline "20240817T182509--physics-flashcards__anki_physics.org" "Unsorted")
-         "* %<%Y-%m-%d %H:%M> %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Mega\n:END:\n** Text\n%x\n** Extra\n")
-        ("p" "Protocol" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
+        ("s" "Basic Statistics" entry
+         (file+headline
+          "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
+         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Statistics\n:END:\n*** Front\n %?\n*** Back\n\n")
+        ("S" "Cloze Statistics" entry
+         (file+headline
+          "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
+         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
+        ("p" "Basic Physics" entry
+         (file+headline
+          "~/Notes/denote/20240902T144403--physics-flashcards__anki_physics.org" "Unsorted")
+         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Physics\n:END:\n*** Front\n %?\n*** Back\n\n")
+        ("P" "Cloze Physics" entry
+         (file+headline
+          "~/Notes/denote/20240902T144403--physics-flashcards__anki_physics.org" "Unsorted")
+         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Physics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
+        ("z" "Protocol" entry
+         (file+olp
+          "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
          "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
-	    ("L" "Protocol Link" entry (file+olp "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
+	    ("Z" "Protocol Link" entry
+         (file+olp
+          "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
 	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
-	    ("b" "Blog Article" entry (file+olp "~/Code/bardmandev/content/_index.org" "Latest updates"))))
+	    ("b" "Blog Article" entry
+         (file+olp
+          "~/Code/bardmandev/content/_index.org" "Latest updates"))))
 
 ;;; Managing media
 ;; inspired by https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
