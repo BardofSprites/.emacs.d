@@ -6,7 +6,9 @@ This is my vanilla Emacs configuration. It works for my purposes, feel free to m
 I program in various languages for fun, so I have many different modes installed. If you would like to add your own, take a look at [[https://github.com/emacs-tw/awesome-emacs#programming-language][Awesome Emacs]]. It has many useful resources and packages to get started with.
 
 ** Screenshots
-I never use the same theme for an extended period of time, I just rotate through =modus= and =ef= themes depending on my mood for the day. The following screenshots are themed with =modus-operandi-tinted=, because it was the theme I was when revising this README.
+I tag my wallpaper based on theme. I pick a wallpaper and then select my Emacs theme that matches with it (Ex: forest wallpaper is good with =ef-cyprus=). In my [[https://github.com/BardofSprites/dotfiles-stow][desktop configuration]] for FVWM3 I created theme files that can be loaded through the menu. I also made Xresources themes for a majority of the ef and modus themes.
+
+The following screenshots are themed with =modus-operandi-tinted=, because it was the theme I was when revising this README.
 
 *** Magit
 [[file:img/magit.png]]
