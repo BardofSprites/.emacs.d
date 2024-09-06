@@ -80,6 +80,7 @@
 	("C-<tab>" . cider-switch-to-last-clojure-buffer)))
 
 (use-package sly
+  :ensure t
   :config
   (setq inferior-lisp-program (executable-find "sbcl")))
 
