@@ -5,7 +5,8 @@
               ("C-c M-i" . bard/anki-editor-cloze-region-auto-incr)
               ("C-c M-I" . bard/anki-editor-cloze-region-dont-incr)
               ("C-c M-r" . bard/anki-editor-reset-cloze-number)
-              ("C-c M-p" . anki-editor-push-notes))
+              ("C-c M-p" . anki-editor-push-new-notes)
+              ("C-c M-P" . anki-editor-push-notes))
 
   :hook (org-capture-after-finalize . bard/anki-editor-reset-cloze-number) ; Reset cloze-number after each capture.
   :config
@@ -32,10 +33,10 @@
   )
 
 
-(use-package gnosis
-  :ensure t
-  :config
-  (gnosis-modeline-mode)
-  :bind
-  ;; k is for kards
-  (("C-c k" . gnosis-dashboard)))
+;; (use-package gnosis
+;;   :ensure t
+;;   :config
+;;   (gnosis-modeline-mode)
+;;   :bind
+;;   ;; k is for kards
+;;   (("C-c k" . gnosis-dashboard)))
