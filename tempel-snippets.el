@@ -1,7 +1,8 @@
 fundamental-mode ;; Available everywhere
 
 (today (format-time-string "%Y-%m-%d"))
-(NOW (format-time-string "<%Y-%0m-%0d %a %H:%0M>"))
+(NOW (format-time-string "%Y-%0m-%0d %a %H:%0M"))
+(time (format-time-string "%Y-%0m-%0d %a %H:%0M"))
 (yesterday (format-time-string "<%Y-%0m-%0d %a>" (time-subtract nil (* 24 60 60))))
 (tomorrow (format-time-string "<%Y-%0m-%0d %a>" (time-add nil (* 24 60 60))))
 (mode "-*- mode: " (s mode) " -*-")
@@ -9,13 +10,19 @@ fundamental-mode ;; Available everywhere
 org-mode
 
 (title "#+title: "p n "#+date: "(format-time-string "[%Y-%0m-%0d %a %H:%0M]") n)
-(subunit "*** " (s title) " [/]" n "**** TODO lesson" p n "**** TODO worked example" p n "**** TODO quick example" p n "**** TODO practice" p)
-
+(begin "\\begin{" (s env) "}" n> r> n> "\\end{" (s env) "}")
+(eq "\\begin{equation*}" n> r> n> "\\end{equation*}")
 (eg "(e.g. " p ")")
+(fr "\\frac{" p "}{" p "}" q)
+(NOW (format-time-string "<%Y-%0m-%0d %a %H:%0M>"))
+(time (format-time-string "\[%Y-%0m-%0d %a %H:%0M\]"))
+(hat1 "$\\hat{\\texbg{"p q"}}$")
+(hat2 "\\hat{\\texbg{"p q"}}")
+
 
 emacs-lisp-mode
 
-(up "(use-package "p n> ":ensure t" n> (s configuration)")")
+(up "(use-package "p n> ":ensure t" n> (s configuration) q")")
 
 (key "(define-key " p " (kbd \""p "\") #'"p")")
 
