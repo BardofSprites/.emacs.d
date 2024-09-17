@@ -327,8 +327,8 @@ face.  Let other buffers have no face.")
   (let ((indicator (cond
                     ((derived-mode-p 'text-mode) "§")
                     ((derived-mode-p 'prog-mode) "λ")
-                    ((derived-mode-p 'comint-mode) ">_")
-		    ((derived-mode-p 'emms-playlist-mode) "♪")
+                    ((derived-mode-p 'term-mode) ">_")
+                    ((derived-mode-p 'emms-playlist-mode) "♪")
                     (t "◦"))))
     (propertize indicator 'face 'shadow)))
 
