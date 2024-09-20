@@ -31,8 +31,8 @@
 (global-set-key (kbd "M-z") nil)
 
 ;; Add the directories to the load path
-(add-to-list 'load-path "~/.emacs.d/elisp/")
-(add-to-list 'load-path "~/.emacs.d/old-ada/")
+;; (add-to-list 'load-path "~/.emacs.d/elisp/")
+;; (add-to-list 'load-path "~/.emacs.d/old-ada/")
 (add-to-list 'load-path (expand-file-name "bard-elisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "bard-emacs-modules" user-emacs-directory))
 
@@ -121,8 +121,8 @@ making an abbreviation to a function."
 ;; Load all .el files in the bard-emacs-modules directory
 (load-directory (expand-file-name "bard-emacs-modules" user-emacs-directory))
 
-(load-directory (expand-file-name "old-ada" user-emacs-directory))
+;; (load-directory (expand-file-name "old-ada" user-emacs-directory))
 
-(load-file (expand-file-name "private.el" user-emacs-directory))
+;; (load-file (expand-file-name "private.el" user-emacs-directory))
 
 (provide 'init)
