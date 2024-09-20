@@ -18,9 +18,6 @@
   (("C-c c" . org-capture)))
 
 ;; Org Variables
-(setq org-directory "~/Notes/denote/")
-;; symlinked file to shorten denote file name in agenda buffers
-(setq org-agenda-files (list "~/Notes/denote/todo.org" "~/Notes/denote/khan.org"))
 (setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
@@ -52,18 +49,19 @@
       org-insert-heading-respect-content t
       org-special-ctrl-a/e t)
 
-(use-package org-mode
-  :demand t
-  :config
-  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-  ;; (setq org-latex-to-pdf-process
-  ;;       '("xelatex -interaction nonstopmode %f"
-  ;;         "xelatex -interaction nonstopmode %f"))
-  ;; (add-to-list 'org-latex-packages-alist
-  ;;              '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
-  ;; (add-to-list 'org-latex-packages-alist
-  ;;              '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
-)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+
+;; (use-package org-mode
+;;   :config
+
+;;   ;; (setq org-latex-to-pdf-process
+;;   ;;       '("xelatex -interaction nonstopmode %f"
+;;   ;;         "xelatex -interaction nonstopmode %f"))
+;;   ;; (add-to-list 'org-latex-packages-alist
+;;   ;;              '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
+;;   ;; (add-to-list 'org-latex-packages-alist
+;;   ;;              '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
+;; )
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -81,118 +79,6 @@
 ;; latex editing niceness
 (use-package org-fragtog
   :ensure t)
-
-;; Calendar
-(use-package calendar-mode
-  :config
-  (setq calendar-holidays (append calendar-holidays russian-holidays))
-  :hook
-  (calendar-today-visible . calendar-mark-today)
-  (calendar-today-visible . calendar-mark-holidays))
-
-;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(d)" "KILLED(k)")
-	    (sequence "MEET(m)" "|" "MET(M)")))
-
-;; Org Agenda Faces
-(custom-set-faces '(org-agenda-structure ((t (:inherit bold :height 1.5)))))
-(setq org-ellipsis "↲")
-
-;;; Org Agenda
-
-;; clock tables
-(setq org-clock-clocktable-default-properties '(:maxlevel 7 :scope agenda)
-      org-clock-persist 'history)
-(org-clock-persistence-insinuate)
-(defun bard/org-clock-report ()
-  (interactive)
-  (bard/new-org-buffer)
-  (org-clock-report))
-
-(defun bard/org-clock-update-mode-line ()
-  (interactive)
-  (setq org-mode-line-string nil)
-  (force-mode-line-update))
-
-(use-package org-mode
-  :demand t
-  :hook
-  ((org-clock-out . bard/org-clock-update-mode-line)))
-
-(defun bard/org-clock-task-string ()
-  "Return a simplified org clock task string."
-  (if (and (boundp 'org-mode-line-string)
-           (not (string-equal "" org-mode-line-string))
-           org-mode-line-string)
-      (substring-no-properties org-mode-line-string)
-    "No task clocked in"))
-
-(defun bard/choose-agenda ()
-  "For viewing my custom agenda"
-  (interactive)
-  (let ((agenda-views '("Default" "Monthly" "Yearly")))
-    (setq chosen-view (completing-read "Choose an agenda view: " agenda-views))
-    (cond
-     ((string= chosen-view "Yearly")
-      (org-agenda nil "Y"))
-     ((string= chosen-view "Monthly")
-      (org-agenda nil "M"))
-     ((string= chosen-view "Default")
-      (org-agenda nil "D")))))
-
-(global-set-key (kbd "M-<f1>") 'bard/choose-agenda)
-(global-set-key (kbd "C-c a c") 'bard/choose-agenda)
-
-(defun bard/default-agenda ()
-  "For viewing my custom agenda"
-  (interactive)
-  (org-agenda nil "D"))
-
-(global-set-key (kbd "<f1>") 'bard/default-agenda)
-(global-set-key (kbd "C-c a a") 'bard/default-agenda)
-
-;; Org Agenda
-(setq org-agenda-include-diary t)
-(setq org-agenda-custom-commands
-      `(("D" "Daily agenda and top priority tasks"
-         ((tags-todo "!TODO"
-                     ((org-agenda-overriding-header "Unscheduled Tasks \n")
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
-          (agenda "" ((org-agenda-span 1)
-                      (org-agenda-start-day nil)
-                      (org-deadline-warning-days 0)
-                      (org-scheduled-past-days 0)
-                      (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
-                      (org-agenda-format-date "%A %-e %B %Y")
-                      (org-agenda-overriding-header "Today's agenda \n")))
-          (agenda "" ((org-agenda-span 8)
-                      (org-calendar-holiday)
-                      (org-deadline-warning-days 0)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this week \n")))
-          (tags "+wait"
-                ((org-agenda-overriding-header "Low Priority Tasks\n")
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
-        ("Y" "Yearly view for all tasks"
-         ((agenda "" ((org-agenda-span 365)
-                      (org-deadline-warning-days 2)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this Year\n")))))
-        ("M" "Monthly view for all tasks"
-         ((agenda "" ((org-agenda-span 31)
-                      (org-deadline-warning-days 2)
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this month\n")))))))
-
-(use-package orthodox-christian-new-calendar-holidays
-  :ensure t
-  :config
-  (setq holiday-other-holidays (append holiday-other-holidays orthodox-christian-new-calendar-holidays))
-
-  (setq holiday-bahai-holidays nil
-	    holiday-christian-holidays nil
-	    holiday-islamic-holidays nil))
 
 ;;; Org capture
 (setq org-capture-bookmark nil)
@@ -235,6 +121,19 @@
 	    ("b" "Blog Article" entry
          (file+olp
           "~/Code/bardmandev/content/_index.org" "Latest updates"))))
+
+;;; Org Publish
+(setq org-html-scripts nil)
+(setq org-publish-project-alist
+      '(("org-blog"
+         :base-directory "~/Code/org-blog/"
+         :base-extension "org"
+         :publishing-directory "~/Code/org-site/"
+         :recursive t
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :html-preamble "<p class=\"backlink\"><a href=\"index.html\">Go back to note index</a></p><p class=\"updatedate\">Page last updated: <i>%d</i></p><hr>"
+         :html-postamble nil)))
 
 ;;; Managing media
 ;; inspired by https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
