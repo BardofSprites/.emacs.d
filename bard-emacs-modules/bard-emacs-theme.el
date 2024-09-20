@@ -176,14 +176,15 @@ The exact color values are taken from the active Modus theme."
            :fixed-pitch-height 1.0
            :bold-weight bold
            :mode-line-active-family "Iosevka Comfy Motion"
+           :mode-line-inactive-family "Iosevka Comfy Motion"
            :mode-line-active-height 130
            :mode-line-inactive-height 130
            )
           (desktop
            :inherit laptop
-           :default-height 150
-           :mode-line-active-height 150
-           :mode-line-inactive-height 150)
+           :default-height 160
+           :mode-line-active-height 160
+           :mode-line-inactive-height 160)
           (large
            :inherit laptop
            :variable-pitch-family "Iosevka Comfy Wide Motion"
@@ -211,6 +212,16 @@ The exact color values are taken from the active Modus theme."
            :variable-pitch-family "Comic Code"
            :fixed-pitch-family "Comic Code"
            :mode-line-active-family "Comic Code"
+           )
+          (berk-desktop
+           :inherit desktop
+           :default-height 150
+           :mode-line-active-height 150
+           :mode-line-inactive-height 150
+           :default-family "Berkeley Mono"
+           :variable-pitch-family "Berkeley Mono"
+           :fixed-pitch-family "Berkeley Mono"
+           :mode-line-active-family "Berkeley Mono"
            )
           (t
            :default-family "Monospace"
@@ -272,6 +283,22 @@ The exact color values are taken from the active Modus theme."
   (interactive)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
+
+;; toggle mode-line
+;; take from: https://lists.gnu.org/archive/html/help-gnu-emacs/2022-11/msg00695.html
+;; (use-package emacs
+;;   :bind
+;;   (("<f6>" . bard/toggle-mode-line))
+;;   :config
+;;   (defvar-local old-mode-line nil)
+
+;;  (defun bard/toggle-mode-line ()
+;;    (interactive)
+;;    (setq-local mode-line-format
+;;                (if old-mode-line
+;;                    (setq mode-line-format old-mode-line)
+;;                  (setq old-mode-line mode-line-format
+;;                        mode-line-format nil)))))
 
 (provide 'bard-emacs-theme)
 
