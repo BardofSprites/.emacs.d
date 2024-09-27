@@ -177,8 +177,8 @@ The exact color values are taken from the active Modus theme."
   :ensure t
   :config
   (setq fontaine-presets
-        '((laptop
-           :default-height 130
+        '((default
+           :default-height 160
            :default-family "Iosevka Comfy"
            :variable-pitch-family "Iosevka Comfy Motion"
            :variable-pitch-height 1.0
@@ -187,12 +187,17 @@ The exact color values are taken from the active Modus theme."
            :bold-weight bold
            :mode-line-active-family "Iosevka Comfy Motion"
            :mode-line-inactive-family "Iosevka Comfy Motion"
-           :mode-line-active-height 130
-           :mode-line-inactive-height 130
+           :mode-line-active-height 160
+           :mode-line-inactive-height 160
            )
-          (desktop
+          (wide
            :inherit laptop
            :default-height 160
+           :default-family "Iosevka Comfy Wide"
+           :fixed-pitch-family "Iosevka Comfy Wide"
+           :mode-line-active-family "Iosevka Comfy Wide Motion Duo"
+           :mode-line-inactive-family "Iosevka Comfy Wide Motion Duo"
+           :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
            :mode-line-active-height 160
            :mode-line-inactive-height 160)
           (large
@@ -209,21 +214,14 @@ The exact color values are taken from the active Modus theme."
            :mode-line-active-height 170
            :mode-line-inactive-height 170
            )
-          (comic-laptop
-           :inherit laptop
-           :default-family "Comic Code"
-           :variable-pitch-family "Comic Code"
-           :fixed-pitch-family "Comic Code"
-           :mode-line-active-family "Comic Code"
-           )
-          (comic-desktop
+          (comic
            :inherit desktop
            :default-family "Comic Code"
            :variable-pitch-family "Comic Code"
            :fixed-pitch-family "Comic Code"
            :mode-line-active-family "Comic Code"
            )
-          (berk-desktop
+          (berkeley
            :inherit desktop
            :default-height 150
            :mode-line-active-height 150
