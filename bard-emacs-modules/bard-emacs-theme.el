@@ -86,8 +86,10 @@ The exact color values are taken from the active Ef theme."
         '((prose-verbatim yellow-cooler)))
 
   (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
-  (setq ef-themes-to-toggle '(ef-winter ef-frost))
-  (setq ef-themes-mixed-fonts t))
+  (setq ef-themes-variable-pitch-ui t
+        ef-themes-mixed-fonts t)
+
+  )
 
 (use-package modus-themes
   :ensure t
@@ -129,12 +131,20 @@ The exact color values are taken from the active Modus theme."
           (agenda-date . (variable-pitch regular 1.3))
           (agenda-structure . (variable-pitch light 1.9))
           (t . 1.1)))
+
+  (setq modus-themes-custom-auto-reload nil
+        modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui t
+        modus-themes-italic-constructs t
+        modus-themes-bold-constructs nil
+        modus-themes-completions '((t . (extrabold)))
+        modus-themes-prompts '(extrabold))
   ;; org customization
   (setq org-priority-faces
         '((?A . (:inherit (bold next-error)))
           (?B . org-priority)
           (?C . (:inherit (shadow org-priority)))))
-  (setq modus-themes-mixed-fonts t)
+
   (load-theme 'modus-vivendi t))
 
 (use-package theme-buffet
