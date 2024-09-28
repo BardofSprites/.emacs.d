@@ -162,6 +162,10 @@
   (define-key global-map (kbd "C-c t r") #'tmr-remove)
   (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
 
+(use-package breadcrumb
+  :ensure t
+  )
+
 ;; running emacs as server
 (require 'server)
 (setq server-client-instructions nil)
