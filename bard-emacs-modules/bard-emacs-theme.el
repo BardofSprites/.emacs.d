@@ -191,17 +191,17 @@ The exact color values are taken from the active Modus theme."
            :mode-line-inactive-height 160
            )
           (wide
-           :inherit laptop
-           :default-height 160
+           :inherit default
+           :default-height 150
            :default-family "Iosevka Comfy Wide"
            :fixed-pitch-family "Iosevka Comfy Wide"
            :mode-line-active-family "Iosevka Comfy Wide Motion Duo"
            :mode-line-inactive-family "Iosevka Comfy Wide Motion Duo"
            :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
-           :mode-line-active-height 160
-           :mode-line-inactive-height 160)
+           :mode-line-active-height 150
+           :mode-line-inactive-height 150)
           (large
-           :inherit laptop
+           :inherit default
            :variable-pitch-family "Iosevka Comfy Wide Motion"
            :default-height 170
            :mode-line-active-height 150
@@ -215,7 +215,7 @@ The exact color values are taken from the active Modus theme."
            :mode-line-inactive-height 170
            )
           (comic
-           :inherit desktop
+           :inherit default
            :default-family "Comic Code"
            :variable-pitch-family "Comic Code"
            :fixed-pitch-family "Comic Code"
@@ -262,13 +262,13 @@ The exact color values are taken from the active Modus theme."
            :blink-cursor-interval 1.0)
           (bar
            :cursor-type (bar . 2)
-           :blink-cursor-interval 0.8)
-          (bar-global
-           :inherit bar
-           :cursor-in-non-selected-windows hollow)
+           :blink-cursor-interval 1.0)
           (box-no-blink
            :blink-cursor-mode -1)
-          (t ; the default values
+          (underscore
+           :cursor-type (hbar . 3)
+           :blink-cursor-interval 1.0)
+          (t                            ; the default values
            :cursor-type box
            :cursor-in-non-selected-windows hollow
            :blink-cursor-mode 1
