@@ -47,15 +47,16 @@
   :ensure t
   :config
   (setq spacious-padding-widths
-        '( :internal-border-width 10
+        '( :internal-border-width 30
            :header-line-width 4
            :mode-line-width 6
            :tab-width 4
-           :right-divider-width 1
-           :left-fringe-width 10
-           :right-fringe-width 10
+           :right-divider-width 30
+           :left-fringe-width 15
+           :right-fringe-width 15
            :scroll-bar-width 0))
-  (spacious-padding-mode t))
+  (spacious-padding-mode t)
+  )
 
 ;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
 (use-package hl-todo
