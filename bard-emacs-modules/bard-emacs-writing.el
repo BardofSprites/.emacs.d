@@ -3,7 +3,8 @@
 (use-package emacs
   :ensure t
   :bind
-  (("C-x i" . insert-char))
+  (("C-x i" . insert-char)
+   ("M-z"   . zap-to-char))
   :config
   ;;; Sentence size
   (setq sentence-end-double-space nil)
