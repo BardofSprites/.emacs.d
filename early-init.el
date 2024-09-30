@@ -24,3 +24,20 @@
 
 ;; settings for windows
 (setq focus-follows-mouse t)
+
+;; garbage collection
+(setq gc-cons-threshold most-positive-fixnum
+      gc-cons-percentage 0.5)
+
+(defvar bard-emacs--file-name-handler-alist file-name-handler-alist)
+(defvar bard-emacs--vc-handled-backends vc-handled-backends)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (* 1000 1000 8)
+                  gc-cons-percentage 0.1
+                  file-name-handler-alist bard-emacs--file-name-handler-alist
+                  vc-handled-backends bard-emacs--vc-handled-backends)))
+
+;; Package cache
+(setq package-enable-at-startup t)
