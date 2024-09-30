@@ -67,3 +67,5 @@ open and unsaved."
             (find-file filename)
             (call-interactively command))
           (dired-get-marked-files))))
+
+(provide 'bard-emacs-dired)

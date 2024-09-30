@@ -78,3 +78,5 @@
   (setq holiday-bahai-holidays nil
 	    holiday-christian-holidays nil
 	    holiday-islamic-holidays nil))
+
+(provide 'bard-emacs-calendar)

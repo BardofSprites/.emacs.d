@@ -148,4 +148,4 @@
   :config
   (require 'org-download))
 
-;; (provide 'bard-emacs-org)
+(provide 'bard-emacs-org)

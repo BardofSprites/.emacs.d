@@ -32,11 +32,4 @@
   (bard/anki-editor-reset-cloze-number)
   )
 
-
-;; (use-package gnosis
-;;   :ensure t
-;;   :config
-;;   (gnosis-modeline-mode)
-;;   :bind
-;;   ;; k is for kards
-;;   (("C-c k" . gnosis-dashboard)))
+(provide 'bard-emacs-anki)
