@@ -1,5 +1,3 @@
-(require 'bard-search)
-
 ;;; Editing niceties
 
 (use-package emacs
