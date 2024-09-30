@@ -33,7 +33,53 @@
 (use-package vertico
   :ensure t
   :config
-  (vertico-mode 1))
+  (vertico-mode 1)
+  (setq vertico-scroll-margin 0)
+  (setq vertico-cycle t)
+
+  (with-eval-after-load 'rfn-eshadow
+    ;; This works with `file-name-shadow-mode' enabled.  When you are in
+    ;; a sub-directory and use, say, `find-file' to go to your home '~/'
+    ;; or root '/' directory, Vertico will clear the old path to keep
+    ;; only your current input.
+    (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
+  )
+
+(use-package rfn-eshadow
+  :ensure nil
+  :hook (minibuffer-setup . cursor-intangible-mode)
+  :config
+  (setq resize-mini-windows t)
+  (setq read-answer-short t) ; also check `use-short-answers' for Emacs28
+  (setq echo-keystrokes 0.25)
+
+  ;; Do not allow the cursor to move inside the minibuffer prompt.  I
+  ;; got this from the documentation of Daniel Mendler's Vertico
+  ;; package: <https://github.com/minad/vertico>.
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+
+  ;; MCT has a variant of this built-in.
+  (unless (eq prot-emacs-completion-ui 'mct)
+    ;; Add prompt indicator to `completing-read-multiple'.  We display
+    ;; [`completing-read-multiple': <separator>], e.g.,
+    ;; [`completing-read-multiple': ,] if the separator is a comma.  This
+    ;; is adapted from the README of the `vertico' package by Daniel
+    ;; Mendler.  I made some small tweaks to propertize the segments of
+    ;; the prompt.
+    (defun crm-indicator (args)
+      (cons (format "[`completing-read-multiple': %s]  %s"
+                    (propertize
+                     (replace-regexp-in-string
+                      "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                      crm-separator)
+                     'face 'error)
+                    (car args))
+            (cdr args)))
+
+    (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
+
+  (file-name-shadow-mode 1))
 
 (use-package marginalia
   :ensure t
@@ -94,6 +140,7 @@
   ("M-s M-o" . consult-outline)
   ("M-s M-l" . consult-line)
   ("M-s M-k" . consult-kmacro)
+  ("M-s M-r" . consult-register)
   :config
   (setq consult-find-args
         (concat "find . -not ( "
@@ -147,16 +194,7 @@
   (setq embark-verbose-indicator-nested nil) ; I think I don't have them, but I do not want them either
   (setq embark-verbose-indicator-buffer-sections '(bindings))
   (setq embark-verbose-indicator-excluded-actions
-        '(embark-cycle embark-act-all embark-collect embark-export embark-insert))
-  )
-
-(use-package imenu-list
-  :ensure t
-  :config
-  (setq imenu-list-idle-update-delay 0.0)
-  (setq org-imenu-depth 2)
-  :bind
-  (("C-`" . imenu-list-smart-toggle)))
+        '(embark-cycle embark-act-all embark-collect embark-export embark-insert)))
 
 ;; Savehist
 (setq savehist-file (locate-user-emacs-file "savehist"))

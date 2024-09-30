@@ -121,11 +121,6 @@
    ("C-c n l" . denote-find-link)
    ("C-c n L" . denote-find-backlink)))
 
-(use-package markdown-mode
-  :ensure t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
-
 ;;; Focus mode for writing
 
 ;; Center line scrolling for focused writing
@@ -205,9 +200,5 @@
   :ensure t
   :config
   (pdf-tools-install))
-
-(use-package nov
-  :ensure t
-  )
 
 (provide 'bard-emacs-writing)

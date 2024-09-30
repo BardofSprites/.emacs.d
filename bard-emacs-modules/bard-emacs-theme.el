@@ -139,6 +139,12 @@ The exact color values are taken from the active Modus theme."
         modus-themes-bold-constructs nil
         modus-themes-completions '((t . (extrabold)))
         modus-themes-prompts '(extrabold))
+  (setq modus-themes-common-palette-overrides
+        `((fringe unspecified)
+          (bg-line-number-active bg-hl-line)
+          (bg-line-number-inactive unspecified)
+          (fg-line-number-active fg-main)
+          ))
   ;; org customization
   (setq org-priority-faces
         '((?A . (:inherit (bold next-error)))
@@ -146,31 +152,6 @@ The exact color values are taken from the active Modus theme."
           (?C . (:inherit (shadow org-priority)))))
 
   (load-theme 'modus-vivendi t))
-
-(use-package theme-buffet
-  :ensure t
-  :defer nil
-  :bind
-  (("<f6>" . theme-buffet-a-la-carte))
-  :config
-  (setq theme-buffet-menu 'end-user)
-  (setq theme-buffet-end-user
-        '(:night
-          (ef-autumn ef-duo-dark ef-night ef-winter ef-dark)
-          :twilight
-          (ef-bio ef-cherie modus-vivendi)
-          :morning
-          (ef-elea-light ef-maris-light ef-spring)
-          :day
-          (ef-frost ef-light ef-trio-light modus-operandi)
-          :afternoon
-          (ef-cyprus ef-arbutus ef-day ef-duo-light ef-kassio ef-melissa-light ef-summer modus-operandi-tinted)
-          :evening
-          (ef-elea-dark ef-maris-dark ef-melissa-dark ef-symbiosis ef-trio-dark)))
-  ;; (theme-buffet-a-la-carte)
-  ;; (theme-buffet-timer-hours 1)
-  ;; (theme-buffet-mode t)
-  )
 
 ;;;; Fonts
 (use-package fontaine
@@ -251,37 +232,6 @@ The exact color values are taken from the active Modus theme."
 
   (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
 
-;;; Cursor appearance (cursory)
-;; Read the manual: <https://protesilaos.com/emacs/cursory>.
-(use-package cursory
-  :ensure t
-  :if (display-graphic-p)
-  :config
-  (setq cursory-presets
-        '((box
-           :blink-cursor-interval 1.0)
-          (bar
-           :cursor-type (bar . 2)
-           :blink-cursor-interval 1.0)
-          (box-no-blink
-           :blink-cursor-mode -1)
-          (underscore
-           :cursor-type (hbar . 3)
-           :blink-cursor-interval 1.0)
-          (t                            ; the default values
-           :cursor-type box
-           :cursor-in-non-selected-windows hollow
-           :blink-cursor-mode 1
-           :blink-cursor-blinks 10
-           :blink-cursor-interval 0.2
-           :blink-cursor-delay 0.2)))
-
-  (cursory-set-preset (or (cursory-restore-latest-preset) 'box))
-  :hook
-  (kill-emacs . cursory-store-latest-preset)
-  :bind
-  ("C-c p" . cursory-set-preset))
-
 (use-package rainbow-mode
   :ensure t)
 
@@ -291,22 +241,6 @@ The exact color values are taken from the active Modus theme."
   (interactive)
   (dolist (i custom-enabled-themes)
     (disable-theme i)))
-
-;; toggle mode-line
-;; take from: https://lists.gnu.org/archive/html/help-gnu-emacs/2022-11/msg00695.html
-;; (use-package emacs
-;;   :bind
-;;   (("<f6>" . bard/toggle-mode-line))
-;;   :config
-;;   (defvar-local old-mode-line nil)
-
-;;  (defun bard/toggle-mode-line ()
-;;    (interactive)
-;;    (setq-local mode-line-format
-;;                (if old-mode-line
-;;                    (setq mode-line-format old-mode-line)
-;;                  (setq old-mode-line mode-line-format
-;;                        mode-line-format nil)))))
 
 (provide 'bard-emacs-theme)
 

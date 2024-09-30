@@ -47,46 +47,21 @@
   :ensure t
   :config
   (setq spacious-padding-widths
-        '( :internal-border-width 30
+        '( :internal-border-width 20
            :header-line-width 4
            :mode-line-width 6
            :tab-width 4
-           :right-divider-width 30
-           :left-fringe-width 15
-           :right-fringe-width 15
+           :right-divider-width 20
+           :left-fringe-width 0
+           :right-fringe-width 0
            :scroll-bar-width 0))
-  (spacious-padding-mode t)
-  )
+  (spacious-padding-mode t))
 
 ;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
 (use-package hl-todo
   :ensure t
   :init
   (global-hl-todo-mode t))
-
-;; Show avaiable key chords
-(use-package which-key
-  :ensure t
-  :init
-  (which-key-mode 1))
-
-(use-package nerd-icons
-  :ensure t)
-
-(use-package nerd-icons-completion
-  :ensure t
-  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
-
-(use-package nerd-icons-corfu
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
-(use-package nerd-icons-dired
-  :ensure t
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
 
 (provide 'bard-emacs-ui)
 

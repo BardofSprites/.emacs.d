@@ -35,11 +35,6 @@
 (setq org-id-link-to-org-use-id t)
 (setq org-link-keep-stored-after-insertion nil)
 
-(use-package org-cliplink
-  :ensure t
-  :bind
-  ("C-c z" . org-cliplink))
-
 ;; Making org mode look nice
 (setq org-startup-indented t
       org-hide-emphasis-markers t

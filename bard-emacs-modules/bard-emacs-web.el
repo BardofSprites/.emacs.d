@@ -27,7 +27,7 @@
 (use-package elfeed
   :ensure t
   :config
-  (global-set-key (kbd "C-c e") 'elfeed)
+  (global-set-key (kbd "C-c r") 'elfeed)
   (setq elfeed-search-filter "+unread -academia"))
 
 (use-package elfeed-org
@@ -48,10 +48,8 @@
 ;;; Web Browsing (EWW and Firefox/Librewolf)
 
 (use-package eww
+  :defer t
   :config
-  (setq browse-url-browser-function 'eww-browse-url)
-  (setq browse-url-secondary-browser-function 'browse-url-default-browser)
-
   (setq browse-url-handlers
         '(("wikipedia\\.org" . eww-browse-url)
           ;; ("github" . browse-url-chromium)
