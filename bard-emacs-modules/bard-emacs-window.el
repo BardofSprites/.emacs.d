@@ -14,21 +14,9 @@
   (setq window-min-height 3)
   (setq window-min-width 30))
 
-(use-package eyebrowse
-  :ensure t
-  :config
-  (eyebrowse-mode t)
-  :bind*
-  (("M-0" . eyebrowse-switch-to-window-config-0)
-   ("M-1" . eyebrowse-switch-to-window-config-1)
-   ("M-2" . eyebrowse-switch-to-window-config-2)
-   ("M-3" . eyebrowse-switch-to-window-config-3)
-   ("M-4" . eyebrowse-switch-to-window-config-4)
-   ("M-5" . eyebrowse-switch-to-window-config-5)
-   ("M-6" . eyebrowse-switch-to-window-config-6)
-   ("M-7" . eyebrowse-switch-to-window-config-7)
-   ("M-8" . eyebrowse-switch-to-window-config-8)
-   ("M-9" . eyebrowse-switch-to-window-config-9)))
+;; (use-package beframe
+;;   :ensure t
+;;   )
 
 (use-package windmove
   :bind*

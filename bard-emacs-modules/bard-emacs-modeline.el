@@ -1,3 +1,5 @@
+(require 'bard-modeline)
+
 ;;; Mode line
 (setq mode-line-compact nil) ; Emacs 28
 (setq mode-line-right-align-edge 'right-margin)
@@ -18,8 +20,9 @@
                 prot-modeline-flymake
                 prot-modeline-eglot
                 "  "
-                prot-modeline-misc-info
-                prot-modeline-notmuch-indicator))
+                prot-modeline-notmuch-indicator
+                " "
+                prot-modeline-misc-info))
 
 (with-eval-after-load 'spacious-padding
   (defun prot/modeline-spacious-indicators ()

@@ -1,22 +1,27 @@
 ;; Generic variables for modes
-(use-package emacs
+(use-package whitespace
+  :ensure nil
+  :demand t
+  :config
+  (setq whitespace-style '(face
+                           tabs
+                           spaces
+                           trailing
+                           space-before-tab
+                           newline indentation
+                           empty space-after-tab
+                           space-mark tab-mark))
+  :hook
+  (prog-mode . whitespace-mode))
+
+(use-package display-line-numbers
+  :ensure nil
+  :demand t
   :bind
   (("<f12>" . display-line-numbers-mode))
+  :hook (prog-mode . display-line-numbers-mode)
   :config
-  (setq display-line-numbers-type 'relative)
-  (setq whitespace-style '(face tabs spaces trailing space-before-tab newline indentation empty space-after-tab space-mark tab-mark)))
-
-;; display line numbers custom mode
-(define-minor-mode bard/display-line-numbers-mode
-  "Toggle `display-line-numbers-mode' and  `hl-line-mode' in tandem"
-  :init-value nil
-  :global nil
-  (if (bard/display-line-numbers-mode
-       (progn
-	 (display-line-numbers-mode 1)
-	 (hl-line-mode 1))
-       (display-line-numbers-mode -1)
-       (hl-line-mode -1))))
+  (setq display-line-numbers-type 'relative))
 
 ;; padding for everything
 (use-package spacious-padding
@@ -36,8 +41,10 @@
 ;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
 (use-package hl-todo
   :ensure t
-  :init
-  (global-hl-todo-mode t))
+  :hook
+  (prog-mode . hl-todo-mode)
+  :config
+  (setq hl-todo-highlight-punctuation ":"))
 
 (provide 'bard-emacs-ui)
 

@@ -145,7 +145,7 @@
 (use-package breadcrumb
   :ensure t
   :hook
-  (prog-mode . breadcrumb-mode))
+  (prog-mode . breadcrumb-local-mode))
 
 ;; running emacs as server
 (require 'server)

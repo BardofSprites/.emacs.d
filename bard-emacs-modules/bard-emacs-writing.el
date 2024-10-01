@@ -1,10 +1,12 @@
 ;;; Input related settings
 
 (use-package emacs
-  :ensure t
+  :ensure nil
+  :demand t
   :bind
   (("C-x i" . insert-char)
-   ("M-z"   . zap-to-char))
+   ("M-z"   . zap-to-char)
+   ("<f10>"  . toggle-input-method))
   :config
   ;;; Sentence size
   (setq sentence-end-double-space nil)
