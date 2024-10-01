@@ -31,17 +31,10 @@
 (global-set-key (kbd "M-z") nil)
 
 ;; Add the directories to the load path
-;; (add-to-list 'load-path "~/.emacs.d/elisp/")
-;; (add-to-list 'load-path "~/.emacs.d/old-ada/")
-(add-to-list 'load-path (expand-file-name "bard-elisp" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "bard-emacs-modules" user-emacs-directory))
-
-;; Function to load all .el files in a directory
-(defun load-directory (dir)
-  "Load all .el files in the specified directory."
-  (dolist (file (directory-files dir t "\\.el$"))
-    (message "Loading file: %s" file)
-    (load file)))
+(mapc
+ (lambda (string)
+   (add-to-list 'load-path (locate-user-emacs-file string)))
+ '("bard-elisp" "bard-emacs-modules" "old-ada"))
 
 ;; Esc key quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -73,25 +66,9 @@
  '(eshell project-eshell overwrite-mode iconify-frame diary))
 
 ;;; Packages
-(add-to-list 'load-path "~/.emacs.d/elisp/")
-(require 'package)
-
 (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
-			             ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-			             ("melpa" . "https://melpa.org/packages/")))
-
-(package-initialize)
-(unless package-archive-contents
- (package-refresh-contents))
-
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-   (package-install 'use-package))
-
-(require 'use-package)
-
-;; Package cache
-(setq package-enable-at-startup t)
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                         ("melpa" . "https://melpa.org/packages/")))
 
 ;;; MACROS
 
@@ -115,14 +92,24 @@ making an abbreviation to a function."
             (seq-split definitions 2)))
      (error "%s is not an abbrev table" ,table)))
 
-;; Load all .el files in the bard-elisp directory
-(load-directory (expand-file-name "bard-elisp" user-emacs-directory))
+(require 'bard-emacs-anki)
+(require 'bard-emacs-calendar)
+(require 'bard-emacs-completion)
+(require 'bard-emacs-dired)
+(require 'bard-emacs-email)
+(require 'bard-emacs-emms)
+(require 'bard-emacs-eshell)
+(provide 'bard-emacs-git)
+(require 'bard-emacs-essentials)
+(require 'bard-emacs-modeline)
+(require 'bard-emacs-org)
+(provide 'bard-emacs-prog)
+(require 'bard-emacs-theme)
+(require 'bard-emacs-ui)
+(require 'bard-emacs-web)
+(require 'bard-emacs-window)
+(require 'bard-emacs-writing)
 
-;; Load all .el files in the bard-emacs-modules directory
-(load-directory (expand-file-name "bard-emacs-modules" user-emacs-directory))
-
-;; (load-directory (expand-file-name "old-ada" user-emacs-directory))
-
-;; (load-file (expand-file-name "private.el" user-emacs-directory))
+(load-library "bard-emacs-prog.el")
 
 (provide 'init)
