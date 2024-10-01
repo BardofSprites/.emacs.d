@@ -1,5 +1,9 @@
 (use-package eshell
+  :ensure nil
+  :bind
+  (("C-z e" . eshell-switcher))
   :config
+  (require 'bard-eshell)
   ;; (setq eshell-banner-message "Time for another recreational programming session.\n\n")
   (setq eshell-banner-message
         '(format "%s %s\n %s\n"
@@ -23,12 +27,15 @@
 	      (defalias (car alias) (cdr alias)))
         bard/eshell-aliases))
 
-(define-key global-map (kbd "C-z e") #'eshell-switcher)
-(with-eval-after-load "esh-mode"
-  (define-key eshell-mode-map (kbd "C-c f") #'bard/eshell-find-file-at-point)
-  (define-key eshell-mode-map (kbd "C-c h") #'prot-eshell-narrow-output-highlight-regexp)
-  (define-key eshell-mode-map (kbd "C-c d") #'prot-eshell-complete-recent-dir)
-  (define-key eshell-mode-map (kbd "M-k") #'eshell-kill-input)
-  (define-key eshell-mode-map (kbd "C-c C-e") #'prot-eshell-export))
+(use-package eshell
+  :ensure nil
+  :after esh-mode
+  :bind
+  (:map eshell-mode-map
+        ("C-c C-e" . prot-eshell-export)
+        ("M-k"     . eshell-kill-input)
+        ("C-c C-d"   . prot-eshell-complete-recent-dir)
+        ("C-c C-h"   . prot-eshell-narrow-output-highlight-regexp)
+        ("C-c C-f"   . bard/eshell-find-file-at-point)))
 
 (provide 'bard-emacs-eshell)

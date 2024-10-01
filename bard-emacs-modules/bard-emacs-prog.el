@@ -1,33 +1,18 @@
-;; Input methods
-(use-package emacs
-  :bind
-  (("<f10>" . toggle-input-method)))
-
-(use-package prog-mode
-  :hook
-  ((prog-mode . display-line-numbers-mode)
-   (prog-mode . whitespace-mode)
-   (prog-mode . hl-todo-mode)))
-
 (use-package haskell-mode
+  :ensure t
   :hook
   ((haskell-mode . interactive-haskell-mode)
    (haskell-mode . haskell-doc-mode)
    (haskell-mode . haskell-indent-mode))
-  :bind
-  (:map haskell-mode-map ("C-`" . complete)))
+  :config
+  (setq haskell-interactive-popup-errors nil))
 
 ;; CPP Mode
-(use-package prog-mode
+(use-package emacs
   :config
   (setq-default c-basic-offset 4))
 
-;;; Haskell
-
-;; disable ghci popups
-(use-package haskell-mode
-  :config
-  (setq haskell-interactive-popup-errors nil))
+;; Haskell
 
 (use-package emacs
   :config
@@ -39,8 +24,9 @@
     (setenv "PATH" (concat bard/ghcup-path ":" (getenv "PATH")))
     (add-to-list 'exec-path bard/ghcup-path)))
 
-;;; Lisp
+;; Lisp
 (use-package clojure-mode
+  :ensure t
   :bind
   (:map clojure-mode-map
 	    ("C-<tab>" . cider-switch-to-repl-buffer))
@@ -48,6 +34,7 @@
   (clojure-mode . paredit-mode))
 
 (use-package cider
+  :ensure t
   :bind
   (:map cider-repl-mode-map
 	("C-<tab>" . cider-switch-to-last-clojure-buffer)))
@@ -81,9 +68,6 @@
   (:map c++-mode-map
         ("C-c C-c" . project-compile)))
 
-(use-package haskell-mode
-  :ensure t)
-
 (use-package flycheck
   :ensure t
   :init
@@ -98,14 +82,14 @@
 		(ggtags-mode 1)))))
 
 ;; Version control
-(use-package magit
-  :ensure t
-  :bind
-  ("C-c g" . magit))
+(define-key global-map (kbd "C-c g") #'magit-status)
+(setq magit-repository-directories
+        '(("~/Code"          . 1)
+          ("~/Repositories"  . 1)
+          ("~/dotfiles-stow" . 0)))
 
 (use-package ada-mode
-  :after dired
-  :load-path "~/.emacs.d/old-ada/"
+  :load-path "~/.emacs.d/old-ada"
   :bind
   (:map ada-mode-map
 	("C-j" . dired-jump)))
@@ -119,4 +103,3 @@
   (add-hook 'prog-mode-hook 'diff-hl-mode))
 
 (provide 'bard-emacs-prog)
-;;; bard-emacs-prog.el ends here
