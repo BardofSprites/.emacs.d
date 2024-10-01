@@ -120,3 +120,4 @@ next invocation of 'notmuch new'."
       (shell-command
        (format "notmuch search --output=files --format=text0 tag:%s | xargs -r0 rm" del-tag)
        t))))
+(provide 'bard-email)

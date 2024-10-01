@@ -1,3 +1,5 @@
+(require 'bard-calendar)
+
 (setq org-directory "~/Notes/denote/")
 ;; symlinked file to shorten denote file name in agenda buffers
 (setq org-agenda-files (list "~/Notes/denote/todo.org"))
@@ -14,9 +16,6 @@
 (setq org-todo-keywords
       '((sequence "TODO(t)" "|" "DONE(d)" "KILLED(k)")
         (sequence "MEET(m)" "|" "MET(M)")))
-
-;; Org Agenda Faces
-(setq org-ellipsis "↲")
 
 ;;; Org Agenda
 

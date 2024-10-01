@@ -1,3 +1,5 @@
+(require 'bard-email)
+
 ;; General `notmuch' ui configuration
 
 (use-package notmuch

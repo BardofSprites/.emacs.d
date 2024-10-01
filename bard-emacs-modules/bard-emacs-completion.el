@@ -122,7 +122,7 @@
   (("C-," . bard-embark-act-no-quit)
    ("C-." . bard-embark-act-quit))
   :config
-
+  (require 'bard-embark)
   (setq embark-keymap-alist
         '((buffer bard-embark-buffer-map)
           (command bard-embark-command-map)
