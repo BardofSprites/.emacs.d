@@ -48,6 +48,13 @@ The exact color values are taken from the active Ef theme."
           (agenda-structure . (variable-pitch light 1.9))
           (t . 1.1)))
 
+  ;; better faces in overrides
+  (setq ef-themes-common-palette-overrides
+        `((fringe unspecified)
+          (bg-line-number-active bg-hl-line)
+          (bg-line-number-inactive unspecified)
+          (fg-line-number-active fg-main)))
+
   ;; verbatim need higher contrast for org mode
   (setq ef-elea-dark-palette-overrides
         '((prose-verbatim yellow-cooler)))
@@ -181,6 +188,7 @@ The exact color values are taken from the active Modus theme."
            :variable-pitch-family "Berkeley Mono"
            :fixed-pitch-family "Berkeley Mono"
            :mode-line-active-family "Berkeley Mono"
+           :mode-line-inactive-family "Berkeley Mono"
            )
           (t
            :default-family "Monospace"
