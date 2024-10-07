@@ -70,7 +70,7 @@
 
 (use-package flycheck
   :ensure t
-  :init
+  :config
   (global-flycheck-mode t))
 
 (use-package ggtags

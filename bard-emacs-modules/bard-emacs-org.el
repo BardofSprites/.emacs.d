@@ -5,7 +5,7 @@
 (require 'ox)
 (require 'org-habit)
 
-(use-package org-mode
+(use-package org
   :bind
   (:map org-mode-map
         ("C-M-a" . backward-paragraph)

@@ -25,7 +25,7 @@
       org-clock-mode-line-total 'current)
 (org-clock-persistence-insinuate)
 
-(use-package org-mode
+(use-package org
   :demand t
   :hook
   ((org-clock-out . bard/org-clock-update-mode-line)))
