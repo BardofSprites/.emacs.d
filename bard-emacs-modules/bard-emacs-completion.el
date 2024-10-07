@@ -29,13 +29,6 @@
         '(read-only t cursor-intangible t face minibuffer-prompt))
 
   ;; MCT has a variant of this built-in.
-  (unless (eq prot-emacs-completion-ui 'mct)
-    ;; Add prompt indicator to `completing-read-multiple'.  We display
-    ;; [`completing-read-multiple': <separator>], e.g.,
-    ;; [`completing-read-multiple': ,] if the separator is a comma.  This
-    ;; is adapted from the README of the `vertico' package by Daniel
-    ;; Mendler.  I made some small tweaks to propertize the segments of
-    ;; the prompt.
     (defun crm-indicator (args)
       (cons (format "[`completing-read-multiple': %s]  %s"
                     (propertize
@@ -46,7 +39,7 @@
                     (car args))
             (cdr args)))
 
-    (advice-add #'completing-read-multiple :filter-args #'crm-indicator))
+    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
   (file-name-shadow-mode 1))
 
@@ -171,7 +164,7 @@
 (setq history-delete-duplicates t)
 (setq savehist-save-minibuffer-history t)
 (setq savehist-additional-variables '(register-alist kill-ring))
-(savehist-mode 1)
+(savehist-mode t)
 
 ;;; abbrev-mode
 (setq abbrev-file-name (locate-user-emacs-file "abbrevs"))
