@@ -147,6 +147,42 @@
   :hook
   (prog-mode . breadcrumb-local-mode))
 
+(use-package vundo
+  :ensure t
+  :defer 1
+  :bind
+  ( :map vundo-mode-map
+    ("C-/" . vundo-backward)
+    ("C-?" . vundo-forward)
+    ("g" . vundo-goto-last-saved)
+    ("p" . vundo-backward)
+    ("n" . vundo-forward)
+    ("f" . vundo-next)
+    ("b" . vundo-previous))
+  :config
+  (setq vundo-glyph-alist vundo-unicode-symbols)
+
+  (defvar prot/vundo-undo-functions '(undo undo-only undo-redo)
+    "List of undo functions to check if we need to visualise the undo ring.")
+
+  (defvar prot/vundo-undo-command #'undo
+    "Command to call if we are not going to visualise the undo ring.")
+
+  (defun prot/vundo-if-repeat-undo (&rest args)
+    "Use `vundo' if the last command is among `prot/vundo-undo-functions'.
+In other words, start visualising the undo ring if we are going
+to be cycling through the edits."
+    (interactive)
+    (if (and (member last-command prot/vundo-undo-functions)
+             (not undo-in-region))
+        (call-interactively 'vundo)
+      (apply args)))
+
+  (mapc
+   (lambda (fn)
+     (advice-add fn :around #'prot/vundo-if-repeat-undo))
+   prot/vundo-undo-functions))
+
 ;; running emacs as server
 (require 'server)
 (setq server-client-instructions nil)
