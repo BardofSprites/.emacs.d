@@ -85,3 +85,5 @@
 ;; for those.  I want it to be silent.
 (defun bard-embark-no-minimal-indicator ())
 (advice-add #'embark-minimal-indicator :override #'bard-embark-no-minimal-indicator)
+
+(provide 'bard-embark)
