@@ -86,7 +86,8 @@
 (setq magit-repository-directories
         '(("~/Code"          . 1)
           ("~/Repositories"  . 1)
-          ("~/dotfiles-stow" . 0)))
+          ("~/dotfiles-stow" . 0)
+          ("~/.emacs.d"      . 0)))
 
 (use-package ada-mode
   :load-path "~/.emacs.d/old-ada"
