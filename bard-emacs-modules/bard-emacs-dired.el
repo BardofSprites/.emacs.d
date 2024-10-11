@@ -21,7 +21,15 @@
    ;; attachments for email through dired
    (dired-mode . turn-on-gnus-dired-mode)))
 
-(setq dired-dwim-target t)
+(use-package dired
+  :ensure nil
+  :defer 1
+  :config
+  (setq dired-dwim-target t)
+  ;; (setq dired-listing-switches "-lXGh --group-directories-first")
+  (setq dired-listing-switches
+        "-AgGFhlv --group-directories-first --time-style=long-iso")
+  )
 
 ;; Image dired
 (use-package image-dired
