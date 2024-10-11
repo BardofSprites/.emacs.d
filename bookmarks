@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("bard-emacs.org"
+(("media tracker"
+ (filename . "~/Notes/denote/20240328T220037--media-tracker__self.org")
+ (front-context-string . "xChristianity]]\n")
+ (rear-context-string . "ons? : r/Orthodo")
+ (position . 10357)
+ (last-modified 26377 11434 493507 76000))
+("bard-emacs.org"
  (filename . "~/Notes/emacs/bard-emacs.org")
  (front-context-string . "#+TITLE: My Emac")
  (rear-context-string)
