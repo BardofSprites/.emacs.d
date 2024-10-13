@@ -104,5 +104,10 @@
    ("C-x <up>" . next-buffer)
    ("C-x <down>" . previous-buffer)))
 
+(use-package emacs
+  :ensure nil
+  :bind
+  ("C-x w t" . tear-off-window))
+
 (provide 'bard-emacs-window)
 ;;; bard-emacs-window.el ends here
