@@ -111,7 +111,7 @@
                                    (bard/scroll-center-cursor-mode t)))
    :bind
   (("C-c n n" . denote)
-   ("C-c R" . denote-region)
+   ("C-c n <SPC>" . denote-region)
    ("C-c n o" . denote-sort-dired)
    ("C-c n j" . denote-journal-extras-new-entry)
    ("C-c n r" . denote-rename-file-using-front-matter)
