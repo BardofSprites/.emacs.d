@@ -1,9 +1,5 @@
 (use-package haskell-mode
   :ensure t
-  :hook
-  ((haskell-mode . interactive-haskell-mode)
-   (haskell-mode . haskell-doc-mode)
-   (haskell-mode . haskell-indent-mode))
   :config
   (setq haskell-interactive-popup-errors nil))
 
@@ -80,6 +76,15 @@
 	    (lambda ()
 	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
 		(ggtags-mode 1)))))
+
+(use-package compile
+  :ensure nil
+  :defer 2
+  :config
+  (require 'bard-compile)
+  (setq compilation-scroll-output t
+        compilation-auto-jump-to-first-error t)
+  )
 
 ;; Version control
 (define-key global-map (kbd "C-c g") #'magit-status)
