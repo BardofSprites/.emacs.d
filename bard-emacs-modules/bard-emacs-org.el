@@ -15,7 +15,11 @@
         ("C-c l" . org-store-link)
         )
   :bind
-  (("C-c c" . org-capture)))
+  (("C-c c" . org-capture))
+  :config
+  (setq org-num-max-level 2)
+  :hook
+  ((org-mode . org-num-mode)))
 
 ;; Org Variables
 (setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
@@ -148,5 +152,12 @@
   ("C-M-y" . org-download-screenshot)
   :config
   (require 'org-download))
+
+(use-package org-modern
+  :ensure t
+  :config
+  (setq org-modern-star nil
+        org-modern-block-name nil)
+  (global-org-modern-mode))
 
 (provide 'bard-emacs-org)
