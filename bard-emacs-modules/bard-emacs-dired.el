@@ -3,6 +3,14 @@
   :config
   (setq dired-subtree-use-backgrounds nil))
 
+(use-package dired-preview
+  :ensure t
+  :bind
+  (:map dired-mode-map
+        ("P" . dired-preview-mode))
+  :config
+  (setq dired-preview-delay 0.0))
+
 (use-package dired
   :bind*
   (("C-j" . dired-jump))
