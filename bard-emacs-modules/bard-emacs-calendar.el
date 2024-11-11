@@ -75,8 +75,8 @@
   (setq holiday-other-holidays (append holiday-other-holidays orthodox-christian-new-calendar-holidays))
 
   (setq holiday-bahai-holidays nil
-	    holiday-christian-holidays nil
-	    holiday-islamic-holidays nil))
+        holiday-christian-holidays nil
+        holiday-islamic-holidays nil))
 
 (use-package calfw
   :ensure t
@@ -84,7 +84,7 @@
   (:map cfw:calendar-mode-map
         ("g" . cfw:refresh-calendar-buffer))
   :bind
-  ("<f2>" . cfw:open-org-calendar))
+  ("<f2>" . bard/open-calendar))
 
 (use-package calfw-org
   :ensure t)

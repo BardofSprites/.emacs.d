@@ -92,7 +92,8 @@
         '(("~/Code"          . 1)
           ("~/Repositories"  . 1)
           ("~/dotfiles-stow" . 0)
-          ("~/.emacs.d"      . 0)))
+          ("~/.emacs.d"      . 0)
+          ("~/Pictures/wallpaper"      . 0)))
 
 (use-package ada-mode
   :load-path "~/.emacs.d/old-ada"
