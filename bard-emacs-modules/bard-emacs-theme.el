@@ -1,3 +1,5 @@
+(require 'bard-theme)
+
 ;; declare all themes as safe (i trust developers)
 (setq custom-safe-themes t)
 
@@ -134,66 +136,6 @@ The exact color values are taken from the active Modus theme."
 (use-package fontaine
   :ensure t
   :config
-  (setq fontaine-presets
-        '((default
-           :default-height 160
-           :default-family "Iosevka Comfy"
-           :variable-pitch-family "Iosevka Comfy Motion"
-           :variable-pitch-height 1.0
-           :fixed-pitch-family "Iosevka Comfy"
-           :fixed-pitch-height 1.0
-           :bold-weight bold
-           :mode-line-active-family "Iosevka Comfy Motion"
-           :mode-line-inactive-family "Iosevka Comfy Motion"
-           :mode-line-active-height 160
-           :mode-line-inactive-height 160
-           )
-          (wide
-           :inherit default
-           :default-height 150
-           :default-family "Iosevka Comfy Wide"
-           :fixed-pitch-family "Iosevka Comfy Wide"
-           :mode-line-active-family "Iosevka Comfy Wide Motion Duo"
-           :mode-line-inactive-family "Iosevka Comfy Wide Motion Duo"
-           :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
-           :mode-line-active-height 150
-           :mode-line-inactive-height 150)
-          (large
-           :inherit default
-           :variable-pitch-family "Iosevka Comfy Wide Motion"
-           :default-height 170
-           :mode-line-active-height 150
-           :mode-line-inactive-height 150
-           )
-          (huge
-           :inherit laptop
-           :variable-pitch-family "Iosevka Comfy Wide Motion"
-           :default-height 200
-           :mode-line-active-height 170
-           :mode-line-inactive-height 170
-           )
-          (comic
-           :inherit default
-           :default-family "Comic Code"
-           :variable-pitch-family "Comic Code"
-           :fixed-pitch-family "Comic Code"
-           :mode-line-active-family "Comic Code"
-           )
-          (berkeley
-           :inherit desktop
-           :default-height 150
-           :mode-line-active-height 150
-           :mode-line-inactive-height 150
-           :default-family "Berkeley Mono"
-           :variable-pitch-family "Berkeley Mono"
-           :fixed-pitch-family "Berkeley Mono"
-           :mode-line-active-family "Berkeley Mono"
-           :mode-line-inactive-family "Berkeley Mono"
-           )
-          (t
-           :default-family "Monospace"
-           )))
-
   ;; save file
   (setq fontaine-latest-state-file
         (locate-user-emacs-file "fontaine-latest-state.eld"))
@@ -213,12 +155,7 @@ The exact color values are taken from the active Modus theme."
 (use-package rainbow-mode
   :ensure t)
 
-;; Switching themes
-(defun bard/disable-all-themes ()
-  "disable all active themes."
-  (interactive)
-  (dolist (i custom-enabled-themes)
-    (disable-theme i)))
+(global-set-key (kbd "<f6>") #'bard/select-theme)
 
 (provide 'bard-emacs-theme)
 
