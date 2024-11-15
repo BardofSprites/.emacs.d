@@ -62,13 +62,17 @@
   )
 
 ;; Version control
-(define-key global-map (kbd "C-c g") #'magit-status)
-(setq magit-repository-directories
-        '(("~/Code"          . 1)
-          ("~/Repositories"  . 1)
-          ("~/dotfiles-stow" . 0)
-          ("~/.emacs.d"      . 0)
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-repository-directories
+        '(("~/Code"                    . 1)
+          ("~/Repositories"            . 1)
+          ("~/dotfiles-stow"           . 0)
+          ("~/.emacs.d"                . 0)
           ("~/Pictures/wallpaper"      . 0)))
+  :bind ("C-c g" . magit-status)
+  )
 
 ;; (use-package ada-mode
 ;;   :load-path "~/.emacs.d/old-ada"
