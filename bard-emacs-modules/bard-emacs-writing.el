@@ -36,15 +36,6 @@
   (setq show-paren-when-point-inside-paren nil)
   (setq show-paren-context-when-offscreen 'overlay))
 
-;; Captain capitalization
-(use-package captain
-  :ensure t
-  :hook
-  (text-mode . captain-mode)
-  :bind
-  ("M-u" . captain-capitalize-word)
-  ("M-S-u" . captain-capitalize-sentence))
-
 ;; snippets
 
 (use-package tempel

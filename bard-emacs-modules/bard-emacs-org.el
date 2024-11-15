@@ -154,11 +154,4 @@
   :config
   (require 'org-download))
 
-;; (use-package org-modern
-;;   :ensure t
-;;   :config
-;;   (setq org-modern-star nil
-;;         org-modern-block-name nil)
-;;   (global-org-modern-mode))
-
 (provide 'bard-emacs-org)

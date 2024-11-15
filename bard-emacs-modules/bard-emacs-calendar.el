@@ -78,15 +78,4 @@
         holiday-christian-holidays nil
         holiday-islamic-holidays nil))
 
-(use-package calfw
-  :ensure t
-  :bind
-  (:map cfw:calendar-mode-map
-        ("g" . cfw:refresh-calendar-buffer))
-  :bind
-  ("<f2>" . bard/open-calendar))
-
-(use-package calfw-org
-  :ensure t)
-
 (provide 'bard-emacs-calendar)

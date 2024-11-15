@@ -21,20 +21,6 @@
     (add-to-list 'exec-path bard/ghcup-path)))
 
 ;; Lisp
-(use-package clojure-mode
-  :ensure t
-  :bind
-  (:map clojure-mode-map
-	    ("C-<tab>" . cider-switch-to-repl-buffer))
-  :hook
-  (clojure-mode . paredit-mode))
-
-(use-package cider
-  :ensure t
-  :bind
-  (:map cider-repl-mode-map
-	("C-<tab>" . cider-switch-to-last-clojure-buffer)))
-
 (use-package sly
   :ensure t
   :config
@@ -47,17 +33,6 @@
   :ensure t)
 
 ;; parens packages
-(use-package paredit
-  :ensure t)
-
-(use-package scheme-mode
-  :hook (scheme-mode . paredit-mode))
-
-(use-package lisp-mode
-  :hook (lisp-mode . paredit-mode))
-
-(use-package emacs-lisp-mode
-  :hook (emacs-lisp-mode . paredit-mode))
 
 (use-package c++-mode
   :bind
@@ -95,18 +70,10 @@
           ("~/.emacs.d"      . 0)
           ("~/Pictures/wallpaper"      . 0)))
 
-(use-package ada-mode
-  :load-path "~/.emacs.d/old-ada"
-  :bind
-  (:map ada-mode-map
-	("C-j" . dired-jump)))
-
-(use-package diff-hl
-  :ensure t
-  :after magit
-  (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-  :init
-  (add-hook 'prog-mode-hook 'diff-hl-mode))
+;; (use-package ada-mode
+;;   :load-path "~/.emacs.d/old-ada"
+;;   :bind
+;;   (:map ada-mode-map
+;; 	("C-j" . dired-jump)))
 
 (provide 'bard-emacs-prog)

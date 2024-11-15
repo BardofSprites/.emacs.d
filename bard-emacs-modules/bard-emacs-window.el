@@ -14,22 +14,6 @@
   (setq window-min-height 3)
   (setq window-min-width 30))
 
-(use-package winum
-  :ensure t
-  :bind
-  (("M-1" . winum-select-window-1)
-   ("M-2" . winum-select-window-2)
-   ("M-3" . winum-select-window-3)
-   ("M-4" . winum-select-window-4)
-   ("M-5" . winum-select-window-5)
-   ("M-6" . winum-select-window-6)
-   ("M-7" . winum-select-window-7)
-   ("M-8" . winum-select-window-8)
-   ("M-9" . winum-select-window-9))
-  :config
-  (setq winum-scope 'frame-local)
-  )
-
 (use-package windmove
   :bind*
   (("C-M-<up>" . windmove-up)
@@ -44,16 +28,29 @@
 (use-package emacs
   :config
   (setq display-buffer-alist
-        `(("\\`\\*Async Shell Command\\*\\'"
-	       (display-buffer-no-window))
-	      ("\\`\\*\\(Warnings\\|Compile-Log\\|tex-shell\\)\\*\\'"
-	       (display-buffer-no-window)
-	       (allow-no-window . t))
-	      ("\\*\\(Calendar\\|wclock\\).*"
-	       (display-buffer-reuse-mode-window display-buffer-below-selected)
-	       (dedicated . t)
-	       (window-height . fit-window-to-buffer))
-	      ("\\magit: .*"
+        `(;; no window
+          ("\\`\\*Async Shell Command\\*\\'"
+           (display-buffer-no-window))
+          ("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
+           (display-buffer-no-window)
+           (allow-no-window . t))
+          ;; bottom side window
+          ("\\*Org \\(Select\\|Note\\)\\*" ; the `org-capture' key selection and `org-add-log-note'
+           (display-buffer-in-side-window)
+           (dedicated . t)
+           (side . bottom)
+           (slot . 0)
+           (window-parameters . ((mode-line-format . none))))
+          ;; bottom buffer (NOT side window)
+          ((or . ((derived-mode . flymake-diagnostics-buffer-mode)
+                  (derived-mode . flymake-project-diagnostics-mode)
+                  (derived-mode . messages-buffer-mode)
+                  (derived-mode . backtrace-mode)))
+           (display-buffer-reuse-mode-window display-buffer-at-bottom)
+           (window-height . 0.3)
+           (dedicated . t)
+           (preserve-size . (t . t)))
+          ("\\magit: .*"
 	       (display-buffer-same-window)
 	       (inhibit-same-window . nil)
 	       (dedicated . t))
@@ -61,37 +58,72 @@
 	       (display-buffer-same-window)
 	       (inhibit-same-window . nil)
 	       (dedicated . t))
-	      ("\\*Embark Actions\\*"
+          ("\\*cfw-calendar\\*"
+	       (display-buffer-same-window)
+	       (inhibit-same-window . nil)
+	       (dedicated . t))
+          ("\\*Embark Actions\\*"
            (display-buffer-reuse-mode-window display-buffer-below-selected)
            (window-height . fit-window-to-buffer)
            (window-parameters . ((no-other-window . t)
                                  (mode-line-format . none))))
-	      ("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
-	       (display-buffer-reuse-mode-window display-buffer-below-selected))
-	      ;; error stuff
-	      ((or . ((derived-mode . flymake-diagnostics-buffer-mode)
-                  (derived-mode . flymake-project-diagnostics-mode)
-                  (derived-mode . messages-buffer-mode)
-                  (derived-mode . backtrace-mode)
-		          (derived-mode . cider-stacktrace-mode)))
-           (display-buffer-reuse-mode-window display-buffer-at-bottom)
-           (window-height . 0.3)
+          ("\\*\\(Output\\|Register Preview\\).*"
+           (display-buffer-reuse-mode-window display-buffer-at-bottom))
+          ;; below current window
+          ("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
+           (display-buffer-in-side-window)
+           (dedicated . t)
+           (side . bottom)
+           (slot . 0)
+           (window-parameters . ((mode-line-format . none))))
+          ("\\*\\vc-\\(incoming\\|outgoing\\|git : \\).*"
+           (display-buffer-reuse-mode-window display-buffer-below-selected)
+           (window-height . 0.1)
            (dedicated . t)
            (preserve-size . (t . t)))
-
-	      ((or . ((derived-mode . occur-mode)
+          ((derived-mode . reb-mode) ; M-x re-builder
+           (display-buffer-reuse-mode-window display-buffer-below-selected)
+           (window-height . 4) ; note this is literal lines, not relative
+           (dedicated . t)
+           (preserve-size . (t . t)))
+          ((or . ((derived-mode . occur-mode)
                   (derived-mode . grep-mode)
-		          (derived-mode . Man-mode)
                   (derived-mode . Buffer-menu-mode)
                   (derived-mode . log-view-mode)
                   (derived-mode . help-mode) ; See the hooks for `visual-line-mode'
-                  "\\*\\(|Buffer List\\|Occur\\|Man.*\\|Org Select\\|vc-change-log\\|eldoc.*\\).*"
+                  "\\*\\(|Buffer List\\|Occur\\|vc-change-log\\|eldoc.*\\).*"
                   prot-window-shell-or-term-p
-                  ,world-clock-buffer-name))
+                  ;; ,world-clock-buffer-name
+                  ))
            (prot-window-display-buffer-below-or-pop)
            (body-function . prot-window-select-fit-size))
-	      ))
+          ("\\*\\(Calendar\\|Bookmark Annotation\\|ert\\).*"
+           (display-buffer-reuse-mode-window display-buffer-below-selected)
+           (dedicated . t)
+           (window-height . fit-window-to-buffer))
+          ;; NOTE 2022-09-10: The following is for `ispell-word', though
+          ;; it only works because I override `ispell-display-buffer'
+          ;; with `prot-spell-ispell-display-buffer' and change the
+          ;; value of `ispell-choices-buffer'.
+          ("\\*ispell-top-choices\\*.*"
+           (display-buffer-reuse-mode-window display-buffer-below-selected)
+           (window-height . fit-window-to-buffer))
+          ;; same window
+
+          ;; NOTE 2023-02-17: `man' does not fully obey the
+          ;; `display-buffer-alist'.  It works for new frames and for
+          ;; `display-buffer-below-selected', but otherwise is
+          ;; unpredictable.  See `Man-notify-method'.
+          ((or . ((derived-mode . Man-mode)
+                  (derived-mode . woman-mode)
+                  "\\*\\(Man\\|woman\\).*"))
+           (display-buffer-same-window))))
   )
+
+(use-package frame
+  :ensure nil
+  :bind ("C-x u" . undelete-frame) ; I use only C-/ for `undo'
+  :hook (after-init . undelete-frame-mode))
 
 (use-package winner-mode
   :init
