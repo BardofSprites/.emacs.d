@@ -71,6 +71,23 @@
     (corfu-history-mode 1)
     (add-to-list 'savehist-additional-variables 'corfu-history)))
 
+(use-package cape
+  :ensure t
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-keyword)
+  (add-to-list 'completion-at-point-functions #'cape-abbrev))
+
+(use-package clang-capf
+  :ensure t
+  :config
+  (defun bard/clang-capf-init ()
+    "Add `clang-capf' to `completion-at-point-functions'."
+    (add-hook 'completion-at-point-functions #'clang-capf nil t))
+
+  (add-hook 'c-mode-hook #'bard/clang-capf-init))
+
 (use-package minibuffer
   :config
 ;;;; Completion styles
@@ -151,7 +168,7 @@
   ;; minimal indicator.  It shows cycling, which I never want to see
   ;; or do.
   (setq embark-mixed-indicator-both nil)
-  (setq embark-mixed-indicator-delay 1.0)
+  (setq embark-mixed-indicator-delay 0.1)
   (setq embark-indicators '(embark-mixed-indicator embark-highlight-indicator))
   (setq embark-verbose-indicator-nested nil) ; I think I don't have them, but I do not want them either
   (setq embark-verbose-indicator-buffer-sections '(bindings))

@@ -6,7 +6,10 @@
 ;; CPP Mode
 (use-package emacs
   :config
-  (setq-default c-basic-offset 4))
+  (setq-default c-basic-offset 4)
+  (setq c-default-style '((c-mode . "gnu")
+                          (java-mode . "java")
+                          (awk-mode . "awk"))))
 
 ;; Haskell
 
@@ -35,9 +38,25 @@
 ;; parens packages
 
 (use-package c++-mode
+  :ensure nil
   :bind
   (:map c++-mode-map
-        ("C-c C-c" . project-compile)))
+        ("C-c C-c" . project-compile))
+  :config
+  (defun bard/c++-completion-or-indent ()
+    "Complete if point is at a symbol; otherwise, indent."
+    (interactive)
+    (if (or (completion-at-point) (looking-at "\\_>"))
+        (completion-at-point)
+      (c-indent-line-or-region)))
+
+  (defun bard/setup-c++-mode ()
+    "Configure completion behavior for `c++-mode'."
+    (local-set-key (kbd "<tab>") 'bard/c++-completion-or-indent))
+
+  (add-hook 'c++-mode-hook #'bard/setup-c++-mode)
+  (add-hook 'c-mode-hook #'bard/setup-c++-mode)
+  )
 
 (use-package flycheck
   :ensure t
@@ -48,9 +67,11 @@
   :ensure t
   :config
   (add-hook 'c-mode-common-hook
-	    (lambda ()
-	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-		(ggtags-mode 1)))))
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                (ggtags-mode 1)
+                (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))
+            ))
 
 (use-package compile
   :ensure nil
