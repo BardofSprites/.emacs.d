@@ -141,5 +141,16 @@
   :bind
   ("C-x w t" . tear-off-window))
 
+(use-package tab-bar
+  :ensure nil
+  :config
+  (tab-bar-mode +1)
+
+  (setq tab-bar-tab-hints t
+        tab-bar-close-button-show nil
+        tab-bar-new-button-show nil
+        tab-bar-separator "  "
+        tab-bar-auto-width nil))
+
 (provide 'bard-emacs-window)
 ;;; bard-emacs-window.el ends here
