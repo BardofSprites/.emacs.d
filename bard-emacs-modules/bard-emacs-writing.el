@@ -134,6 +134,9 @@
 		               maximum-scroll-margin
 		               scroll-margin))
         (kill-local-variable `,local))))
+  (defun bard/cursor-centered-p ()
+    "Check if `bard/scroll-center-cursor-mode` is currently active."
+    (bound-and-true-p bard/scroll-center-cursor-mode))
   :bind
   (("C-c L" . bard/scroll-center-cursor-mode)))
 

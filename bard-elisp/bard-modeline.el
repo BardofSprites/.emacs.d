@@ -224,6 +224,15 @@ Specific to the current window's mode line.")
         (propertize " Narrow " 'face 'prot-modeline-indicator-cyan-bg)))
   "Mode line construct to report the multilingual environment.")
 
+;;;; Centered cursor indicator
+(defvar-local bard-modeline-centered-cursor
+    '(:eval
+      (when (and (mode-line-window-selected-p)
+                 (bard/cursor-centered-p)
+                 (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
+        (propertize " Center " 'face 'prot-modeline-indicator-yellow-bg)))
+  "Mode line construct to report the multilingual environment.")
+
 ;;;; Input method
 
 (defvar-local prot-modeline-input-method
@@ -519,6 +528,7 @@ Specific to the current window's mode line.")
 ;; variables will not work without it.
 (dolist (construct '(prot-modeline-kbd-macro
                      prot-modeline-narrow
+                     bard-modeline-centered-cursor
                      prot-modeline-input-method
                      prot-modeline-buffer-status
                      prot-modeline-evil

@@ -7,6 +7,7 @@
               '("%e"
                 prot-modeline-kbd-macro
                 prot-modeline-narrow
+                bard-modeline-centered-cursor
                 prot-modeline-input-method
                 prot-modeline-buffer-status
                 " "
