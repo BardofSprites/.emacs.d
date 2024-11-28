@@ -112,4 +112,22 @@ making an abbreviation to a function."
 
 (load-library "bard-emacs-prog.el")
 
+(defun bard/setup-initial-buffers ()
+  "Set up initial tabs for Org Agenda, EMMS, and todo.org file."
+  (interactive)
+  (bard/default-agenda)
+  (emms)
+  (find-file "~/Notes/denote/todo.org")
+  (unless (bound-and-true-p tab-bar-mode)
+    (tab-bar-mode 1))
+  (tab-bar-new-tab)
+  (switch-to-buffer "*Org Agenda*")
+  (tab-bar-new-tab)
+  (switch-to-buffer " *EMMS Playlist*")
+  (tab-bar-new-tab)
+  (switch-to-buffer "*scratch*"))
+
+(bard/setup-initial-buffers)
+
 (provide 'init)
+(put 'eshell 'disabled nil)
