@@ -55,7 +55,8 @@ The exact color values are taken from the active Ef theme."
         `((fringe unspecified)
           (bg-line-number-active bg-hl-line)
           (bg-line-number-inactive unspecified)
-          (fg-line-number-active fg-main)))
+          (fg-line-number-active fg-main)
+          (bg-tab-bar bg-dim)))
 
   ;; verbatim need higher contrast for org mode
   (setq ef-elea-dark-palette-overrides
@@ -123,7 +124,7 @@ The exact color values are taken from the active Modus theme."
           (bg-line-number-active bg-hl-line)
           (bg-line-number-inactive unspecified)
           (fg-line-number-active fg-main)
-          ))
+          (bg-tab-bar bg-dim)))
   ;; org customization
   (setq org-priority-faces
         '((?A . (:inherit (bold next-error)))
