@@ -65,7 +65,7 @@
            :default-family "Monospace"
            )))
 
-;; Switching themes
+;;; Switching themes
 (defun bard/disable-all-themes ()
   "disable all active themes."
   (interactive)
@@ -75,27 +75,25 @@
 (defvar bard/after-theme-load-hook nil
   "Hook that runs after a new theme is loaded using `bard/select-theme`.")
 
-(dolist (hook '(enable-theme-hook))
+(dolist (hook '(bard/after-theme-load-hook))
   (add-hook hook #'fontaine-apply-current-preset)
   (add-hook hook #'logos-update-fringe-in-buffers))
 
-(add-to-list 'enable-theme-functions #'logos-update-fringe-in-buffers)
-
-(add-to-list 'enable-theme-functions #'fontaine-apply-current-preset)
-
-(defun bard/select-theme ()
-  "Prompt the user to select a theme from all available custom themes and enable it."
-  (interactive)
-  (let* ((theme (completing-read "Select theme: " (mapcar 'symbol-name (custom-available-themes))))
-         (theme-symbol (intern theme))
-         (theme-name (if (string-suffix-p "-theme" theme)
-                         (substring theme 0 -6)
-                       theme))
-         (colored-theme-name (propertize theme-name 'face '(:weight bold))))
+(defun bard/select-theme (&optional theme)
+  "Enable the specified THEME, or prompt the user to select one if THEME is nil."
+  (interactive
+   (list
+    (completing-read "Select theme: "
+                     (mapcar 'symbol-name (custom-available-themes)))))
+  (let* ((theme-symbol (if (symbolp theme) theme (intern theme)))
+         (theme-name (symbol-name theme-symbol))
+         (display-theme-name (if (string-suffix-p "-theme" theme-name)
+                                 (substring theme-name 0 -6)
+                               theme-name))
+         (colored-theme-name (propertize display-theme-name 'face '(:weight bold))))
     (bard/disable-all-themes)
     (load-theme theme-symbol t)
     (message "Loaded the %s theme" colored-theme-name)
-    (run-hooks 'after-theme-load-hook)))
-
+    (run-hooks 'bard/after-theme-load-hook)))
 
 (provide 'bard-theme)
