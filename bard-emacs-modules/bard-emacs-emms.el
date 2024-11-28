@@ -20,8 +20,8 @@
         ("<mouse-3>" . emms-pause)
         ("<SPC>" . emms-pause)
         ("c" . bard/emms-recenter)
-        ("<up>" . emms-playlist-mode-shift-track-up)
-        ("<down>" . emms-playlist-mode-shift-track-down))
+        ("P" . emms-playlist-mode-shift-track-up)
+        ("N" . emms-playlist-mode-shift-track-down))
   :bind (("<f8>" . emms)
          ("M-<f8>" . emms-browser))
   :hook

@@ -1,11 +1,5 @@
 ;;; Editing niceties
 
-(use-package emacs
-  :bind
-  (("C-c r" . jump-to-register))
-  :config
-  (setq reb-re-syntax 'string))
-
 ;; writeable grep buffers
 (use-package wgrep
   :ensure t
