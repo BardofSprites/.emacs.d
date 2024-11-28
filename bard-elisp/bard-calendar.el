@@ -18,7 +18,11 @@
       (substring-no-properties org-mode-line-string)
     "No task clocked in"))
 
-;; -----
+(defun bard/open-calendar ()
+  "Opens calendar as only window"
+  (interactive)
+  (calendar)
+  (delete-other-windows))
 
 ;; Org Agenda
 
