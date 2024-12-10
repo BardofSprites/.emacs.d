@@ -36,9 +36,6 @@
    (add-to-list 'load-path (locate-user-emacs-file string)))
  '("bard-elisp" "bard-emacs-modules" "old-ada"))
 
-;; Esc key quit prompts
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
 ;; Clipboard saving
 (setq select-enable-clipboard t)
 
@@ -99,18 +96,17 @@ making an abbreviation to a function."
 (require 'bard-emacs-email)
 (require 'bard-emacs-emms)
 (require 'bard-emacs-eshell)
-(provide 'bard-emacs-git)
 (require 'bard-emacs-essentials)
+(require 'bard-emacs-git)
+(require 'bard-emacs-keyboard)
 (require 'bard-emacs-modeline)
 (require 'bard-emacs-org)
-(provide 'bard-emacs-prog)
+(require 'bard-emacs-prog)
 (require 'bard-emacs-theme)
 (require 'bard-emacs-ui)
 (require 'bard-emacs-web)
 (require 'bard-emacs-window)
 (require 'bard-emacs-writing)
-
-(load-library "bard-emacs-prog.el")
 
 (defun bard/setup-initial-buffers ()
   "Set up initial tabs for Org Agenda, EMMS, and todo.org file."
