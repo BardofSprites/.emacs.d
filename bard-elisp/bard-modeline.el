@@ -233,6 +233,25 @@ Specific to the current window's mode line.")
         (propertize " Center " 'face 'prot-modeline-indicator-yellow-bg)))
   "Mode line construct to report the multilingual environment.")
 
+;; FIXME: Combine these two functions one day...
+(defvar-local bard-modeline-ryo-modal-normal
+    '(:eval
+      (when (and (mode-line-window-selected-p)
+                 (not (bard/ryo-insert-p))
+                 (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
+        (propertize "<N>" 'face 'prot-modeline-indicator-magenta-bg))
+      )
+  "Mode line construct to show normal mode for ryo-modal.")
+
+(defvar-local bard-modeline-ryo-modal-insert
+    '(:eval
+      (when (and (mode-line-window-selected-p)
+                 (bard/ryo-insert-p)
+                 (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
+        (propertize "<I>" 'face 'prot-modeline-indicator-blue-bg))
+      )
+  "Mode line construct to show insert mode for ryo-modal.")
+
 ;;;; Input method
 
 (defvar-local prot-modeline-input-method
@@ -529,6 +548,8 @@ Specific to the current window's mode line.")
 (dolist (construct '(prot-modeline-kbd-macro
                      prot-modeline-narrow
                      bard-modeline-centered-cursor
+                     bard-modeline-ryo-modal-insert
+                     bard-modeline-ryo-modal-normal
                      prot-modeline-input-method
                      prot-modeline-buffer-status
                      prot-modeline-evil

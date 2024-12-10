@@ -9,6 +9,8 @@
                 prot-modeline-narrow
                 bard-modeline-centered-cursor
                 prot-modeline-input-method
+                bard-modeline-ryo-modal-insert
+                bard-modeline-ryo-modal-normal
                 prot-modeline-buffer-status
                 " "
                 prot-modeline-buffer-identification

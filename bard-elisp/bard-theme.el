@@ -77,7 +77,8 @@
 
 (dolist (hook '(bard/after-theme-load-hook))
   (add-hook hook #'fontaine-apply-current-preset)
-  (add-hook hook #'logos-update-fringe-in-buffers))
+  (add-hook hook #'logos-update-fringe-in-buffers)
+  (add-hook hook #'bard/update-ryo-cursor-color))
 
 (defun bard/select-theme (&optional theme)
   "Enable the specified THEME, or prompt the user to select one if THEME is nil."
@@ -95,5 +96,24 @@
     (load-theme theme-symbol t)
     (message "Loaded the %s theme" colored-theme-name)
     (run-hooks 'bard/after-theme-load-hook)))
+
+(defun bard/update-ryo-cursor-color ()
+  "Update the color variable of `ryo-modal-mode' cursor to match the ef/modus theme."
+  (let ((active-theme (car custom-enabled-themes))
+        (cursor-color nil))
+    (cond
+     ((and (fboundp 'ef-themes-with-colors)
+           (string-prefix-p "ef-" (symbol-name active-theme)))
+      (ef-themes-with-colors
+        (setq ryo-modal-cursor-color cursor
+              ryo-modal-default-cursor-color cursor)))
+     ((and (fboundp 'modus-themes-with-colors)
+           (string-prefix-p "modus-" (symbol-name active-theme)))
+      (modus-themes-with-colors
+        (setq ryo-modal-cursor-color cursor
+              ryo-modal-default-cursor-color cursor)))
+     (t (setq cursor-color "red"))
+     (setq ryo-modal-cursor-color cursor-color
+           ryo-modal-default-cursor-color cursor-color))))
 
 (provide 'bard-theme)
