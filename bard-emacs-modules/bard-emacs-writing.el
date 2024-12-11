@@ -74,15 +74,18 @@
   (setq denote-journal-extras-directory "~/Notes/journal")
   (setq denote-rename-buffer-format "[Note] %t %b")
   (setq denote-known-keywords
-	    '("emacs"
-	      "linux"
-	      "programming"
-	      "org"
-	      "school"
-	      "language"
-	      "history"
-	      "biology"
-	      ))
+        '("emacs"
+          "linux"
+          "programming"
+          "org"
+          "school"
+          "language"
+          "history"
+          "biology"
+          ))
+  (setq denote-templates
+        '((physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")))
+
   (setq denote-save-buffers t)
   (setq denote-prompts '(title keywords subdirectory))
   (denote-rename-buffer-mode 1)
@@ -127,12 +130,12 @@
     :global nil
     (if bard/scroll-center-cursor-mode
         (setq-local scroll-margin (* (frame-height) 2)
-		            scroll-conservatively 0
-		            maximum-scroll-margin 0.5)
+                    scroll-conservatively 0
+                    maximum-scroll-margin 0.5)
       (dolist (local '(scroll-preserve-screen-position
-		               scroll-conservatively
-		               maximum-scroll-margin
-		               scroll-margin))
+                       scroll-conservatively
+                       maximum-scroll-margin
+                       scroll-margin))
         (kill-local-variable `,local))))
   (defun bard/cursor-centered-p ()
     "Check if `bard/scroll-center-cursor-mode` is currently active."
@@ -166,17 +169,17 @@
   (setq logos-outlines-are-pages t)
 
   (setq logos-outline-regexp-alist
-	    `((emacs-lisp-mode . "^;;;+ ")
+        `((emacs-lisp-mode . "^;;;+ ")
           (org-mode . "^\\* +")
           (t . ,(or outline-regexp logos--page-delimiter))))
 
   (setq-default logos-hide-cursor nil
-		        logos-hide-mode-line nil
-		        logos-hide-header-line t
-		        logos-hide-buffer-boundaries t
-		        logos-hide-fringe t
-		        logos-variable-pitch t
-		        logos-olivetti t)
+                logos-hide-mode-line nil
+                logos-hide-header-line t
+                logos-hide-buffer-boundaries t
+                logos-hide-fringe t
+                logos-variable-pitch t
+                logos-olivetti t)
 
   (defun bard/logos--recenter-top ()
     "Use `recenter' to reposition the view at the top."
@@ -197,5 +200,17 @@
   :ensure t
   :config
   (pdf-tools-install))
+
+(use-package citar
+  :ensure t
+  :config
+  (setq citar-bibliography '("~/Notes/denote/bib/references.bib"))
+  (setq org-cite-global-bibliography '("~/Notes/denote/bib/references.bib"))
+  (setq org-cite-insert-processor 'citar)
+  (setq org-cite-follow-processor 'citar)
+  (setq org-cite-activate-processor 'citar)
+  (setq citar-bibliography org-cite-global-bibliography)
+  :bind
+  (:map org-mode-map ("C-c b" . #'citar-insert-citation)))
 
 (provide 'bard-emacs-writing)
