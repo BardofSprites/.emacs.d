@@ -11,20 +11,20 @@
                              'face 'mode-line-highlight)
                  (propertize (current-time-string)
                              'face 'font-lock-keyword-face)
-		 (propertize "Time for another recreational programming session."
-			         'face 'warning)))
+         (propertize "Time for another recreational programming session."
+                     'face 'warning)))
   (setq bard/eshell-aliases
         '((g   . magit)
-	      (gl  . magit-log)
-	      (d   . dired)
-	      (o   . find-file)
+          (gl  . magit-log)
+          (d   . dired)
+          (o   . find-file)
           (oo . find-file-other-window)
-	      (vim . find-file)
-	      (l  . (lambda () (eshell/ls '-la)))
-	      (eshell/clear . eshell/clear-scrollback)))
+          (vim . find-file)
+          (l  . (lambda () (eshell/ls '-la)))
+          (eshell/clear . eshell/clear-scrollback)))
 
   (mapc (lambda (alias)
-	      (defalias (car alias) (cdr alias)))
+          (defalias (car alias) (cdr alias)))
         bard/eshell-aliases))
 
 (use-package eshell

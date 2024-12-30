@@ -201,16 +201,4 @@
   :config
   (pdf-tools-install))
 
-(use-package citar
-  :ensure t
-  :config
-  (setq citar-bibliography '("~/Notes/denote/bib/references.bib"))
-  (setq org-cite-global-bibliography '("~/Notes/denote/bib/references.bib"))
-  (setq org-cite-insert-processor 'citar)
-  (setq org-cite-follow-processor 'citar)
-  (setq org-cite-activate-processor 'citar)
-  (setq citar-bibliography org-cite-global-bibliography)
-  :bind
-  (:map org-mode-map ("C-c b" . #'citar-insert-citation)))
-
 (provide 'bard-emacs-writing)

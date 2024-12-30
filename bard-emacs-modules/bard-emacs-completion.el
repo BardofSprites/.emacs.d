@@ -128,7 +128,7 @@
 
 (use-package embark
   :ensure t
-  :bind
+  :bind*
   (("C-," . bard-embark-act-no-quit)
    ("C-." . bard-embark-act-quit))
   :config
