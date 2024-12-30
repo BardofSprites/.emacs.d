@@ -27,8 +27,14 @@
 (use-package elfeed
   :ensure t
   :config
+  (require 'bard-web)
   (global-set-key (kbd "C-c r") 'elfeed)
-  (setq elfeed-search-filter "+unread -academia"))
+  (setq elfeed-search-filter "+unread")
+
+  :bind
+  (:map elfeed-search-mode-map
+        ("C-c C-p" . bard/play-elfeed-video)
+        ("C-c C-e" . bard/add-video-emms-queue)))
 
 (use-package elfeed-org
   :ensure t
