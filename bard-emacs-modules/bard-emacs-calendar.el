@@ -43,6 +43,11 @@
          ((tags-todo "!TODO"
                      ((org-agenda-overriding-header "Unscheduled Tasks \n")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
+          (tags-todo "+DEADLINE<>\"\""
+                     ((org-agenda-sorting-strategy '(deadline-up priority-down))
+                      (org-agenda-overriding-header "Deadline Items")
+                      (org-agenda-prefix-format " %i %-12:c%?-12t% s")
+                      (org-agenda-format-date "%A %-e %B %Y")))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
                       (org-deadline-warning-days 0)
@@ -54,10 +59,7 @@
                       (org-calendar-holiday)
                       (org-deadline-warning-days 0)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                      (org-agenda-overriding-header "Upcoming this week \n")))
-          (tags "+wait"
-                ((org-agenda-overriding-header "Low Priority Tasks\n")
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
+                      (org-agenda-overriding-header "Upcoming this week \n")))))
         ("Y" "Yearly view for all tasks"
          ((agenda "" ((org-agenda-span 365)
                       (org-deadline-warning-days 2)
