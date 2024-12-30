@@ -1,6 +1,6 @@
 (setq fontaine-presets
         '((default
-           :default-height 160
+           :default-height 140
            :default-family "Iosevka Comfy"
            :variable-pitch-family "Iosevka Comfy Motion"
            :variable-pitch-height 1.0
@@ -9,22 +9,19 @@
            :bold-weight bold
            :mode-line-active-family "Iosevka Comfy Motion"
            :mode-line-inactive-family "Iosevka Comfy Motion"
-           :mode-line-active-height 160
-           :mode-line-inactive-height 160
+           :mode-line-active-height 140
+           :mode-line-inactive-height 140
            )
-          (mixed
+          (tiny
            :inherit default
-           :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
+           :default-height 135)
           (wide
            :inherit default
-           :default-height 150
            :default-family "Iosevka Comfy Wide"
            :fixed-pitch-family "Iosevka Comfy Wide"
            :mode-line-active-family "Iosevka Comfy Wide Motion Duo"
            :mode-line-inactive-family "Iosevka Comfy Wide Motion Duo"
-           :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
-           :mode-line-active-height 150
-           :mode-line-inactive-height 150)
+           :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
           (large
            :inherit default
            :variable-pitch-family "Iosevka Comfy Wide Motion"
@@ -38,28 +35,6 @@
            :default-height 200
            :mode-line-active-height 170
            :mode-line-inactive-height 170
-           )
-          (comic
-           :inherit default
-           :default-family "Comic Code"
-           :variable-pitch-family "Comic Code"
-           :fixed-pitch-family "Comic Code"
-           :mode-line-active-family "Comic Code"
-           :mode-line-inactive-family "Comic Code"
-           )
-          (writing
-           :inherit default
-           :variable-pitch-family "Lora")
-          (bit
-           :inherit default
-           :default-height 180
-           :mode-line-active-height 180
-           :mode-line-inactive-height 180
-           :default-family "Terminus"
-           :variable-pitch-family "Terminus"
-           :fixed-pitch-family "Terminus"
-           :mode-line-active-family "Terminus"
-           :mode-line-inactive-family "Terminus"
            )
           (t
            :default-family "Monospace"
