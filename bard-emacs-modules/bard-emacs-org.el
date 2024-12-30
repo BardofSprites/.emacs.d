@@ -26,6 +26,13 @@
 (setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
+(setq org-icalendar-include-todo t
+      org-icalendar-include-body t
+      org-icalendar-with-timestamps t
+      org-icalendar-use-scheduled '(event-if-todo-not-done)
+      org-icalendar-scheduled-summary-prefix "SCHEDULED: "
+      org-icalendar-use-deadline '(event-if-todo-not-done)
+      org-icalendar-deadline-summary-prefix "DEADLINE: ")
 (setq org-structure-template-alist
       '(("c" . "center")
 	    ("x" . "example")
