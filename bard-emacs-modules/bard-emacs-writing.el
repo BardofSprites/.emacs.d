@@ -8,12 +8,17 @@
    ("M-z"   . zap-to-char)
    ("<f10>"  . toggle-input-method))
   :config
-  ;;; Sentence size
+  ;; Sentence size
   (setq sentence-end-double-space nil)
 
-;;; Keyboard things
+  ;; Keyboard things
   (setq default-input-method "cyrillic-yawerty")
   (setq default-transient-input-method "cyrillic-yawerty"))
+
+(use-package text-mode
+  :ensure nil
+  :hook
+  (text-mode . fly-spell-mode))
 
 ;; Tab settings
 (use-package emacs
@@ -93,17 +98,17 @@
     (interactive)
     (let ((consult-find-args "find . -name \"*.org\"-not ( -path */.git* -prune -or -path */.cache* -prune )"))
       (consult-find "~/Notes/denote")))
-   (defun bard/search-notes-directory ()
-     (interactive)
-     (consult-grep "~/Notes/denote"))
+  (defun bard/search-notes-directory ()
+    (interactive)
+    (consult-grep "~/Notes/denote"))
   :hook
   (dired-mode . denote-dired-mode)
 
-   ;; journalling with timer
-   (denote-journal-extras-hook . (lambda ()
-                                   (tmr "10" "Journalling")
-                                   (bard/scroll-center-cursor-mode t)))
-   :bind
+  ;; journalling with timer
+  (denote-journal-extras-hook . (lambda ()
+                                  (tmr "10" "Journalling")
+                                  (bard/scroll-center-cursor-mode t)))
+  :bind
   (("C-c n n" . denote)
    ("C-c n <SPC>" . denote-region)
    ("C-c n o" . denote-sort-dired)
