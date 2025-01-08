@@ -144,4 +144,15 @@ This as the action function in a `display-buffer-alist' entry."
                 (rx (or "*" "helpful" "Org Src"))
                 "" name)))
 
+(defun bard/toggle-window-split ()
+  "Toggle between horizontal and vertical window splits."
+  (interactive)
+  (let ((split-direction (if (= (window-width) (frame-width))
+                             'vertical
+                           'horizontal)))
+    (delete-other-windows)
+    (if (eq split-direction 'horizontal)
+        (split-window-vertically)
+      (split-window-horizontally))))
+
 (provide 'bard-window)
