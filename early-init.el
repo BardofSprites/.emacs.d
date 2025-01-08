@@ -3,7 +3,6 @@
 
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t
-      frame-title-format '("%b")
       use-dialog-box t ; only for mouse events, which I seldom use
       use-file-dialog nil
       use-short-answers t
