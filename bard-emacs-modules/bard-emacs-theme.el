@@ -131,7 +131,13 @@ The exact color values are taken from the active Modus theme."
           (?B . org-priority)
           (?C . (:inherit (shadow org-priority)))))
 
-  (load-theme 'modus-vivendi t))
+  ;; (load-theme 'modus-vivendi t)
+  )
+
+(use-package gruber-darker-theme
+  :ensure t
+  :config
+  (bard/select-theme 'gruber-darker))
 
 ;;;; Fonts
 (use-package fontaine
