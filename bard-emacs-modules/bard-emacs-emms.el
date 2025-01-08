@@ -38,12 +38,6 @@
 
   (setq emms-volume-amixer-card 0)
 
-  (require 'emms-player-simple)
-  (define-emms-simple-player mpv-video '(file url)
-    (regexp-opt '("mp4" "mkv" "webm" "youtube.com" "youtu.be"))
-    "mpv" "--quiet" "--no-audio-display" "--vid=1")
-  (add-to-list 'emms-player-list 'emms-player-mpv-video)
-
   ;; center line function
   (defun bard/emms-recenter ()
     (interactive)
