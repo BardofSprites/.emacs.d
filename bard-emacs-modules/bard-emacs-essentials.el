@@ -109,7 +109,7 @@
 
 ;;; Time Management
 ;; Modeline
-(setq display-time-format "%Y-%m-%d (%A) %H:%M")
+(setq display-time-format "%Y-%m-%d (%a) %H:%M")
 (setq display-time-interval 60)
 (setq display-time-default-load-average nil)
 (setq display-time-mail-directory nil)
@@ -133,8 +133,6 @@
 	    ("Asia/Tokyo" "Tokyo")))
 
 (setq world-clock-time-format "%Y-%m-%d %B (%A) %R %Z")
-
-(define-key global-map (kbd "C-c C-w") #'world-clock)
 
 ;; running emacs as server
 (require 'server)
