@@ -18,7 +18,7 @@
 (use-package text-mode
   :ensure nil
   :hook
-  (text-mode . fly-spell-mode))
+  (text-mode . flyspell-mode))
 
 ;; Tab settings
 (use-package emacs
