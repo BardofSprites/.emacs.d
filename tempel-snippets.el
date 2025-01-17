@@ -13,6 +13,7 @@ org-mode
 (title "#+title: "p n "#+date: "(format-time-string "[%Y-%0m-%0d %a %H:%0M]") n)
 (begin "\\begin{" (s env) "}" n> r> n> "\\end{" (s env) "}")
 (eq "\\begin{equation}" n> r> n> "\\end{equation}")
+(begin "\\begin{" (s env) "}" r> n> "\\end{" (s env) "}")
 (eg "(e.g. " p ")")
 (fr "\\frac{" p "}{" p "}" q)
 (NOW (format-time-string "<%Y-%0m-%0d %a %H:%0M>"))
