@@ -43,7 +43,7 @@
          ((tags-todo "!TODO"
                      ((org-agenda-overriding-header "Unscheduled Tasks \n")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
-          (tags-todo "+DEADLINE<>\"\""
+          (tags-todo "-SCHEDULED<>\"\"+DEADLINE<>\"\""
                      ((org-agenda-sorting-strategy '(deadline-up priority-down))
                       (org-agenda-overriding-header "Deadline Items")
                       (org-agenda-prefix-format " %i %-12:c%?-12t% s")
