@@ -95,10 +95,10 @@
 
 (require 'org-protocol)
 (setq org-capture-templates
-      '(("i" "Important Stuff" entry
+      '(("t" "task" entry
          (file+olp
           "~/Notes/denote/20240328T215727--todo__self.org"
-          "Inbox" "Important Stuff")
+          "Inbox" "General tasks")
 	     "* TODO %?")
 	    ("e" "Extra/Coding" entry
          (file+olp
