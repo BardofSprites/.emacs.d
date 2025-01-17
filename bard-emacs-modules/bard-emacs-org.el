@@ -13,11 +13,13 @@
         ("C-c M-c" . count-words-region)
         ("C-c C-M-c" . count-words)
         ("C-c l" . org-store-link)
+        ("C-c j" . org-goto)
         )
   :bind
   (("C-c c" . org-capture))
-  ;; :config
-  ;; (setq org-num-max-level 2)
+  :config
+  (setq org-goto-interface 'outline-path-completion)
+  (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3))))
   ;; :hook
   ;; ((org-mode . org-num-mode))
   )
