@@ -132,7 +132,8 @@
 (use-package ibuffer
   :ensure nil
   :config
-  (setq ibuffer-default-sorting-mode 'major-mode))
+  (setq ibuffer-default-sorting-mode 'major-mode)
+  (ibuffer-auto-mode t))
 
 (use-package emacs
   :ensure nil
