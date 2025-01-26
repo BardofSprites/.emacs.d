@@ -8,6 +8,9 @@ fundamental-mode ;; Available everywhere
 (tomorrow (format-time-string "<%Y-%0m-%0d %a>" (time-add nil (* 24 60 60))))
 (mode "-*- mode: " (s mode) " -*-")
 
+c++-mode
+(log "std::cout << \"" p "\" << std::endl;")
+
 org-mode
 
 (title "#+title: "p n "#+date: "(format-time-string "[%Y-%0m-%0d %a %H:%0M]") n)
