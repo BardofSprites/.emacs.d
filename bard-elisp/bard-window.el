@@ -145,14 +145,22 @@ This as the action function in a `display-buffer-alist' entry."
                 "" name)))
 
 (defun bard/toggle-window-split ()
-  "Toggle between horizontal and vertical window splits."
+  "Toggle between horizontal and vertical window splits, preserving buffer layout."
   (interactive)
-  (let ((split-direction (if (= (window-width) (frame-width))
+  (let ((current-buffers (mapcar #'window-buffer (window-list))) ; List of buffers in current windows
+        (split-direction (if (= (window-width) (frame-width))
                              'vertical
                            'horizontal)))
     (delete-other-windows)
+    ;; Toggle the split direction
     (if (eq split-direction 'horizontal)
         (split-window-vertically)
-      (split-window-horizontally))))
+      (split-window-horizontally))
+    ;; Restore buffers to the new windows
+    (let ((windows (window-list)))
+      (cl-loop for buffer in current-buffers
+               for window in windows
+               do (set-window-buffer window buffer)))))
+
 
 (provide 'bard-window)
