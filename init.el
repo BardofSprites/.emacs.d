@@ -30,6 +30,9 @@
 (global-set-key (kbd "C-z") nil)
 (global-set-key (kbd "M-z") nil)
 
+(global-set-key (kbd "C-z C-z") #'suspend-emacs)
+
+
 ;; Add the directories to the load path
 (mapc
  (lambda (string)
