@@ -163,4 +163,8 @@
   :config
   (require 'org-download))
 
+(use-package org-pdftools
+  :ensure t
+  :hook (org-mode . org-pdftools-setup-link))
+
 (provide 'bard-emacs-org)
