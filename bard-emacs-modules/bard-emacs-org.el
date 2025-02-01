@@ -6,6 +6,7 @@
 (require 'org-habit)
 
 (use-package org
+  :defer nil
   :bind
   (:map org-mode-map
         ("C-M-a" . backward-paragraph)
@@ -35,6 +36,9 @@
       org-icalendar-scheduled-summary-prefix "SCHEDULED: "
       org-icalendar-use-deadline '(event-if-todo-not-done)
       org-icalendar-deadline-summary-prefix "DEADLINE: ")
+
+(setq org-habit-show-all-today nil)
+
 (setq org-structure-template-alist
       '(("c" . "center")
 	    ("x" . "example")
