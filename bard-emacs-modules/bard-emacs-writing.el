@@ -89,10 +89,11 @@
           "biology"
           ))
   (setq denote-templates
-        '((physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")))
+        '((default . "*")
+          (physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")))
 
   (setq denote-save-buffers t)
-  (setq denote-prompts '(title keywords subdirectory))
+  (setq denote-prompts '(title keywords template))
   (denote-rename-buffer-mode 1)
   (defun bard/find-notes-file ()
     (interactive)
