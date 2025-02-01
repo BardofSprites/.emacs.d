@@ -23,10 +23,6 @@ org-mode
 (time (format-time-string "\[%Y-%0m-%0d %a %H:%0M\]"))
 (hat1 "$\\hat{\\texbg{"p q"}}$")
 (hat2 "\\hat{\\texbg{"p q"}}")
-(physics-lab "#+options: toc:nil num:1" n
-             "#+setupfile: setup.org" n
-             "#+LATEX_CLASS: article" n
-             "#+export_file_name: Daniel Pinkston - " (car denote-title-history))
 
 emacs-lisp-mode
 
