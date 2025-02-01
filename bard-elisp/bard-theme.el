@@ -40,6 +40,10 @@
            :default-family "Monospace"
            )))
 
+(set-fontset-font
+ t 'han
+ (font-spec :family "Noto Serif CJK JP") nil 'prepend)
+
 ;;; Switching themes
 (defun bard/disable-all-themes ()
   "disable all active themes."
