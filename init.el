@@ -97,7 +97,7 @@ making an abbreviation to a function."
 (require 'bard-emacs-completion)
 (require 'bard-emacs-dired)
 (require 'bard-emacs-email)
-(require 'bard-emacs-emms)
+(require 'bard-emacs-media)
 (require 'bard-emacs-eshell)
 (require 'bard-emacs-essentials)
 ;; (require 'bard-emacs-keyboard)
