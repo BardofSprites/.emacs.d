@@ -90,7 +90,8 @@
           ))
   (setq denote-templates
         '((default . "*")
-          (physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")))
+          (physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")
+          (writing . "* Prompt\n* Outline\n* Response")))
 
   (setq denote-save-buffers t)
   (setq denote-prompts '(title keywords template))
