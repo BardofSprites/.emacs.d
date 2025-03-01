@@ -202,10 +202,4 @@
    ("<f9>" . logos-focus-mode)
    ("C-x n n" . logos-narrow-dwim)))
 
-(use-package pdf-tools
-  :ensure t
-  :config
-  (pdf-tools-install)
-  (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode))
-
 (provide 'bard-emacs-writing)
