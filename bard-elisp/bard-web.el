@@ -1,3 +1,5 @@
+(require 'emms)
+
 (defun bard/play-elfeed-video ()
   "Play the URL of the entry at point in mpv if it's a YouTube video."
   (interactive)
