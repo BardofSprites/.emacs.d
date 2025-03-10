@@ -7,10 +7,6 @@
            :fixed-pitch-family "Iosevka Comfy"
            :fixed-pitch-height 1.0
            :bold-weight bold
-           :mode-line-active-family "Iosevka Comfy Motion"
-           :mode-line-inactive-family "Iosevka Comfy Motion"
-           :mode-line-active-height 140
-           :mode-line-inactive-height 140
            )
           (tiny
            :inherit default
@@ -19,8 +15,6 @@
            :inherit default
            :default-family "Iosevka Comfy Wide"
            :fixed-pitch-family "Iosevka Comfy Wide"
-           :mode-line-active-family "Iosevka Comfy Wide Motion Duo"
-           :mode-line-inactive-family "Iosevka Comfy Wide Motion Duo"
            :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
           (large
            :inherit default
