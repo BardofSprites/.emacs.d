@@ -89,7 +89,7 @@
           "biology"
           ))
   (setq denote-templates
-        '((default . "*")
+        '((default . "* ")
           (physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")
           (writing . "* Prompt\n* Outline\n* Response")))
 
