@@ -12,6 +12,7 @@
                 bard-modeline-ryo-modal-insert
                 bard-modeline-ryo-modal-normal
                 prot-modeline-buffer-status
+                prot-modeline-window-dedicated-status
                 " "
                 prot-modeline-buffer-identification
                 "  "

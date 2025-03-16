@@ -271,6 +271,16 @@ Specific to the current window's mode line.")
                     'mouse-face 'mode-line-highlight)))
   "Mode line construct for showing remote file name.")
 
+;;;; Dedicated window
+
+(defvar-local prot-modeline-window-dedicated-status
+    '(:eval
+      (when (window-dedicated-p)
+        (propertize " = "
+                    'face 'prot-modeline-indicator-magenta-bg
+                    'mouse-face 'mode-line-highlight)))
+  "Mode line construct for dedicated window indicator.")
+
 ;;;; Buffer name and modified status
 
 (defun prot-modeline-buffer-identification-face ()
@@ -552,6 +562,7 @@ Specific to the current window's mode line.")
                      bard-modeline-ryo-modal-normal
                      prot-modeline-input-method
                      prot-modeline-buffer-status
+                     prot-modeline-window-dedicated-status
                      prot-modeline-evil
                      prot-modeline-buffer-identification
                      prot-modeline-major-mode
