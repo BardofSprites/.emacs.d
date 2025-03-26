@@ -14,8 +14,11 @@
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(d)" "KILLED(k)")
+      '((sequence "TODO(t)" "EXTRA(e)" "|" "DONE(d)" "KILLED(k)")
         (sequence "MEET(m)" "|" "MET(M)")))
+
+(setq org-todo-keyword-faces
+      '(("EXTRA" . (:inherit warning))))
 
 ;;; Org Agenda
 
@@ -51,7 +54,7 @@
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
                       (org-deadline-warning-days 0)
-                      (org-scheduled-past-days 0)
+                      ;; (org-scheduled-past-days 0)
                       (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                       (org-agenda-format-date "%A %-e %B %Y")
                       (org-agenda-overriding-header "Today's agenda \n")))
