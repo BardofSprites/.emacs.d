@@ -95,6 +95,10 @@
 
   (setq denote-save-buffers t)
   (setq denote-prompts '(title keywords template))
+  (setq denote-sort-dired-extra-prompts nil)
+  (setq denote-sort-dired-default-sort-component 'identifier)
+  (setq denote-sort-dired-default-reverse-sort nil)
+
   (denote-rename-buffer-mode 1)
   (defun bard/find-notes-file ()
     (interactive)
