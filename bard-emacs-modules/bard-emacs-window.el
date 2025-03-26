@@ -127,7 +127,8 @@
 (use-package emacs
   :ensure nil
   :bind
-  ("C-x w t" . tear-off-window))
+  ("C-x w t" . tear-off-window)
+  ("C-x w c" . clone-indirect-buffer-other-window))
 
 (use-package ibuffer
   :ensure nil
