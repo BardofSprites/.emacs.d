@@ -14,7 +14,8 @@
         ("<SPC>" . emms-pause)
         ("c" . bard/emms-recenter)
         ("P" . emms-playlist-mode-shift-track-up)
-        ("N" . emms-playlist-mode-shift-track-down))
+        ("N" . emms-playlist-mode-shift-track-down)
+        ("Z" . bard/save-emms-watch-later))
   :bind (("<f8>" . emms)
          ("M-<f8>" . emms-browser))
   :hook
@@ -39,6 +40,10 @@
   ;; modeline
   (emms-mode-line-disable)
   (emms-playing-time-disable-display)
+
+  ;; playlist saving
+  (setq bard/emms-playlist-format 'm3u)
+  (setq bard/watch-later-file "~/Videos/watch-later.m3u")
   )
 
 ;;;; Youtube
