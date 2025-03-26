@@ -134,6 +134,24 @@
 
 (setq world-clock-time-format "%Y-%m-%d %B (%A) %R %Z")
 
+;; timer package
+(use-package tmr
+  :ensure t
+  :config
+  (setq tmr-sound-file "/home/bard/.local/bin/scripts/bell.mp3")
+  (setq tmr-notification-urgency 'normal)
+  (setq tmr-descriptions-list 'tmr-description-history)
+  (define-key global-map (kbd "C-c t l") 'tmr-tabulated-view)
+  (define-key global-map (kbd "C-c t t") #'tmr)
+  (define-key global-map (kbd "C-c t T") #'tmr-with-description)
+  (define-key global-map (kbd "C-c t l") #'tmr-tabulated-view)
+  (define-key global-map (kbd "C-c t c") #'tmr-clone)
+  (define-key global-map (kbd "C-c t k") #'tmr-cancel)
+  (define-key global-map (kbd "C-c t s") #'tmr-reschedule)
+  (define-key global-map (kbd "C-c t e") #'tmr-edit-description)
+  (define-key global-map (kbd "C-c t r") #'tmr-remove)
+  (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
+
 ;; running emacs as server
 (require 'server)
 (setq server-client-instructions nil)
