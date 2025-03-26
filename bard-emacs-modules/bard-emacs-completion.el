@@ -95,7 +95,7 @@
 
   (setq completion-category-defaults nil)
 
-  (setq completion-category-overridesd
+  (setq completion-category-overrides
         '((file (styles . (basic partial-completion orderless)))
           (bookmark (styles . (basic substring)))
           (library (styles . (basic substring)))
