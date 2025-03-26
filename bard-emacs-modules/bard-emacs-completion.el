@@ -55,7 +55,7 @@
 
 (use-package corfu
   :ensure t
-  :hook (after-init . global-corfu-mode)
+  :init (global-corfu-mode)
   ;; I also have (setq tab-always-indent 'complete) for TAB to complete
   ;; when it does not need to perform an indentation change.
   :bind (:map corfu-map ("<tab>" . corfu-complete))
