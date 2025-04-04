@@ -58,4 +58,13 @@
   (pdf-tools-install)
   (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode))
 
+(use-package bard-media
+  :ensure nil
+  :config
+  (require 'bard-media)
+  :bind
+  (("C-c o p" . bard/play-youtube-video)
+   ("C-c o i" . bard/image-browser))
+  )
+
 (provide 'bard-emacs-media)
