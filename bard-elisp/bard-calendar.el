@@ -9,10 +9,6 @@
   (when (equal (org-get-todo-state) "DONE")
     (org-clock-out)))
 
-(defun test-func ()
-  (interactive)
-  (message (org-get-todo-state)))
-
 (defun bard/org-clock-report ()
   (interactive)
   (bard/new-org-buffer)
