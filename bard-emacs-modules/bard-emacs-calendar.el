@@ -14,11 +14,15 @@
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "EXTRA(e)" "|" "DONE(d)" "KILLED(k)")
+      '((sequence "TODO(t)" "EXTRA(e)" "INPROG(i)" "|" "DONE(d)" "KILLED(k)")
         (sequence "MEET(m)" "|" "MET(M)")))
 
 (setq org-todo-keyword-faces
-      '(("EXTRA" . (:inherit warning))))
+      '(("EXTRA" . (:inherit warning))
+        ("INPROG" . (:inherit hi-yellow :weight bold))))
+
+;; Automatically clock in
+(add-hook 'org-after-todo-state-change-hook #'bard/auto-clock-in)
 
 ;;; Org Agenda
 

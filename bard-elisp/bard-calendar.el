@@ -1,4 +1,17 @@
+(require 'org)
+
 ;; Org Clock
+
+(defun bard/auto-clock-in ()
+  "Automatically clock in when task marked in progress (INPROG)."
+  (when (equal (org-get-todo-state) "INPROG")
+    (org-clock-in))
+  (when (equal (org-get-todo-state) "DONE")
+    (org-clock-out)))
+
+(defun test-func ()
+  (interactive)
+  (message (org-get-todo-state)))
 
 (defun bard/org-clock-report ()
   (interactive)
