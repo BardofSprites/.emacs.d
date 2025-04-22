@@ -3,11 +3,26 @@
 ;; Org Clock
 
 (defun bard/auto-clock-in ()
-  "Automatically clock in when task marked in progress (INPROG)."
+  "Automatically clock in when task marked in progress (INPROG),
+ and start study session."
   (when (equal (org-get-todo-state) "INPROG")
-    (org-clock-in))
-  (when (equal (org-get-todo-state) "DONE")
-    (org-clock-out)))
+    (org-clock-in)
+    (bard/study-session)))
+
+(defun bard/study-session ()
+  "Prompt for study parameters, run study session, and clock out when done."
+  (interactive)
+  (let* ((study-time (read-string "Study time (minutes): "))
+         (break-time (read-string "Break time (minutes): "))
+         (sessions (read-string "Number of sessions: "))
+         (command (format "study %s %s %s" study-time break-time sessions))
+         (process (start-process-shell-command "study-session" "*study*" command)))
+    (set-process-sentinel
+     process
+     (lambda (_proc event)
+       (when (string= event "finished\n")
+         (progn (org-clock-out)
+                (pop-to-buffer-same-window "todo.org")))))))
 
 (defun bard/org-clock-report ()
   (interactive)
