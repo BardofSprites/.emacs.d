@@ -107,6 +107,7 @@
   (defun bard/search-notes-directory ()
     (interactive)
     (consult-grep "~/Notes/denote"))
+
   :hook
   (dired-mode . denote-dired-mode)
 
@@ -128,6 +129,14 @@
    ("C-c n s" . bard/search-notes-directory)
    ("C-c n l" . denote-find-link)
    ("C-c n L" . denote-find-backlink)))
+
+(use-package denote-org
+  :ensure t
+  )
+
+(use-package denote-silo
+  :ensure t
+  )
 
 ;;; Focus mode for writing
 
