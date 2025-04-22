@@ -34,7 +34,8 @@
   :bind
   (:map elfeed-search-mode-map
         ("C-c C-p" . bard/play-elfeed-video)
-        ("C-c C-e" . bard/add-video-emms-queue)))
+        ("C-c C-e" . bard/add-video-emms-queue)
+        ("C-c C-w" . bard/add-video-watch-later)))
 
 (use-package elfeed-org
   :ensure t
