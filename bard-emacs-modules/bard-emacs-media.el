@@ -15,7 +15,8 @@
         ("c" . bard/emms-recenter)
         ("P" . emms-playlist-mode-shift-track-up)
         ("N" . emms-playlist-mode-shift-track-down)
-        ("Z" . bard/save-emms-watch-later))
+        ("Z" . bard/save-emms-watch-later)
+        ("Y" . bard/emms-download-current-video))
   :bind (("<f8>" . emms)
          ("M-<f8>" . emms-browser))
   :hook
