@@ -9,7 +9,7 @@
   (:map dired-mode-map
         ("P" . dired-preview-mode))
   :config
-  (setq dired-preview-delay 0.0))
+  (setq dired-preview-delay 0.1))
 
 (use-package dired
   :bind*
