@@ -4,6 +4,7 @@
   (("C-z e" . eshell-switcher))
   :config
   (require 'bard-eshell)
+  (require 'ffap)
   ;; (setq eshell-banner-message "Time for another recreational programming session.\n\n")
   (setq eshell-banner-message
         '(format "%s %s\n %s\n"

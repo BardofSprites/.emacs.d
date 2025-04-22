@@ -1,8 +1,9 @@
 (require 'bard-calendar)
+(require 'hi-lock)
 
 (setq org-directory "~/Notes/denote/")
 ;; symlinked file to shorten denote file name in agenda buffers
-(setq org-agenda-files (list "~/Notes/denote/todo.org"))
+(setq org-agenda-files (list "~/Notes/denote/todo.org" "~/Notes/denote/study.org"))
 
 ;; Calendar
 (use-package calendar-mode
@@ -50,11 +51,6 @@
          ((tags-todo "!TODO"
                      ((org-agenda-overriding-header "Unscheduled Tasks \n")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
-          (tags-todo "-SCHEDULED<>\"\"+DEADLINE<>\"\""
-                     ((org-agenda-sorting-strategy '(deadline-up priority-down))
-                      (org-agenda-overriding-header "Deadline Items")
-                      (org-agenda-prefix-format " %i %-12:c%?-12t% s")
-                      (org-agenda-format-date "%A %-e %B %Y")))
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
                       (org-deadline-warning-days 0)
