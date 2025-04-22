@@ -4,7 +4,7 @@
   :config
   (vertico-mode 1)
   (setq vertico-scroll-margin 0)
-  (setq vertico-cycle t)
+  (setq vertico-cycle nil)
 
   (with-eval-after-load 'rfn-eshadow
     ;; This works with `file-name-shadow-mode' enabled.  When you are in
@@ -183,6 +183,14 @@
 (setq savehist-additional-variables '(register-alist kill-ring))
 (savehist-mode t)
 
+;; recentf
+(recentf-mode t)
+(setq recentf-save-file (locate-user-emacs-file "recentf"))
+
+;; save cursor place for code files
+(add-hook 'prog-mode-hook #'save-place-local-mode)
+
+
 ;;; abbrev-mode
 (setq abbrev-file-name (locate-user-emacs-file "abbrevs"))
 (setq only-global-abbrevs nil)
@@ -190,6 +198,7 @@
 (bard/make-abbrev global-abbrev-table
   "meweb" "https://bardman.dev"
   "megit" "https://github.com/BardofSprites"
+  "meyt" "https://www.youtube.com/@bardmandev"
   "protweb" "https://protesilaos.com/")
 
 (bard/make-abbrev text-mode-abbrev-table
@@ -214,7 +223,9 @@
     "youtube"        "YouTube"
     "Результат"      "=Результат Сегодняшний Битвый="
     "asf"            "and so on and so forth"
-    "paragraph"      "¶")
+    "paragraph"      "¶"
+    "xmonad"         "XMonad"
+    "xmobar"         "XMobar")
 
 (dolist (hook '(text-mode-hook prog-mode-hook git-commit-mode-hook))
   (add-hook hook #'abbrev-mode))
