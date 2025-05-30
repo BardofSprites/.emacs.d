@@ -23,37 +23,7 @@
     (emms-playlist-save bard/emms-playlist-format bard/watch-later-file)
     (message "Playlist saved to %s" bard/watch-later-file)))
 
-;; (defun bard/image-browser (directory)
-;;   "Open nsxiv in thumbnail mode on DIRECTORY.
-;; Asks the user whether to enable recursive mode."
-;;   (interactive "DSelect directory: ")
-;;   (let ((recursive (if (y-or-n-p "Recursive searching? ") "-r" "")))
-;;     (start-process "nsxiv"  "nsxiv" "-t" "-o" recursive (expand-file-name directory))))
-
-;; (defun bard/image-browser (directory)
-;;   "Open nsxiv in thumbnail mode on DIRECTORY.
-;; Asks the user whether to enable recursive mode."
-;;   (interactive "DSelect directory: ")
-;;   (let ((recursive (if (y-or-n-p "Recursive searching? ") "-r" "")))
-;;     (start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" "-o" recursive (expand-file-name directory))
-;;     (pop-to-buffer "*nsxiv*")))
-
-;; (defun bard/image-browser (directory)
-;;   "Open nsxiv in thumbnail mode on DIRECTORY.
-;; Asks the user whether to enable recursive mode."
-;;   (interactive "DSelect directory: ")
-;;   (let ((recursive (if (y-or-n-p "Recursive searching? ") "-r" ""))
-;;         (stdout (if (y-or-n-p "Output marked files to buffer? ") "-o" "")))
-;;     (start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" stdout recursive (expand-file-name directory))
-;;     (if (string= stdout "-o")
-;;         (progn (with-current-buffer "*nsxiv*"
-;;                  (read-only-mode nil)
-;;                  (erase-buffer))
-;;                (pop-to-buffer "*nsxiv*")
-;;                )
-;;       nil)))
-
-(defun bard/image-browser (directory)
+(defun bard/image-browser-choose (directory)
   "Open nsxiv in thumbnail mode on DIRECTORY.
 Asks the user whether to enable recursive mode."
   (interactive "DSelect directory: ")
@@ -69,6 +39,24 @@ Asks the user whether to enable recursive mode."
                (read-only-mode nil)
                (erase-buffer)))))
         (pop-to-buffer "*nsxiv*")))))
+
+(defun bard/image-browser-marked ()
+  "Open nsxiv on the marked files in Dired."
+  (interactive)
+  (let ((files (dired-get-marked-files)))
+    (if files
+        (apply #'start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" files)
+      (message "No files marked."))))
+
+(defun bard/image-browser ()
+  "Open nsxiv in a context-sensitive way:
+- If in Dired with marked files, open those with nsxiv.
+- Otherwise, prompt for a directory to browse."
+  (interactive)
+  (if (and (derived-mode-p 'dired-mode)
+           (dired-get-marked-files))
+      (bard/image-browser-marked)
+    (call-interactively #'bard/image-browser)))
 
 (defun bard/emms-download-current-video (destination)
   "Download the currently playing EMMS video and move it to DESTINATION."
