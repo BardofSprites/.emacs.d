@@ -56,7 +56,7 @@ Asks the user whether to enable recursive mode."
   (if (and (derived-mode-p 'dired-mode)
            (dired-get-marked-files))
       (bard/image-browser-marked)
-    (call-interactively #'bard/image-browser)))
+    (call-interactively #'bard/image-browser-choose)))
 
 (defun bard/emms-download-current-video (destination)
   "Download the currently playing EMMS video and move it to DESTINATION."
