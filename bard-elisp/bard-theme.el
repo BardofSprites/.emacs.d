@@ -20,15 +20,11 @@
            :inherit default
            :variable-pitch-family "Iosevka Comfy Wide Motion"
            :default-height 170
-           :mode-line-active-height 150
-           :mode-line-inactive-height 150
            )
           (huge
            :inherit default
            :variable-pitch-family "Iosevka Comfy Wide Motion"
            :default-height 200
-           :mode-line-active-height 170
-           :mode-line-inactive-height 170
            )
           (t
            :default-family "Monospace"
