@@ -42,12 +42,8 @@ The exact color values are taken from the active Ef theme."
           (?C . (:inherit (shadow org-priority)))))
 
   (setq ef-themes-headings
-        '((0 variable-pitch light 2.00)
-          (1 variable-pitch light 1.5)
-          (2 regular 1.3)
-          (3 1.1)
-          (agenda-date . (variable-pitch regular 1.3))
-          (agenda-structure . (variable-pitch light 1.9))
+        '((agenda-date . (variable-pitch regular 1.1))
+          (agenda-structure . (variable-pitch light 1.3))
           (t . 1.1)))
 
   ;; better faces in overrides
@@ -103,13 +99,10 @@ The exact color values are taken from the active Modus theme."
               ("REVIEW" . ,red)
               ("KILLED" . ,cyan)
               ("DEPRECATED" . ,yellow)))))
+
   (setq modus-themes-headings
-        '((0 variable-pitch light 2.00)
-          (1 variable-pitch light 1.5)
-          (2 regular 1.3)
-          (3 1.1)
-          (agenda-date . (variable-pitch regular 1.3))
-          (agenda-structure . (variable-pitch light 1.9))
+        '((agenda-date . (variable-pitch regular 1.1))
+          (agenda-structure . (variable-pitch light 1.3))
           (t . 1.1)))
 
   (setq modus-themes-custom-auto-reload nil
