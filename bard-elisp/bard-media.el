@@ -25,11 +25,14 @@
 
 (defun bard/image-browser-choose (directory)
   "Open nsxiv in thumbnail mode on DIRECTORY.
-Asks the user whether to enable recursive mode."
+Asks the user whether to enable recursive mode and whether to output marked files to a buffer."
   (interactive "DSelect directory: ")
-  (let ((recursive (if (y-or-n-p "Recursive searching? ") "-r" ""))
-        (stdout (if (y-or-n-p "Output marked files to buffer? ") "-o" "")))
-    (let ((process (start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" stdout recursive (expand-file-name directory))))
+  (let* ((recursive (if (y-or-n-p "Recursive searching? ") "-r" ""))
+         (stdout (if (y-or-n-p "Output marked files to buffer? ") "-o" ""))
+         (full-dir (expand-file-name directory))
+         (args (remove "" (list "nsxiv" "-t" stdout recursive full-dir))))
+    (message "Running: %s" (string-join args " "))
+    (let ((process (apply #'start-process "nsxiv" "*nsxiv*" args)))
       (when (string= stdout "-o")
         (set-process-sentinel
          process
@@ -41,22 +44,34 @@ Asks the user whether to enable recursive mode."
         (pop-to-buffer "*nsxiv*")))))
 
 (defun bard/image-browser-marked ()
-  "Open nsxiv on the marked files in Dired."
-  (interactive)
+  "Open nsxiv on the marked files in Dired.
+Assumes that files have already been validated."
   (let ((files (dired-get-marked-files)))
-    (if files
-        (apply #'start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" files)
-      (message "No files marked."))))
+    (message "Opening marked files: %s" (string-join files ", "))
+    (apply #'start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" files)))
 
 (defun bard/image-browser ()
   "Open nsxiv in a context-sensitive way:
 - If in Dired with marked files, open those with nsxiv.
-- Otherwise, prompt for a directory to browse."
+- If in Dired with no marked files, prompt for a directory.
+- If not in Dired, prompt for a directory."
   (interactive)
-  (if (and (derived-mode-p 'dired-mode)
-           (dired-get-marked-files))
-      (bard/image-browser-marked)
-    (call-interactively #'bard/image-browser-choose)))
+  (cond
+   ;; In Dired and files are marked
+   ((and (derived-mode-p 'dired-mode)
+         (< 1 (length (dired-get-marked-files))))
+    (message "Opening marked files from Dired...")
+    (bard/image-browser-marked))
+
+   ;; In Dired but no marked files
+   ((derived-mode-p 'dired-mode)
+    (message "No files marked in Dired. Prompting for directory...")
+    (call-interactively #'bard/image-browser-choose))
+
+   ;; Not in Dired
+   (t
+    (message "Not in Dired. Prompting for directory...")
+    (call-interactively #'bard/image-browser-choose))))
 
 (defun bard/emms-download-current-video (destination)
   "Download the currently playing EMMS video and move it to DESTINATION."
