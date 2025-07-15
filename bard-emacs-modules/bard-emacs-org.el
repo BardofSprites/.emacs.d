@@ -104,26 +104,14 @@
           "~/Notes/denote/20240328T215727--todo__self.org"
           "Inbox" "General tasks")
 	     "* TODO %?")
-	    ("e" "Extra/Coding" entry
-         (file+olp
-          "~/Notes/denote/20240328T215727--todo__self.org" "Inbox" "Extra/Coding")
-	     "* TODO %?")
-        ("s" "Basic Statistics" entry
-         (file+headline
-          "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
-         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Statistics\n:END:\n*** Front\n %?\n*** Back\n\n")
-        ("S" "Cloze Statistics" entry
-         (file+headline
-          "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
-         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
-        ("p" "Basic Physics" entry
-         (file+headline
-          "~/Notes/denote/20240902T144403--physics-flashcards__anki_physics.org" "Unsorted")
-         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Physics\n:END:\n*** Front\n %?\n*** Back\n\n")
-        ("P" "Cloze Physics" entry
-         (file+headline
-          "~/Notes/denote/20240902T144403--physics-flashcards__anki_physics.org" "Unsorted")
-         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Physics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
+        ;; ("s" "Basic Statistics" entry
+        ;;  (file+headline
+        ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
+        ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Statistics\n:END:\n*** Front\n %?\n*** Back\n\n")
+        ;; ("S" "Cloze Statistics" entry
+        ;;  (file+headline
+        ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
+        ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
         ("z" "Protocol" entry
          (file+olp
           "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
@@ -132,9 +120,11 @@
          (file+olp
           "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
 	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
-	    ("b" "Blog Article" entry
-         (file+olp
-          "~/Code/bardmandev/content/_index.org" "Latest updates"))))
+        ("w" "Class outline" entry
+         (file
+          "~/Notes/denote/20240328T215727--todo__self.org")
+         (file
+          "~/Notes/denote/templates/class-template.org"))))
 
 ;;; Org Publish
 (setq org-html-scripts nil)
