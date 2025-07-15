@@ -1,18 +1,18 @@
 ;; Generic variables for modes
-(use-package whitespace
-  :ensure nil
-  :demand t
-  :config
-  (setq whitespace-style '(face
-                           tabs
-                           spaces
-                           trailing
-                           space-before-tab
-                           newline indentation
-                           empty space-after-tab
-                           space-mark tab-mark))
-  :hook
-  (prog-mode . whitespace-mode))
+;; (use-package whitespace
+;;   :ensure nil
+;;   :demand t
+;;   :config
+;;   (setq whitespace-style '(face
+;;                            tabs
+;;                            spaces
+;;                            trailing
+;;                            space-before-tab
+;;                            newline indentation
+;;                            empty space-after-tab
+;;                            space-mark tab-mark))
+;;   :hook
+;;   (prog-mode . whitespace-mode))
 
 (use-package display-line-numbers
   :ensure nil
