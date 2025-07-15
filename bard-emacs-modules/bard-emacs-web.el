@@ -33,17 +33,22 @@
 
   :bind
   (:map elfeed-search-mode-map
+        ;; C-p for play now
         ("C-c C-p" . bard/play-elfeed-video)
+        ;; C-e for EMMS
         ("C-c C-e" . bard/add-video-emms-queue)
-        ("C-c C-w" . bard/add-video-watch-later)))
+        ;; C-w for watch later
+        ("C-c C-w" . bard/add-video-watch-later)
+        ;; F is for fetch
+        ("F"       . elfeed-update)))
 
 (use-package elfeed-org
   :ensure t
   :init
   (elfeed-org)
   :config
-  (setq rmh-elfeed-org-files (list "~/.emacs.d/feeds.org"
-				   "~/.emacs.d/youtube.org")))
+  (setq rmh-elfeed-org-files (list "~/Notes/denote/feeds.org"
+                                   "~/Notes/denote/youtube.org")))
 
 ;; (use-package elfeed-goodies
 ;;   :ensure t
