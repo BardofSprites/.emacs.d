@@ -3,7 +3,7 @@
 
 (setq org-directory "~/Notes/denote/")
 ;; symlinked file to shorten denote file name in agenda buffers
-(setq org-agenda-files (list "~/Notes/denote/todo.org" "~/Notes/denote/study.org"))
+(setq org-agenda-files (list "~/Notes/denote/todo.org" "~/Notes/denote/uni.org"))
 
 ;; Calendar
 (use-package calendar-mode
@@ -21,6 +21,8 @@
 (setq org-todo-keyword-faces
       '(("EXTRA" . (:inherit warning))
         ("INPROG" . (:inherit hi-yellow :weight bold))))
+
+(setq org-enforce-todo-dependencies t)
 
 ;; Automatically clock in
 (add-hook 'org-after-todo-state-change-hook #'bard/auto-clock-in)
