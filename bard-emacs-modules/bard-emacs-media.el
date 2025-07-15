@@ -47,11 +47,6 @@
   (setq bard/watch-later-file "~/Videos/watch-later.m3u")
   )
 
-;;;; Youtube
-(use-package yeetube
-  :ensure t
-  )
-
 ;;;; PDFS
 (use-package pdf-tools
   :ensure t
