@@ -136,6 +136,9 @@
 
 (use-package denote-silo
   :ensure t
+  :config
+  (setq denote-silo-directories '("~/Notes/denote"
+                                  "~/Notes/Old Notes/"))
   )
 
 ;;; Focus mode for writing
