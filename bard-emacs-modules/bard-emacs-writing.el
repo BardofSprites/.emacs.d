@@ -141,6 +141,13 @@
                                   "~/Notes/Old Notes/"))
   )
 
+(use-package denote-sequence
+  :ensure t
+  :bind
+  ("C-c n N" . denote-sequence)
+  ("C-c n z" . denote-rename-file-signature)
+  ("C-c n O" . denote-sequence-dired))
+
 ;;; Focus mode for writing
 
 ;; Center line scrolling for focused writing
