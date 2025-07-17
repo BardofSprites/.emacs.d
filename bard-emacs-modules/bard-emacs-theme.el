@@ -155,7 +155,29 @@ The exact color values are taken from the active Modus theme."
 (use-package rainbow-mode
   :ensure t)
 
-(global-set-key (kbd "<f6>") #'bard/select-theme)
+(global-set-key (kbd "M-<f6>") #'bard/select-theme)
+
+(use-package standard-themes
+  :ensure t
+  ;; :init (standard-themes-select 'standard-light)
+  :config
+  (setq standard-themes-to-toggle '(standard-light
+                                    standard-dark))
+  (add-hook 'standard-themes-post-load-hook #'logos-update-fringe-in-buffers)
+
+  ;; headings
+  (setq standard-themes-headings
+        '((0 . (variable-pitch light 1.5))
+          (1 . (variable-pitch light 1.3))
+          (2 . (variable-pitch regular 1.2))
+          (agenda-date . (semilight 1.4))
+          (agenda-structure . (variable-pitch light 1.5))
+          (t . (variable-pitch 1.1))))
+
+  (setq standard-themes-mixed-fonts t)
+
+  :bind
+  ("<f6>" . standard-themes-toggle))
 
 (provide 'bard-emacs-theme)
 
