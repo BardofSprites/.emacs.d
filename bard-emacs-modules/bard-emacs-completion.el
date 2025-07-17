@@ -224,6 +224,7 @@
     "Результат"      "=Результат Сегодняшний Битвый="
     "asf"            "and so on and so forth"
     "paragraph"      "¶"
+    "em"             "—"
     "xmonad"         "XMonad"
     "xmobar"         "XMobar")
 
