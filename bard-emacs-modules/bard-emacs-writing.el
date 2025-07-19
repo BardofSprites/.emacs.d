@@ -89,15 +89,23 @@
           "biology"
           ))
   (setq denote-templates
-        '((default . "* ")
+        '((default . "Related to — ")
           (physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")
           (writing . "* Prompt\n* Outline\n* Response")))
 
   (setq denote-save-buffers t)
-  (setq denote-prompts '(title keywords template))
+  (setq denote-prompts '(title keywords signature))
   (setq denote-sort-dired-extra-prompts nil)
   (setq denote-sort-dired-default-sort-component 'identifier)
   (setq denote-sort-dired-default-reverse-sort nil)
+
+  ;; backlinks sidebar
+  (setq denote-backlinks-display-buffer-action
+        '((display-buffer-in-direction)
+          (direction . right)
+          (window-width . 0.33)
+          (window-height . fit-window-to-buffer)
+          (dedicated . t)))
 
   (denote-rename-buffer-mode 1)
   (defun bard/find-notes-file ()
@@ -117,7 +125,7 @@
                                   (bard/scroll-center-cursor-mode t)))
   :bind
   (("C-c n n" . denote)
-   ("C-c n <SPC>" . denote-region)
+   ("C-c n <TAB>" . denote-region)
    ("C-c n o" . denote-sort-dired)
    ("C-c n j" . denote-journal-extras-new-entry)
    ("C-c n r" . denote-rename-file-using-front-matter)
@@ -125,8 +133,8 @@
    ("C-c n i" . denote-link)
    ("C-c n I" . denote-add-links)
    ("C-c n b" . denote-backlinks)
-   ("C-c n f" . bard/find-notes-file)
-   ("C-c n s" . bard/search-notes-directory)
+   ("C-c n f" . bard/find-notes-file)        ; notes-find
+   ("C-c n g" . bard/search-notes-directory) ; notes-grep
    ("C-c n l" . denote-find-link)
    ("C-c n L" . denote-find-backlink)))
 
@@ -143,10 +151,12 @@
 
 (use-package denote-sequence
   :ensure t
+  :config
+  (require 'bard-writing)
   :bind
   ("C-c n N" . denote-sequence)
-  ("C-c n z" . denote-rename-file-signature)
-  ("C-c n O" . denote-sequence-dired))
+  ("C-c n O" . denote-sequence-dired)
+  ("C-c n <SPC>" . denote-sequence-region))
 
 ;;; Focus mode for writing
 
