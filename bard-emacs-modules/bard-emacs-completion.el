@@ -14,6 +14,13 @@
     (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
   )
 
+(use-package mct
+  :ensure t
+  :config
+  (setq mct-hide-completion-mode-line t)
+  (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
+  (mct-mode t))
+
 (use-package rfn-eshadow
   :ensure nil
   :hook (minibuffer-setup . cursor-intangible-mode)
