@@ -23,12 +23,13 @@ org-mode
 (time (format-time-string "\[%Y-%0m-%0d %a %H:%0M\]"))
 (hat1 "$\\hat{\\texbg{"p q"}}$")
 (hat2 "\\hat{\\texbg{"p q"}}")
+(цитат "«"q"»")
 
 emacs-lisp-mode
 
-(up "(use-package "p n> ":ensure t" n> (s configuration) q")")
+(up "(use-package "p n> ":ensure t" n> q")")
 
-(key "(define-key " p " (kbd \""p "\") #'"p")")
+(key "(define-key " p " (kbd \""p "\") #'"q")")
 
 (hook "(add-hook '"(s hook-name) " #'" (s function-to-add) ")")
 
