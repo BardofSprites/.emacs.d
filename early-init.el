@@ -24,6 +24,8 @@
 ;; settings for windows
 (setq focus-follows-mouse t)
 
+(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+
 ;; garbage collection
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
