@@ -42,6 +42,7 @@
 
   (add-hook 'spacious-padding-mode-hook #'prot/modeline-spacious-indicators))
 
+(setq mode-line-right-align-edge 'window)
 
 (provide 'bard-emacs-modeline)
 
