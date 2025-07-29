@@ -2,7 +2,6 @@
 (use-package vertico
   :ensure t
   :config
-  (vertico-mode 1)
   (setq vertico-scroll-margin 0)
   (setq vertico-cycle nil)
 

@@ -57,7 +57,7 @@
   "i" #'package-install
   "d" #'package-delete
   "r" #'package-reinstall
-  "u" #'embark-browse-package-url
+  "b" #'embark-browse-package-url
   "w" #'embark-save-package-url)
 
 (defvar-keymap bard-embark-symbol-map

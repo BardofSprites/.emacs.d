@@ -101,7 +101,7 @@
 (setq org-capture-templates
       '(("t" "task" entry
          (file+olp
-          "~/Notes/denote/20240328T215727--todo__self.org"
+          "~/Notes/denote/20240328T215727--todo.org"
           "Inbox" "General tasks")
 	     "* TODO %?")
         ;; ("s" "Basic Statistics" entry
@@ -114,17 +114,21 @@
         ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
         ("z" "Protocol" entry
          (file+olp
-          "~/Notes/denote/20240328T220037--media-tracker__self.org" "Quotes")
+          "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Quotes")
          "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
 	    ("Z" "Protocol Link" entry
          (file+olp
-          "~/Notes/denote/20240328T220037--media-tracker__self.org" "Watch/Read List")
+          "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Watch/Read List")
 	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
         ("w" "Class outline" entry
          (file
-          "~/Notes/denote/20240328T215727--todo__self.org")
+          "~/Notes/denote/20240328T215727--todo.org")
          (file
-          "~/Notes/denote/templates/class-template.org"))))
+          "~/Notes/denote/templates/class-template.org"))
+        ("p" "project idea" entry
+         (file
+          "~/Notes/denote/20250201T165619--project-ideas__idea_programming.org")
+         "* %^{Project description}\n%?")))
 
 ;;; Org Publish
 (setq org-html-scripts nil)

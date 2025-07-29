@@ -63,6 +63,10 @@
           :query "tag:unread and tag:inbox"
           :sort-order newest-first
           :key ,(kbd "u"))
+        ( :name "📝 To Do"
+          :query "tag:todo"
+          :sort-order oldest-first
+          :key ,(kbd "t"))
         ( :name "🚩 flagged"
           :query "tag:flag"
           :sort-order newest-first

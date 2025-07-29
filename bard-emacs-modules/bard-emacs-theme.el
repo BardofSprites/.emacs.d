@@ -159,7 +159,7 @@ The exact color values are taken from the active Modus theme."
 
 (use-package standard-themes
   :ensure t
-  ;; :init (standard-themes-select 'standard-light)
+  :init (standard-themes-select 'standard-light)
   :config
   (setq standard-themes-to-toggle '(standard-light
                                     standard-dark))
@@ -171,7 +171,7 @@ The exact color values are taken from the active Modus theme."
           (1 . (variable-pitch light 1.3))
           (2 . (variable-pitch regular 1.2))
           (agenda-date . (semilight 1.4))
-          (agenda-structure . (variable-pitch light 1.5))
+          (agenda-structure . (light 1.5))
           (t . (variable-pitch 1.1))))
 
   (setq standard-themes-mixed-fonts t)

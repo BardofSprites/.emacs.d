@@ -25,6 +25,8 @@ org-mode
 (hat2 "\\hat{\\texbg{"p q"}}")
 (цитат "«"q"»")
 
+(dblock-link "#+BEGIN: denote-links :regexp \"" q "\"" n n "#+END:")
+
 emacs-lisp-mode
 
 (up "(use-package "p n> ":ensure t" n> q")")
