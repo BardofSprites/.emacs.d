@@ -56,6 +56,7 @@
 
 ;; Making org mode look nice
 (setq org-startup-indented t
+      org-startup-folded 'content
       org-hide-emphasis-markers t
       org-startup-with-inline-images t
       org-image-actual-width '(600)
@@ -164,5 +165,11 @@
 (use-package org-pdftools
   :ensure t
   :hook (org-mode . org-pdftools-setup-link))
+
+(use-package org-bullets
+  :ensure t
+  :hook (org-mode . org-bullets-mode)
+  :config
+  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
 
 (provide 'bard-emacs-org)
