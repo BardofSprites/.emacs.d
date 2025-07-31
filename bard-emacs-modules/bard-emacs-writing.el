@@ -186,10 +186,10 @@
 (use-package olivetti
   :ensure t
   :config
-  (setq olivetti-minimum-body-width 100)
+  (setq olivetti-minimum-body-width 90)
   (setq olivetti-recall-visual-line-mode-entry-state t)
   :hook
-  ((olivetti-mode-on . (lambda () (olivetti-set-width 100)))
+  ((olivetti-mode-on . (lambda () (olivetti-set-width 90)))
    ))
 
 ;; narrowing and focus mode
