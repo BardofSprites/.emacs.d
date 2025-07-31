@@ -79,7 +79,7 @@
   :config
   (require 'bard-compile)
   (setq compilation-scroll-output t
-        compilation-auto-jump-to-first-error t)
+        compilation-auto-jump-to-first-error nil)
   )
 
 ;; Version control
