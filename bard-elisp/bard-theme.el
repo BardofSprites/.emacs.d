@@ -88,11 +88,13 @@
 (defvar my-last-cursor-type nil)
 
 (defun bard/update-cursor-type ()
-  "Set cursor type to 'bar in text modes, 'box otherwise."
-  (let ((new-cursor (if (derived-mode-p 'text-mode) 'bar 'box)))
-    (unless (eq my-last-cursor-type new-cursor)
-      (setq cursor-type new-cursor)
-      (setq my-last-cursor-type new-cursor))))
+  "Set cursor type to 'bar in text modes, 'box otherwise.
+leave it alone in pdf-view-mode."
+  (unless (derived-mode-p 'pdf-view-mode)
+    (let ((new-cursor (if (derived-mode-p 'text-mode) 'bar 'box)))
+      (unless (eq my-last-cursor-type new-cursor)
+        (setq cursor-type new-cursor)
+        (setq my-last-cursor-type new-cursor)))))
 
 (add-hook 'post-command-hook #'bard/update-cursor-type)
 
