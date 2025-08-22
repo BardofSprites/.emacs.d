@@ -236,4 +236,49 @@
    ("<f9>" . logos-focus-mode)
    ("C-x n n" . logos-narrow-dwim)))
 
+(use-package citar
+  :ensure t
+  :bind
+  ("C-c n c" . citar-open)
+  :config
+  (setq citar-bibliography '("~/Documents/bib/references.bib"))
+  (setq org-cite-global-bibliography citar-bibliography
+        org-cite-insert-processor 'citar
+        org-cite-follow-processor 'citar
+        org-cite-activate-processor 'citar)
+
+  (setq citar-notes-paths '("~/Notes/denote"))
+  (setq citar-library-paths '("~/Documents/Research Articles/"))
+  ;; (setq citar-file-open-functions 'find-file)
+  :hook
+  (org-mode . citar-capf-setup)
+  :bind (("C-c i" . citar-insert-citation))
+  )
+
+(use-package citar-denote
+  :ensure t
+  :config
+  (citar-denote-mode t)
+  )
+
+(use-package citar-embark
+  :ensure t
+  )
+
+;; Org Roam (trying this out again?)
+;;;; Org Roam
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/Notes/denote"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	     ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-db-autosync-mode 1))
+
+(use-package org-roam-ui
+  :ensure t
+  :bind
+  ("C-c n u" . org-roam-ui-open))
+
 (provide 'bard-emacs-writing)
