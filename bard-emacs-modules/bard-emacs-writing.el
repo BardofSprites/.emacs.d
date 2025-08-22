@@ -94,7 +94,7 @@
           (writing . "* Prompt\n* Outline\n* Response")))
 
   (setq denote-save-buffers t)
-  (setq denote-prompts '(title keywords signature))
+  (setq denote-prompts '(title keywords))
   (setq denote-sort-dired-extra-prompts nil)
   (setq denote-sort-dired-default-sort-component 'identifier)
   (setq denote-sort-dired-default-reverse-sort nil)
@@ -116,18 +116,15 @@
     (interactive)
     (consult-grep "~/Notes/denote"))
 
+  (add-hook 'denote-after-new-note-hook #'bard/denote-insert-id-at-top)
+
   :hook
   (dired-mode . denote-dired-mode)
-
-  ;; journalling with timer
-  (denote-journal-extras-hook . (lambda ()
-                                  (tmr "10" "Journalling")
-                                  (bard/scroll-center-cursor-mode t)))
+  
   :bind
   (("C-c n n" . denote)
    ("C-c n <TAB>" . denote-region)
    ("C-c n o" . denote-sort-dired)
-   ("C-c n j" . denote-journal-extras-new-entry)
    ("C-c n r" . denote-rename-file-using-front-matter)
    ("C-c n k" . denote-rename-file-keywords)
    ("C-c n i" . denote-link)
