@@ -53,6 +53,10 @@
          ((tags-todo "!TODO"
                      ((org-agenda-overriding-header "Unscheduled Tasks \n")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
+          (tags-todo "+hw"
+           ((org-agenda-overriding-header "Homework")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'not-scheduled))))
+
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
                       (org-deadline-warning-days 0)
