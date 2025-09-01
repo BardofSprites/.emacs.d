@@ -542,6 +542,22 @@ Specific to the current window's mode line.")
   "The equivalent of `notmuch-indicator-mode-line-construct'.
 Display the indicator only on the focused window's mode line.")
 
+(defvar-local bard-evil-state-indicator
+  '(:eval
+    (when (and (bound-and-true-p evil-local-mode)
+               (mode-line-window-selected-p))
+      (let ((state-label
+             (pcase evil-state
+               ('normal  (propertize " <N>" 'face 'prot-modeline-indicator-green))
+               ('insert  (propertize " <I> " 'face 'prot-modeline-indicator-blue))
+               ('visual  (propertize " <V> " 'face 'prot-modeline-indicator-yellow))
+               ('replace (propertize " <R> " 'face 'prot-modeline-indicator-red))
+               ('emacs   (propertize " <E> " 'face 'prot-modeline-indicator-magenta))
+               ('motion  (propertize " <V> " 'face 'prot-modeline-indicator-cyan))
+               (_        (propertize " <> " 'face 'shadow)))))
+        state-label)))
+  "Modeline indicator for current Evil state.")
+
 ;;;; Miscellaneous
 
 (defvar-local prot-modeline-misc-info
@@ -558,8 +574,7 @@ Specific to the current window's mode line.")
 (dolist (construct '(prot-modeline-kbd-macro
                      prot-modeline-narrow
                      bard-modeline-centered-cursor
-                     bard-modeline-ryo-modal-insert
-                     bard-modeline-ryo-modal-normal
+                     bard-evil-state-indicator
                      prot-modeline-input-method
                      prot-modeline-buffer-status
                      prot-modeline-window-dedicated-status

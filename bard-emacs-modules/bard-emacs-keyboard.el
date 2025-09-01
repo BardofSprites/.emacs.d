@@ -1,151 +1,102 @@
-(require 'bard-ryo)
-
-(use-package hydra
+;;; Vim Bindings
+(use-package evil
   :ensure t
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+  ;; allows for using cgn
+  ;; (setq evil-search-module 'evil-search)
+  (setq evil-want-keybinding nil)
+  ;; no vim insert bindings
+  (setq evil-undo-system 'undo-fu)
   :config
-  )
+  (evil-mode 1))
 
-(use-package ryo-modal
+;;; Vim Bindings Everywhere else
+(use-package evil-collection
   :ensure t
-  :bind (("C-c SPC" . ryo-modal-mode)
-         ("<escape>" . ryo-modal-mode))
+  :after evil
   :config
-  (setq-default cursor-type '(bar . 2))
-  (setq ryo-modal-cursor-type 'box)
-  (ryo-modal-keys
-   ("," ryo-modal-repeat)
-   ("f" ryo-modal-mode)
-   ;; movement
-   ("i" previous-line)
-   ("j" backward-char)
-   ("k" next-line)
-   ("l" forward-char)
-   ;; word movement
-   ("o" forward-word)
-   ("u" backward-word)
+  (setq evil-want-integration t)
+  (evil-collection-init))
 
-   ;; sexp movement
-   ("(" backward-sexp)
-   (")" forward-sexp)
+(use-package undo-fu
+  :ensure t)
 
-   ;; deletion
-   ("e" backward-kill-word)
-   ("r" kill-word)
-   ("d" backward-delete-char)
+(use-package general
+  :ensure t
+  :after evil
+  :config
+  (general-create-definer bard/leader-keys
+    :states '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
 
-   ;; copy/paste/cut
-   ("x" kill-region)
-   ("c" kill-ring-save)
-   ("v" yank)
+  (bard/leader-keys
 
-   ("s" open-line)
-   ("y" undo)
-   ("t" set-mark-command)
+    ;; files
+    "f"  '(:ignore t :which-key "files")
+    "ff" '(find-file :which-key "find file")
 
-   ;; searching
-   ("n" isearch-forward)
-   ("N" isearch-backward)
+    ;; buffers
+    "b"  '(:ignore t :which-key "buffers")
+    "bb" '(consult-buffer :which-key "switch buffer")
+    "bd" '(kill-this-buffer :which-key "kill buffer")
+    "bs" '(save-buffer :which-key "save buffer")
 
-   ;; command mode
-   ("a" "M-x")
+    ;; windows
+    "w"  '(:ignore t :which-key "windows")
+    "ws" '(split-window-below :which-key "split below")
+    "wv" '(split-window-right :which-key "split right")
+    "wo" '(other-window :which-key "other window")
+    ;; "w0" '(delete-window :which-key "delete window")
 
-   ;;window management
-   ("1" delete-other-windows)
-   ("2" split-window-below)
-   ("3" split-window-right))
+    ;; projects
+    "p" '(:ignore t :which-key "project")
+    "pp" '(project-switch-project :which-key "project switch project")
+    "pf" '(project-find-file :which-key "project find file")
 
-  (define-key global-map (kbd "C-<SPC>") nil)
+    ;; notes
+    "n" '(:ignore t :which-key "notes")
+    "nn" '(denote :which-key "denote note")
+    "nd" '(denote-sort-dired :which-key "denote dired")
+    "nr" '(denote-rename-file-using-front-matter :which-key "denote rename")
+    "nk" '(denote-rename-file-keywords :which-key "denote keywords")
+    "nf" '(bard/find-notes-file :which-key "find notes")
+    "ng" '(bard/search-notes-directory :which-key "search notes")
+    "nN" '(denote-sequence :which-key "sequence note")
+    "nD" '(denote-sequence-dired :which-key "sequence dired")
+    "ni" '(org-roam-node-insert :which-key "insert link")
+    "nl" '(org-roam-buffer-toggle :which-key "org roam buffer")
+    "nu" '(org-roam-ui-open :which-key "org roam ui")
 
-  (ryo-modal-key
-   "SPC"
-   '(("SPC" ryo-modal-mode)
-     ("w" save-buffer)
-     ("j" dired-jump)
-     ("f" find-file)
-     ("m" pop-to-mark-command)))
+    ;; open
+    "o" '(:ignore t :which-key "open")
+    "oa" '(bard/default-agenda :which-key "agenda")
+    "or" '(elfeed :which-key "RSS")
+    "ow" '(eww :which-key "web browser")
+    "op" '(bard/play-youtube-video :which-key "play video")
+    "oi" '(bard/image-browser :which-key "images")
+    "oc" '(org-capture :which-key "capture")
+    "om" '(notmuch :which-key "email")
+    "ob" '(consult-bookmark :which-key "bookmarks")
+    "od" '(dired :which-key "new frame")
+    "of" '(dired-jump :which-key "dired")
 
-  (ryo-modal-key
-   "SPC r" :hydra
-   '(hydra-replace ()
-                      "Replace/Substitute hydra"
-                      ("a" substitute-target-above-point "above")
-                      ("b" substitute-target-below-point "below")
-                      ("d" substitute-target-in-defun "defun")
-                      ("s" substitute-target-in-buffer "buffer")
-                      ("r" query-replace-regexp "regexp"))
-   :norepeat t)
+    ;; search
+    "s" '(:ignore t :which-key "search")
+    "sb" '(consult-line :which-key "search buffer")
+    "sf" '(consult-find :which-key "search files")
+    "sg" '(consult-grep :which-key "search grep")
+    "so" '(consult-outline :which-key "search outline")
 
-  (ryo-modal-key
-   "SPC n" :hydra
-   '(hydra-denote ()
-                  "Denote hydra"
-                  ("n" denote "new note")
-                  ("<SPC>" denote-region "note region")
-                  ("o" denote-sort-dired "sort dired")
-                  ("j" denote-journal-extras-new-entry "journal")
-                  ("r" denote-rename-file-using-front-matter "rename note")
-                  ("k" denote-rename-file-keywords "edit keywords")
-                  ("i" denote-link "insert link")
-                  ("I" denote-add-links "insert listed links")
-                  ("b" denote-backlinks "list backlinks")
-                  ("f" bard/find-notes-file "find in notes")
-                  ("s" bard/search-notes-directory "search in notes")
-                  ("l" denote-find-link "list links")
-                  ("L" denote-find-backlink "list backlinks")
-                  ("q" nil "cancel" :color red)
-                  )
-   :norepeat t)
-
-  (ryo-modal-key
-   "SPC s" :hydra
-   '(hydra-consult ()
-                  "Consult hydra"
-                  ("f" consult-find "find")
-                  ("g" consult-grep "grep")
-                  ("k" consult-kmacro "kmacro")
-                  ("o" consult-outline "outline")
-                  ("r" consult-register "register")
-                  ("l" consult-line "search file")
-                  ("q" nil "cancel" :color red))
-   :norepeat t)
-
-  (ryo-modal-key
-   "SPC o" :hydra
-   '(hydra-open ()
-                "Open hydra"
-                ("a" bard/default-agenda "agenda")
-                ("c" calendar "calendar")
-                ("g" magit-status "git")
-                ("m" notmuch "mail")
-                ("q" nil "cancel" :color red)
-                ("r" elfeed "rss")
-                ("w" eww "web browser")
-                ("x" org-capture "capture"))
-   :norepeat t)
-
-  (ryo-modal-key
-   "SPC t" :hydra
-   '(hydra-tab ()
-               "Tab hydra"
-               ("0" tab-close "close")
-               ("1" tab-close-other "delete others")
-               ("2" tab-new "new")
-               ("t" tab-next "next")
-               ("T" tab-next "prev")
-               ("d" dired-other-tab "dired tab")
-               ("q" nil "cancel" :color red))
-   :norepeat t)
-
-  (ryo-modal-key
-   "SPC b" :hydra
-   '(hydra-buffer ()
-               "Buffer hydra"
-               ("k" kill-buffer "kill buffer")
-               ("b" consult-buffer "switch-buffer")
-               ("l" ibuffer "buffer list")
-               ("q" nil "cancel" :color red))
-   :norepeat t)
+    ;; toggle
+    "t" '(:ignore t :which-key "toggle")
+    "tf" '(toggle-frame-fullscreen :which-key "fullscreen")
+    "tf" '(toggle-frame-fullscreen :which-key "fullscreen")
+    )
+  
 
   )
-
 (provide 'bard-emacs-keyboard)
+

@@ -9,10 +9,9 @@
                 prot-modeline-narrow
                 bard-modeline-centered-cursor
                 prot-modeline-input-method
-                bard-modeline-ryo-modal-insert
-                bard-modeline-ryo-modal-normal
                 prot-modeline-buffer-status
                 prot-modeline-window-dedicated-status
+                bard-evil-state-indicator
                 " "
                 prot-modeline-buffer-identification
                 "  "
