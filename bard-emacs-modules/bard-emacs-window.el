@@ -50,6 +50,11 @@
            (window-height . 0.3)
            (dedicated . t)
            (preserve-size . (t . t)))
+          ;; terminal popups
+          (prot-window-shell-or-term-p
+           (display-buffer-reuse-mode-window display-buffer-at-bottom)
+           (mode . (shell-mode eshell-mode comint-mode))
+           (body-function . prot-window-select-fit-size))
           ("\\magit: .*"
 	       (display-buffer-same-window)
 	       (inhibit-same-window . nil)
@@ -140,6 +145,66 @@
   :ensure nil
   :bind
   ("C-x w w" . bard/toggle-window-split))
+
+(use-package beframe
+  :ensure t
+  :config
+  (setq beframe-functions-in-frames '(project-prompt-project-dir
+                                      notmuch))
+  (setq beframe-create-frame-scratch-buffer nil)
+  (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
+  (beframe-mode 1)
+
+  (define-key global-map (kbd "C-x f") #'other-frame-prefix)
+  (define-key global-map (kbd "C-c b") beframe-prefix-map)
+  (define-key global-map (kbd "C-x C-b") #'beframe-buffer-menu)
+  (define-key global-map (kbd "C-x B") #'select-frame-by-name)
+
+  ;; Consult integration
+  (defvar consult-buffer-sources)
+     (declare-function consult--buffer-state "consult")
+
+     (with-eval-after-load 'consult
+       (defface beframe-buffer
+         '((t :inherit font-lock-string-face))
+         "Face for `consult' framed buffers.")
+
+       (defun my-beframe-buffer-names-sorted (&optional frame)
+         "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
+     With optional argument FRAME, return the list of buffers of FRAME."
+         (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
+
+       (defvar beframe-consult-source
+         `( :name     "Frame-specific buffers (current frame)"
+            :narrow   ?F
+            :category buffer
+            :face     beframe-buffer
+            :history  beframe-history
+            :items    ,#'my-beframe-buffer-names-sorted
+            :action   ,#'switch-to-buffer
+            :state    ,#'consult--buffer-state))
+
+       (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
+
+(defun bard/academic-frame ()
+  "Create a new academic frame with key folders opened and beframed."
+  (interactive)
+  (let ((frame (make-frame)))
+    (select-frame-set-input-focus frame)
+    ;; Set frame title explicitly
+    (modify-frame-parameters frame '((name . "Academic")))
+
+    (dired "~/Documents/Uni")
+    (goto-char (point-min))
+    (split-window-right)
+
+    (bard/default-agenda)
+    (split-root-window-below)
+
+    (dired "~/Notes/denote")
+    (goto-char (point-min))))
+
+(global-set-key (kbd "<f2>") #'bard/academic-frame)
 
 (provide 'bard-emacs-window)
 ;;; bard-emacs-window.el ends here

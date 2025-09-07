@@ -63,6 +63,17 @@ This as the action function in a `display-buffer-alist' entry."
         (when (apply fn args)
           (throw 'success fn))))))
 
+;; from protesilaos prot-shell library
+(defun prot-window-shell-or-term-p (buffer &rest _)
+  "Check if BUFFER is a shell or terminal.
+This is a predicate function for `buffer-match-p', intended for
+use in `display-buffer-alist'."
+  (when (string-match-p "\\*.*\\(e?shell\\|v?term\\|terminal\\).*" (buffer-name (get-buffer buffer)))
+    (with-current-buffer buffer
+      ;; REVIEW 2022-07-14: Is this robust?
+      (and (not (derived-mode-p 'message-mode 'text-mode))
+           (derived-mode-p 'eshell-mode 'shell-mode 'term-mode 'comint-mode 'fundamental-mode)))))
+
 ;; taken from https://github.com/hylophile/.files/blob/1f3f01e4e25b00f7b61eca286fcf4f865885090c/.config/doom/config.org#fancy-tab-bar
 
 (defun hy/tab-bar-format-align-center ()

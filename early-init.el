@@ -13,6 +13,8 @@
 (setq mode-line-misc-info
       (delete (assoc 'minor-mode-alist mode-line-misc-info) mode-line-misc-info))
 
+(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
+
 ;; Modes
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
