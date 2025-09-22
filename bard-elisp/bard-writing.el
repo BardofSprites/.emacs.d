@@ -1,3 +1,42 @@
+(require 'consult)
+(require 'beframe)
+
+(defvar bard/consult--source-notes
+  `(:name     "Note Buffers"
+    :narrow   ?n
+    :category buffer
+    :face     consult-buffer
+    :history  buffer-name-history
+    :items    ,(lambda ()
+                 (mapcar #'buffer-name
+                         (seq-filter
+                          (lambda (buf)
+                            (string-prefix-p "[Note]" (buffer-name buf)))
+                          (beframe-buffer-list))))
+    :action   ,#'switch-to-buffer
+    :state    ,#'consult--buffer-state)
+  "Consult source for note buffers (limited to beframe buffers).")
+
+
+(defun bard/find-notes-file ()
+  (interactive)
+  (consult-find "~/Notes/denote"))
+
+(defun bard/search-notes-directory ()
+  (interactive)
+  (consult-grep "~/Notes/denote"))
+
+(defun bard/consult-buffer-notes ()
+  "Show `consult-buffer` limited to buffers starting with [Note]."
+  (interactive)
+  (consult-buffer '(bard/consult--source-notes)))
+
+(defun bard/ibuffer-notes ()
+  "Open `ibuffer` limited to buffers starting with [Note]."
+  (interactive)
+  (ibuffer nil "*Ibuffer-Notes*"
+           '((name . "^\\[Note\\]"))))
+
 (defun bard/denote-insert-id-at-top ()
   "Insert or replace a top-level :ID: property at the very top of the current file."
   (interactive)
@@ -38,5 +77,82 @@ saved or killed at the end of `denote-sequence-region'."
         (insert text)
         (run-hook-with-args 'denote-region-after-new-note-functions (mark) (point)))
     (call-interactively 'denote-sequence)))
+
+(defvar bard/class-dirs
+  '(("ANTH 204" . "~/Documents/dox/Uni/FALL2025-ANTH 204/")
+    ("CHEM 201" . "~/Documents/dox/Uni/FALL2025-CHEM 201/")
+    ("CHEM 207" . "~/Documents/dox/Uni/FALL2025-CHEM 207/")
+    ("ENGL 105" . "~/Documents/dox/Uni/FALL2025-ENGL 105/")
+    ("ENGR 101" . "~/Documents/dox/Uni/FALL2025-ENGR 101/")
+    ("ENGR 110" . "~/Documents/dox/Uni/FALL2025-ENGR 110/"))
+  "Mapping of class names to their document directories.")
+
+(defvar bard/uni-notes-file "~/Notes/denote/uni.org"
+  "Path to the main university org file.")
+
+(defun bard/jump-to-class (class)
+  "Jump to CLASS heading in `bard/uni-notes-file` and open its dir in dired."
+  (interactive
+   (list (completing-read "Class: " (mapcar #'car bard/class-dirs))))
+  (let* ((dir (cdr (assoc class bard/class-dirs))))
+    ;; split windows
+    (delete-other-windows)
+    (let ((notes-window (selected-window))
+          (dired-window (split-window-right)))
+      ;; open notes file and jump to heading
+      (with-selected-window notes-window
+        (find-file bard/uni-notes-file)
+        (widen)
+        (goto-char (point-min))
+        (message class)
+        (search-forward class nil nil))
+      ;; open dired in right window
+      (with-selected-window dired-window
+        (dired dir)))))
+
+;; (defun bard/jump-to-class-new-frame (class)
+;;   "Open CLASS notes and dir in a new frame titled after CLASS."
+;;   (interactive
+;;    (list (completing-read "Class: " (mapcar #'car bard/class-dirs))))
+;;   (let* ((dir (cdr (assoc class bard/class-dirs)))
+;;          ;; make a new frame with title
+;;          (frame (make-frame `((name . ,class)))))
+;;     (select-frame-set-input-focus frame)
+;;     (delete-other-windows)
+;;     (let ((notes-window (selected-window))
+;;           (dired-window (split-window-right)))
+;;       ;; open notes file and jump to heading
+;;       (with-selected-window notes-window
+;;         (find-file bard/uni-notes-file)
+;;         (widen)
+;;         (goto-char (point-min))
+;;         (search-forward class nil nil))
+;;       ;; open dired in right window
+;;       (with-selected-window dired-window
+;;         (dired dir)))))
+
+(defun bard/jump-to-class-new-frame (class)
+  "Open CLASS notes and dir in a new frame titled after CLASS, even with beframe."
+  (interactive
+   (list (completing-read "Class: " (mapcar #'car bard/class-dirs))))
+  (let* ((dir (cdr (assoc class bard/class-dirs)))
+         (frame (make-frame `((frame-title-format . ,class)))))
+    (select-frame-set-input-focus frame)
+    (delete-other-windows)
+    (let ((notes-window (selected-window))
+          (dired-window (split-window-right)))
+      (with-selected-window notes-window
+        (find-file bard/uni-notes-file)
+        (widen)
+        (goto-char (point-min))
+        (search-forward class nil nil))
+      (with-selected-window dired-window
+        (dired dir)
+        (beframe-rename-current-frame)))))
+
+;; Optional: bind to a key
+(global-set-key (kbd "C-c u") #'bard/jump-to-class)
+(global-set-key (kbd "C-c U") #'bard/jump-to-class-new-frame)
+
 
 (provide 'bard-writing)
