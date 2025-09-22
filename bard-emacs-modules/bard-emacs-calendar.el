@@ -16,10 +16,11 @@
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
       '((sequence "TODO(t)" "EXTRA(e)" "INPROG(i)" "|" "DONE(d)" "KILLED(k)")
-        (sequence "MEET(m)" "|" "MET(M)")))
+        (sequence "MEET(m)" "TENT(t)" "|" "MET(M)" "DITCH(d)")))
 
 (setq org-todo-keyword-faces
       '(("EXTRA" . (:inherit warning))
+        ("TENT" . (:inherit warning))
         ("INPROG" . (:inherit hi-yellow :weight bold))))
 
 (setq org-enforce-todo-dependencies t)

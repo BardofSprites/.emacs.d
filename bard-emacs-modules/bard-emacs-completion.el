@@ -231,6 +231,11 @@
     "asf"            "and so on and so forth"
     "paragraph"      "¶"
     "em"             "—"
+    "ra"             "→"
+    "la"             "←"
+    "iff"            "⇔"
+    "imp"            "⇒"
+    "tf"             "∴"
     "xmonad"         "XMonad"
     "xmobar"         "XMobar")
 

@@ -108,13 +108,8 @@
           (dedicated . t)))
 
   (denote-rename-buffer-mode 1)
-  (defun bard/find-notes-file ()
-    (interactive)
-    (let ((consult-find-args "find . -name \"*.org\"-not ( -path */.git* -prune -or -path */.cache* -prune )"))
-      (consult-find "~/Notes/denote")))
-  (defun bard/search-notes-directory ()
-    (interactive)
-    (consult-grep "~/Notes/denote"))
+
+  (require 'bard-writing)
 
   (add-hook 'denote-after-new-note-hook #'bard/denote-insert-id-at-top)
 
@@ -129,7 +124,8 @@
    ("C-c n k" . denote-rename-file-keywords)
    ("C-c n i" . denote-link)
    ("C-c n I" . denote-add-links)
-   ("C-c n b" . denote-backlinks)
+   ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
+   ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
    ("C-c n f" . bard/find-notes-file)        ; notes-find
    ("C-c n g" . bard/search-notes-directory) ; notes-grep
    ("C-c n l" . denote-find-link)
@@ -154,6 +150,19 @@
   ("C-c n N" . denote-sequence)
   ("C-c n O" . denote-sequence-dired)
   ("C-c n <SPC>" . denote-sequence-region))
+
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/Notes/denote"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+	     ("C-c n i" . org-roam-node-insert))
+  :config
+  (org-roam-db-autosync-mode 1))
+
+(use-package org-roam-ui
+  :ensure t)
+
 
 ;;; Focus mode for writing
 
