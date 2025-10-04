@@ -187,6 +187,20 @@ The exact color values are taken from the active Modus theme."
   :bind
   ("<f6>" . standard-themes-toggle))
 
+(use-package spacious-padding
+  :ensure t
+  :config
+  (setq spacious-padding-widths
+        '( :internal-border-width 10
+           :header-line-width 4
+           :mode-line-width 6
+           :tab-width 4
+           :right-divider-width 1
+           :left-fringe-width 0
+           :right-fringe-width 0
+           :scroll-bar-width 0))
+  (spacious-padding-mode t))
+
 (provide 'bard-emacs-theme)
 
 ;;; bard-emacs-theme.el ends here
