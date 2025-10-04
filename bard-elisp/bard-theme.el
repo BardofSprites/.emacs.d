@@ -18,13 +18,11 @@
            :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
           (large
            :inherit default
-           :variable-pitch-family "Iosevka Comfy Wide Motion"
-           :default-height 170
+           :default-height 160
            )
           (huge
            :inherit default
-           :variable-pitch-family "Iosevka Comfy Wide Motion"
-           :default-height 200
+           :default-height 180
            )
           (t
            :default-family "Monospace"
