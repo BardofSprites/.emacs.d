@@ -5,6 +5,8 @@
   (setq vertico-scroll-margin 0)
   (setq vertico-cycle nil)
 
+  (vertico-mode t)
+
   (with-eval-after-load 'rfn-eshadow
     ;; This works with `file-name-shadow-mode' enabled.  When you are in
     ;; a sub-directory and use, say, `find-file' to go to your home '~/'
@@ -12,13 +14,6 @@
     ;; only your current input.
     (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
   )
-
-(use-package mct
-  :ensure t
-  :config
-  (setq mct-hide-completion-mode-line t)
-  (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode)
-  (mct-mode t))
 
 (use-package rfn-eshadow
   :ensure nil
