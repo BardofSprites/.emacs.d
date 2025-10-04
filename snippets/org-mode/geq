@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: greater or equal
+# key: geq
+# --
+\geq

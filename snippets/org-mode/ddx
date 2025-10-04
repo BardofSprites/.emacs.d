@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: derivative
+# key: ddx
+# --
+\frac{d}{dx}

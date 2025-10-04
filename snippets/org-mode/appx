@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: approximately
+# key: appx
+# --
+
+\approx $0
