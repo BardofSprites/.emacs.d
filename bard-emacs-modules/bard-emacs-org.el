@@ -56,7 +56,7 @@
 
 ;; Making org mode look nice
 (setq org-startup-indented t
-      org-startup-folded 'content
+      org-startup-folded 'showeverything
       org-hide-emphasis-markers t
       org-startup-with-inline-images t
       org-image-actual-width '(600)
@@ -64,7 +64,14 @@
       org-insert-heading-respect-content t
       org-special-ctrl-a/e t)
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+
+(use-package auctex
+  :ensure t)
+
+(use-package cdlatex
+  :ensure t
+  )
 
 ;; (use-package org-mode
 ;;   :config
