@@ -92,7 +92,7 @@
   "Open a terminal in the current working directory."
   (interactive)
   (let ((default-directory default-directory))
-    (term "/bin/bash")))
+    (term "/usr/bin/env bash")))
 
 ;; (define-key global-map (kbd "C-t") #'bard/open-terminal-in-current-directory)
 (define-key global-map (kbd "C-z t") #'bard/open-terminal-in-current-directory)
