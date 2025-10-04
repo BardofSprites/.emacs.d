@@ -103,7 +103,7 @@
   :bind
   (("C-c n n" . denote)
    ("C-c n <TAB>" . denote-region)
-   ("C-c n o" . denote-sort-dired)
+   ("C-c n d" . denote-sort-dired)
    ("C-c n r" . denote-rename-file-using-front-matter)
    ("C-c n k" . denote-rename-file-keywords)
    ("C-c n i" . denote-link)
@@ -132,7 +132,7 @@
   (require 'bard-writing)
   :bind
   ("C-c n N" . denote-sequence)
-  ("C-c n O" . denote-sequence-dired)
+  ("C-c n D" . denote-sequence-dired)
   ("C-c n <SPC>" . denote-sequence-region))
 
 (use-package org-roam
@@ -140,7 +140,8 @@
   :custom
   (org-roam-directory (file-truename "~/Notes/denote"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
-	     ("C-c n i" . org-roam-node-insert))
+	     ("C-c n i" . org-roam-node-insert)
+         ("C-c n o" . org-roam-node-find))
   :config
   (org-roam-db-autosync-mode 1))
 
