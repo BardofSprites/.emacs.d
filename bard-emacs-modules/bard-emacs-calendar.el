@@ -16,11 +16,12 @@
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
 (setq org-todo-keywords
       '((sequence "TODO(t)" "EXTRA(e)" "INPROG(i)" "|" "DONE(d)" "KILLED(k)")
-        (sequence "MEET(m)" "TENT(t)" "|" "MET(M)" "DITCH(d)")))
+        (sequence "MEET(m)" "TENT(T)" "|" "MET(M)" "NOGO(n)")))
 
 (setq org-todo-keyword-faces
       '(("EXTRA" . (:inherit warning))
         ("TENT" . (:inherit warning))
+        ("MEET" . (:inherit warning underline bold))
         ("INPROG" . (:inherit hi-yellow :weight bold))))
 
 (setq org-enforce-todo-dependencies t)
@@ -54,13 +55,10 @@
          ((tags-todo "!TODO"
                      ((org-agenda-overriding-header "Unscheduled Tasks \n")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
-          (tags-todo "+hw"
-           ((org-agenda-overriding-header "Homework")
-            (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'not-scheduled))))
-
+          
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
-                      (org-deadline-warning-days 0)
+                      (org-deadline-warning-days 1)
                       ;; (org-scheduled-past-days 0)
                       (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                       (org-agenda-format-date "%A %-e %B %Y")
