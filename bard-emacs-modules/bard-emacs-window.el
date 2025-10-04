@@ -159,6 +159,8 @@
   (define-key global-map (kbd "C-c b") beframe-prefix-map)
   (define-key global-map (kbd "C-x C-b") #'beframe-buffer-menu)
   (define-key global-map (kbd "C-x B") #'select-frame-by-name)
+  (define-key global-map (kbd "C-c b u") #'beframe-unassume-current-frame-buffers-selectively)
+  (define-key global-map (kbd "C-c b a") #'beframe-assume-buffers-selectively-all-frames)
 
   ;; Consult integration
   (defvar consult-buffer-sources)
