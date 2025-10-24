@@ -61,7 +61,8 @@
   :config
   (setq denote-directory "~/Notes/denote/")
   (setq denote-journal-extras-directory "~/Notes/journal")
-  (setq denote-rename-buffer-format "[Note] %t %b")
+  (setq denote-rename-buffer-format "%s %t"
+        denote-buffer-name-prefix "[Note] ")
   (setq denote-known-keywords
         '("emacs"
           "linux"
