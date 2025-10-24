@@ -2,7 +2,19 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("media tracker"
+(("references bib"
+ (filename . "~/Documents/bib/references.bib")
+ (front-context-string)
+ (rear-context-string . "sion support}\n}\n")
+ (position . 4329)
+ (last-modified 26839 12987 796979 406000))
+("references"
+ (filename . "~/Documents/bib/references.bib")
+ (front-context-string)
+ (rear-context-string . "sion support}\n}\n")
+ (position . 4329)
+ (last-modified 26839 12976 503892 624000))
+("media tracker"
  (filename . "~/Notes/denote/20240328T220037--media-tracker__media_topic.org")
  (front-context-string . "xChristianity]]\n")
  (rear-context-string . "ons? : r/Orthodo")
