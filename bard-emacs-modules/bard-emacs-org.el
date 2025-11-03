@@ -48,7 +48,7 @@
         ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
         ("t" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
         ("T" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
-(setq org-ellipsis "↲")
+(setq org-ellipsis " ⤶")
 
 ;; mainly for denote, org throws away a link that i might reuse later
 (setq org-id-link-to-org-use-id t)
