@@ -59,10 +59,10 @@
 (use-package denote
   :ensure t
   :config
+  (require 'bard-writing)
   (setq denote-directory "~/Notes/denote/")
-  (setq denote-journal-extras-directory "~/Notes/journal")
-  (setq denote-rename-buffer-format "%s %t"
-        denote-buffer-name-prefix "[Note] ")
+  (setq denote-buffer-name-prefix "[Note] "
+        denote-rename-buffer-format "%t %b")
   (setq denote-known-keywords
         '("emacs"
           "linux"
@@ -73,10 +73,10 @@
           "history"
           "biology"
           ))
+
   (setq denote-templates
         '((default . "Related to — ")
-          (physics . "* Introduction\n** Hypothesis\n** Materials\n* Procedure\n* Data\n* Conclusion")
-          (writing . "* Prompt\n* Outline\n* Response")))
+          (todo . bard/denote-todo-template)))
 
   (setq denote-save-buffers t)
   (setq denote-prompts '(title keywords))
@@ -96,7 +96,7 @@
 
   (require 'bard-writing)
 
-  (add-hook 'denote-after-new-note-hook #'bard/denote-insert-id-at-top)
+  (add-hook 'denote-after-new-note-hook #'bard/denote-maybe-insert-id)
 
   :hook
   (dired-mode . denote-dired-mode)
@@ -107,7 +107,6 @@
    ("C-c n d" . denote-sort-dired)
    ("C-c n r" . denote-rename-file-using-front-matter)
    ("C-c n k" . denote-rename-file-keywords)
-   ("C-c n i" . denote-link)
    ("C-c n I" . denote-add-links)
    ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
    ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
@@ -135,6 +134,16 @@
   ("C-c n N" . denote-sequence)
   ("C-c n D" . denote-sequence-dired)
   ("C-c n <SPC>" . denote-sequence-region))
+
+(use-package denote-journal
+  :ensure t
+  :bind
+  ("C-c n j" . denote-journal-new-or-existing-entry)
+  :config
+  (setq denote-journal-directory "~/Notes/denote/journal/")
+
+  (setq denote-journal-title-format "Daily Tasks and Notes")
+  )
 
 (use-package org-roam
   :ensure t

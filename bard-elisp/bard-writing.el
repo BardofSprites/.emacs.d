@@ -54,6 +54,16 @@
     (insert (format ":PROPERTIES:\n:ID:       %s\n:END:\n" id)))
   (save-buffer))
 
+(defun bard/denote-maybe-insert-id ()
+  "Insert a top-level :ID: unless this is a denote journal file."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (unless (and file
+                 (boundp 'denote-journal-directory)
+                 (string-prefix-p (expand-file-name denote-journal-directory)
+                                  (expand-file-name file)))
+      (bard/denote-insert-id-at-top))))
+
 (defun denote-sequence-region ()
   "Call `denote-sequence' and insert therein the text of the active region.
 
@@ -154,5 +164,9 @@ saved or killed at the end of `denote-sequence-region'."
 (global-set-key (kbd "C-c u") #'bard/jump-to-class)
 (global-set-key (kbd "C-c U") #'bard/jump-to-class-new-frame)
 
+(defun bard/denote-todo-template ()
+  "Return string for daily tasks heading in `denote-journal' entries"
+  (format "* Tasks for %s\n\n* Notes for today"
+          (format-time-string "%Y-%m-%d (%a)")))
 
 (provide 'bard-writing)
