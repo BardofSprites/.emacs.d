@@ -184,6 +184,8 @@
   :ensure t
   :hook (org-mode . org-bullets-mode)
   :config
-  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
+  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆"))
+  (set-fontset-font t 'symbol (font-spec :family "Iosevka Comfy") nil 'append)
+  (set-fontset-font t 'unicode (font-spec :family "Iosevka Comfy") nil 'append))
 
 (provide 'bard-emacs-org)
