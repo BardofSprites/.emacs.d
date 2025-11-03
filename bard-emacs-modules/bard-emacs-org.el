@@ -120,6 +120,13 @@
         ;;  (file+headline
         ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
         ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
+        ("c" "Basic Chemistry" entry
+         (file+headline
+          "~/Notes/denote/20251019T175402--chemistry-flashcards__anki_chem.org" "Unsorted")
+         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Chemistry\n:END:\n*** Front\n%?\n*** Back\n\n")
+        ("n" "common place note" entry
+         (file "~/Notes/denote/20251023T182240--common-place-notes__topic.org")
+         "* %^{Source}\n#+BEGIN_QUOTE\n%?\n#+END_QUOTE")
         ("z" "Protocol" entry
          (file+olp
           "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Quotes")
