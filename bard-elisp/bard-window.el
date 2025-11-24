@@ -1,3 +1,5 @@
+(require 'prot-common)
+
 (defvar prot-window-window-sizes
   '( :max-height (lambda () (floor (frame-height) 3))
      :min-height 10
