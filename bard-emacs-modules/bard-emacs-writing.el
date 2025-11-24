@@ -107,6 +107,7 @@
    ("C-c n d" . denote-sort-dired)
    ("C-c n r" . denote-rename-file-using-front-matter)
    ("C-c n k" . denote-rename-file-keywords)
+   ("C-c n i" . bard/insert-or-create-node)
    ("C-c n I" . denote-add-links)
    ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
    ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
@@ -150,7 +151,6 @@
   :custom
   (org-roam-directory (file-truename "~/Notes/denote"))
   :bind (("C-c n l" . org-roam-buffer-toggle)
-	     ("C-c n i" . org-roam-node-insert)
          ("C-c n o" . org-roam-node-find))
   :config
   (org-roam-db-autosync-mode 1))
