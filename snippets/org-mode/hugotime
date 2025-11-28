@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: hugotime
+# key: hugotime
+# --
+
+[`(format-time-string "%Y-%m-%dT%H:%M:%S%z")`]
