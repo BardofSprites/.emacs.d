@@ -158,4 +158,10 @@
 (unless (server-running-p)
   (server-start))
 
+(use-package treemacs
+  :ensure t
+  :bind
+  ("M-`" . treemacs) ; uses old text-based menu keybind
+  )
+
 (provide 'bard-emacs-essentials)
