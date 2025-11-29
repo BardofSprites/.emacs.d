@@ -83,6 +83,18 @@
             ;; Node does not exist (no id): create via Denote
             (bard/denote-insert-node title))))))
 
+(defun bard/find-or-create-node ()
+  "Find an Org-roam node by title; if missing, create via Denote."
+  (interactive)
+  (let* ((node (org-roam-node-read nil nil))  ;; no auto-create; just selection
+         (title (org-roam-node-title node)))
+    (if (org-roam-node-id node)
+        ;; Node exists → visit
+        (org-roam-node-visit node)
+      ;; Node missing → create via Denote
+      (let ((keyword (denote-keywords-prompt)))
+        (denote title keyword)))))
+
 (defun bard/denote-insert-node (title)
   "Denote analogy for `org-roam-insert-node', takes TITLE as node title."
   (interactive)
