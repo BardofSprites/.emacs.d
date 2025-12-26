@@ -226,6 +226,8 @@
     "asf"            "and so on and so forth"
     "paragraph"      "¶"
     "em"             "—"
+    "ua"             "↑"
+    "da"             "↓"
     "ra"             "→"
     "la"             "←"
     "iff"            "⇔"
