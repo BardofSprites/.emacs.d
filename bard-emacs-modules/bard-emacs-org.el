@@ -118,7 +118,8 @@
   :ensure t)
 
 ;;; Org capture
-(setq org-capture-bookmark nil)
+(setq org-capture-bookmark nil
+      org-id-link-to-org-use-id nil)
 
 (require 'org-protocol)
 (setq org-capture-templates
@@ -191,9 +192,13 @@
   :config
   (require 'org-download))
 
-(use-package org-pdftools
+(use-package org-noter
+  :ensure t)
+
+(use-package org-cliplink
   :ensure t
-  :hook (org-mode . org-pdftools-setup-link))
+  :bind
+  ("C-c p" . org-cliplink))
 
 (use-package org-bullets
   :ensure t
