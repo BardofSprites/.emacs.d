@@ -224,4 +224,27 @@ saved or killed at the end of `denote-sequence-region'."
   (format "* Tasks for %s\n\n* Notes for today"
           (format-time-string "%Y-%m-%d (%a)")))
 
+;; Taken from: https://stackoverflow.com/a/75314192
+(defun add-multiple-into-list (lst items)
+    "Add each item from ITEMS into LST."
+    (dolist (item items)
+        (add-to-list lst item)))
+
+(defun bard/cdlatex-add-math-symbols ()
+  "Add functions into list."
+  (add-multiple-into-list
+   'cdlatex-math-symbol-alist-comb
+   '((?V "\\vec"))))
+
+(define-minor-mode bard/org-math-mode
+  "Enable features to write math in `org-mode'."
+  :init-value nil
+  :lighter " S="
+  :global nil
+  (org-fragtog-mode t)
+  (org-cdlatex-mode t)
+  (electric-pair-local-mode t)
+  (bard/cdlatex-add-math-symbols))
+
+
 (provide 'bard-writing)
