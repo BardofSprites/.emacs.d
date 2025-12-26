@@ -11,6 +11,7 @@
   (setq calendar-holidays (append calendar-holidays russian-holidays))
   :hook
   (calendar-today-visible . calendar-mark-today)
+  (calendar-mode . denote-journal-calendar-mode)
   (calendar-today-visible . calendar-mark-holidays))
 
 ;; Org todo keywords - changed to using hl-todo faces fixed by modus/ef themes
@@ -58,7 +59,7 @@
           
           (agenda "" ((org-agenda-span 1)
                       (org-agenda-start-day nil)
-                      (org-deadline-warning-days 1)
+                      (org-deadline-warning-days 14)
                       ;; (org-scheduled-past-days 0)
                       (org-agenda-day-face-function (lambda (date) 'org-agenda-date))
                       (org-agenda-format-date "%A %-e %B %Y")
@@ -78,6 +79,14 @@
                       (org-deadline-warning-days 2)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                       (org-agenda-overriding-header "Upcoming this month\n")))))))
+
+(use-package org-habit
+  :after org-agenda
+  :config
+  (setq org-habit-show-done-always-green t
+        org-habit-show-habits t
+        org-habit-show-all-today t)
+  )
 
 (use-package orthodox-christian-new-calendar-holidays
   :ensure t
