@@ -13,7 +13,7 @@
         ("C-M-e" . forward-paragraph)
         ("C-c M-c" . count-words-region)
         ("C-c C-M-c" . count-words)
-        ("C-c l" . org-store-link)
+        ("C-c l" . org-id-get-create)
         ("C-c j" . org-goto)
         )
   :bind
@@ -42,12 +42,14 @@
 (setq org-structure-template-alist
       '(("c" . "center")
 	    ("x" . "example")
-	    ("q" . "quote")
+        ("d" . "definition")
+	    ("t" . "theorem")
+        ("q" . "quote")
 	    ("v" . "verse")
 	    ("s" . "src")
         ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
-        ("t" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
-        ("T" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
+        ("z" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
+        ("Z" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
 (setq org-ellipsis " ⤶")
 
 ;; mainly for denote, org throws away a link that i might reuse later
