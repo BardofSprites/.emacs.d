@@ -31,7 +31,15 @@ Asks the user whether to enable recursive mode and whether to output marked file
          (stdout (if (y-or-n-p "Output marked files to buffer? ") "-o" ""))
          (full-dir (expand-file-name directory))
          (args (remove "" (list "nsxiv" "-t" stdout recursive full-dir))))
+    
+    ;; Pre-clear the output buffer if needed
+    (when (string= stdout "-o")
+      (with-current-buffer (get-buffer-create "*nsxiv*")
+        (read-only-mode 0)
+        (erase-buffer)))
+
     (message "Running: %s" (string-join args " "))
+
     (let ((process (apply #'start-process "nsxiv" "*nsxiv*" args)))
       (when (string= stdout "-o")
         (set-process-sentinel
@@ -40,8 +48,18 @@ Asks the user whether to enable recursive mode and whether to output marked file
            (when (string= event "finished\n")
              (with-current-buffer "*nsxiv*"
                (read-only-mode nil)
-               (erase-buffer)))))
+               (goto-char (point-min)))
+             ;; Read marked files
+             (let ((files (with-current-buffer "*nsxiv*"
+                            (split-string (buffer-string) "\n" t))))
+               (bard/open-marked-in-dired files)))))
         (pop-to-buffer "*nsxiv*")))))
+
+(defun bard/open-marked-in-dired (files)
+  "Open a list of FILES in an interactive Dired buffer."
+  (if (and files (listp files))
+      (dired (cons "*nsxiv-marked*" files))
+    (message "No valid files to show in Dired.")))
 
 (defun bard/image-browser-marked ()
   "Open nsxiv on the marked files in Dired.
@@ -87,7 +105,7 @@ Assumes that files have already been validated."
     (unless (string-match-p "^https?://" url)
       (error "Current track is not a valid video URL"))
 
-    (let ((cmd (format "%s -f best -o \"%s\" \"%s\""
+    (let ((cmd (format "%s -o \"%s\" \"%s\""
                        downloader output-template url)))
       (message "Downloading video from: %s" url)
       (let ((exit-code (shell-command cmd)))
