@@ -68,6 +68,19 @@
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
+(defun bard/org-export-on-save ()
+  "Export current Org buffer to PDF and open it with auto-revert enabled."
+  (when (derived-mode-p 'org-mode)
+    (org-latex-export-to-pdf)))
+
+(define-minor-mode bard/org-auto-export-pdf-mode
+  "Automatically export Org buffer to PDF on save."
+  :lighter " AutoPDF"
+  :group 'org
+  (if bard/org-auto-export-pdf-mode
+      (add-hook 'after-save-hook #'bard/org-export-on-save)
+    (remove-hook 'after-save-hook #'bard/org-export-on-save)))
+
 (use-package auctex
   :ensure t)
 
