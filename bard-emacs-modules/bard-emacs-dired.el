@@ -50,6 +50,24 @@
   :bind
   (:map image-dired-thumbnail-mode-map ("B" . bard/image-dired-set-background-with-feh))
   :config
+  (define-advice image-dired-display-image (:override (file &optional _ignored))
+    (setq file (expand-file-name file))
+    (when (not (file-exists-p file))
+      (error "No such file: %s" file))
+    (let ((buf (get-buffer image-dired-display-image-buffer))
+          (cur-win (selected-window)))
+      (when buf
+        (kill-buffer buf))
+      (when-let ((buf (find-file-noselect file nil t)))
+        (with-current-buffer buf
+          (rename-buffer image-dired-display-image-buffer)
+          (if (string-match (image-file-name-regexp) file)
+              (image-dired-image-mode)
+            ;; Support visiting PDF files.
+            (normal-mode))
+          (display-buffer buf))
+        (select-window cur-win))))
+
   (setq image-dired-thumbnail-storage 'standard)
   (setq image-dired-external-viewer "nsxiv")
   (setq image-dired-thumb-size 80)
@@ -83,5 +101,12 @@ open and unsaved."
             (find-file filename)
             (call-interactively command))
           (dired-get-marked-files))))
+
+(use-package dired-video-thumbnail
+  :ensure t
+  :vc (:url "https://github.com/captainflasmr/dired-video-thumbnail"
+       :rev :newest)
+  :bind (:map dired-mode-map
+              ("C-t v" . dired-video-thumbnail)))
 
 (provide 'bard-emacs-dired)
