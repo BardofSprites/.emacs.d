@@ -56,22 +56,30 @@
            (mode . (shell-mode eshell-mode comint-mode))
            (body-function . prot-window-select-fit-size))
           ("\\magit: .*"
-	       (display-buffer-same-window)
-	       (inhibit-same-window . nil)
-	       (dedicated . t))
-	      ("\\*Org Agenda\\*"
-	       (display-buffer-same-window)
-	       (inhibit-same-window . nil)
-	       (dedicated . t))
+           (display-buffer-same-window)
+           (inhibit-same-window . nil)
+           (dedicated . t))
+          ("\\*Org Agenda\\*"
+           (display-buffer-same-window)
+           (inhibit-same-window . nil)
+           (dedicated . t))
           ("\\*cfw-calendar\\*"
-	       (display-buffer-same-window)
-	       (inhibit-same-window . nil)
-	       (dedicated . t))
-          ("\\*Embark Actions\\*"
-           (display-buffer-reuse-mode-window display-buffer-below-selected)
-           (window-height . fit-window-to-buffer)
-           (window-parameters . ((no-other-window . t)
-                                 (mode-line-format . none))))
+           (display-buffer-same-window)
+           (inhibit-same-window . nil)
+           (dedicated . t))
+          ("\\*image-dired\\*"
+           (display-buffer-reuse-mode-window display-buffer-in-side-window)
+           (side . bottom)
+           (window-height . 0.5))
+          ("\\*image-dired-display-image\\*"
+           (display-buffer-reuse-mode-window display-buffer-in-side-window)
+           (side . right)
+           (window-width . 0.35))
+          ;; ("\\*Embark Actions\\*"
+          ;;  (display-buffer-reuse-mode-window display-buffer-below-selected)
+          ;;  (window-height . fit-window-to-buffer)
+          ;;  (window-parameters . ((no-other-window . t)
+          ;;                        (mode-line-format . none))))
           ("\\*\\(Output\\|Register Preview\\).*"
            (display-buffer-reuse-mode-window display-buffer-at-bottom))
           ;; below current window
@@ -164,49 +172,29 @@
 
   ;; Consult integration
   (defvar consult-buffer-sources)
-     (declare-function consult--buffer-state "consult")
+  (declare-function consult--buffer-state "consult")
 
-     (with-eval-after-load 'consult
-       (defface beframe-buffer
-         '((t :inherit font-lock-string-face))
-         "Face for `consult' framed buffers.")
+  (with-eval-after-load 'consult
+    (defface beframe-buffer
+      '((t :inherit font-lock-string-face))
+      "Face for `consult' framed buffers.")
 
-       (defun my-beframe-buffer-names-sorted (&optional frame)
-         "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
+    (defun my-beframe-buffer-names-sorted (&optional frame)
+      "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
      With optional argument FRAME, return the list of buffers of FRAME."
-         (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
+      (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
 
-       (defvar beframe-consult-source
-         `( :name     "Frame-specific buffers (current frame)"
-            :narrow   ?F
-            :category buffer
-            :face     beframe-buffer
-            :history  beframe-history
-            :items    ,#'my-beframe-buffer-names-sorted
-            :action   ,#'switch-to-buffer
-            :state    ,#'consult--buffer-state))
+    (defvar beframe-consult-source
+      `( :name     "Frame-specific buffers (current frame)"
+         :narrow   ?F
+         :category buffer
+         :face     beframe-buffer
+         :history  beframe-history
+         :items    ,#'my-beframe-buffer-names-sorted
+         :action   ,#'switch-to-buffer
+         :state    ,#'consult--buffer-state))
 
-       (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
-
-(defun bard/academic-frame ()
-  "Create a new academic frame with key folders opened and beframed."
-  (interactive)
-  (let ((frame (make-frame)))
-    (select-frame-set-input-focus frame)
-    ;; Set frame title explicitly
-    (modify-frame-parameters frame '((name . "Academic")))
-
-    (dired "~/Documents/Uni")
-    (goto-char (point-min))
-    (split-window-right)
-
-    (bard/default-agenda)
-    (split-root-window-below)
-
-    (dired "~/Notes/denote")
-    (goto-char (point-min))))
-
-(global-set-key (kbd "<f2>") #'bard/academic-frame)
+    (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
 (provide 'bard-emacs-window)
 ;;; bard-emacs-window.el ends here
