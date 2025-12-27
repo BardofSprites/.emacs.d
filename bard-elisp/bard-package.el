@@ -1,4 +1,4 @@
-;; taken and renamed functions from https://manueluberti.eu/posts/2021-09-01-package-report/
+;; taken and renamed functions from 
 
 (defun bard/package-report ()
   "Report total package counts grouped by archive."

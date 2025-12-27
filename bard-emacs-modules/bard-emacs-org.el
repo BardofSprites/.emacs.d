@@ -1,6 +1,3 @@
-;; |------------------------------------|
-;; |            Org Config              |
-;; |------------------------------------|
 (require 'org)
 (require 'ox)
 (require 'org-habit)
@@ -20,10 +17,9 @@
   (("C-c c" . org-capture))
   :config
   (setq org-goto-interface 'outline-path-completion)
+  (setq org-special-ctrl-a/e t)
   (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 
-;; Org Variables
-(setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
 (setq org-log-done 'time)
 (setq org-icalendar-include-todo t
@@ -34,34 +30,32 @@
       org-icalendar-use-deadline '(event-if-todo-not-done)
       org-icalendar-deadline-summary-prefix "DEADLINE: ")
 
-(setq org-habit-show-all-today nil)
-
 (setq org-structure-template-alist
       '(("c" . "center")
-	    ("x" . "example")
+        ("x" . "example")
         ("d" . "definition")
-	    ("t" . "theorem")
+        ("t" . "theorem")
         ("q" . "quote")
-	    ("v" . "verse")
-	    ("s" . "src")
+        ("v" . "verse")
+        ("s" . "src")
         ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
         ("z" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
         ("Z" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
 (setq org-ellipsis " ⤶")
 
-;; mainly for denote, org throws away a link that i might reuse later
-(setq org-id-link-to-org-use-id t)
-(setq org-link-keep-stored-after-insertion nil)
-
-;; Making org mode look nice
 (setq org-startup-indented t
       org-startup-folded 'showeverything
       org-hide-emphasis-markers t
       org-startup-with-inline-images t
       org-image-actual-width '(600)
       org-list-allow-alphabetical t
-      org-insert-heading-respect-content t
-      org-special-ctrl-a/e t)
+      org-insert-heading-respect-content t)
+
+(use-package org-bullets
+  :ensure t
+  :hook (org-mode . org-bullets-mode)
+  :config
+  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
@@ -85,17 +79,9 @@
   :ensure t
   )
 
-;; (use-package org-mode
-;;   :config
-
-;;   ;; (setq org-latex-to-pdf-process
-;;   ;;       '("xelatex -interaction nonstopmode %f"
-;;   ;;         "xelatex -interaction nonstopmode %f"))
-;;   ;; (add-to-list 'org-latex-packages-alist
-;;   ;;              '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
-;;   ;; (add-to-list 'org-latex-packages-alist
-;;   ;;              '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
-;; )
+;; latex editing niceness
+(use-package org-fragtog
+  :ensure t)
 
 (with-eval-after-load 'ox-latex
   (add-to-list 'org-latex-classes
@@ -110,13 +96,43 @@
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-;; latex editing niceness
-(use-package org-fragtog
-  :ensure t)
+(setq org-latex-listings t)
+(setq org-latex-listings-options
+      '(("basicstyle" "\\ttfamily")
+        ("breakatwhitespace" "false")
+        ("breakautoindent" "true")
+        ("breaklines" "true")
+        ("columns" "[c]fullflexible")
+        ("commentstyle" "")
+        ("emptylines" "*")
+        ("extendedchars" "false")
+        ("fancyvrb" "true")
+        ("firstnumber" "auto")
+        ("flexiblecolumns" "false")
+        ("frame" "single")
+        ("frameround" "tttt")
+        ("identifierstyle" "")
+        ("keepspaces" "true")
+        ("keywordstyle" "")
+        ("mathescape" "false")
+        ("numbers" "left")
+        ("numbers" "none")
+        ("numbersep" "5pt")
+        ("numberstyle" "\\tiny")
+        ("resetmargins" "false")
+        ("showlines" "true")
+        ("showspaces" "false")
+        ("showstringspaces" "false")
+        ("showtabs" "true")
+        ("stepnumber" "2")
+        ("stringstyle" "")
+        ("tab" "↹")
+        ("tabsize" "4")
+        ("texcl" "false")
+        ("upquote" "false")))
 
-;;; Org capture
 (setq org-capture-bookmark nil
-      org-id-link-to-org-use-id nil)
+      org-id-link-to-org-use-id t)
 
 (require 'org-protocol)
 (setq org-capture-templates
@@ -124,7 +140,7 @@
          (file+olp
           "~/Notes/denote/20240328T215727--todo.org"
           "Inbox" "General tasks")
-	     "* TODO %?")
+         "* TODO %?")
         ;; ("s" "Basic Statistics" entry
         ;;  (file+headline
         ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
@@ -144,10 +160,10 @@
          (file+olp
           "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Quotes")
          "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
-	    ("Z" "Protocol Link" entry
+        ("Z" "Protocol Link" entry
          (file+olp
           "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Watch/Read List")
-	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
+         "* [[%:link][%:description]] \nCaptured On: %U \n%?")
         ("w" "Class outline" entry
          (file
           "~/Notes/denote/20240328T215727--todo.org")
@@ -158,22 +174,7 @@
           "~/Notes/denote/20250201T165619--project-ideas__idea_programming.org")
          "* %^{Project description}\n%?")))
 
-;;; Org Publish
-(setq org-html-scripts nil)
-(setq org-publish-project-alist
-      '(("org-blog"
-         :base-directory "~/Code/org-blog/"
-         :base-extension "org"
-         :publishing-directory "~/Code/org-site/"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :html-preamble "<p class=\"backlink\"><a href=\"index.html\">Go back to note index</a></p><p class=\"updatedate\">Page last updated: <i>%d</i></p><hr>"
-         :html-postamble nil)))
-
-;;; Managing media
-;; inspired by https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
-
+;; copy/paste images
 (use-package org-download
   :after org
   :defer nil
@@ -189,21 +190,14 @@
   :config
   (require 'org-download))
 
+;; pdf notes
 (use-package org-noter
   :ensure t)
 
+;; links
 (use-package org-cliplink
   :ensure t
   :bind
   ("C-c p" . org-cliplink))
-
-(use-package org-bullets
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :config
-  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆"))
-  ;; (set-fontset-font t 'symbol (font-spec :family "Iosevka Comfy") nil 'append)
-  ;; (set-fontset-font t 'unicode (font-spec :family "Iosevka Comfy") nil 'append)
-  )
 
 (provide 'bard-emacs-org)

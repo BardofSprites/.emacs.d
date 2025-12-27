@@ -4,15 +4,15 @@
 ;; aliases
 (setq bard/eshell-aliases
       '((g  . magit)
-	(gl . magit-log)
-	(d  . dired)
-	(o  . find-file)
-	(oo . find-file-other-window)
-	(l  . (lambda () (eshell/ls '-la)))
-	(eshell/clear . eshell/clear-scrollback)))
+        (gl . magit-log)
+        (d  . dired)
+        (o  . find-file)
+        (oo . find-file-other-window)
+        (l  . (lambda () (eshell/ls '-la)))
+        (eshell/clear . eshell/clear-scrollback)))
 
 (mapc (lambda (alias)
-	(defalias (car alias) (cdr alias)))
+        (defalias (car alias) (cdr alias)))
       bard/eshell-aliases)
 
 (defun prot-eshell--cd (dir)
@@ -47,7 +47,7 @@ open the directory in a `dired' buffer."
   (interactive)
   (let ((file (ffap-file-at-point)))
     (if file
-	(find-file file)
+        (find-file file)
       (user-error "No file at point"))))
 
 (defcustom prot-eshell-output-buffer "*Exported Eshell output*"
@@ -119,24 +119,24 @@ append to it, while separating multiple outputs with
   (if (string= arg "New eshell")
       (eshell t)
     (switch-to-buffer arg)))
- (defun eshell-switcher (&optional arg)
-    "Commentary ARG."
-    (interactive)
-    (let* (
-           (buffers (cl-remove-if-not (lambda (n) (eq (buffer-local-value 'major-mode n) 'eshell-mode)) (buffer-list)) )
-           (names (mapcar (lambda (n) (buffer-name n)) buffers))
-           (num-buffers (length buffers) )
-           (in-eshellp (eq major-mode 'eshell-mode)))
-      (cond ((eq num-buffers 0) (eshell (or arg t)))
-            ((not in-eshellp) (switch-to-buffer (car buffers)))
-            (t (select-or-create (completing-read "Select Shell:" (cons "New eshell" names)))))))
+(defun eshell-switcher (&optional arg)
+  "Commentary ARG."
+  (interactive)
+  (let* (
+         (buffers (cl-remove-if-not (lambda (n) (eq (buffer-local-value 'major-mode n) 'eshell-mode)) (buffer-list)) )
+         (names (mapcar (lambda (n) (buffer-name n)) buffers))
+         (num-buffers (length buffers) )
+         (in-eshellp (eq major-mode 'eshell-mode)))
+    (cond ((eq num-buffers 0) (eshell (or arg t)))
+          ((not in-eshellp) (switch-to-buffer (car buffers)))
+          (t (select-or-create (completing-read "Select Shell:" (cons "New eshell" names)))))))
 
 ;; taken from https://github.com/karthink/.emacs.d/blob/master/lisp/setup-shells.el
 (use-package eshell
   :defer
   :config
   (setq eshell-prompt-regexp "^.* λ "
-          eshell-prompt-function #'bard/eshell-default-prompt-fn)
+        eshell-prompt-function #'bard/eshell-default-prompt-fn)
 
   (defun bard/eshell-default-prompt-fn ()
     "Generate the prompt string for eshell. Use for `eshell-prompt-function'."

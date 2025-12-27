@@ -9,10 +9,10 @@
   (setq even-window-sizes 'height-only)
   (setq window-sides-vertical nil)
   (setq switch-to-buffer-in-dedicated-window 'pop)
-  (setq split-height-threshold 80)
-  (setq split-width-threshold 125)
-  (setq window-min-height 3)
-  (setq window-min-width 30))
+  (setq split-height-threshold 80
+        split-width-threshold 125)
+  (setq window-min-height 3
+        window-min-width 30))
 
 (use-package windmove
   :bind*
@@ -117,42 +117,15 @@
           ("\\*ispell-top-choices\\*.*"
            (display-buffer-reuse-mode-window display-buffer-below-selected)
            (window-height . fit-window-to-buffer))
-          ))
-  )
+          )))
 
 (use-package frame
   :ensure nil
   :bind (("C-x u" . undelete-frame)
-         ("C-x f" . other-frame-prefix)) ; I use only C-/ for `undo'
+         ("C-x f" . other-frame-prefix)
+         ("C-x w t" . tear-off-window)
+         ("C-x w c" . clone-indirect-buffer-other-window))
   :hook (after-init . undelete-frame-mode))
-
-(use-package winner-mode
-  :init
-  (winner-mode 1)
-  :bind
-  (("C-x <right>" . winner-redo)
-   ("C-x <left>" . winner-undo)
-   ("C-x C-n" . next-buffer)
-   ("C-x C-p" . previous-buffer)
-   ("C-x <up>" . next-buffer)
-   ("C-x <down>" . previous-buffer)))
-
-(use-package emacs
-  :ensure nil
-  :bind
-  ("C-x w t" . tear-off-window)
-  ("C-x w c" . clone-indirect-buffer-other-window))
-
-(use-package ibuffer
-  :ensure nil
-  :config
-  (setq ibuffer-default-sorting-mode 'major-mode)
-  (ibuffer-auto-mode t))
-
-(use-package emacs
-  :ensure nil
-  :bind
-  ("C-x w w" . bard/toggle-window-split))
 
 (use-package beframe
   :ensure t
@@ -198,3 +171,21 @@
 
 (provide 'bard-emacs-window)
 ;;; bard-emacs-window.el ends here
+
+(use-package winner-mode
+  :init
+  (winner-mode 1)
+  :bind
+  (("C-x <right>" . winner-redo)
+   ("C-x <left>" . winner-undo)
+   ("C-x C-n" . next-buffer)
+   ("C-x C-p" . previous-buffer)
+   ("C-x <up>" . next-buffer)
+   ("C-x <down>" . previous-buffer)
+   ("C-x w w" . bard/toggle-window-split)))
+
+(use-package ibuffer
+  :ensure nil
+  :config
+  (setq ibuffer-default-sorting-mode 'major-mode)
+  (ibuffer-auto-mode t))

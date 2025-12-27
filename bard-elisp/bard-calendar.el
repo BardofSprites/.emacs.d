@@ -1,7 +1,5 @@
 (require 'org)
 
-;; Org Clock
-
 (defun bard/auto-clock-in ()
   "Automatically clock in when task marked in progress (INPROG),
  and start study session."
@@ -25,30 +23,31 @@
                 (pop-to-buffer-same-window "todo.org")))))))
 
 (defun bard/org-clock-report ()
-  (interactive)
-  (bard/new-org-buffer)
-  (org-clock-report))
+    "Generate an org clock report in a separate org buffer."
+    (interactive)
+    (bard/new-org-buffer)
+    (org-clock-report))
 
-(defun bard/org-clock-update-mode-line ()
-  (interactive)
-  (setq org-mode-line-string nil)
-  (force-mode-line-update))
+  (defun bard/org-clock-update-mode-line ()
+    "Update the modeline, not sure why I have this."
+    (interactive)
+    (setq org-mode-line-string nil)
+    (force-mode-line-update))
 
-(defun bard/org-clock-task-string ()
-  "Return a simplified org clock task string."
-  (if (and (boundp 'org-mode-line-string)
-           (not (string-equal "" org-mode-line-string))
-           org-mode-line-string)
-      (substring-no-properties org-mode-line-string)
-    "No task clocked in"))
+  (defun bard/org-clock-task-string ()
+    "Return a simplified org clock task string.
+Used in FVWM3 configuration to show clocked task in FVWMbuttons."
+    (if (and (boundp 'org-mode-line-string)
+             (not (string-equal "" org-mode-line-string))
+             org-mode-line-string)
+        (substring-no-properties org-mode-line-string)
+      "No task clocked in"))
 
 (defun bard/open-calendar ()
   "Opens calendar as only window"
   (interactive)
   (calendar)
   (delete-other-windows))
-
-;; Org Agenda
 
 (defun bard/choose-agenda ()
   "For viewing my custom agenda"

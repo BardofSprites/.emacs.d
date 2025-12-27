@@ -46,6 +46,7 @@
 (org-clock-persistence-insinuate)
 
 (use-package org
+  ;; not really show what this does anymore
   :demand t
   :hook
   ((org-clock-out . bard/org-clock-update-mode-line)))
@@ -87,7 +88,6 @@
   :config
   (setq org-habit-show-done-always-green t
         org-habit-show-habits t
-        org-habit-show-all-today t)
-  )
+        org-habit-show-all-today t))
 
 (provide 'bard-emacs-calendar)

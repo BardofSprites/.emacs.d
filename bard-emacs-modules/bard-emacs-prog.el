@@ -1,29 +1,45 @@
+(use-package electric
+  :hook
+  (prog-mode . electric-indent-local-mode)
+  (prog-mode . electric-pair-local-mode))
+
+(use-package paren
+  :hook (prog-mode . show-paren-local-mode)
+  :config
+  (setq show-paren-style 'parenthesis)
+  (setq show-paren-when-point-in-periphery nil)
+  (setq show-paren-when-point-inside-paren nil)
+  (setq show-paren-context-when-offscreen 'overlay))
+
 (use-package haskell-mode
   :ensure t
   :config
   (setq haskell-interactive-popup-errors nil))
 
-;; CPP Mode
-(use-package emacs
+(use-package c-mode
   :config
   (setq-default c-basic-offset 4)
   (setq c-default-style '((c-mode . "gnu")
                           (java-mode . "java")
                           (awk-mode . "awk"))))
 
-;; Haskell
-
-(use-package emacs
+(use-package ggtags
+  :ensure t
   :config
-  (add-to-list 'exec-path "$HOME/.ghcup/bin")
-  (add-to-list 'exec-path "/home/bard/.cabal/bin")
-  (add-to-list 'exec-path "/home/bard/.local/bin")
-  (add-to-list 'exec-path "/home/bard/opt/")
-  (let ((bard/ghcup-path (expand-file-name "~/.ghcup/bin")))
-    (setenv "PATH" (concat bard/ghcup-path ":" (getenv "PATH")))
-    (add-to-list 'exec-path bard/ghcup-path)))
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                (ggtags-mode 1)
+                (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))))
 
-;; Lisp
+(use-package compile
+  :ensure nil
+  :defer 2
+  :config
+  (require 'bard-compile)
+  (setq compilation-scroll-output t
+        compilation-auto-jump-to-first-error nil))
+
 (use-package clojure-mode
   :ensure t)
 
@@ -43,50 +59,10 @@
 
 ;; parens packages
 
-(use-package c++-mode
-  :ensure nil
-  :bind
-  (:map c++-mode-map
-        ("C-c C-c" . project-compile))
-  :config
-  (defun bard/c++-completion-or-indent ()
-    "Complete if point is at a symbol; otherwise, indent."
-    (interactive)
-    (if (or (completion-at-point) (looking-at "\\_>"))
-        (completion-at-point)
-      (c-indent-line-or-region)))
-
-  (defun bard/setup-c++-mode ()
-    "Configure completion behavior for `c++-mode'."
-    (local-set-key (kbd "<tab>") 'bard/c++-completion-or-indent))
-
-  (add-hook 'c++-mode-hook #'bard/setup-c++-mode)
-  (add-hook 'c-mode-hook #'bard/setup-c++-mode)
-  )
-
 (use-package flycheck
   :ensure t
   :config
   (global-flycheck-mode t))
-
-(use-package ggtags
-  :ensure t
-  :config
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                (ggtags-mode 1)
-                (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))
-            ))
-
-(use-package compile
-  :ensure nil
-  :defer 2
-  :config
-  (require 'bard-compile)
-  (setq compilation-scroll-output t
-        compilation-auto-jump-to-first-error nil)
-  )
 
 ;; Version control
 (use-package magit
@@ -98,8 +74,7 @@
           ("~/dotfiles-stow"           . 0)
           ("~/.emacs.d"                . 0)
           ("~/Pictures/wallpaper"      . 0)))
-  :bind ("C-c g" . magit-status)
-  )
+  :bind ("C-c g" . magit-status))
 
 ;; (use-package ada-mode
 ;;   :load-path "~/.emacs.d/old-ada"

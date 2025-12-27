@@ -1,4 +1,3 @@
-;; Stolen from (http://endlessparentheses.com/ansi-colors-in-the-compilation-buffer-output.html)
 (require 'ansi-color)
 (defun endless/colorize-compilation ()
   "Colorize from `compilation-filter-start' to `point'."

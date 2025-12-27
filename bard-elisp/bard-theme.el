@@ -1,60 +1,56 @@
 (setq fontaine-presets
-        '((default
-           :default-height 140
-           :default-family "Iosevka Comfy"
-           :variable-pitch-family "Iosevka Comfy"
-           :variable-pitch-height 1.0
-           :fixed-pitch-family "Iosevka Comfy"
-           :fixed-pitch-height 1.0
-           :bold-weight bold
-           )
-          (tiny
-           :inherit default
-           :default-height 135)
-          (wide
-           :default-height 135
-           :default-family "Iosevka Comfy Wide"
-           :fixed-pitch-family "Iosevka Comfy Wide"
-           :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
-          (prot
-           :default-family "Iosevka Comfy Wide Motion"
-           :default-height 130
-           :default-weight medium
-           :fixed-pitch-family "Iosevka Comfy Wide Motion"
-           :variable-pitch-family "Iosevka Comfy Wide Duo"
-           :bold-weight extrabold)
-          (mono
-           :default-height 130
-           :default-family "monospace"
-           :fixed-pitch-family "monospace"
-           :variable-pitch-family "Baskerville"
-           :variable-pitch-height 140)
-          (mono-large
-           :inherit mono
-           :default-height 150
-           :variable-pitch-height 160)
-          (mac
-           :default-height 130
-           :default-family "Monaco"
-           :variable-pitch-family "Monaco"
-           :fixed-pitch-family "Monaco")
-          (large
-           :inherit default
-           :default-height 160
-           )
-          (huge
-           :inherit default
-           :default-height 180
-           )
-          (t
-           :default-family "Monospace"
-           )))
+      '((default
+         :default-height 140
+         :default-family "Iosevka Comfy"
+         :variable-pitch-family "Iosevka Comfy"
+         :variable-pitch-height 1.0
+         :fixed-pitch-family "Iosevka Comfy"
+         :fixed-pitch-height 1.0
+         :bold-weight bold
+         )
+        (tiny
+         :inherit default
+         :default-height 135)
+        (wide
+         :default-height 135
+         :default-family "Iosevka Comfy Wide"
+         :fixed-pitch-family "Iosevka Comfy Wide"
+         :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
+        (prot
+         :default-family "Iosevka Comfy Wide Motion"
+         :default-height 130
+         :default-weight medium
+         :fixed-pitch-family "Iosevka Comfy Wide Motion"
+         :variable-pitch-family "Iosevka Comfy Wide Duo"
+         :bold-weight extrabold)
+        (mono
+         :default-height 130
+         :default-family "monospace"
+         :fixed-pitch-family "monospace"
+         :variable-pitch-family "Baskerville"
+         :variable-pitch-height 140)
+        (mono-large
+         :inherit mono
+         :default-height 150
+         :variable-pitch-height 160)
+        (mac
+         :default-height 130
+         :default-family "Monaco"
+         :variable-pitch-family "Monaco"
+         :fixed-pitch-family "Monaco")
+        (large
+         :inherit default
+         :default-height 160)
+        (huge
+         :inherit default
+         :default-height 180)
+        (t
+         :default-family "Monospace")))
 
 (set-fontset-font
  t 'han
  (font-spec :family "Noto Serif CJK JP") nil 'prepend)
 
-;;; Switching themes
 (defun bard/disable-all-themes ()
   "disable all active themes."
   (interactive)
@@ -84,25 +80,6 @@
     (load-theme theme-symbol t)
     (message "Loaded the %s theme" colored-theme-name)
     (run-hooks 'bard/after-theme-load-hook)))
-
-(defun bard/update-ryo-cursor-color ()
-  "Update the color variable of `ryo-modal-mode' cursor to match the ef/modus theme."
-  (let ((active-theme (car custom-enabled-themes))
-        (cursor-color nil))
-    (cond
-     ((and (fboundp 'ef-themes-with-colors)
-           (string-prefix-p "ef-" (symbol-name active-theme)))
-      (ef-themes-with-colors
-        (setq ryo-modal-cursor-color cursor
-              ryo-modal-default-cursor-color cursor)))
-     ((and (fboundp 'modus-themes-with-colors)
-           (string-prefix-p "modus-" (symbol-name active-theme)))
-      (modus-themes-with-colors
-        (setq ryo-modal-cursor-color cursor
-              ryo-modal-default-cursor-color cursor)))
-     (t (setq cursor-color "red"))
-     (setq ryo-modal-cursor-color cursor-color
-           ryo-modal-default-cursor-color cursor-color))))
 
 (defvar my-last-cursor-type nil)
 

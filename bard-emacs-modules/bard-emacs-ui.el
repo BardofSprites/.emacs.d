@@ -1,4 +1,3 @@
-;; Generic variables for modes
 (use-package whitespace
   :ensure nil
   :demand t
@@ -23,7 +22,6 @@
   :config
   (setq display-line-numbers-type 'relative))
 
-;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
 (use-package hl-todo
   :ensure t
   :hook
@@ -47,5 +45,4 @@
     (add-to-list 'keycast-substitute-alist `(,event nil nil))))
 
 (provide 'bard-emacs-ui)
-
 ;;; bard-emacs-ui.el ends here

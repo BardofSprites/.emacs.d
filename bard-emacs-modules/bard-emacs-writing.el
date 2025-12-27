@@ -1,5 +1,3 @@
-;;; Input related settings
-
 (use-package emacs
   :ensure nil
   :demand t
@@ -15,6 +13,7 @@
   (setq default-input-method "cyrillic-yawerty")
   (setq default-transient-input-method "cyrillic-yawerty"))
 
+;; spell check
 (use-package text-mode
   :ensure nil
   :hook
@@ -28,20 +27,6 @@
   (setq-default tab-width 4
                 indent-tabs-mode nil))
 
-(use-package electric
-  :hook
-  (prog-mode . electric-indent-local-mode)
-  (prog-mode . electric-pair-local-mode))
-
-(use-package paren
-  :hook (prog-mode . show-paren-local-mode)
-  :config
-  (setq show-paren-style 'parenthesis)
-  (setq show-paren-when-point-in-periphery nil)
-  (setq show-paren-when-point-inside-paren nil)
-  (setq show-paren-context-when-offscreen 'overlay))
-
-;; snippets
 (use-package yasnippet
   :ensure t
   :config
@@ -55,7 +40,6 @@
   :config
   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
-;;; Notes
 (use-package denote
   :ensure t
   :config
@@ -117,8 +101,7 @@
   :ensure t
   :config
   (setq denote-silo-directories '("~/Notes/denote"
-                                  "~/Notes/Old Notes/"))
-  )
+                                  "~/Notes/Old Notes/")))
 
 (use-package denote-sequence
   :ensure t
@@ -136,8 +119,7 @@
   :config
   (setq denote-journal-directory "~/Notes/denote/journal/")
 
-  (setq denote-journal-title-format "Daily Tasks and Notes")
-  )
+  (setq denote-journal-title-format "Daily Tasks and Notes"))
 
 (use-package denote-roam
   :ensure nil
@@ -151,7 +133,6 @@
   :config
   (denote-roam-mode t))
 
-;;;; Org Roam
 (use-package org-roam
   :ensure t
   :custom
@@ -170,8 +151,6 @@
   ("C-c n u" . org-roam-ui-open)
   :custom
   (org-roam-ui-open-on-start nil))
-
-;;; Focus mode for writing
 
 ;; Center line scrolling for focused writing
 (use-package emacs
@@ -265,8 +244,7 @@
   ;; (setq citar-file-open-functions 'find-file)
   :hook
   (org-mode . citar-capf-setup)
-  :bind (("C-c i" . citar-insert-citation))
-  )
+  :bind (("C-c i" . citar-insert-citation)))
 
 (use-package citar-denote
   :ensure t

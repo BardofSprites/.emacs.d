@@ -76,8 +76,6 @@ use in `display-buffer-alist'."
       (and (not (derived-mode-p 'message-mode 'text-mode))
            (derived-mode-p 'eshell-mode 'shell-mode 'term-mode 'comint-mode 'fundamental-mode)))))
 
-;; taken from https://github.com/hylophile/.files/blob/1f3f01e4e25b00f7b61eca286fcf4f865885090c/.config/doom/config.org#fancy-tab-bar
-
 (defun hy/tab-bar-format-align-center ()
   "Align the rest of tab bar items centered."
   (let* ((rest (cdr (memq 'hy/tab-bar-format-align-center tab-bar-format)))
