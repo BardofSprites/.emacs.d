@@ -4,7 +4,7 @@
   :config
   (setq vertico-scroll-margin 0)
   (setq vertico-cycle nil)
-
+  (setq vertico-resize nil)
   (vertico-mode t)
 
   (with-eval-after-load 'rfn-eshadow
@@ -30,17 +30,17 @@
         '(read-only t cursor-intangible t face minibuffer-prompt))
 
   ;; MCT has a variant of this built-in.
-    (defun crm-indicator (args)
-      (cons (format "[`completing-read-multiple': %s]  %s"
-                    (propertize
-                     (replace-regexp-in-string
-                      "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                      crm-separator)
-                     'face 'error)
-                    (car args))
-            (cdr args)))
+  (defun crm-indicator (args)
+    (cons (format "[`completing-read-multiple': %s]  %s"
+                  (propertize
+                   (replace-regexp-in-string
+                    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+                    crm-separator)
+                   'face 'error)
+                  (car args))
+          (cdr args)))
 
-    (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
   (file-name-shadow-mode 1))
 
@@ -176,7 +176,6 @@
   (setq embark-verbose-indicator-excluded-actions
         '(embark-cycle embark-act-all embark-collect embark-export embark-insert)))
 
-;; Savehist
 (setq savehist-file (locate-user-emacs-file "savehist"))
 (setq history-length 100)
 (setq history-delete-duplicates t)
@@ -184,15 +183,12 @@
 (setq savehist-additional-variables '(register-alist kill-ring))
 (savehist-mode t)
 
-;; recentf
 (recentf-mode t)
 (setq recentf-save-file (locate-user-emacs-file "recentf"))
 
 ;; save cursor place for code files
 (add-hook 'prog-mode-hook #'save-place-local-mode)
 
-
-;;; abbrev-mode
 (setq abbrev-file-name (locate-user-emacs-file "abbrevs"))
 (setq only-global-abbrevs nil)
 
@@ -203,38 +199,38 @@
   "protweb" "https://protesilaos.com/")
 
 (bard/make-abbrev text-mode-abbrev-table
-    "asciidoc"       "AsciiDoc"
-    "auctex"         "AUCTeX"
-    "cafe"           "café"
-    "cliche"         "cliché"
-    "clojurescript"  "ClojureScript"
-    "emacsconf"      "EmacsConf"
-    "github"         "GitHub"
-    "gitlab"         "GitLab"
-    "javascript"     "JavaScript"
-    "latex"          "LaTeX"
-    "libreplanet"    "LibrePlanet"
-    "linkedin"       "LinkedIn"
-    "paypal"         "PayPal"
-    "sourcehut"      "SourceHut"
-    "texmacs"        "TeXmacs"
-    "typescript"     "TypeScript"
-    "visavis"        "vis-à-vis"
-    "vscode"         "Visual Studio Code"
-    "youtube"        "YouTube"
-    "Результат"      "=Результат Сегодняшний Битвый="
-    "asf"            "and so on and so forth"
-    "paragraph"      "¶"
-    "em"             "—"
-    "ua"             "↑"
-    "da"             "↓"
-    "ra"             "→"
-    "la"             "←"
-    "iff"            "⇔"
-    "imp"            "⇒"
-    "tf"             "∴"
-    "xmonad"         "XMonad"
-    "xmobar"         "XMobar")
+  "asciidoc"       "AsciiDoc"
+  "auctex"         "AUCTeX"
+  "cafe"           "café"
+  "cliche"         "cliché"
+  "clojurescript"  "ClojureScript"
+  "emacsconf"      "EmacsConf"
+  "github"         "GitHub"
+  "gitlab"         "GitLab"
+  "javascript"     "JavaScript"
+  "latex"          "LaTeX"
+  "libreplanet"    "LibrePlanet"
+  "linkedin"       "LinkedIn"
+  "paypal"         "PayPal"
+  "sourcehut"      "SourceHut"
+  "texmacs"        "TeXmacs"
+  "typescript"     "TypeScript"
+  "visavis"        "vis-à-vis"
+  "vscode"         "Visual Studio Code"
+  "youtube"        "YouTube"
+  "Результат"      "=Результат Сегодняшний Битвый="
+  "asf"            "and so on and so forth"
+  "paragraph"      "¶"
+  "em"             "—"
+  "ua"             "↑"
+  "da"             "↓"
+  "ra"             "→"
+  "la"             "←"
+  "iff"            "⇔"
+  "imp"            "⇒"
+  "tf"             "∴"
+  "xmonad"         "XMonad"
+  "xmobar"         "XMobar")
 
 (dolist (hook '(text-mode-hook prog-mode-hook git-commit-mode-hook))
   (add-hook hook #'abbrev-mode))

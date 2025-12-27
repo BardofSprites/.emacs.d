@@ -9,6 +9,7 @@
   (setq evil-want-keybinding nil)
   ;; no vim insert bindings
   (setq evil-undo-system 'undo-fu)
+  (setq evil-respect-visual-line-mode t)
   :config
   (evil-mode 1))
 
@@ -30,7 +31,7 @@
   (general-create-definer bard/leader-keys
     :states '(normal insert visual emacs)
     :prefix "SPC"
-    :global-prefix "C-SPC")
+    :global-prefix "C-S-SPC")
 
   (bard/leader-keys
 
@@ -41,7 +42,7 @@
     ;; buffers
     "b"  '(:ignore t :which-key "buffers")
     "bb" '(consult-buffer :which-key "switch buffer")
-    "bd" '(kill-this-buffer :which-key "kill buffer")
+    "bk" '(kill-buffer :which-key "kill buffer")
     "bs" '(save-buffer :which-key "save buffer")
 
     ;; windows
@@ -94,9 +95,14 @@
     "t" '(:ignore t :which-key "toggle")
     "tf" '(toggle-frame-fullscreen :which-key "fullscreen")
     "tf" '(toggle-frame-fullscreen :which-key "fullscreen")
+
+    ;; help
+    "h" '(:ignore t :which-key "help")
+    "hr" '(info-emacs-manual :which-key "emacs manual")
+    "hR" '(info-display-manual :which-key "emacs search manual")
+    "hi" '(info :which-key "info")
     )
   
 
   )
 (provide 'bard-emacs-keyboard)
-

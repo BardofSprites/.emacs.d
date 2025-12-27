@@ -1,4 +1,3 @@
-;;;; EMMS
 (use-package emms
   :ensure t
   ;; :demand t
@@ -47,7 +46,6 @@
   (setq bard/watch-later-file "~/Videos/watch-later.m3u")
   )
 
-;;;; PDFS
 (use-package pdf-tools
   :ensure t
   :config

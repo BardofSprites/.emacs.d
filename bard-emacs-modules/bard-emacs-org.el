@@ -20,10 +20,7 @@
   (("C-c c" . org-capture))
   :config
   (setq org-goto-interface 'outline-path-completion)
-  (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3))))
-  ;; :hook
-  ;; ((org-mode . org-num-mode))
-  )
+  (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 
 ;; Org Variables
 (setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
@@ -205,7 +202,8 @@
   :hook (org-mode . org-bullets-mode)
   :config
   (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆"))
-  (set-fontset-font t 'symbol (font-spec :family "Iosevka Comfy") nil 'append)
-  (set-fontset-font t 'unicode (font-spec :family "Iosevka Comfy") nil 'append))
+  ;; (set-fontset-font t 'symbol (font-spec :family "Iosevka Comfy") nil 'append)
+  ;; (set-fontset-font t 'unicode (font-spec :family "Iosevka Comfy") nil 'append)
+  )
 
 (provide 'bard-emacs-org)

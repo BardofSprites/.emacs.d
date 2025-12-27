@@ -24,22 +24,14 @@
           ("\\.\\(mp[34]\\|m4a\\|ogg\\|flac\\|webm\\|mkv\\)" "mpv" "xdg-open")
 	      (".gif" "mpv --loop=inf")
           (".*" "xdg-open")))
+  (setq dired-dwim-target t)
+  (setq dired-listing-switches
+        "-AgGFhlv --group-directories-first --time-style=long-iso")
   :hook
   ((dired-mode . dired-hide-details-mode)
    ;; attachments for email through dired
    (dired-mode . turn-on-gnus-dired-mode)))
 
-(use-package dired
-  :ensure nil
-  :defer 1
-  :config
-  (setq dired-dwim-target t)
-  ;; (setq dired-listing-switches "-lXGh --group-directories-first")
-  (setq dired-listing-switches
-        "-AgGFhlv --group-directories-first --time-style=long-iso")
-  )
-
-;; Image dired
 (use-package image-dired
   :bind
   (:map dired-mode-map
@@ -89,7 +81,6 @@
       (start-process "feh" nil "feh" "--bg-fill" image-file)
       (message "Background set to %s" image-file))))
 
-
 ;; Taken from https://superuser.com/a/176629
 (defun bard/dired-do-command (command)
   "Run COMMAND on marked files. Any files not already open will be opened.
@@ -105,7 +96,7 @@ open and unsaved."
 (use-package dired-video-thumbnail
   :ensure t
   :vc (:url "https://github.com/captainflasmr/dired-video-thumbnail"
-       :rev :newest)
+            :rev :newest)
   :bind (:map dired-mode-map
               ("C-t v" . dired-video-thumbnail)))
 

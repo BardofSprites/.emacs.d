@@ -24,6 +24,12 @@
     (add-to-list 'exec-path bard/ghcup-path)))
 
 ;; Lisp
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t)
+
 (use-package sly
   :ensure t
   :config

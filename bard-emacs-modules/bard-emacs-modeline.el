@@ -26,7 +26,8 @@
                 mode-line-format-right-align
                 prot-modeline-notmuch-indicator
                 " "
-                prot-modeline-misc-info))
+                prot-modeline-misc-info
+                " "))
 
 (with-eval-after-load 'spacious-padding
   (defun prot/modeline-spacious-indicators ()

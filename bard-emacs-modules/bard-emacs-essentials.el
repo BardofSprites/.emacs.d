@@ -1,6 +1,3 @@
-;;; Editing niceties
-
-;; writeable grep buffers
 (use-package wgrep
   :ensure t
   :bind
@@ -12,7 +9,6 @@
   (:map grep-mode-map
         ("e" . wgrep-change-to-wgrep-mode)))
 
-;; preview replace
 (use-package multiple-cursors
   :ensure t
   :config
@@ -46,18 +42,10 @@
       desktop-restore-=frams t
       desktop-restory-in-current-display t
       desktop-files-not-to-save "\(^$\\|\\*scratch\\*\\|\\*Messages\\*\\|\\*dashboard\\*\\|\\*Async-native-compile-log\\*|\\*Music\\*)")
-
-;;; General Keybinds
-
-;; Buffer switching
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; Desktop/session save
 ;; (desktop-save-mode t)
 (global-set-key (kbd "C-z s") 'desktop-save-in-desktop-dir)
 (global-set-key (kbd "C-z r") 'desktop-read)
 
-;;; Scratch buffers
 ;; Text Scratch buffers
 (defun bard/new-org-buffer ()
   (interactive)
@@ -87,7 +75,6 @@
     (text-scale-increase 1.5)
     xbuf))
 
-;;; Terminals
 (defun bard/open-terminal-in-current-directory ()
   "Open a terminal in the current working directory."
   (interactive)
@@ -107,7 +94,6 @@
 
 (define-key global-map (kbd "C-z C-s") #'bard/new-elisp-buffer)
 
-;;; Time Management
 ;; Modeline
 (setq display-time-format "%Y-%m-%d (%a) %H:%M")
 (setq display-time-interval 60)
@@ -138,8 +124,11 @@
 (use-package tmr
   :ensure t
   :config
-  (setq tmr-sound-file "/home/bard/.local/bin/scripts/bell.mp3")
   (setq tmr-notification-urgency 'normal)
+  (setq tmr-sound-file nil)
+  (setq tmr-timer-finished-functions '(tmr-notification-notify
+                                       tmr-print-message-for-finished-timer
+                                       tmr-acknowledge-minibuffer))
   (setq tmr-descriptions-list 'tmr-description-history)
   (define-key global-map (kbd "C-c t l") 'tmr-tabulated-view)
   (define-key global-map (kbd "C-c t t") #'tmr)
@@ -152,16 +141,9 @@
   (define-key global-map (kbd "C-c t r") #'tmr-remove)
   (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
 
-;; running emacs as server
 (require 'server)
 (setq server-client-instructions nil)
 (unless (server-running-p)
   (server-start))
-
-(use-package treemacs
-  :ensure t
-  :bind
-  ("M-`" . treemacs) ; uses old text-based menu keybind
-  )
 
 (provide 'bard-emacs-essentials)
