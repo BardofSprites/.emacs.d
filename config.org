@@ -1234,427 +1234,320 @@ making an abbreviation to a function."
 #+end_src
 
 ** bard-emacs-org
+*** Include required libraries
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
-;; |------------------------------------|
-;; |            Org Config              |
-;; |------------------------------------|
-(require 'org)
-(require 'ox)
-(require 'org-habit)
+  (require 'org)
+  (require 'ox)
+  (require 'org-habit)
+#+end_src
 
-(use-package org
-  :defer nil
-  :bind
-  (:map org-mode-map
-        ("C-M-a" . backward-paragraph)
-        ("C-M-e" . forward-paragraph)
-        ("C-c M-c" . count-words-region)
-        ("C-c C-M-c" . count-words)
-        ("C-c l" . org-id-get-create)
-        ("C-c j" . org-goto)
-        )
-  :bind
-  (("C-c c" . org-capture))
-  :config
-  (setq org-goto-interface 'outline-path-completion)
-  (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
+*** Main Configuration
 
-;; Org Variables
-(setq bard/org-anki-file "~/Notes/denote/20240729T171836--anki-flashcards__cards_meta.org")
-(setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
-(setq org-log-done 'time)
-(setq org-icalendar-include-todo t
-      org-icalendar-include-body t
-      org-icalendar-with-timestamps t
-      org-icalendar-use-scheduled '(event-if-todo-not-done)
-      org-icalendar-scheduled-summary-prefix "SCHEDULED: "
-      org-icalendar-use-deadline '(event-if-todo-not-done)
-      org-icalendar-deadline-summary-prefix "DEADLINE: ")
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (use-package org
+    :defer nil
+    :bind
+    (:map org-mode-map
+          ("C-M-a" . backward-paragraph)
+          ("C-M-e" . forward-paragraph)
+          ("C-c M-c" . count-words-region)
+          ("C-c C-M-c" . count-words)
+          ("C-c l" . org-id-get-create)
+          ("C-c j" . org-goto)
+          )
+    :bind
+    (("C-c c" . org-capture))
+    :config
+    (setq org-goto-interface 'outline-path-completion)
+    (setq org-special-ctrl-a/e t)
+    (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
+#+end_src
 
-(setq org-habit-show-all-today nil)
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
+  (setq org-log-done 'time)
+  (setq org-icalendar-include-todo t
+        org-icalendar-include-body t
+        org-icalendar-with-timestamps t
+        org-icalendar-use-scheduled '(event-if-todo-not-done)
+        org-icalendar-scheduled-summary-prefix "SCHEDULED: "
+        org-icalendar-use-deadline '(event-if-todo-not-done)
+        org-icalendar-deadline-summary-prefix "DEADLINE: ")
+#+end_src
 
-(setq org-structure-template-alist
-      '(("c" . "center")
-	    ("x" . "example")
-        ("d" . "definition")
-	    ("t" . "theorem")
-        ("q" . "quote")
-	    ("v" . "verse")
-	    ("s" . "src")
-        ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
-        ("z" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
-        ("Z" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
-(setq org-ellipsis " ⤶")
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (setq org-structure-template-alist
+        '(("c" . "center")
+          ("x" . "example")
+          ("d" . "definition")
+          ("t" . "theorem")
+          ("q" . "quote")
+          ("v" . "verse")
+          ("s" . "src")
+          ("E" . "src emacs-lisp :results value code :lexical t") ; for code examples in notes
+          ("z" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
+          ("Z" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
+  (setq org-ellipsis " ⤶")
+#+end_src
 
-;; mainly for denote, org throws away a link that i might reuse later
-(setq org-id-link-to-org-use-id t)
-(setq org-link-keep-stored-after-insertion nil)
+*** Making org mode look nice
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (setq org-startup-indented t
+        org-startup-folded 'showeverything
+        org-hide-emphasis-markers t
+        org-startup-with-inline-images t
+        org-image-actual-width '(600)
+        org-list-allow-alphabetical t
+        org-insert-heading-respect-content t)
 
-;; Making org mode look nice
-(setq org-startup-indented t
-      org-startup-folded 'showeverything
-      org-hide-emphasis-markers t
-      org-startup-with-inline-images t
-      org-image-actual-width '(600)
-      org-list-allow-alphabetical t
-      org-insert-heading-respect-content t
-      org-special-ctrl-a/e t)
+  (use-package org-bullets
+    :ensure t
+    :hook (org-mode . org-bullets-mode)
+    :config
+    (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
 
-(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+#+end_src
 
-(defun bard/org-export-on-save ()
-  "Export current Org buffer to PDF and open it with auto-revert enabled."
-  (when (derived-mode-p 'org-mode)
-    (org-latex-export-to-pdf)))
+*** Org export + latex
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
-(define-minor-mode bard/org-auto-export-pdf-mode
-  "Automatically export Org buffer to PDF on save."
-  :lighter " AutoPDF"
-  :group 'org
-  (if bard/org-auto-export-pdf-mode
-      (add-hook 'after-save-hook #'bard/org-export-on-save)
-    (remove-hook 'after-save-hook #'bard/org-export-on-save)))
+  (defun bard/org-export-on-save ()
+    "Export current Org buffer to PDF and open it with auto-revert enabled."
+    (when (derived-mode-p 'org-mode)
+      (org-latex-export-to-pdf)))
 
-(use-package auctex
-  :ensure t)
+  (define-minor-mode bard/org-auto-export-pdf-mode
+    "Automatically export Org buffer to PDF on save."
+    :lighter " AutoPDF"
+    :group 'org
+    (if bard/org-auto-export-pdf-mode
+        (add-hook 'after-save-hook #'bard/org-export-on-save)
+      (remove-hook 'after-save-hook #'bard/org-export-on-save)))
 
-(use-package cdlatex
-  :ensure t
-  )
+  (use-package auctex
+    :ensure t)
 
-;; (use-package org-mode
-;;   :config
+  (use-package cdlatex
+    :ensure t
+    )
 
-;;   ;; (setq org-latex-to-pdf-process
-;;   ;;       '("xelatex -interaction nonstopmode %f"
-;;   ;;         "xelatex -interaction nonstopmode %f"))
-;;   ;; (add-to-list 'org-latex-packages-alist
-;;   ;;              '("AUTO" "babel" t ("pdflatex" "xelatex" "lualatex")))
-;;   ;; (add-to-list 'org-latex-packages-alist
-;;   ;;              '("AUTO" "polyglossia" t ("xelatex" "lualatex")))
-;; )
+  ;; latex editing niceness
+  (use-package org-fragtog
+    :ensure t)
+#+end_src
 
-(with-eval-after-load 'ox-latex
-  (add-to-list 'org-latex-classes
-               '("org-plain-latex"
-                 "\\documentclass{article}
-           [NO-DEFAULT-PACKAGES]
-           [PACKAGES]
-           [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+*** Org capture
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (setq org-capture-bookmark nil
+        org-id-link-to-org-use-id nil)
 
-;; latex editing niceness
-(use-package org-fragtog
-  :ensure t)
+  (require 'org-protocol)
+  (setq org-capture-templates
+        '(("t" "task" entry
+           (file+olp
+            "~/Notes/denote/20240328T215727--todo.org"
+            "Inbox" "General tasks")
+           "* TODO %?")
+          ;; ("s" "Basic Statistics" entry
+          ;;  (file+headline
+          ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
+          ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Statistics\n:END:\n*** Front\n %?\n*** Back\n\n")
+          ;; ("S" "Cloze Statistics" entry
+          ;;  (file+headline
+          ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
+          ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
+          ("c" "Basic Chemistry" entry
+           (file+headline
+            "~/Notes/denote/20251019T175402--chemistry-flashcards__anki_chem.org" "Unsorted")
+           "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Chemistry\n:END:\n*** Front\n%?\n*** Back\n\n")
+          ("n" "common place note" entry
+           (file "~/Notes/denote/20251023T182240--common-place-notes__topic.org")
+           "* %^{Source}\n#+BEGIN_QUOTE\n%?\n#+END_QUOTE")
+          ("z" "Protocol" entry
+           (file+olp
+            "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Quotes")
+           "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
+          ("Z" "Protocol Link" entry
+           (file+olp
+            "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Watch/Read List")
+           "* [[%:link][%:description]] \nCaptured On: %U \n%?")
+          ("w" "Class outline" entry
+           (file
+            "~/Notes/denote/20240328T215727--todo.org")
+           (file
+            "~/Notes/denote/templates/class-template.org"))
+          ("p" "project idea" entry
+           (file
+            "~/Notes/denote/20250201T165619--project-ideas__idea_programming.org")
+           "* %^{Project description}\n%?")))
+#+end_src
 
-;;; Org capture
-(setq org-capture-bookmark nil
-      org-id-link-to-org-use-id nil)
+*** Managing media
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  ;; copy/paste images
+  (use-package org-download
+    :after org
+    :defer nil
+    :ensure t
+    :custom
+    (org-download-method 'directory)
+    (org-download-image-dir "~/Notes/denote/Images")
+    (org-download-heading-lvl 0)
+    (org-download-timestamp "org_%Y%m%d-%H%M%S_")
+    (org-download-screenshot-method "xclip -selection clipboard -t image/png -o > '%s'")
+    :bind
+    ("C-M-y" . org-download-screenshot)
+    :config
+    (require 'org-download))
 
-(require 'org-protocol)
-(setq org-capture-templates
-      '(("t" "task" entry
-         (file+olp
-          "~/Notes/denote/20240328T215727--todo.org"
-          "Inbox" "General tasks")
-	     "* TODO %?")
-        ;; ("s" "Basic Statistics" entry
-        ;;  (file+headline
-        ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
-        ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Statistics\n:END:\n*** Front\n %?\n*** Back\n\n")
-        ;; ("S" "Cloze Statistics" entry
-        ;;  (file+headline
-        ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
-        ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
-        ("c" "Basic Chemistry" entry
-         (file+headline
-          "~/Notes/denote/20251019T175402--chemistry-flashcards__anki_chem.org" "Unsorted")
-         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Chemistry\n:END:\n*** Front\n%?\n*** Back\n\n")
-        ("n" "common place note" entry
-         (file "~/Notes/denote/20251023T182240--common-place-notes__topic.org")
-         "* %^{Source}\n#+BEGIN_QUOTE\n%?\n#+END_QUOTE")
-        ("z" "Protocol" entry
-         (file+olp
-          "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Quotes")
-         "* Source: [[%:link][%:description]]\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n%?")
-	    ("Z" "Protocol Link" entry
-         (file+olp
-          "~/Notes/denote/20240328T220037--media-tracker__media_topic.org" "Watch/Read List")
-	     "* [[%:link][%:description]] \nCaptured On: %U \n%?")
-        ("w" "Class outline" entry
-         (file
-          "~/Notes/denote/20240328T215727--todo.org")
-         (file
-          "~/Notes/denote/templates/class-template.org"))
-        ("p" "project idea" entry
-         (file
-          "~/Notes/denote/20250201T165619--project-ideas__idea_programming.org")
-         "* %^{Project description}\n%?")))
+  ;; pdf notes
+  (use-package org-noter
+    :ensure t)
 
-;;; Org Publish
-(setq org-html-scripts nil)
-(setq org-publish-project-alist
-      '(("org-blog"
-         :base-directory "~/Code/org-blog/"
-         :base-extension "org"
-         :publishing-directory "~/Code/org-site/"
-         :recursive t
-         :publishing-function org-html-publish-to-html
-         :headline-levels 4
-         :html-preamble "<p class=\"backlink\"><a href=\"index.html\">Go back to note index</a></p><p class=\"updatedate\">Page last updated: <i>%d</i></p><hr>"
-         :html-postamble nil)))
+  ;; links
+  (use-package org-cliplink
+    :ensure t
+    :bind
+    ("C-c p" . org-cliplink))
 
-;;; Managing media
-;; inspired by https://zzamboni.org/post/how-to-insert-screenshots-in-org-documents-on-macos/
-
-(use-package org-download
-  :after org
-  :defer nil
-  :ensure t
-  :custom
-  (org-download-method 'directory)
-  (org-download-image-dir "~/Notes/denote/Images")
-  (org-download-heading-lvl 0)
-  (org-download-timestamp "org_%Y%m%d-%H%M%S_")
-  (org-download-screenshot-method "xclip -selection clipboard -t image/png -o > '%s'")
-  :bind
-  ("C-M-y" . org-download-screenshot)
-  :config
-  (require 'org-download))
-
-(use-package org-noter
-  :ensure t)
-
-(use-package org-cliplink
-  :ensure t
-  :bind
-  ("C-c p" . org-cliplink))
-
-(use-package org-bullets
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :config
-  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆"))
-  ;; (set-fontset-font t 'symbol (font-spec :family "Iosevka Comfy") nil 'append)
-  ;; (set-fontset-font t 'unicode (font-spec :family "Iosevka Comfy") nil 'append)
-  )
-
-(provide 'bard-emacs-org)
-
+  (provide 'bard-emacs-org)
 #+end_src
 
 ** bard-emacs-prog
+*** General input setup
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
-(use-package haskell-mode
-  :ensure t
+(use-package electric
+  :hook
+  (prog-mode . electric-indent-local-mode)
+  (prog-mode . electric-pair-local-mode))
+
+(use-package paren
+  :hook (prog-mode . show-paren-local-mode)
   :config
-  (setq haskell-interactive-popup-errors nil))
+  (setq show-paren-style 'parenthesis)
+  (setq show-paren-when-point-in-periphery nil)
+  (setq show-paren-when-point-inside-paren nil)
+  (setq show-paren-context-when-offscreen 'overlay))
+#+end_src
 
-;; CPP Mode
-(use-package emacs
-  :config
-  (setq-default c-basic-offset 4)
-  (setq c-default-style '((c-mode . "gnu")
-                          (java-mode . "java")
-                          (awk-mode . "awk"))))
+*** Haskell
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  (use-package haskell-mode
+    :ensure t
+    :config
+    (setq haskell-interactive-popup-errors nil))
+#+end_src
 
-;; Haskell
+*** C/C++
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  (use-package c-mode
+    :config
+    (setq-default c-basic-offset 4)
+    (setq c-default-style '((c-mode . "gnu")
+                            (java-mode . "java")
+                            (awk-mode . "awk"))))
 
-(use-package emacs
-  :config
-  (add-to-list 'exec-path "$HOME/.ghcup/bin")
-  (add-to-list 'exec-path "/home/bard/.cabal/bin")
-  (add-to-list 'exec-path "/home/bard/.local/bin")
-  (add-to-list 'exec-path "/home/bard/opt/")
-  (let ((bard/ghcup-path (expand-file-name "~/.ghcup/bin")))
-    (setenv "PATH" (concat bard/ghcup-path ":" (getenv "PATH")))
-    (add-to-list 'exec-path bard/ghcup-path)))
+  (use-package ggtags
+    :ensure t
+    :config
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                  (ggtags-mode 1)
+                  (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))))
 
-;; Lisp
-(use-package clojure-mode
-  :ensure t)
+  (use-package compile
+    :ensure nil
+    :defer 2
+    :config
+    (require 'bard-compile)
+    (setq compilation-scroll-output t
+          compilation-auto-jump-to-first-error nil))
+#+end_src
 
-(use-package cider
-  :ensure t)
+*** Lisp development
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  (use-package clojure-mode
+    :ensure t)
 
-(use-package sly
-  :ensure t
-  :config
-  (setq inferior-lisp-program (executable-find "sbcl")))
+  (use-package cider
+    :ensure t)
 
-(use-package geiser
-  :ensure t)
+  (use-package sly
+    :ensure t
+    :config
+    (setq inferior-lisp-program (executable-find "sbcl")))
 
-(use-package geiser-gauche
-  :ensure t)
+  (use-package geiser
+    :ensure t)
 
-;; parens packages
+  (use-package geiser-gauche
+    :ensure t)
 
-(use-package c++-mode
-  :ensure nil
-  :bind
-  (:map c++-mode-map
-        ("C-c C-c" . project-compile))
-  :config
-  (defun bard/c++-completion-or-indent ()
-    "Complete if point is at a symbol; otherwise, indent."
-    (interactive)
-    (if (or (completion-at-point) (looking-at "\\_>"))
-        (completion-at-point)
-      (c-indent-line-or-region)))
+  ;; parens packages
+#+end_src
 
-  (defun bard/setup-c++-mode ()
-    "Configure completion behavior for `c++-mode'."
-    (local-set-key (kbd "<tab>") 'bard/c++-completion-or-indent))
+*** Catching errors
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  (use-package flycheck
+    :ensure t
+    :config
+    (global-flycheck-mode t))
+#+end_src
 
-  (add-hook 'c++-mode-hook #'bard/setup-c++-mode)
-  (add-hook 'c-mode-hook #'bard/setup-c++-mode)
-  )
+*** Version control
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  ;; Version control
+  (use-package magit
+    :ensure t
+    :config
+    (setq magit-repository-directories
+          '(("~/Code"                    . 1)
+            ("~/Repositories"            . 1)
+            ("~/dotfiles-stow"           . 0)
+            ("~/.emacs.d"                . 0)
+            ("~/Pictures/wallpaper"      . 0)))
+    :bind ("C-c g" . magit-status))
+#+end_src
 
-(use-package flycheck
-  :ensure t
-  :config
-  (global-flycheck-mode t))
+*** Ada-mode
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  ;; (use-package ada-mode
+  ;;   :load-path "~/.emacs.d/old-ada"
+  ;;   :bind
+  ;;   (:map ada-mode-map
+  ;; 	("C-j" . dired-jump)))
+#+end_src
 
-(use-package ggtags
-  :ensure t
-  :config
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                (ggtags-mode 1)
-                (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))
-            ))
-
-(use-package compile
-  :ensure nil
-  :defer 2
-  :config
-  (require 'bard-compile)
-  (setq compilation-scroll-output t
-        compilation-auto-jump-to-first-error nil)
-  )
-
-;; Version control
-(use-package magit
-  :ensure t
-  :config
-  (setq magit-repository-directories
-        '(("~/Code"                    . 1)
-          ("~/Repositories"            . 1)
-          ("~/dotfiles-stow"           . 0)
-          ("~/.emacs.d"                . 0)
-          ("~/Pictures/wallpaper"      . 0)))
-  :bind ("C-c g" . magit-status)
-  )
-
-;; (use-package ada-mode
-;;   :load-path "~/.emacs.d/old-ada"
-;;   :bind
-;;   (:map ada-mode-map
-;; 	("C-j" . dired-jump)))
-
-(provide 'bard-emacs-prog)
-
+*** Provide module
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
+  (provide 'bard-emacs-prog)
 #+end_src
 
 ** bard-emacs-theme
+*** Load required libraries
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (require 'bard-theme)
+#+end_src
 
+*** Set all themes to safe
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   ;; declare all themes as safe (i trust developers)
   (setq custom-safe-themes t)
+#+end_src
 
-  (use-package ef-themes
-    :ensure t
-    :demand t
-    :hook
-    ((ef-themes-post-load . bard/ef-themes-hl-todo-faces)
-     (ef-themes-post-load . logos-update-fringe-in-buffers))
-    :config
-    (defun bard/ef-themes-hl-todo-faces ()
-      "Configure `hl-todo-keyword-faces' with Ef themes colors.
-  The exact color values are taken from the active Ef theme."
-      (ef-themes-with-colors
-        (setq hl-todo-keyword-faces
-              `(("WAIT" . ,yellow)
-                ("TODO" . ,red)
-                ("NEXT" . ,blue)
-                ("THEM" . ,magenta)
-                ("PROG" . ,cyan-warmer)
-                ("OKAY" . ,green-warmer)
-                ("DONT" . ,yellow-warmer)
-                ("FAIL" . ,red-warmer)
-                ("BUG" . ,red-warmer)
-                ("DONE" . ,green)
-                ("NOTE" . ,blue-warmer)
-                ("KLUDGE" . ,cyan)
-                ("HACK" . ,cyan)
-                ("TEMP" . ,red)
-                ("FIXME" . ,red-warmer)
-                ("XXX+" . ,red-warmer)
-                ("KILLED" . ,cyan)
-                ("REVIEW" . ,red)
-                ("DEPRECATED" . ,yellow)))))
-
-    (setq org-priority-faces
-          '((?A . (:inherit (bold next-error)))
-            (?B . org-priority)
-            (?C . (:inherit (shadow org-priority)))))
-
-    ;; (setq ef-themes-headings
-    ;;       '((0 variable-pitch bold 1.5)
-    ;;         (1 variable-pitch bold 1.3)
-    ;;         (2 regular 1.2)
-    ;;         (3 1.1)
-    ;;         (agenda-date . (variable-pitch bold 1.3))
-    ;;         (agenda-structure . (variable-pitch bold 1.5))
-    ;;         (t . 1.1)))
-
-    (setq ef-themes-headings
-          '((0 . (variable-pitch light 1.5))
-            (1 . (variable-pitch light 1.3))
-            (2 . (regular 1.2))
-            (t . (variable-pitch 1.1))
-            (agenda-date . (variable-pitch bold 1.3))
-            (agenda-structure . (variable-pitch bold 1.5))))
-
-    ;; better faces in overrides
-    (setq ef-themes-common-palette-overrides
-          `((fringe unspecified)
-            (bg-line-number-active bg-hl-line)
-            (bg-line-number-inactive unspecified)
-            (fg-line-number-active fg-main)
-            (bg-tab-bar bg-dim)))
-
-    ;; verbatim need higher contrast for org mode
-    (setq ef-elea-dark-palette-overrides
-          '((prose-verbatim yellow-cooler)))
-
-    (setq ef-elea-light-palette-overrides
-          '((prose-verbatim yellow-cooler)))
-
-    (define-key global-map (kbd "M-<f5>") #'ef-themes-select)
-    (setq ef-themes-variable-pitch-ui t
-          ef-themes-mixed-fonts t))
-
+*** Color theme
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package doom-themes
     :ensure t
     :config
     (setq doom-gruvbox-dark-variant "hard")
-    (bard/select-theme 'doom-gruvbox)
-    )
+    (bard/select-theme 'doom-gruvbox))
+#+end_src
 
-  (use-package gruber-darker-theme
-    :ensure t
-    :vc (:url "https://github.com/BardofSprites/gruber-darker-theme"
-         :rev newest))
-
-  ;;;; Fonts
+*** Fonts
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package fontaine
     :ensure nil
     :config
@@ -1673,18 +1566,29 @@ making an abbreviation to a function."
       (add-hook hook #'fontaine-apply-current-preset))
 
     (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
+#+end_src
 
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package rainbow-mode
     :ensure t)
+#+end_src
 
+
+*** Binding for custom select theme function
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (global-set-key (kbd "M-<f6>") #'bard/select-theme)
+#+end_src
 
+*** Mixed pitch faces for writing
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package mixed-pitch
     :ensure t
     :hook
-    (org-mode . mixed-pitch-mode)
-    )
+    (org-mode . mixed-pitch-mode))
+#+end_src
 
+*** Spacious padding
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package spacious-padding
     :ensure t
     :config
@@ -1698,680 +1602,669 @@ making an abbreviation to a function."
              :right-fringe-width 0
              :scroll-bar-width 0))
     (spacious-padding-mode t))
+#+end_src
 
+*** Provide module
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (provide 'bard-emacs-theme)
-
   ;;; bard-emacs-theme.el ends here
-
 #+end_src
 
 ** bard-emacs-ui
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
-;; Generic variables for modes
-(use-package whitespace
-  :ensure nil
-  :demand t
-  :config
-  (setq whitespace-style '(face
-                           tabs
-                           spaces
-                           trailing
-                           space-before-tab
-                           newline indentation
-                           empty space-after-tab
-                           space-mark tab-mark))
-  :hook
-  (prog-mode . whitespace-mode))
+  (use-package whitespace
+    :ensure nil
+    :demand t
+    :config
+    (setq whitespace-style '(face
+                             tabs
+                             spaces
+                             trailing
+                             space-before-tab
+                             newline indentation
+                             empty space-after-tab
+                             space-mark tab-mark))
+    :hook
+    (prog-mode . whitespace-mode))
 
-(use-package display-line-numbers
-  :ensure nil
-  :demand t
-  :bind
-  (("<f12>" . display-line-numbers-mode))
-  :hook (prog-mode . display-line-numbers-mode)
-  :config
-  (setq display-line-numbers-type 'relative))
+  (use-package display-line-numbers
+    :ensure nil
+    :demand t
+    :bind
+    (("<f12>" . display-line-numbers-mode))
+    :hook (prog-mode . display-line-numbers-mode)
+    :config
+    (setq display-line-numbers-type 'relative))
+#+end_src
 
-;; Todo Keywords highlighting, colors defined in bard-emacs-theme.el
-(use-package hl-todo
-  :ensure t
-  :hook
-  (prog-mode . hl-todo-mode)
-  :config
-  (setq hl-todo-highlight-punctuation ":"))
+*** Todo keywords
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
+  (use-package hl-todo
+    :ensure t
+    :hook
+    (prog-mode . hl-todo-mode)
+    :config
+    (setq hl-todo-highlight-punctuation ":"))
+#+end_src
 
-(use-package keycast
-  :ensure t
-  :commands (keycast-mode-line-mode keycast-header-line-mode keycast-tab-bar-mode keycast-log-mode)
-  :init
-  (setq keycast-mode-line-format "%2s%k%c%R")
-  (setq keycast-mode-line-insert-after 'prot-modeline-vc-branch)
-  (setq keycast-mode-line-window-predicate 'mode-line-window-selected-p)
-  (setq keycast-mode-line-remove-tail-elements nil)
-  :config
-  (dolist (input '(self-insert-command org-self-insert-command))
-    (add-to-list 'keycast-substitute-alist `(,input "." "Typing…")))
+*** Keycasting
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
+  (use-package keycast
+    :ensure t
+    :commands (keycast-mode-line-mode keycast-header-line-mode keycast-tab-bar-mode keycast-log-mode)
+    :init
+    (setq keycast-mode-line-format "%2s%k%c%R")
+    (setq keycast-mode-line-insert-after 'prot-modeline-vc-branch)
+    (setq keycast-mode-line-window-predicate 'mode-line-window-selected-p)
+    (setq keycast-mode-line-remove-tail-elements nil)
+    :config
+    (dolist (input '(self-insert-command org-self-insert-command))
+      (add-to-list 'keycast-substitute-alist `(,input "." "Typing…")))
 
-  (dolist (event '("<mouse-event>" "<mouse-movement>" "<mouse-2>" "<drag-mouse-1>" "<wheel-up>" "<wheel-down>" "<double-wheel-up>" "<double-wheel-down>" "<triple-wheel-up>" "<triple-wheel-down>" "<wheel-left>" "<wheel-right>" handle-select-window mouse-set-point  mouse-drag-region))
-    (add-to-list 'keycast-substitute-alist `(,event nil nil))))
+    (dolist (event '("<mouse-event>" "<mouse-movement>" "<mouse-2>" "<drag-mouse-1>" "<wheel-up>" "<wheel-down>" "<double-wheel-up>" "<double-wheel-down>" "<triple-wheel-up>" "<triple-wheel-down>" "<wheel-left>" "<wheel-right>" handle-select-window mouse-set-point  mouse-drag-region))
+      (add-to-list 'keycast-substitute-alist `(,event nil nil))))
+#+end_src
 
-(provide 'bard-emacs-ui)
-
-;;; bard-emacs-ui.el ends here
-
+*** Provide module
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
+  (provide 'bard-emacs-ui)
+  ;;; bard-emacs-ui.el ends here
 #+end_src
 
 ** bard-emacs-web
+*** IRC
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-web.el :mkdirp yes
-;;; IRC
-(use-package circe
-  :ensure t
-  :config
-  (setq auth-sources '("~/.authinfo.gpg"))
+  ;;; IRC
+  (use-package circe
+    :ensure t
+    :config
+    (setq auth-sources '("~/.authinfo.gpg"))
 
-  (defun my-fetch-password (&rest params)
-    (require 'auth-source)
-    (let ((match (car (apply 'auth-source-search params))))
-      (if match
-          (let ((secret (plist-get match :secret)))
-            (if (functionp secret)
-                (funcall secret)
-              secret))
-        (error "Password not found for %S" params))))
+    (defun my-fetch-password (&rest params)
+      (require 'auth-source)
+      (let ((match (car (apply 'auth-source-search params))))
+        (if match
+            (let ((secret (plist-get match :secret)))
+              (if (functionp secret)
+                  (funcall secret)
+                secret))
+          (error "Password not found for %S" params))))
 
-  (defun my-nickserv-password (server)
-    (my-fetch-password :user "bardman" :machine "irc.libera.chat"))
+    (defun my-nickserv-password (server)
+      (my-fetch-password :user "bardman" :machine "irc.libera.chat"))
 
-  (setq circe-network-options
-        '(("Libera Chat"
-           :nick "bardman"
-           :channels ("#emacs" "##anime" "#gentoo")
-           :nickserv-password my-nickserv-password))))
+    (setq circe-network-options
+          '(("Libera Chat"
+             :nick "bardman"
+             :channels ("#emacs" "##anime" "#gentoo")
+             :nickserv-password my-nickserv-password))))
+#+end_src
 
-;;; RSS Feeds
-(use-package elfeed
-  :ensure t
-  :config
-  (require 'bard-web)
-  (global-set-key (kbd "C-c r") 'elfeed)
-  (setq elfeed-search-filter "+unread")
+*** RSS Feeds
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-web.el :mkdirp yes
+  (use-package elfeed
+    :ensure t
+    :config
+    (require 'bard-web)
+    (global-set-key (kbd "C-c r") 'elfeed)
+    (setq elfeed-search-filter "+unread")
 
-  :bind
-  (:map elfeed-search-mode-map
-        ;; C-p for play now
-        ("C-c C-p" . bard/play-elfeed-video)
-        ;; C-e for EMMS
-        ("C-c C-e" . bard/add-video-emms-queue)
-        ;; C-w for watch later
-        ("C-c C-w" . bard/add-video-watch-later)
-        ;; F is for fetch
-        ("F"       . elfeed-update)))
+    :bind
+    (:map elfeed-search-mode-map
+          ;; C-p for play now
+          ("C-c C-p" . bard/play-elfeed-video)
+          ;; C-e for EMMS
+          ("C-c C-e" . bard/add-video-emms-queue)
+          ;; C-w for watch later
+          ("C-c C-w" . bard/add-video-watch-later)
+          ;; F is for fetch
+          ("F"       . elfeed-update)))
 
-(use-package elfeed-org
-  :ensure t
-  :init
-  (elfeed-org)
-  :config
-  (setq rmh-elfeed-org-files (list "~/Notes/denote/feeds.org"
-                                   "~/Notes/denote/youtube.org")))
+  (use-package elfeed-org
+    :ensure t
+    :init
+    (elfeed-org)
+    :config
+    (setq rmh-elfeed-org-files (list "~/Notes/denote/feeds.org"
+                                     "~/Notes/denote/youtube.org")))
+#+end_src
 
-;; (use-package elfeed-goodies
-;;   :ensure t
-;;   :init
-;;   (elfeed-goodies/setup)
-;;   :config
-;;   (setq elfeed-goodies/powerline-default-separator 'box))
+*** Web Browsing (EWW and external)
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-web.el :mkdirp yes
 
-;;; Web Browsing (EWW and Firefox/Librewolf)
+  (use-package eww
+    :defer t
+    :config
+    (setq browse-url-handlers
+          '(("wikipedia\\.org" . eww-browse-url)
+            ("github" . browse-url-default-browser)
+            ("youtube.com" . browse-url-default-browser)
+            ("reddit.com" . browse-url-default-browser)))
 
-(use-package eww
-  :defer t
-  :config
-  (setq browse-url-handlers
-        '(("wikipedia\\.org" . eww-browse-url)
-          ;; ("github" . browse-url-chromium)
-          ("github" . browse-url-default-browser)
-          ("youtube.com" . browse-url-default-browser)
-          ("reddit.com" . browse-url-default-browser)))
+    ;; shr optimizations
+    (setq shr-use-colors nil)
+    (setq shr-use-fonts nil)
+    (setq shr-max-image-proportion 0.6)
+    (setq shr-image-animate nil)
+    (setq shr-width fill-column)
+    (setq shr-max-width fill-column)
+    (setq shr-discard-aria-hidden t)
+    (setq shr-cookie-policy nil)
 
-  ;; shr optimizations
-  (setq shr-use-colors nil)
-  (setq shr-use-fonts nil)
-  (setq shr-max-image-proportion 0.6)
-  (setq shr-image-animate nil)
-  (setq shr-width fill-column)
-  (setq shr-max-width fill-column)
-  (setq shr-discard-aria-hidden t)
-  (setq shr-cookie-policy nil)
+    ;; eww
+    (setq eww-search-prefix "https://duckduckgo.com/html/?q=")
+    (setq eww-history-limit 150)
+    (setq eww-use-external-browser-for-content-type
+          "\\`\\(video/\\|audio\\)")
+    :bind
+    ("C-c w" . eww))
 
-  ;; eww
-  (setq eww-search-prefix "https://duckduckgo.com/html/?q=")
-  (setq eww-history-limit 150)
-  (setq eww-use-external-browser-for-content-type
-        "\\`\\(video/\\|audio\\)")
-  :bind
-  ("C-c w" . eww))
-
-;; librewolf open browser
-
-;; TODO fix this to work with librewolf-bin on Gentoo
-(defun browse-url-librewolf (url &optional new-window)
-  "Ask the Librewolf WWW browser to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-librewolf-arguments' to Librewolf.
-
-Interactively, if the variable `browse-url-new-window-flag' is non-nil,
-loads the document in a new Librewolf window.  A non-nil prefix argument
-reverses the effect of `browse-url-new-window-flag'.
-
-If `browse-url-librewolf-new-window-is-tab' is non-nil, then
-whenever a document would otherwise be loaded in a new window, it
-is loaded in a new tab in an existing window instead.
-
-Non-interactively, this uses the optional second argument NEW-WINDOW
-instead of `browse-url-new-window-flag'."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (setq url (browse-url-encode-url url))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply #'start-process
-           (concat "librewolf-bin " url) nil
-           "librewolf-bin"
-            (list url))))
-
-(provide 'bard-emacs-web)
-;;; bard-emacs-web.el ends here
-
+  (provide 'bard-emacs-web)
+  ;;; bard-emacs-web.el ends here
 #+end_src
 
 ** bard-emacs-window
+*** Load required libraries
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
-(require 'bard-window)
+  (require 'bard-window)
+#+end_src
 
-(use-package emacs
-  ;; configuration for window splits/window sizes
-  :config
-  (setq focus-follows-mouse t)
-  (setq mouse-autoselect-window t)
-  (setq window-combination-resize t)
-  (setq even-window-sizes 'height-only)
-  (setq window-sides-vertical nil)
-  (setq switch-to-buffer-in-dedicated-window 'pop)
-  (setq split-height-threshold 80)
-  (setq split-width-threshold 125)
-  (setq window-min-height 3)
-  (setq window-min-width 30))
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package emacs
+    ;; configuration for window splits/window sizes
+    :config
+    (setq focus-follows-mouse t)
+    (setq mouse-autoselect-window t)
+    (setq window-combination-resize t)
+    (setq even-window-sizes 'height-only)
+    (setq window-sides-vertical nil)
+    (setq switch-to-buffer-in-dedicated-window 'pop)
+    (setq split-height-threshold 80
+          split-width-threshold 125)
+    (setq window-min-height 3
+          window-min-width 30))
+#+end_src
 
-(use-package windmove
-  :bind*
-  (("C-M-<up>" . windmove-up)
-   ("C-M-<right>" . windmove-right)
-   ("C-M-<down>" . windmove-down)
-   ("C-M-<left>" . windmove-left)
-   ("C-M-S-<up>" . windmove-swap-states-up)
-   ("C-M-S-<right>" . windmove-swap-states-right)
-   ("C-M-S-<down>" . windmove-swap-states-down)
-   ("C-M-S-<left>" . windmove-swap-states-left)))
+*** Moving windos
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package windmove
+    :bind*
+    (("C-M-<up>" . windmove-up)
+     ("C-M-<right>" . windmove-right)
+     ("C-M-<down>" . windmove-down)
+     ("C-M-<left>" . windmove-left)
+     ("C-M-S-<up>" . windmove-swap-states-up)
+     ("C-M-S-<right>" . windmove-swap-states-right)
+     ("C-M-S-<down>" . windmove-swap-states-down)
+     ("C-M-S-<left>" . windmove-swap-states-left)))
+#+end_src
 
-(use-package emacs
-  :config
-  (setq display-buffer-alist
-        `(;; no window
-          ("\\`\\*Async Shell Command\\*\\'"
-           (display-buffer-no-window))
-          ("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
-           (display-buffer-no-window)
-           (allow-no-window . t))
-          ;; bottom side window
-          ("\\*Org \\(Select\\|Note\\)\\*" ; the `org-capture' key selection and `org-add-log-note'
-           (display-buffer-in-side-window)
-           (dedicated . t)
-           (side . bottom)
-           (slot . 0)
-           (window-parameters . ((mode-line-format . none))))
-          ;; bottom buffer (NOT side window)
-          ((or . ((derived-mode . flymake-diagnostics-buffer-mode)
-                  (derived-mode . flymake-project-diagnostics-mode)
-                  (derived-mode . messages-buffer-mode)
-                  (derived-mode . backtrace-mode)))
-           (display-buffer-reuse-mode-window display-buffer-at-bottom)
-           (window-height . 0.3)
-           (dedicated . t)
-           (preserve-size . (t . t)))
-          ;; terminal popups
-          (prot-window-shell-or-term-p
-           (display-buffer-reuse-mode-window display-buffer-at-bottom)
-           (mode . (shell-mode eshell-mode comint-mode))
-           (body-function . prot-window-select-fit-size))
-          ("\\magit: .*"
-           (display-buffer-same-window)
-           (inhibit-same-window . nil)
-           (dedicated . t))
-          ("\\*Org Agenda\\*"
-           (display-buffer-same-window)
-           (inhibit-same-window . nil)
-           (dedicated . t))
-          ("\\*cfw-calendar\\*"
-           (display-buffer-same-window)
-           (inhibit-same-window . nil)
-           (dedicated . t))
-          ("\\*image-dired\\*"
-           (display-buffer-reuse-mode-window display-buffer-in-side-window)
-           (side . bottom)
-           (window-height . 0.5))
-          ("\\*image-dired-display-image\\*"
-           (display-buffer-reuse-mode-window display-buffer-in-side-window)
-           (side . right)
-           (window-width . 0.35))
-          ;; ("\\*Embark Actions\\*"
-          ;;  (display-buffer-reuse-mode-window display-buffer-below-selected)
-          ;;  (window-height . fit-window-to-buffer)
-          ;;  (window-parameters . ((no-other-window . t)
-          ;;                        (mode-line-format . none))))
-          ("\\*\\(Output\\|Register Preview\\).*"
-           (display-buffer-reuse-mode-window display-buffer-at-bottom))
-          ;; below current window
-          ("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
-           (display-buffer-in-side-window)
-           (dedicated . t)
-           (side . bottom)
-           (slot . 0)
-           (window-parameters . ((mode-line-format . none))))
-          ("\\*\\vc-\\(incoming\\|outgoing\\|git : \\).*"
-           (display-buffer-reuse-mode-window display-buffer-below-selected)
-           (window-height . 0.1)
-           (dedicated . t)
-           (preserve-size . (t . t)))
-          ((derived-mode . reb-mode) ; M-x re-builder
-           (display-buffer-reuse-mode-window display-buffer-below-selected)
-           (window-height . 4) ; note this is literal lines, not relative
-           (dedicated . t)
-           (preserve-size . (t . t)))
-          ((or . ((derived-mode . occur-mode)
-                  (derived-mode . grep-mode)
-                  (derived-mode . Buffer-menu-mode)
-                  (derived-mode . log-view-mode)
-                  (derived-mode . help-mode) ; See the hooks for `visual-line-mode'
-                  "\\*\\(|Buffer List\\|Occur\\|vc-change-log\\|eldoc.*\\).*"
-                  prot-window-shell-or-term-p
-                  ;; ,world-clock-buffer-name
-                  ))
-           (prot-window-display-buffer-below-or-pop)
-           (body-function . prot-window-select-fit-size))
-          ("\\*\\(Calendar\\|Bookmark Annotation\\|ert\\).*"
-           (display-buffer-reuse-mode-window display-buffer-below-selected)
-           (dedicated . t)
-           (window-height . fit-window-to-buffer))
-          ("\\*ispell-top-choices\\*.*"
-           (display-buffer-reuse-mode-window display-buffer-below-selected)
-           (window-height . fit-window-to-buffer))
-          ))
-  )
+*** Window display rules (~display-buffer-alist~)
+Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-buffer-alist/][Protesilaos Stavrou's video]] about this to understand it. My configuration Just Works™, so I don't really get how to change it that much anymore. He can explain it a lot better than I can.
 
-(use-package frame
-  :ensure nil
-  :bind (("C-x u" . undelete-frame)
-         ("C-x f" . other-frame-prefix)) ; I use only C-/ for `undo'
-  :hook (after-init . undelete-frame-mode))
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package emacs
+    :config
+    (setq display-buffer-alist
+          `(;; no window
+            ("\\`\\*Async Shell Command\\*\\'"
+             (display-buffer-no-window))
+            ("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
+             (display-buffer-no-window)
+             (allow-no-window . t))
+            ;; bottom side window
+            ("\\*Org \\(Select\\|Note\\)\\*" ; the `org-capture' key selection and `org-add-log-note'
+             (display-buffer-in-side-window)
+             (dedicated . t)
+             (side . bottom)
+             (slot . 0)
+             (window-parameters . ((mode-line-format . none))))
+            ;; bottom buffer (NOT side window)
+            ((or . ((derived-mode . flymake-diagnostics-buffer-mode)
+                    (derived-mode . flymake-project-diagnostics-mode)
+                    (derived-mode . messages-buffer-mode)
+                    (derived-mode . backtrace-mode)))
+             (display-buffer-reuse-mode-window display-buffer-at-bottom)
+             (window-height . 0.3)
+             (dedicated . t)
+             (preserve-size . (t . t)))
+            ;; terminal popups
+            (prot-window-shell-or-term-p
+             (display-buffer-reuse-mode-window display-buffer-at-bottom)
+             (mode . (shell-mode eshell-mode comint-mode))
+             (body-function . prot-window-select-fit-size))
+            ("\\magit: .*"
+             (display-buffer-same-window)
+             (inhibit-same-window . nil)
+             (dedicated . t))
+            ("\\*Org Agenda\\*"
+             (display-buffer-same-window)
+             (inhibit-same-window . nil)
+             (dedicated . t))
+            ("\\*cfw-calendar\\*"
+             (display-buffer-same-window)
+             (inhibit-same-window . nil)
+             (dedicated . t))
+            ("\\*image-dired\\*"
+             (display-buffer-reuse-mode-window display-buffer-in-side-window)
+             (side . bottom)
+             (window-height . 0.5))
+            ("\\*image-dired-display-image\\*"
+             (display-buffer-reuse-mode-window display-buffer-in-side-window)
+             (side . right)
+             (window-width . 0.35))
+            ;; ("\\*Embark Actions\\*"
+            ;;  (display-buffer-reuse-mode-window display-buffer-below-selected)
+            ;;  (window-height . fit-window-to-buffer)
+            ;;  (window-parameters . ((no-other-window . t)
+            ;;                        (mode-line-format . none))))
+            ("\\*\\(Output\\|Register Preview\\).*"
+             (display-buffer-reuse-mode-window display-buffer-at-bottom))
+            ;; below current window
+            ("\\(\\*Capture\\*\\|CAPTURE-.*\\)"
+             (display-buffer-in-side-window)
+             (dedicated . t)
+             (side . bottom)
+             (slot . 0)
+             (window-parameters . ((mode-line-format . none))))
+            ("\\*\\vc-\\(incoming\\|outgoing\\|git : \\).*"
+             (display-buffer-reuse-mode-window display-buffer-below-selected)
+             (window-height . 0.1)
+             (dedicated . t)
+             (preserve-size . (t . t)))
+            ((derived-mode . reb-mode) ; M-x re-builder
+             (display-buffer-reuse-mode-window display-buffer-below-selected)
+             (window-height . 4) ; note this is literal lines, not relative
+             (dedicated . t)
+             (preserve-size . (t . t)))
+            ((or . ((derived-mode . occur-mode)
+                    (derived-mode . grep-mode)
+                    (derived-mode . Buffer-menu-mode)
+                    (derived-mode . log-view-mode)
+                    (derived-mode . help-mode) ; See the hooks for `visual-line-mode'
+                    "\\*\\(|Buffer List\\|Occur\\|vc-change-log\\|eldoc.*\\).*"
+                    prot-window-shell-or-term-p
+                    ;; ,world-clock-buffer-name
+                    ))
+             (prot-window-display-buffer-below-or-pop)
+             (body-function . prot-window-select-fit-size))
+            ("\\*\\(Calendar\\|Bookmark Annotation\\|ert\\).*"
+             (display-buffer-reuse-mode-window display-buffer-below-selected)
+             (dedicated . t)
+             (window-height . fit-window-to-buffer))
+            ("\\*ispell-top-choices\\*.*"
+             (display-buffer-reuse-mode-window display-buffer-below-selected)
+             (window-height . fit-window-to-buffer))
+            )))
+#+end_src
 
-(use-package winner-mode
-  :init
-  (winner-mode 1)
-  :bind
-  (("C-x <right>" . winner-redo)
-   ("C-x <left>" . winner-undo)
-   ("C-x C-n" . next-buffer)
-   ("C-x C-p" . previous-buffer)
-   ("C-x <up>" . next-buffer)
-   ("C-x <down>" . previous-buffer)))
+*** Frame
+**** Keybinds
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package frame
+    :ensure nil
+    :bind (("C-x u" . undelete-frame)
+           ("C-x f" . other-frame-prefix)
+           ("C-x w t" . tear-off-window)
+           ("C-x w c" . clone-indirect-buffer-other-window))
+    :hook (after-init . undelete-frame-mode))
+#+end_src
 
-(use-package emacs
-  :ensure nil
-  :bind
-  ("C-x w t" . tear-off-window)
-  ("C-x w c" . clone-indirect-buffer-other-window))
+**** Beframe
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package beframe
+    :ensure t
+    :config
+    (setq beframe-functions-in-frames '(project-prompt-project-dir
+                                        notmuch))
+    (setq beframe-create-frame-scratch-buffer nil)
+    (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
+    (beframe-mode 1)
 
-(use-package ibuffer
-  :ensure nil
-  :config
-  (setq ibuffer-default-sorting-mode 'major-mode)
-  (ibuffer-auto-mode t))
+    (define-key global-map (kbd "C-x f") #'other-frame-prefix)
+    (define-key global-map (kbd "C-c b") beframe-prefix-map)
+    (define-key global-map (kbd "C-x C-b") #'beframe-buffer-menu)
+    (define-key global-map (kbd "C-x B") #'select-frame-by-name)
+    (define-key global-map (kbd "C-c b u") #'beframe-unassume-current-frame-buffers-selectively)
+    (define-key global-map (kbd "C-c b a") #'beframe-assume-buffers-selectively-all-frames)
 
-(use-package emacs
-  :ensure nil
-  :bind
-  ("C-x w w" . bard/toggle-window-split))
+    ;; Consult integration
+    (defvar consult-buffer-sources)
+    (declare-function consult--buffer-state "consult")
 
-(use-package beframe
-  :ensure t
-  :config
-  (setq beframe-functions-in-frames '(project-prompt-project-dir
-                                      notmuch))
-  (setq beframe-create-frame-scratch-buffer nil)
-  (setq beframe-global-buffers '("*scratch*" "*Messages*" "*Backtrace*"))
-  (beframe-mode 1)
+    (with-eval-after-load 'consult
+      (defface beframe-buffer
+        '((t :inherit font-lock-string-face))
+        "Face for `consult' framed buffers.")
 
-  (define-key global-map (kbd "C-x f") #'other-frame-prefix)
-  (define-key global-map (kbd "C-c b") beframe-prefix-map)
-  (define-key global-map (kbd "C-x C-b") #'beframe-buffer-menu)
-  (define-key global-map (kbd "C-x B") #'select-frame-by-name)
-  (define-key global-map (kbd "C-c b u") #'beframe-unassume-current-frame-buffers-selectively)
-  (define-key global-map (kbd "C-c b a") #'beframe-assume-buffers-selectively-all-frames)
+      (defun my-beframe-buffer-names-sorted (&optional frame)
+        "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
+       With optional argument FRAME, return the list of buffers of FRAME."
+        (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
 
-  ;; Consult integration
-  (defvar consult-buffer-sources)
-  (declare-function consult--buffer-state "consult")
+      (defvar beframe-consult-source
+        `( :name     "Frame-specific buffers (current frame)"
+           :narrow   ?F
+           :category buffer
+           :face     beframe-buffer
+           :history  beframe-history
+           :items    ,#'my-beframe-buffer-names-sorted
+           :action   ,#'switch-to-buffer
+           :state    ,#'consult--buffer-state))
 
-  (with-eval-after-load 'consult
-    (defface beframe-buffer
-      '((t :inherit font-lock-string-face))
-      "Face for `consult' framed buffers.")
+      (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
 
-    (defun my-beframe-buffer-names-sorted (&optional frame)
-      "Return the list of buffers from `beframe-buffer-names' sorted by visibility.
-     With optional argument FRAME, return the list of buffers of FRAME."
-      (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
+  (provide 'bard-emacs-window)
+  ;;; bard-emacs-window.el ends here
+#+end_src
 
-    (defvar beframe-consult-source
-      `( :name     "Frame-specific buffers (current frame)"
-         :narrow   ?F
-         :category buffer
-         :face     beframe-buffer
-         :history  beframe-history
-         :items    ,#'my-beframe-buffer-names-sorted
-         :action   ,#'switch-to-buffer
-         :state    ,#'consult--buffer-state))
+*** Undoing window actions (~winner-mode~)
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package winner-mode
+    :init
+    (winner-mode 1)
+    :bind
+    (("C-x <right>" . winner-redo)
+     ("C-x <left>" . winner-undo)
+     ("C-x C-n" . next-buffer)
+     ("C-x C-p" . previous-buffer)
+     ("C-x <up>" . next-buffer)
+     ("C-x <down>" . previous-buffer)
+     ("C-x w w" . bard/toggle-window-split)))
+#+end_src
 
-    (add-to-list 'consult-buffer-sources 'beframe-consult-source)))
-
-(provide 'bard-emacs-window)
-;;; bard-emacs-window.el ends here
-
+*** Ibuffer
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (use-package ibuffer
+    :ensure nil
+    :config
+    (setq ibuffer-default-sorting-mode 'major-mode)
+    (ibuffer-auto-mode t))
 #+end_src
 
 ** bard-emacs-writing
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
-;;; Input related settings
+  (use-package emacs
+    :ensure nil
+    :demand t
+    :bind
+    (("C-x i" . insert-char)
+     ("M-z"   . zap-to-char)
+     ("<f10>"  . toggle-input-method))
+    :config
+    ;; Sentence size
+    (setq sentence-end-double-space nil)
 
-(use-package emacs
-  :ensure nil
-  :demand t
-  :bind
-  (("C-x i" . insert-char)
-   ("M-z"   . zap-to-char)
-   ("<f10>"  . toggle-input-method))
-  :config
-  ;; Sentence size
-  (setq sentence-end-double-space nil)
+    ;; Keyboard things
+    (setq default-input-method "cyrillic-yawerty")
+    (setq default-transient-input-method "cyrillic-yawerty"))
 
-  ;; Keyboard things
-  (setq default-input-method "cyrillic-yawerty")
-  (setq default-transient-input-method "cyrillic-yawerty"))
+  ;; spell check
+  (use-package text-mode
+    :ensure nil
+    :hook
+    (text-mode . flyspell-mode))
 
-(use-package text-mode
-  :ensure nil
-  :hook
-  (text-mode . flyspell-mode))
+  ;; Tab settings
+  (use-package emacs
+    :config
+    (setq tab-always-indent 'complete)
+    (setq tab-first-completion 'word-or-paren-or-punct)
+    (setq-default tab-width 4
+                  indent-tabs-mode nil))
+#+end_src
 
-;; Tab settings
-(use-package emacs
-  :config
-  (setq tab-always-indent 'complete)
-  (setq tab-first-completion 'word-or-paren-or-punct)
-  (setq-default tab-width 4
-                indent-tabs-mode nil))
+*** Snippets
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (use-package yasnippet
+    :ensure t
+    :config
+    (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
+    (yas-global-mode t)
+    )
 
-(use-package electric
-  :hook
-  (prog-mode . electric-indent-local-mode)
-  (prog-mode . electric-pair-local-mode))
+  (use-package yasnippet-capf
+    :ensure t
+    :after cape
+    :config
+    (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+#+end_src
 
-(use-package paren
-  :hook (prog-mode . show-paren-local-mode)
-  :config
-  (setq show-paren-style 'parenthesis)
-  (setq show-paren-when-point-in-periphery nil)
-  (setq show-paren-when-point-inside-paren nil)
-  (setq show-paren-context-when-offscreen 'overlay))
+*** Note taking
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (use-package denote
+    :ensure t
+    :config
+    (require 'bard-writing)
+    (setq denote-directory "~/Notes/denote/")
+    (setq denote-buffer-name-prefix "[Note] "
+          denote-rename-buffer-format "%t %b")
+    (setq denote-known-keywords
+          '("emacs"
+            "linux"
+            "programming"
+            "org"
+            "school"
+            "language"
+            "history"
+            "biology"
+            ))
 
-;; snippets
-(use-package yasnippet
-  :ensure t
-  :config
-  (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
-  (yas-global-mode t)
-  )
+    (setq denote-templates
+          '((default . "Related to — ")
+            (todo . bard/denote-todo-template)))
 
-(use-package yasnippet-capf
-  :ensure t
-  :after cape
-  :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+    (setq denote-save-buffers t)
+    (setq denote-prompts '(title keywords))
+    (setq denote-sort-dired-extra-prompts nil)
+    (setq denote-sort-dired-default-sort-component 'identifier)
+    (setq denote-sort-dired-default-reverse-sort nil)
 
-;;; Notes
-(use-package denote
-  :ensure t
-  :config
-  (require 'bard-writing)
-  (setq denote-directory "~/Notes/denote/")
-  (setq denote-buffer-name-prefix "[Note] "
-        denote-rename-buffer-format "%t %b")
-  (setq denote-known-keywords
-        '("emacs"
-          "linux"
-          "programming"
-          "org"
-          "school"
-          "language"
-          "history"
-          "biology"
-          ))
+    ;; backlinks sidebar
+    (setq denote-backlinks-display-buffer-action
+          '((display-buffer-in-direction)
+            (direction . right)
+            (window-width . 0.33)
+            (window-height . fit-window-to-buffer)
+            (dedicated . t)))
 
-  (setq denote-templates
-        '((default . "Related to — ")
-          (todo . bard/denote-todo-template)))
+    (denote-rename-buffer-mode 1)
 
-  (setq denote-save-buffers t)
-  (setq denote-prompts '(title keywords))
-  (setq denote-sort-dired-extra-prompts nil)
-  (setq denote-sort-dired-default-sort-component 'identifier)
-  (setq denote-sort-dired-default-reverse-sort nil)
+    (require 'bard-writing)
 
-  ;; backlinks sidebar
-  (setq denote-backlinks-display-buffer-action
-        '((display-buffer-in-direction)
-          (direction . right)
-          (window-width . 0.33)
-          (window-height . fit-window-to-buffer)
-          (dedicated . t)))
+    :hook
+    (dired-mode . denote-dired-mode)
+    :bind
+    (("C-c n n" . denote)
+     ("C-c n d" . denote-sort-dired)
+     ("C-c n r" . denote-rename-file-using-front-matter)
+     ("C-c n k" . denote-rename-file-keywords)
+     ("C-c n I" . denote-add-links)
+     ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
+     ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
+     ("C-c n f" . bard/find-notes-file)        ; notes-find
+     ("C-c n g" . bard/search-notes-directory))) ; notes-grep
 
-  (denote-rename-buffer-mode 1)
+  (use-package denote-org
+    :ensure t
+    )
 
-  (require 'bard-writing)
+  (use-package denote-silo
+    :ensure t
+    :config
+    (setq denote-silo-directories '("~/Notes/denote"
+                                    "~/Notes/Old Notes/")))
 
-  :hook
-  (dired-mode . denote-dired-mode)
-  :bind
-  (("C-c n n" . denote)
-   ("C-c n d" . denote-sort-dired)
-   ("C-c n r" . denote-rename-file-using-front-matter)
-   ("C-c n k" . denote-rename-file-keywords)
-   ("C-c n I" . denote-add-links)
-   ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
-   ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
-   ("C-c n f" . bard/find-notes-file)        ; notes-find
-   ("C-c n g" . bard/search-notes-directory))) ; notes-grep
+  (use-package denote-sequence
+    :ensure t
+    :config
+    (require 'bard-writing)
+    :bind
+    ("C-c n N" . denote-sequence)
+    ("C-c n D" . denote-sequence-dired)
+    ("C-c n <SPC>" . denote-sequence-region))
 
-(use-package denote-org
-  :ensure t
-  )
+  (use-package denote-journal
+    :ensure t
+    :bind
+    ("C-c n j" . denote-journal-new-or-existing-entry)
+    :config
+    (setq denote-journal-directory "~/Notes/denote/journal/")
 
-(use-package denote-silo
-  :ensure t
-  :config
-  (setq denote-silo-directories '("~/Notes/denote"
-                                  "~/Notes/Old Notes/"))
-  )
+    (setq denote-journal-title-format "Daily Tasks and Notes"))
+#+end_src
 
-(use-package denote-sequence
-  :ensure t
-  :config
-  (require 'bard-writing)
-  :bind
-  ("C-c n N" . denote-sequence)
-  ("C-c n D" . denote-sequence-dired)
-  ("C-c n <SPC>" . denote-sequence-region))
+*** Denote roam
+[[https://github.com/BardofSprites/denote-roam][Denote-roam]] is my Emacs package that blends org roam and denote into one workflow.
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (use-package denote-roam
+    :ensure nil
+    :load-path "~/Code/denote-roam/"
+    :bind
+    ("C-c n i" . denote-roam-insert-or-create-node)  ; node insert
+    ("C-c n o" . denote-roam-find-or-create-node)    ; node open
+    :custom
+    (denote-roam-include-journal nil)
+    (denote-roam-directory "~/Notes/denote")
+    :config
+    (denote-roam-mode t))
+#+end_src
 
-(use-package denote-journal
-  :ensure t
-  :bind
-  ("C-c n j" . denote-journal-new-or-existing-entry)
-  :config
-  (setq denote-journal-directory "~/Notes/denote/journal/")
+*** Org roam
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory (file-truename "~/Notes/denote"))
+    :bind (("C-c n l" . org-roam-buffer-toggle))
+    :config
+    (setq org-roam-db-node-include-function
+          (lambda ()
+            (not (member "ATTACH" (org-get-tags)))))
 
-  (setq denote-journal-title-format "Daily Tasks and Notes")
-  )
+    (org-roam-db-autosync-mode 1))
 
-(use-package denote-roam
-  :ensure nil
-  :load-path "~/Code/denote-roam/"
-  :bind
-  ("C-c n i" . denote-roam-insert-or-create-node)  ; node insert
-  ("C-c n o" . denote-roam-find-or-create-node)    ; node open
-  :custom
-  (denote-roam-include-journal nil)
-  (denote-roam-directory "~/Notes/denote")
-  :config
-  (denote-roam-mode t))
+  (use-package org-roam-ui
+    :ensure t
+    :bind
+    ("C-c n u" . org-roam-ui-open)
+    :custom
+    (org-roam-ui-open-on-start nil))
+#+end_src
 
-;;;; Org Roam
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/Notes/denote"))
-  :bind (("C-c n l" . org-roam-buffer-toggle))
-  :config
-  (setq org-roam-db-node-include-function
-        (lambda ()
-          (not (member "ATTACH" (org-get-tags)))))
+*** Focused writing environment
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  ;; Center line scrolling for focused writing
+  (use-package emacs
+    :config
+    (define-minor-mode bard/scroll-center-cursor-mode
+      "Toggle centered cursor scrolling behavior."
+      :init-value nil
+      :lighter " S="
+      :global nil
+      (if bard/scroll-center-cursor-mode
+          (setq-local scroll-margin (* (frame-height) 2)
+                      scroll-conservatively 0
+                      maximum-scroll-margin 0.5)
+        (dolist (local '(scroll-preserve-screen-position
+                         scroll-conservatively
+                         maximum-scroll-margin
+                         scroll-margin))
+          (kill-local-variable `,local))))
+    (defun bard/cursor-centered-p ()
+      "Check if `bard/scroll-center-cursor-mode` is currently active."
+      (bound-and-true-p bard/scroll-center-cursor-mode))
+    :bind
+    (("C-c L" . bard/scroll-center-cursor-mode)))
 
-  (org-roam-db-autosync-mode 1))
+  (use-package olivetti
+    :ensure t
+    :config
+    (setq olivetti-minimum-body-width 90)
+    (setq olivetti-recall-visual-line-mode-entry-state t)
+    :hook
+    ((olivetti-mode-on . (lambda () (olivetti-set-width 90)))
+     ))
 
-(use-package org-roam-ui
-  :ensure t
-  :bind
-  ("C-c n u" . org-roam-ui-open)
-  :custom
-  (org-roam-ui-open-on-start nil))
+  ;; narrowing and focus mode
+  (use-package logos
+    :ensure t
+    :config
+    (defun logos-reveal-entry ()
+      "Reveal Org or Outline entry."
+      (cond
+       ((and (eq major-mode 'org-mode)
+             (org-at-heading-p))
+        (org-show-subtree))
+       ((or (eq major-mode 'outline-mode)
+            (bound-and-true-p outline-minor-mode))
+        (outline-show-subtree))))
 
-;;; Focus mode for writing
+    (setq logos-outlines-are-pages t)
 
-;; Center line scrolling for focused writing
-(use-package emacs
-  :config
-  (define-minor-mode bard/scroll-center-cursor-mode
-    "Toggle centered cursor scrolling behavior."
-    :init-value nil
-    :lighter " S="
-    :global nil
-    (if bard/scroll-center-cursor-mode
-        (setq-local scroll-margin (* (frame-height) 2)
-                    scroll-conservatively 0
-                    maximum-scroll-margin 0.5)
-      (dolist (local '(scroll-preserve-screen-position
-                       scroll-conservatively
-                       maximum-scroll-margin
-                       scroll-margin))
-        (kill-local-variable `,local))))
-  (defun bard/cursor-centered-p ()
-    "Check if `bard/scroll-center-cursor-mode` is currently active."
-    (bound-and-true-p bard/scroll-center-cursor-mode))
-  :bind
-  (("C-c L" . bard/scroll-center-cursor-mode)))
+    (setq logos-outline-regexp-alist
+          `((emacs-lisp-mode . "^;;;+ ")
+            (org-mode . "^\\* +")
+            (t . ,(or outline-regexp logos--page-delimiter))))
 
-(use-package olivetti
-  :ensure t
-  :config
-  (setq olivetti-minimum-body-width 90)
-  (setq olivetti-recall-visual-line-mode-entry-state t)
-  :hook
-  ((olivetti-mode-on . (lambda () (olivetti-set-width 90)))
-   ))
+    (setq-default logos-hide-cursor nil
+                  logos-hide-mode-line nil
+                  logos-hide-header-line t
+                  logos-hide-buffer-boundaries t
+                  logos-hide-fringe t
+                  logos-variable-pitch t
+                  logos-olivetti t)
 
-;; narrowing and focus mode
-(use-package logos
-  :ensure t
-  :config
-  (defun logos-reveal-entry ()
-    "Reveal Org or Outline entry."
-    (cond
-     ((and (eq major-mode 'org-mode)
-           (org-at-heading-p))
-      (org-show-subtree))
-     ((or (eq major-mode 'outline-mode)
-          (bound-and-true-p outline-minor-mode))
-      (outline-show-subtree))))
+    (defun bard/logos--recenter-top ()
+      "Use `recenter' to reposition the view at the top."
+      (unless (derived-mode-p 'prog-mode)
+        (recenter 1))) ; Use 0 for the absolute top
+    :hook
+    ((logos-page-motion . bard/logos--recenter-top))
+    :hook
+    ((org-mode . logos-focus-mode)
+     (markdown-mode . logos-focus-mode))
+    :bind
+    (("M-]" . logos-forward-page-dwim)
+     ("M-[" . logos-backward-page-dwim)
+     ("<f9>" . logos-focus-mode)
+     ("C-x n n" . logos-narrow-dwim)))
+#+end_src
 
-  (setq logos-outlines-are-pages t)
+*** Citations and bibliography
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (use-package citar
+    :ensure t
+    :bind
+    ("C-c n c" . citar-open)
+    :config
+    (setq citar-bibliography '("~/Documents/bib/references.bib"))
+    (setq org-cite-global-bibliography citar-bibliography
+          org-cite-insert-processor 'citar
+          org-cite-follow-processor 'citar
+          org-cite-activate-processor 'citar)
 
-  (setq logos-outline-regexp-alist
-        `((emacs-lisp-mode . "^;;;+ ")
-          (org-mode . "^\\* +")
-          (t . ,(or outline-regexp logos--page-delimiter))))
+    (setq citar-notes-paths '("~/Notes/denote"))
+    (setq citar-library-paths '("~/Documents/Research Articles/"))
+    ;; (setq citar-file-open-functions 'find-file)
+    :hook
+    (org-mode . citar-capf-setup)
+    :bind (("C-c i" . citar-insert-citation)))
 
-  (setq-default logos-hide-cursor nil
-                logos-hide-mode-line nil
-                logos-hide-header-line t
-                logos-hide-buffer-boundaries t
-                logos-hide-fringe t
-                logos-variable-pitch t
-                logos-olivetti t)
+  (use-package citar-denote
+    :ensure t
+    :config
+    (citar-denote-mode t)
+    )
 
-  (defun bard/logos--recenter-top ()
-    "Use `recenter' to reposition the view at the top."
-    (unless (derived-mode-p 'prog-mode)
-      (recenter 1))) ; Use 0 for the absolute top
-  :hook
-  ((logos-page-motion . bard/logos--recenter-top))
-  :hook
-  ((org-mode . logos-focus-mode)
-   (markdown-mode . logos-focus-mode))
-  :bind
-  (("M-]" . logos-forward-page-dwim)
-   ("M-[" . logos-backward-page-dwim)
-   ("<f9>" . logos-focus-mode)
-   ("C-x n n" . logos-narrow-dwim)))
+  (use-package citar-embark
+    :ensure t
+    )
+#+end_src
 
-(use-package citar
-  :ensure t
-  :bind
-  ("C-c n c" . citar-open)
-  :config
-  (setq citar-bibliography '("~/Documents/bib/references.bib"))
-  (setq org-cite-global-bibliography citar-bibliography
-        org-cite-insert-processor 'citar
-        org-cite-follow-processor 'citar
-        org-cite-activate-processor 'citar)
-
-  (setq citar-notes-paths '("~/Notes/denote"))
-  (setq citar-library-paths '("~/Documents/Research Articles/"))
-  ;; (setq citar-file-open-functions 'find-file)
-  :hook
-  (org-mode . citar-capf-setup)
-  :bind (("C-c i" . citar-insert-citation))
-  )
-
-(use-package citar-denote
-  :ensure t
-  :config
-  (citar-denote-mode t)
-  )
-
-(use-package citar-embark
-  :ensure t
-  )
-
-(provide 'bard-emacs-writing)
-
+*** Provide the module
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (provide 'bard-emacs-writing)
 #+end_src
 
 * Libraries
