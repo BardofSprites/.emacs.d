@@ -4226,13 +4226,14 @@ This is what the tabs look like with ~doom-gruvbox~ theme:
   (global-set-key (kbd "C-c U") #'bard/jump-to-class-new-frame)
 #+end_src
 
-*** Denote journal template
+*** Denote journal
+I want to have a custom format for my daily journal file to start what I want to get done that day specifically. It helps me get focused on what needs to be accomplished on days when I have a lot of tasks.
 #+begin_src emacs-lisp :tangle bard-elisp/bard-writing.el :mkdirp yes
   (defun bard/denote-todo-template ()
     "Return string for daily tasks heading in `denote-journal' entries."
     (with-temp-buffer
       (org-mode)
-      (insert (format "* Tasks for %s\n** Время я потратил бездельничая\n\n* Notes for today\n\n"
+      (insert (format "* Tasks for %s\n** Время я потратил бездельничая\n\n* Notes for today\n\n* Clocktable\n"
                       (format-time-string "%Y-%m-%d (%a)")))
       (let ((org-clock-clocktable-default-properties
              '(:scope file :maxlevel 3 :link nil :compact t)))
