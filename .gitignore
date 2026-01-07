@@ -23,3 +23,5 @@ transient/
 url/
 projects
 tree-sitter/
+org-roam.db
+dired-video-thumbnails
