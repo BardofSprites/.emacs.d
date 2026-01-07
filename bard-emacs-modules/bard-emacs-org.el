@@ -166,7 +166,7 @@
          "* [[%:link][%:description]] \nCaptured On: %U \n%?")
         ("w" "Class outline" entry
          (file
-          "~/Notes/denote/20240328T215727--todo.org")
+          "~/Notes/denote/uni.org")
          (file
           "~/Notes/denote/templates/class-template.org"))
         ("p" "project idea" entry

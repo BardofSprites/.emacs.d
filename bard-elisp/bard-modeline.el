@@ -538,7 +538,53 @@ Display the indicator only on the focused window's mode line.")
         state-label)))
   "Modeline indicator for current Evil state.")
 
+
+;;;; Org clock indicator
+(defun bard-modeline--org-clock-check-overrun ()
+  "Check if the clock is overrun."
+  (when org-clock-effort
+    (> (org-clock-get-clocked-time)
+       (org-duration-to-minutes org-clock-effort))))
+
+(defun bard-modeline--org-clock-string ()
+  "Make a string for org-clock indicator."
+  (let* ((clocked-mins (org-clock-get-clocked-time))
+         (work-time (org-duration-from-minutes clocked-mins)))
+    (if org-clock-effort
+        (format "[%s/%s]"
+                work-time
+                org-clock-effort)
+      (format "[%s]" work-time))))
+
+(defun bard-modeline--org-clock-choose-face ()
+  "Make the background red when overrunning the clock."
+  (if (bard-modeline--org-clock-check-overrun)
+      'prot-modeline-indicator-red-bg
+    'prot-modeline-indicator-green-bg))
+
+(defvar-local bard-modeline-org-clock
+  '(:eval
+    (when (and (featurep 'org)
+               (bound-and-true-p org-clock-current-task)
+               (mode-line-window-selected-p))
+      (propertize
+       (concat " ⊙ "
+               (prot-modeline-string-truncate
+                (bard-modeline--org-clock-string))
+               " ")
+       'face (bard-modeline--org-clock-choose-face)
+       'mouse-face 'mode-line-highlight
+       'help-echo "Org clocked task\nmouse-1: Go to task"
+       'local-map (let ((map (make-sparse-keymap)))
+                    (define-key map [mode-line down-mouse-1]
+                      #'org-clock-goto)
+                    map))))
+  "Mode line construct showing the current Org clocked task.")
+
 ;;;; Miscellaneous
+
+(setq global-mode-string
+      (remove 'org-mode-line-string global-mode-string))
 
 (defvar-local prot-modeline-misc-info
     '(:eval
@@ -556,6 +602,7 @@ Specific to the current window's mode line.")
                      bard-modeline-centered-cursor
                      bard-evil-state-indicator
                      prot-modeline-input-method
+                     bard-modeline-org-clock
                      prot-modeline-buffer-status
                      prot-modeline-window-dedicated-status
                      prot-modeline-evil

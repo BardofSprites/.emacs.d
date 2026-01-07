@@ -98,7 +98,7 @@
   "Return string for daily tasks heading in `denote-journal' entries."
   (with-temp-buffer
     (org-mode)
-    (insert (format "* Tasks for %s\n** Время я потратил бездельничая\n\n* Notes for today\n\n"
+    (insert (format "* Tasks for %s\n** Время я потратил бездельничая\n\n* Notes for today\n\n* Clocktable\n"
                     (format-time-string "%Y-%m-%d (%a)")))
     (let ((org-clock-clocktable-default-properties
            '(:scope file :maxlevel 3 :link nil :compact t)))

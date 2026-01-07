@@ -22,6 +22,7 @@
                 "  "
                 prot-modeline-flymake
                 prot-modeline-eglot
+                bard-modeline-org-clock
                 "  "
                 mode-line-format-right-align
                 prot-modeline-notmuch-indicator

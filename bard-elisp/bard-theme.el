@@ -21,7 +21,7 @@
          :default-height 130
          :default-weight medium
          :fixed-pitch-family "Iosevka Comfy Wide Motion"
-         :variable-pitch-family "Iosevka Comfy Wide Duo"
+         :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
          :bold-weight extrabold)
         (mono
          :default-height 130
@@ -38,6 +38,11 @@
          :default-family "Monaco"
          :variable-pitch-family "Monaco"
          :fixed-pitch-family "Monaco")
+        (bit
+         :default-height 140
+         :default-family "Ttyp0 OTB"
+         :variable-pitch-family "Ttyp0 OTB"
+         :fixed-pitch-family "Ttyp0 OTB")
         (large
          :inherit default
          :default-height 160)

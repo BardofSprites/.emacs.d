@@ -1207,55 +1207,56 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 
 ** bard-emacs-modeline
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-modeline.el :mkdirp yes
-(require 'bard-modeline)
+  (require 'bard-modeline)
 
-;;; Mode line
-(setq mode-line-compact nil) ; Emacs 28
-(setq mode-line-right-align-edge 'right-margin)
-(setq-default mode-line-format
-              '("%e"
-                prot-modeline-kbd-macro
-                prot-modeline-narrow
-                bard-modeline-centered-cursor
-                prot-modeline-input-method
-                prot-modeline-buffer-status
-                prot-modeline-window-dedicated-status
-                bard-evil-state-indicator
-                " "
-                prot-modeline-buffer-identification
-                "  "
-                prot-modeline-major-mode
-                prot-modeline-process
-                "  "
-                prot-modeline-vc-branch
-                "  "
-                prot-modeline-flymake
-                prot-modeline-eglot
-                "  "
-                mode-line-format-right-align
-                prot-modeline-notmuch-indicator
-                " "
-                prot-modeline-misc-info
-                " "))
+  ;;; Mode line
+  (setq mode-line-compact nil) ; Emacs 28
+  (setq mode-line-right-align-edge 'right-margin)
+  (setq-default mode-line-format
+                '("%e"
+                  prot-modeline-kbd-macro
+                  prot-modeline-narrow
+                  bard-modeline-centered-cursor
+                  prot-modeline-input-method
+                  prot-modeline-buffer-status
+                  prot-modeline-window-dedicated-status
+                  bard-evil-state-indicator
+                  " "
+                  prot-modeline-buffer-identification
+                  "  "
+                  prot-modeline-major-mode
+                  prot-modeline-process
+                  "  "
+                  prot-modeline-vc-branch
+                  "  "
+                  prot-modeline-flymake
+                  prot-modeline-eglot
+                  bard-modeline-org-clock
+                  "  "
+                  mode-line-format-right-align
+                  prot-modeline-notmuch-indicator
+                  " "
+                  prot-modeline-misc-info
+                  " "))
 
-(with-eval-after-load 'spacious-padding
-  (defun prot/modeline-spacious-indicators ()
-    "Set box attribute to `'prot-modeline-indicator-button' if spacious-padding is enabled."
-    (if (bound-and-true-p spacious-padding-mode)
-        (set-face-attribute 'prot-modeline-indicator-button nil :box t)
-      (set-face-attribute 'prot-modeline-indicator-button nil :box 'unspecified)))
+  (with-eval-after-load 'spacious-padding
+    (defun prot/modeline-spacious-indicators ()
+      "Set box attribute to `'prot-modeline-indicator-button' if spacious-padding is enabled."
+      (if (bound-and-true-p spacious-padding-mode)
+          (set-face-attribute 'prot-modeline-indicator-button nil :box t)
+        (set-face-attribute 'prot-modeline-indicator-button nil :box 'unspecified)))
 
-  ;; Run it at startup and then afterwards whenever
-  ;; `spacious-padding-mode' is toggled on/off.
-  (prot/modeline-spacious-indicators)
+    ;; Run it at startup and then afterwards whenever
+    ;; `spacious-padding-mode' is toggled on/off.
+    (prot/modeline-spacious-indicators)
 
-  (add-hook 'spacious-padding-mode-hook #'prot/modeline-spacious-indicators))
+    (add-hook 'spacious-padding-mode-hook #'prot/modeline-spacious-indicators))
 
-(setq mode-line-right-align-edge 'window)
+  (setq mode-line-right-align-edge 'window)
 
-(provide 'bard-emacs-modeline)
+  (provide 'bard-emacs-modeline)
 
-;;; bard-emacs-modeline.el ends here
+  ;;; bard-emacs-modeline.el ends here
 
 #+end_src
 
@@ -3600,7 +3601,53 @@ This is another one of prot's libraries that I copied and modified a long time a
           state-label)))
     "Modeline indicator for current Evil state.")
 
+
+  ;;;; Org clock indicator
+  (defun bard-modeline--org-clock-check-overrun ()
+    "Check if the clock is overrun."
+    (when org-clock-effort
+      (> (org-clock-get-clocked-time)
+         (org-duration-to-minutes org-clock-effort))))
+
+  (defun bard-modeline--org-clock-string ()
+    "Make a string for org-clock indicator."
+    (let* ((clocked-mins (org-clock-get-clocked-time))
+           (work-time (org-duration-from-minutes clocked-mins)))
+      (if org-clock-effort
+          (format "[%s/%s]"
+                  work-time
+                  org-clock-effort)
+        (format "[%s]" work-time))))
+
+  (defun bard-modeline--org-clock-choose-face ()
+    "Make the background red when overrunning the clock."
+    (if (bard-modeline--org-clock-check-overrun)
+        'prot-modeline-indicator-red-bg
+      'prot-modeline-indicator-green-bg))
+
+  (defvar-local bard-modeline-org-clock
+    '(:eval
+      (when (and (featurep 'org)
+                 (bound-and-true-p org-clock-current-task)
+                 (mode-line-window-selected-p))
+        (propertize
+         (concat " ⊙ "
+                 (prot-modeline-string-truncate
+                  (bard-modeline--org-clock-string))
+                 " ")
+         'face (bard-modeline--org-clock-choose-face)
+         'mouse-face 'mode-line-highlight
+         'help-echo "Org clocked task\nmouse-1: Go to task"
+         'local-map (let ((map (make-sparse-keymap)))
+                      (define-key map [mode-line down-mouse-1]
+                        #'org-clock-goto)
+                      map))))
+    "Mode line construct showing the current Org clocked task.")
+
   ;;;; Miscellaneous
+
+  (setq global-mode-string
+        (remove 'org-mode-line-string global-mode-string))
 
   (defvar-local prot-modeline-misc-info
       '(:eval
@@ -3618,6 +3665,7 @@ This is another one of prot's libraries that I copied and modified a long time a
                        bard-modeline-centered-cursor
                        bard-evil-state-indicator
                        prot-modeline-input-method
+                       bard-modeline-org-clock
                        prot-modeline-buffer-status
                        prot-modeline-window-dedicated-status
                        prot-modeline-evil
