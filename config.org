@@ -1448,7 +1448,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
            "* [[%:link][%:description]] \nCaptured On: %U \n%?")
           ("w" "Class outline" entry
            (file
-            "~/Notes/denote/20240328T215727--todo.org")
+            "~/Notes/denote/uni.org")
            (file
             "~/Notes/denote/templates/class-template.org"))
           ("p" "project idea" entry
@@ -2106,7 +2106,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 #+end_src
 
-*** Note taking
+*** Denote Note taking
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (use-package denote
     :ensure t
@@ -2160,17 +2160,25 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
      ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
      ("C-c n f" . bard/find-notes-file)        ; notes-find
      ("C-c n g" . bard/search-notes-directory))) ; notes-grep
-
+#+end_src
+**** Denote org mode extensions
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (use-package denote-org
     :ensure t
     )
+#+end_src
 
+**** Denote silo extension
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (use-package denote-silo
     :ensure t
     :config
     (setq denote-silo-directories '("~/Notes/denote"
                                     "~/Notes/Old Notes/")))
+#+end_src
 
+**** Denote sequence extension
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (use-package denote-sequence
     :ensure t
     :config
@@ -2179,7 +2187,10 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     ("C-c n N" . denote-sequence)
     ("C-c n D" . denote-sequence-dired)
     ("C-c n <SPC>" . denote-sequence-region))
+#+end_src
 
+**** Denote journal extension
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (use-package denote-journal
     :ensure t
     :bind
@@ -3713,7 +3724,7 @@ The main configuration for fontaine is found at [[id:542a0f2e-f79e-4272-af55-284
            :default-height 130
            :default-weight medium
            :fixed-pitch-family "Iosevka Comfy Wide Motion"
-           :variable-pitch-family "Iosevka Comfy Wide Duo"
+           :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
            :bold-weight extrabold)
           (mono
            :default-height 130
@@ -4168,7 +4179,7 @@ This is what the tabs look like with ~doom-gruvbox~ theme:
     (consult-grep "~/Notes/denote"))
 #+end_src
 
-*** Denote
+*** University Class jumping in ~uni.org~ file
 #+begin_src emacs-lisp :tangle bard-elisp/bard-writing.el :mkdirp yes
   (defvar bard/class-dirs
     '(("ANTH 204" . "~/Documents/Uni/FALL2025-ANTH 204/")
