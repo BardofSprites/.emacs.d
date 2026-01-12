@@ -40,12 +40,11 @@
   (consult-grep "~/Notes/denote"))
 
 (defvar bard/class-dirs
-  '(("ANTH 204" . "~/Documents/Uni/FALL2025-ANTH 204/")
-    ("CHEM 201" . "~/Documents/Uni/FALL2025-CHEM 201/")
-    ("CHEM 207" . "~/Documents/Uni/FALL2025-CHEM 207/")
-    ("ENGL 105" . "~/Documents/Uni/FALL2025-ENGL 105/")
-    ("ENGR 101" . "~/Documents/Uni/FALL2025-ENGR 101/")
-    ("ENGR 110" . "~/Documents/Uni/FALL2025-ENGR 110/"))
+  '(("CSE 130 " . "~/Documents/Uni/SPRING2026-CSE 130/")
+    ("CSE 310 " . "~/Documents/Uni/SPRING2026-CSE 310/")
+    ("ENGR 111" . "~/Documents/Uni/SPRING2026-ENGR 111/")
+    ("MATH 206" . "~/Documents/Uni/SPRING2026-MATH 206/")
+    ("PHYS 298" . "~/Documents/Uni/SPRING2026-PHYS 298/"))
   "Mapping of class names to their document directories.")
 
 (defvar bard/uni-notes-file "~/Notes/denote/uni.org"
