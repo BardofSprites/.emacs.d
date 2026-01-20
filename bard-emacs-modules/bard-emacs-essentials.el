@@ -33,6 +33,13 @@
    ("C-c s d" . substitute-target-in-defun)
    ("C-c s s" . substitute-target-in-buffer)))
 
+(use-package move-text
+  :ensure t
+  :bind
+  (:map prog-mode-map
+        ("M-p" . move-text-up)
+        ("M-n" . move-text-down)))
+
 ;; Desktop mode/session saving
 (setq desktop-path '("~/.emacs.d/desktop")
       desktop-dirname "~/.emacs.d/desktop/"

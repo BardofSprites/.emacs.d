@@ -583,8 +583,14 @@ Display the indicator only on the focused window's mode line.")
 
 ;;;; Miscellaneous
 
-(setq global-mode-string
-      (remove 'org-mode-line-string global-mode-string))
+;; (setq global-mode-string
+;;       (remove 'org-mode-line-string global-mode-string))
+
+;; (delq 'org-mode-line-string global-mode-string)
+
+(with-eval-after-load 'org
+  (setq mode-line-misc-info
+        (delete 'org-mode-line-string mode-line-misc-info)))
 
 (defvar-local prot-modeline-misc-info
     '(:eval

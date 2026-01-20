@@ -63,120 +63,120 @@ The ~early-init.el~ removes all the visual fluff like scrollbars and sets up ver
 
 ** Initialization
 #+begin_src emacs-lisp :tangle init.el
-;;; init.el --- init.el -*- lexical-binding: t -*-
+  ;;; init.el --- init.el -*- lexical-binding: t -*-
 
-;; Author: BardofSprites
-;; Maintainer: BardofSprites
-;; Version: 0.1.0
-;; Package-Requires: ((emacs "28.2"))
+  ;; Author: BardofSprites
+  ;; Maintainer: BardofSprites
+  ;; Version: 0.1.0
+  ;; Package-Requires: ((emacs "28.2"))
 
-;; This file is not part of GNU Emacs
+  ;; This file is not part of GNU Emacs
 
-;; This program is free software: you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation, either version 3 of the License, or
-;; (at your option) any later version.
+  ;; This program is free software: you can redistribute it and/or modify
+  ;; it under the terms of the GNU General Public License as published by
+  ;; the Free Software Foundation, either version 3 of the License, or
+  ;; (at your option) any later version.
 
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+  ;; This program is distributed in the hope that it will be useful,
+  ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ;; GNU General Public License for more details.
 
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-
-;;; Commentary:
-
-;;; Code:
-
-;; fix keymap
-(repeat-mode t)
-(global-set-key (kbd "C-z") nil)
-(global-set-key (kbd "M-z") nil)
-
-(global-set-key (kbd "C-z C-z") #'suspend-emacs)
+  ;; You should have received a copy of the GNU General Public License
+  ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-;; Add the directories to the load path
-(mapc
- (lambda (string)
-   (add-to-list 'load-path (locate-user-emacs-file string)))
- '("bard-elisp" "bard-emacs-modules" "old-ada"))
+  ;;; Commentary:
 
-;; Clipboard saving
-(setq select-enable-clipboard t)
+  ;;; Code:
 
-;; custom file is evil
-(setq custom-file (make-temp-file "emacs-custom-"))
+  ;; fix keymap
+  (repeat-mode t)
+  (global-set-key (kbd "C-z") nil)
+  (global-set-key (kbd "M-z") nil)
 
-;; No Backups
-(setq auto-save-default nil)
-(setq make-backup-files nil)
-(setq confirm-kill-emacs 'y-or-n-p)
+  (global-set-key (kbd "C-z C-z") #'suspend-emacs)
 
-;; native comp enabled
-(when (native-comp-available-p)
-  (setq native-compile-prune-cache t))
 
-;; enable/disable commands
-(mapc
- (lambda (command)
-   (put command 'disabled nil))
- '(list-timers narrow-to-region narrow-to-page upcase-region downcase-region))
+  ;; Add the directories to the load path
+  (mapc
+   (lambda (string)
+     (add-to-list 'load-path (locate-user-emacs-file string)))
+   '("bard-elisp" "bard-emacs-modules" "old-ada"))
 
-(mapc
- (lambda (command)
-   (put command 'disabled t))
- '(eshell project-eshell overwrite-mode iconify-frame diary))
+  ;; Clipboard saving
+  (setq select-enable-clipboard t)
 
-;;; Packages
-(setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-                         ("melpa" . "https://melpa.org/packages/")))
+  ;; custom file is evil
+  (setq custom-file (make-temp-file "emacs-custom-"))
 
-;;; MACROS
+  ;; No Backups
+  (setq auto-save-default nil)
+  (setq make-backup-files nil)
+  (setq confirm-kill-emacs 'y-or-n-p)
 
-(defmacro bard/make-abbrev (table &rest definitions)
-  "Expand abbrev DEFINITIONS for the given TABLE.
-DEFINITIONS is a sequence of (i) string pairs mapping the
-abbreviation to its expansion or (ii) a string and symbol pair
-making an abbreviation to a function."
-  (declare (indent 1))
-  (unless (zerop (% (length definitions) 2))
-    (error "Uneven number of key+command pairs"))
-  `(if (abbrev-table-p ,table)
-       (progn
-         ,@(mapcar
-            (lambda (pair)
-              (let ((abbrev (nth 0 pair))
-                    (expansion (nth 1 pair)))
-                (if (stringp expansion)
-                    `(define-abbrev ,table ,abbrev ,expansion)
-                  `(define-abbrev ,table ,abbrev "" ,expansion))))
-            (seq-split definitions 2)))
-     (error "%s is not an abbrev table" ,table)))
+  ;; native comp enabled
+  (when (native-comp-available-p)
+    (setq native-compile-prune-cache t))
 
-(require 'bard-emacs-anki)
-(require 'bard-emacs-calendar)
-(require 'bard-emacs-completion)
-(require 'bard-emacs-dired)
-;; (require 'bard-emacs-email)
-(require 'bard-emacs-media)
-(require 'bard-emacs-eshell)
-(require 'bard-emacs-essentials)
-;; (require 'bard-emacs-keyboard)
-(require 'bard-emacs-modeline)
-(require 'bard-emacs-org)
-(require 'bard-emacs-prog)
-(require 'bard-emacs-theme)
-(require 'bard-emacs-ui)
-(require 'bard-emacs-web)
-(require 'bard-emacs-window)
-(require 'bard-emacs-writing)
+  ;; enable/disable commands
+  (mapc
+   (lambda (command)
+     (put command 'disabled nil))
+   '(list-timers narrow-to-region narrow-to-page upcase-region downcase-region))
 
-(provide 'init)
-(put 'eshell 'disabled nil)
+  (mapc
+   (lambda (command)
+     (put command 'disabled t))
+   '(eshell project-eshell overwrite-mode iconify-frame diary))
+
+  ;;; Packages
+  (setq package-archives '(("elpa" . "https://elpa.gnu.org/packages/")
+                           ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                           ("melpa" . "https://melpa.org/packages/")))
+
+  ;;; MACROS
+
+  (defmacro bard/make-abbrev (table &rest definitions)
+    "Expand abbrev DEFINITIONS for the given TABLE.
+  DEFINITIONS is a sequence of (i) string pairs mapping the
+  abbreviation to its expansion or (ii) a string and symbol pair
+  making an abbreviation to a function."
+    (declare (indent 1))
+    (unless (zerop (% (length definitions) 2))
+      (error "Uneven number of key+command pairs"))
+    `(if (abbrev-table-p ,table)
+         (progn
+           ,@(mapcar
+              (lambda (pair)
+                (let ((abbrev (nth 0 pair))
+                      (expansion (nth 1 pair)))
+                  (if (stringp expansion)
+                      `(define-abbrev ,table ,abbrev ,expansion)
+                    `(define-abbrev ,table ,abbrev "" ,expansion))))
+              (seq-split definitions 2)))
+       (error "%s is not an abbrev table" ,table)))
+
+  (require 'bard-emacs-anki)
+  (require 'bard-emacs-calendar)
+  (require 'bard-emacs-completion)
+  (require 'bard-emacs-dired)
+  ;; (require 'bard-emacs-email)
+  (require 'bard-emacs-media)
+  (require 'bard-emacs-eshell)
+  (require 'bard-emacs-essentials)
+  ;; (require 'bard-emacs-keyboard)
+  (require 'bard-emacs-modeline)
+  (require 'bard-emacs-org)
+  (require 'bard-emacs-prog)
+  (require 'bard-emacs-theme)
+  (require 'bard-emacs-ui)
+  (require 'bard-emacs-web)
+  (require 'bard-emacs-window)
+  (require 'bard-emacs-writing)
+
+  (provide 'init)
+  (put 'eshell 'disabled nil)
 
 #+end_src
 * Modules
@@ -951,7 +951,6 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 ** bard-emacs-essentials
 *** Writable grep buffers (wgrep)
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
-
   (use-package wgrep
     :ensure t
     :bind
@@ -964,6 +963,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
           ("e" . wgrep-change-to-wgrep-mode)))
 #+end_src
 
+*** Multiple cursors
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   (use-package multiple-cursors
     :ensure t
@@ -978,12 +978,14 @@ For a long time I really struggled with Emacs tab completion. It still only kind
      ("C-;" . mc/skip-to-previous-like-this)))
 #+end_src
 
+*** Expand region
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   (use-package expand-region
     :ensure t
     :bind ("C-=" . er/expand-region))
 #+end_src
 
+*** Substitute (simple text substitution)
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   (use-package substitute
     :ensure t
@@ -994,6 +996,17 @@ For a long time I really struggled with Emacs tab completion. It still only kind
      ("C-c s s" . substitute-target-in-buffer)))
 #+end_src
 
+*** Moving text around
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
+  (use-package move-text
+    :ensure t
+    :bind
+    (:map prog-mode-map
+          ("M-p" . move-text-up)
+          ("M-n" . move-text-down)))
+#+end_src
+
+*** Saving session with desktop
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   ;; Desktop mode/session saving
   (setq desktop-path '("~/.emacs.d/desktop")
@@ -1236,8 +1249,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
                   mode-line-format-right-align
                   prot-modeline-notmuch-indicator
                   " "
-                  prot-modeline-misc-info
-                  " "))
+                  prot-modeline-misc-info))
 
   (with-eval-after-load 'spacious-padding
     (defun prot/modeline-spacious-indicators ()
@@ -3647,8 +3659,14 @@ This is another one of prot's libraries that I copied and modified a long time a
 
   ;;;; Miscellaneous
 
-  (setq global-mode-string
-        (remove 'org-mode-line-string global-mode-string))
+  ;; (setq global-mode-string
+  ;;       (remove 'org-mode-line-string global-mode-string))
+
+  ;; (delq 'org-mode-line-string global-mode-string)
+
+  (with-eval-after-load 'org
+    (setq mode-line-misc-info
+          (delete 'org-mode-line-string mode-line-misc-info)))
 
   (defvar-local prot-modeline-misc-info
       '(:eval
