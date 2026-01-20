@@ -2,7 +2,34 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("references bib"
+(("PHYS 298 Notes"
+ (filename . "~/Notes/boox/School/Spring 2026/PHYS 298/PHYS 298.pdf")
+ (position . 1)
+ (last-modified 26978 37501 964748 237000)
+ (page . 1)
+ (slice)
+ (size . fit-width)
+ (origin 0.0 . 0.0)
+ (handler . pdf-view-bookmark-jump-handler))
+("MATH 206 Notes"
+ (filename . "~/Notes/boox/School/Spring 2026/MATH 206/MATH 206.pdf")
+ (position . 1)
+ (last-modified 26978 37494 315193 243000)
+ (page . 1)
+ (slice)
+ (size . fit-width)
+ (origin 0.0 . 0.0)
+ (handler . pdf-view-bookmark-jump-handler))
+("CSE 310 Notes"
+ (filename . "~/Notes/boox/School/Spring 2026/CSE 310/CSE 310.pdf")
+ (position . 1)
+ (last-modified 26978 37481 624793 363000)
+ (page . 1)
+ (slice)
+ (size . fit-width)
+ (origin 0.0 . 0.0)
+ (handler . pdf-view-bookmark-jump-handler))
+("references bib"
  (filename . "~/Documents/bib/references.bib")
  (front-context-string)
  (rear-context-string . "sion support}\n}\n")
