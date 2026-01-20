@@ -124,6 +124,27 @@
   (org-fragtog-mode t)
   (org-cdlatex-mode t)
   (electric-pair-local-mode t)
-  (bard/cdlatex-add-math-symbols))
+  (bard/cdlatex-add-math-symbols)
+  ;; sending math to calc from latex doc
+  (define-key org-mode-map (kbd "C-S-e") #'latex-math-from-calc))
+
+;; latex into calc
+(defun latex-math-from-calc ()
+  "Evaluate `calc' on the contents of line at point."
+  (interactive)
+  (cond ((region-active-p)
+         (let* ((beg (region-beginning))
+                (end (region-end))
+                (string (buffer-substring-no-properties beg end)))
+           (kill-region beg end)
+           (insert (calc-eval `(,string calc-language latex
+                                        calc-prefer-frac t
+                                        calc-angle-mode rad)))))
+        (t (let ((l (thing-at-point 'line)))
+             (end-of-line 1) (kill-line 0)
+             (insert (calc-eval `(,l
+                                  calc-language latex
+                                  calc-prefer-frac t
+                                  calc-angle-mode rad)))))))
 
 (provide 'bard-writing)

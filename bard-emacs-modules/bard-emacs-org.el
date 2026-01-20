@@ -77,7 +77,9 @@
 
 (use-package cdlatex
   :ensure t
-  )
+  :hook (LaTeX-mode . turn-on-cdlatex)
+  :bind (:map cdlatex-mode-map
+              ("<tab>" . cdlatex-tab)))
 
 ;; latex editing niceness
 (use-package org-fragtog
