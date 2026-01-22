@@ -50,7 +50,8 @@
   :ensure t
   :config
   (pdf-tools-install)
-  (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode))
+  (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode)
+  (add-to-list 'pdf-tools-enabled-modes #'pdf-view-roll-minor-mode))
 
 (use-package bard-media
   :ensure nil

@@ -1198,7 +1198,8 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     :ensure t
     :config
     (pdf-tools-install)
-    (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode))
+    (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode)
+    (add-to-list 'pdf-tools-enabled-modes #'pdf-view-roll-minor-mode))
 #+end_src
 
 *** Custom functions
