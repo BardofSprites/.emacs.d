@@ -1299,7 +1299,8 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     (("C-c c" . org-capture))
     :config
     (setq org-goto-interface 'outline-path-completion
-          org-outline-path-complete-in-steps nil)
+          org-outline-path-complete-in-steps nil
+          org-goto-max-level '2)
     (setq org-special-ctrl-a/e t)
     (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 #+end_src

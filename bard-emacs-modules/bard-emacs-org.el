@@ -16,7 +16,9 @@
   :bind
   (("C-c c" . org-capture))
   :config
-  (setq org-goto-interface 'outline-path-completion)
+  (setq org-goto-interface 'outline-path-completion
+        org-outline-path-complete-in-steps nil
+        org-goto-max-level '2)
   (setq org-special-ctrl-a/e t)
   (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 
