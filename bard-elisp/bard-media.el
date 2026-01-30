@@ -87,11 +87,31 @@ Asks the user whether to enable recursive mode and whether to output marked file
     (message "No valid files to show in Dired.")))
 
 (defun bard/image-browser-marked ()
-  "Open nsxiv on the marked files in Dired.
-Assumes that files have already been validated."
-  (let ((files (dired-get-marked-files)))
+  "Open nsxiv on the marked files in Dired."
+  (let* ((files (dired-get-marked-files))
+         (stdout (if (y-or-n-p "Output marked files to buffer? ") "-o" "")))
     (message "Opening marked files: %s" (string-join files ", "))
-    (apply #'start-process "nsxiv" "*nsxiv*" "nsxiv" "-t" files)))
+    (when (string= stdout "-o")
+      (with-current-buffer (get-buffer-create "*nsxiv*")
+        (read-only-mode 0)
+        (erase-buffer)))
+    ;; Corrected apply call:
+    (let ((process (apply #'start-process
+                          "nsxiv"
+                          "*nsxiv*"
+                          (append (list "nsxiv" "-t" stdout) files))))
+      (when (string= stdout "-o")
+        (set-process-sentinel
+         process
+         (lambda (proc event)
+           (when (string= event "finished\n")
+             (with-current-buffer "*nsxiv*"
+               (read-only-mode nil)
+               (goto-char (point-min)))
+             (let ((files (with-current-buffer "*nsxiv*"
+                            (split-string (buffer-string) "\n" t))))
+               (bard/open-marked-in-dired files)))))
+        (pop-to-buffer "*nsxiv*")))))
 
 (defun bard/image-browser ()
   "Open nsxiv in a context-sensitive way:
