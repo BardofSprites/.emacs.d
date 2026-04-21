@@ -4311,13 +4311,11 @@ This is what the tabs look like with ~doom-gruvbox~ theme:
 
 *** Searching notes
 #+begin_src emacs-lisp :tangle bard-elisp/bard-writing.el :mkdirp yes
-  (defun bard/find-notes-file ()
-    (interactive)
-    (consult-find "~/Notes/denote"))
-
-  (defun bard/search-notes-directory ()
-    (interactive)
-    (consult-grep "~/Notes/denote"))
+  (use-package consult-denote
+    :ensure t
+    :bind
+    ("C-c n g" . consult-denote-grep)
+    ("C-c n f" . consult-denote-find))
 #+end_src
 
 *** University Class jumping in ~uni.org~ file

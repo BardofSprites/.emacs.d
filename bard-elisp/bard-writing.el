@@ -31,13 +31,11 @@
   (ibuffer nil "*Ibuffer-Notes*"
            '((name . "^\\[Note\\]"))))
 
-(defun bard/find-notes-file ()
-  (interactive)
-  (consult-find "~/Notes/denote"))
-
-(defun bard/search-notes-directory ()
-  (interactive)
-  (consult-grep "~/Notes/denote"))
+(use-package consult-denote
+  :ensure t
+  :bind
+  ("C-c n g" . consult-denote-grep)
+  ("C-c n f" . consult-denote-find))
 
 (defvar bard/class-dirs
   '(("CSE 130 " . "~/Documents/Uni/SPRING2026-CSE 130/")
