@@ -191,6 +191,18 @@
   (org-roam-directory (file-truename "~/Notes/denote"))
   :bind (("C-c n l" . org-roam-buffer-toggle))
   :config
+  (cl-defmethod org-roam-node-type ((node org-roam-node))
+    "Return the TYPE of NODE based on its filetags."
+    (let ((tags (org-roam-node-tags node)))
+      (cond
+       ((member "bib"   tags) "reference")
+       ((member "topic" tags) "topic")
+       (tags                  "main")
+       (t                     "root"))))
+
+  (setq org-roam-node-display-template
+        (concat "${type:10} ${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
+
   (setq org-roam-db-node-include-function
         (lambda ()
           (not (member "ATTACH" (org-get-tags)))))
