@@ -505,9 +505,6 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 #+end_src
 
 **** Embark
-:PROPERTIES:
-:ID:       ce728534-8fa7-4d4a-96e3-71cb02fc9af4
-:END:
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-completion.el :mkdirp yes
   (use-package embark
     :ensure t
@@ -1650,9 +1647,6 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 #+end_src
 
 *** Fonts
-:PROPERTIES:
-:ID:       542a0f2e-f79e-4272-af55-284c81b16fc3
-:END:
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package fontaine
     :ensure nil
@@ -2717,7 +2711,7 @@ next invocation of 'notmuch new'."
 #+end_src
 
 ** bard-embark
-Main embark configuration found [[id:ce728534-8fa7-4d4a-96e3-71cb02fc9af4][here]]. This is another one of the files I borrowed from Protesilaos, but renamed/modified so I can remember.
+Main embark configuration found in ~bard-emacs-modules/bard-emacs-embark.el~. This is another one of the files I borrowed from Protesilaos, but renamed/modified so I can remember.
 
 #+begin_src emacs-lisp :tangle bard-elisp/bard-embark.el :mkdirp yes
 (require 'embark)
@@ -3014,7 +3008,7 @@ I believe Protesilaos has stopped using eshell, but I went back in his git histo
 #+end_src
 
 *** EMMS Convenience functions
-Somewhat related to [[id:3ca0c5a0-4829-4411-a80b-f2fe69650ea0][Elfeed/EMMS Youtube Code]].
+Somewhat related to my Elfeed/EMMS Youtube Code.
 
 #+begin_src emacs-lisp :tangle bard-elisp/bard-media.el :mkdirp yes
   (defun bard/play-youtube-video ()
@@ -3852,7 +3846,7 @@ packages installed from each archive."
 
 ** bard-theme
 *** Fontaine font presets
-The main configuration for fontaine is found at [[id:542a0f2e-f79e-4272-af55-284c81b16fc3][bard-emacs-theme::Fonts]]. These are the presets for different fonts that I can switch between using ~C-c f~.
+The main configuration for fontaine is found at ~bard-emacs-theme~ - Fonts. These are the presets for different fonts that I can switch between using ~C-c f~.
 
 #+begin_src emacs-lisp :tangle bard-elisp/bard-theme.el :mkdirp yes
   (setq fontaine-presets
@@ -4022,9 +4016,6 @@ Explanation provided by [[https://tatsumoto-ren.github.io/blog/japanese-fonts.ht
 #+end_src
 
 *** Elfeed/EMMS YouTube code
-:PROPERTIES:
-:ID:       3ca0c5a0-4829-4411-a80b-f2fe69650ea0
-:END:
 I made a video about this here: https://bardman.dev/technology/elfeed.
 
 #+begin_src emacs-lisp :tangle bard-elisp/bard-web.el :mkdirp yes
