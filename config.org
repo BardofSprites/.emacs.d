@@ -1792,7 +1792,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     (setq circe-network-options
           '(("Libera Chat"
              :nick "bardman"
-             :channels ("#emacs" "##anime" "#gentoo")
+             ;; :channels ("#emacs" "##anime" "#gentoo")
              :nickserv-password my-nickserv-password))))
 #+end_src
 

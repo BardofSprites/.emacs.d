@@ -20,7 +20,7 @@
   (setq circe-network-options
         '(("Libera Chat"
            :nick "bardman"
-           :channels ("#emacs" "##anime" "#gentoo")
+           ;; :channels ("#emacs" "##anime" "#gentoo")
            :nickserv-password my-nickserv-password))))
 
 (use-package elfeed
