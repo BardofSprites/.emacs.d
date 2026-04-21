@@ -25,3 +25,5 @@ projects
 tree-sitter/
 org-roam.db
 dired-video-thumbnails
+eln-cache/
+xenops/
