@@ -49,7 +49,7 @@
   "Path to the main university org file.")
 
 (defun bard/jump-to-class (class &optional with-dired)
-  "Jump to CLASS heading in bard/uni-notes-file, can open its dir in Dired".
+  "Jump to CLASS heading in bard/uni-notes-file, can open its dir in Dired."
   (interactive
    (list
     (completing-read "Class: " (mapcar #'car bard/class-dirs))
