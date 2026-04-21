@@ -38,11 +38,6 @@
          :default-family "Monaco"
          :variable-pitch-family "Monaco"
          :fixed-pitch-family "Monaco")
-        (bit
-         :default-height 140
-         :default-family "Ttyp0 OTB"
-         :variable-pitch-family "Ttyp0 OTB"
-         :fixed-pitch-family "Ttyp0 OTB")
         (large
          :inherit default
          :default-height 160)
@@ -66,7 +61,6 @@
   "Hook that runs after a new theme is loaded using `bard/select-theme`.")
 
 (dolist (hook '(bard/after-theme-load-hook))
-  (add-hook hook #'fontaine-apply-current-preset)
   (add-hook hook #'logos-update-fringe-in-buffers))
 
 (defun bard/select-theme (&optional theme)

@@ -1650,7 +1650,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 *** Fonts
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package fontaine
-    :ensure nil
+    :ensure t
     :config
     ;; save file
     (setq fontaine-latest-state-file
@@ -1661,10 +1661,6 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 
     ;; The other side of `fontaine-restore-latest-preset'.
     (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
-
-    ;; preserve fonts when switching themes
-    (dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
-      (add-hook hook #'fontaine-apply-current-preset))
 
     (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
 #+end_src
@@ -3921,7 +3917,6 @@ Explanation provided by [[https://tatsumoto-ren.github.io/blog/japanese-fonts.ht
     "Hook that runs after a new theme is loaded using `bard/select-theme`.")
 
   (dolist (hook '(bard/after-theme-load-hook))
-    (add-hook hook #'fontaine-apply-current-preset)
     (add-hook hook #'logos-update-fringe-in-buffers))
 
   (defun bard/select-theme (&optional theme)

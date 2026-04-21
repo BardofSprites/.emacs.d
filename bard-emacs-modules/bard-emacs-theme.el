@@ -10,7 +10,7 @@
   (bard/select-theme 'doom-gruvbox))
 
 (use-package fontaine
-  :ensure nil
+  :ensure t
   :config
   ;; save file
   (setq fontaine-latest-state-file
@@ -21,10 +21,6 @@
 
   ;; The other side of `fontaine-restore-latest-preset'.
   (add-hook 'kill-emacs-hook #'fontaine-store-latest-preset)
-
-  ;; preserve fonts when switching themes
-  (dolist (hook '(modus-themes-after-load-theme-hook ef-themes-post-load-hook))
-    (add-hook hook #'fontaine-apply-current-preset))
 
   (define-key global-map (kbd "C-c f") #'fontaine-set-preset))
 
