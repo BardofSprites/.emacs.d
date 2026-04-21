@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("PHYS 298 Notes"
+(("dotemacs"
+ (filename . "~/.emacs.d/config.org")
+ (front-context-string . "#+title: My Lite")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 27095 46704 658997 868000))
+("PHYS 298 Notes"
  (filename . "~/Notes/boox/School/Spring 2026/PHYS 298/PHYS 298.pdf")
  (position . 1)
  (last-modified 26978 37501 964748 237000)
@@ -58,7 +64,7 @@
  (front-context-string . "20230202T104500-")
  (rear-context-string . "21 Apr  3 20:54 ")
  (position . 168)
- (last-modified 26126 2004 739066 838000))
+ (last-modified 26994 17376 141650 831000))
 ("aliases"
  (filename . "~/.bash_aliases")
  (front-context-string . "alias pyenv=\"sou")
