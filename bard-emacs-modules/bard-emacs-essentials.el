@@ -148,6 +148,14 @@
   (define-key global-map (kbd "C-c t r") #'tmr-remove)
   (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
 
+(use-package bookmarks
+  :ensure nil
+  :hook
+  (bookmark-bmenu-mode-hook . hl-line-mode)
+  :config
+  (setq bookmark-fringe-mark nil)
+  (setq bookmark-save-flag 1))
+
 (require 'server)
 (setq server-client-instructions nil)
 (unless (server-running-p)

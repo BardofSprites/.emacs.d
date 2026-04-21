@@ -1127,6 +1127,17 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     (define-key global-map (kbd "C-c t R") #'tmr-remove-finished))
 #+end_src
 
+*** Bookmarks
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
+  (use-package bookmarks
+    :ensure nil
+    :hook
+    (bookmark-bmenu-mode-hook . hl-line-mode)
+    :config
+    (setq bookmark-fringe-mark nil)
+    (setq bookmark-save-flag 1))
+#+end_src
+
 *** Running emacs as server
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   (require 'server)
