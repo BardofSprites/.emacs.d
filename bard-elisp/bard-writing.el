@@ -114,14 +114,20 @@
   "Add functions into list."
   (add-multiple-into-list
    'cdlatex-math-symbol-alist-comb
-   '((?V "\\vec"))))
+   '((?V "\\vec")
+     (?= "\\implies" "\\Leftrightarrow" "\\Longleftrightarrow"))))
+
+(use-package xenops
+  :ensure t
+  :config
+  (setq xenops-math-image-scale-factor 1.2))
 
 (define-minor-mode bard/org-math-mode
   "Enable features to write math in `org-mode'."
   :init-value nil
   :lighter " S="
   :global nil
-  (org-fragtog-mode t)
+  (xenops-mode t)
   (org-cdlatex-mode t)
   (electric-pair-local-mode t)
   (bard/cdlatex-add-math-symbols)
