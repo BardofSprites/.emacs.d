@@ -2391,6 +2391,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
 #+end_src
 
 *** Citations and bibliography
+**** Citar bibliography front end
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (use-package citar
     :ensure t
@@ -2420,7 +2421,31 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :ensure t
     )
 #+end_src
+**** Creating bibliographic entries
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (defun bard/create-bib-entry ()
+    (interactive)
+    (let* ((default-file (when (derived-mode-p 'dired-mode)
+                           (dired-get-file-for-visit)))
+           (file (read-file-name "PDF: "
+                                 "~/Documents/Research Articles/"
+                                 default-file nil
+                                 (when default-file
+                                   (file-name-nondirectory default-file)))))
+      (find-file "~/Documents/bib/references.bib")
+      (goto-char (point-max))
+      (yas-expand-snippet
+       (format "@article{$1,
+    author       = {$2},
+    title        = {$3},
+    journaltitle = {$4},
+    year         = {$5},
+    doi          = {$9},
+    url          = {$10},
+    file         = {PDF:%s:application/pdf},
+  }" file))))
 
+#+end_src
 *** Provide module
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   (provide 'bard-emacs-writing)

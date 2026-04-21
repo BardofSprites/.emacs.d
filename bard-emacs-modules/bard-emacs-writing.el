@@ -308,4 +308,26 @@
   :ensure t
   )
 
+(defun bard/create-bib-entry ()
+  (interactive)
+  (let* ((default-file (when (derived-mode-p 'dired-mode)
+                         (dired-get-file-for-visit)))
+         (file (read-file-name "PDF: "
+                               "~/Documents/Research Articles/"
+                               default-file nil
+                               (when default-file
+                                 (file-name-nondirectory default-file)))))
+    (find-file "~/Documents/bib/references.bib")
+    (goto-char (point-max))
+    (yas-expand-snippet
+     (format "@article{$1,
+  author       = {$2},
+  title        = {$3},
+  journaltitle = {$4},
+  year         = {$5},
+  doi          = {$9},
+  url          = {$10},
+  file         = {PDF:%s:application/pdf},
+}" file))))
+
 (provide 'bard-emacs-writing)
