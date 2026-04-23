@@ -2313,8 +2313,28 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
          (tags                  "main")
          (t                     "root"))))
 
+    ;; (cl-defmethod org-roam-node-denote-id ((node org-roam-node))
+    ;;   "Return the denote timestamp ID from NODE's filename, e.g. 20251202T154611."
+    ;;   (when-let ((file (org-roam-node-file node)))
+    ;;     (and (string-match "\\([0-9]\\{8\\}T[0-9]\\{6\\}\\)" file)
+    ;;          (match-string 1 file))))
+
+    (cl-defmethod org-roam-node-denote-id ((node org-roam-node))
+      "Return reformatted denote timestamp from NODE's filename as YYYY-MM-DD HH:MM."
+      (when-let ((file (org-roam-node-file node)))
+        (and (string-match "\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)T\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)" file)
+             (format "%s-%s-%s %s:%s"
+                     (match-string 1 file)   ; YYYY
+                     (match-string 2 file)   ; MM
+                     (match-string 3 file)   ; DD
+                     (match-string 4 file)   ; HH
+                     (match-string 5 file))))) ; MM
+
+    ;; depends on denote faces :P
     (setq org-roam-node-display-template
-          (concat "${type:10} ${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
+          (concat (propertize "${denote-id:20}" 'face 'denote-faces-date)
+                  (propertize "${title:*} " 'face 'denote-faces-title)
+                  (propertize "${tags:*}" 'face 'denote-faces-keywords)))
 
     (setq org-roam-db-node-include-function
           (lambda ()
