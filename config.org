@@ -1096,7 +1096,10 @@ For a long time I really struggled with Emacs tab completion. It still only kind
   	    ("Asia/Tokyo" "Tokyo")))
 
   (setq world-clock-time-format "%Y-%m-%d %B (%A) %R %Z")
+#+end_src
 
+*** Timer (tmr)
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   ;; timer package
   (use-package tmr
     :ensure t
@@ -1109,7 +1112,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     (setq tmr-descriptions-list 'tmr-description-history)
     (define-key global-map (kbd "C-c t l") 'tmr-tabulated-view)
     (define-key global-map (kbd "C-c t t") #'tmr)
-    (define-key global-map (kbd "C-c t T") #'tmr-with-description)
+    (define-key global-map (kbd "C-c t T") #'tmr-with-details)
     (define-key global-map (kbd "C-c t l") #'tmr-tabulated-view)
     (define-key global-map (kbd "C-c t c") #'tmr-clone)
     (define-key global-map (kbd "C-c t k") #'tmr-cancel)
