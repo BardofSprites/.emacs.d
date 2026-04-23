@@ -612,9 +612,6 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     "da"             "↓"
     "ra"             "→"
     "la"             "←"
-    "iff"            "⇔"
-    "imp"            "⇒"
-    "tf"             "∴"
     "xmonad"         "XMonad"
     "xmobar"         "XMobar")
 
@@ -1445,7 +1442,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
   (setq org-capture-templates
         '(("t" "task" entry
            (file+olp
-            "~/Notes/denote/20240328T215727--todo.org"
+            "~/Notes/denote/todo.org"
             "Inbox" "General tasks")
            "* TODO %?")
           ;; ("s" "Basic Statistics" entry
@@ -2228,8 +2225,8 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
      ("C-c n I" . denote-add-links)
      ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
      ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
-     ("C-c n f" . bard/find-notes-file)        ; notes-find
-     ("C-c n g" . bard/search-notes-directory))) ; notes-grep
+     (:map dired-mode-map ; rename files in dired with denote structure
+           ("r" . denote-rename-file))))
 #+end_src
 **** Denote org mode extensions
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
@@ -2255,8 +2252,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     (require 'bard-writing)
     :bind
     ("C-c n N" . denote-sequence)
-    ("C-c n D" . denote-sequence-dired)
-    ("C-c n <SPC>" . denote-sequence-region))
+    ("C-c n D" . denote-sequence-dired))
 #+end_src
 
 **** Denote journal extension
