@@ -1635,11 +1635,10 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 
 *** Color theme
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
-  (use-package doom-themes
+  (use-package doric-themes
     :ensure t
     :config
-    (setq doom-gruvbox-dark-variant "hard")
-    (bard/select-theme 'doom-gruvbox))
+    (bard/select-theme 'doric-obsidian))
 #+end_src
 
 *** Fonts
