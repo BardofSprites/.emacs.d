@@ -1608,6 +1608,9 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 *** Version control
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
   ;; Version control
+
+  (setq vc-follow-symlinks t)
+
   (use-package magit
     :ensure t
     :config
