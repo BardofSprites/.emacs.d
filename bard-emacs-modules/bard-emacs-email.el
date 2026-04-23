@@ -4,12 +4,13 @@
   :ensure t
   :config
   (define-key global-map (kbd "C-c m") #'notmuch)
-  (setq notmuch-show-logo t
+  (setq notmuch-show-logo nil
         notmuch-column-control 1.0
         notmuch-hello-auto-refresh t
         notmuch-hello-recent-searches-max 20
         notmuch-hello-thousands-separator ""
-        notmuch-hello-sections '(notmuch-hello-insert-header notmuch-hello-insert-saved-searches notmuch-hello-insert-search notmuch-hello-insert-alltags)
+        notmuch-hello-sections '(notmuch-hello-insert-saved-searches
+                                 notmuch-hello-insert-alltags)
         notmuch-show-all-tags-list t)
 
   (setq notmuch-search-oldest-first nil)
@@ -24,51 +25,48 @@
 
 (setq notmuch-show-empty-saved-searches t)
 (setq notmuch-saved-searches
-      `(( :name "📥 inbox (all-mail)"
+      `(( :name "📥 Inbox (all-mail)"
           :query "tag:inbox"
           :sort-order newest-first
           :key ,(kbd "i"))
-        ( :name "💬 unread (inbox)"
+        ( :name "💬 Unread (inbox)"
           :query "tag:unread and tag:inbox"
           :sort-order newest-first
           :key ,(kbd "u"))
-        ( :name "📝 To Do"
-          :query "tag:todo"
-          :sort-order oldest-first
-          :key ,(kbd "t"))
-        ( :name "🚩 flagged"
+        ( :name "🚩 Flagged"
           :query "tag:flag"
           :sort-order newest-first
           :key ,(kbd "f"))
-        ( :name "🐃 contributions"
-          :query "tag:unread and tag:contrib"
-          :sort-order newest-first
-          :key ,(kbd "c"))
-        ( :name "🐧 linux-related"
-          :query "tag:unread and tag:linux"
-          :sort-order newest-first
+        ( :name "📚 Archive"
+          :query "tag:archive"
+          :sort-order oldest-first
+          :key ,(kbd "a"))
+        ( :name "📜 Reference"
+          :query "tag:ref"
+          :sort-order oldest-first
+          :key ,(kbd "r"))
+        ( :name "📬 Mailing Lists"
+          :query "tag:list and tag:unread"
+          :sort-order oldest-first
           :key ,(kbd "l"))
-        ( :name "🚂 emacs developement"
-          :query "tag:unread and tag:contrib"
+        ( :name "🎨 Emacs - Humanities"
+          :query "tag:unread and tag:humanities"
           :sort-order newest-first
-          :key ,(kbd "ed"))
-        ( :name "🎨 emacs humanities"
-          :query "tag:unread and tag:emacs-humanities"
+          :key ,(kbd "lh"))
+        ( :name "🦄 Emacs - Org Mode"
+          :query "tag:unread and tag:org"
           :sort-order newest-first
-          :key ,(kbd "eh"))
-        ( :name "🦄 emacs org-mode"
-          :query "tag:unread and tag:emacs-org"
-          :sort-order newest-first
-          :key ,(kbd "eo"))))
+          :key ,(kbd "lo"))))
 
 (setq notmuch-tagging-keys
-      `((,(kbd "d") prot-notmuch-mark-delete-tags "💥 Mark for deletion")
-        (,(kbd "f") prot-notmuch-mark-flag-tags "🚩 Flag as important")
-        (,(kbd "s") prot-notmuch-mark-spam-tags "🔥 Mark as spam")
-        (,(kbd "r") ("-unread") "👁️‍🗨️ Mark as read")
+      `((,(kbd "d") bard-notmuch-mark-delete-tags "💥 Mark for deletion")
+        (,(kbd "f") bard-notmuch-mark-flag-tags "🚩 Flag as important")
+        (,(kbd "s") bard-notmuch-mark-spam-tags "🔥 Mark as spam")
+        (,(kbd "R") bard-notmuch-mark-ref-tags "📜 Mark for reference")
+        (,(kbd "r") ("-unread") "👁️‍ Mark as read")
         (,(kbd "u") ("+unread") "🗨️ Mark as unread")))
 
-(setq notmuch-archive-tags '("+archive")
+(setq notmuch-archive-tags '("+archive" "-unread" "-inbox")
       notmuch-message-replied-tags '("+replied")
       notmuch-message-forwarded-tags '("+forwarded")
       notmuch-show-mark-read-tags '("-unread")
@@ -81,21 +79,24 @@
   :after notmuch
   :config
   (setq notmuch-indicator-args
-        '(( :terms "tag:unread and tag:inbox"
-            :label "[U] "
-            :label-face prot-modeline-indicator-green
-            :counter-face prot-modeline-indicator-green)
-          ( :terms "tag:unread and tag:linux"
-            :label "[L] "
-            :label-face prot-modeline-indicator-cyan
-            :counter-face prot-modeline-indicator-cyan)
-          ( :terms "tag:unread and tag:emacs"
-            :label "[E] "
-            :label-face prot-modeline-indicator-blue
-            :counter-face prot-modeline-indicator-blue))
+        '(( :terms "tag:account/home and tag:inbox and tag:unread"
+            :label "[Дом] "
+            ;; :label-face prot-modeline-indicator-green
+            ;; :counter-face prot-modeline-indicator-green
+            )
+          ( :terms "tag:account/devel and tag:inbox and tag:unread"
+            :label "[Прог] "
+            ;; :label-face prot-modeline-indicator-cyan
+            ;; :counter-face prot-modeline-indicator-cyan
+            )
+          ( :terms "tag:inbox"
+            :label "[Все] "
+            ;; :label-face prot-modeline-indicator-blue
+            ;; :counter-face prot-modeline-indicator-blue
+            ))
 
         notmuch-indicator-refresh-count (* 60 3)
-        notmuch-indicator-hide-empty-counters t
+        notmuch-indicator-hide-empty-counters nil
         notmuch-indicator-force-refresh-commands '(notmuch-refresh-this-buffer))
   (setq notmuch-indicator-add-to-mode-line-misc-info nil)
   (notmuch-indicator-mode t))
