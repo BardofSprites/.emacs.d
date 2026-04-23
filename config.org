@@ -1325,9 +1325,11 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
   (setq org-structure-template-alist
         '(("c" . "center")
-          ("x" . "example")
+          ("x" . "eg")
+          ("X" . "example")
           ("d" . "definition")
           ("t" . "theorem")
+          ("n" . "NB")
           ("q" . "quote")
           ("v" . "verse")
           ("s" . "src")
