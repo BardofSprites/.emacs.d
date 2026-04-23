@@ -1451,6 +1451,12 @@ For a long time I really struggled with Emacs tab completion. It still only kind
             "~/Notes/denote/todo.org"
             "Inbox" "General tasks")
            "* TODO %?")
+          ("a" "appointment" entry
+           (file+olp
+            "~/Notes/denote/todo.org"
+            "Appointments" "General")
+           "* %?\n%^t"
+           :time-prompt t)
           ;; ("s" "Basic Statistics" entry
           ;;  (file+headline
           ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
