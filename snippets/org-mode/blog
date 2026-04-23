@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: blog
+# key: blog
+# --
+#+title: ${1:title}
+#+date: `(format-time-string "%Y-%m-%dT%H:%M:%S%z")`
+#+type: ${2:type of post}
+#+tags: [${3:tags}]
+
+$0
