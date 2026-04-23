@@ -1306,6 +1306,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
           org-goto-max-level '2)
     (setq org-id-track-globally nil)
     (setq org-special-ctrl-a/e t)
+    (setq org-id-track-globally nil)
     (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 #+end_src
 
@@ -1589,6 +1590,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
   (use-package flycheck
     :ensure t
     :config
+    (setq flycheck-disabled-checkers '(org-lint))
     (global-flycheck-mode t))
 #+end_src
 
