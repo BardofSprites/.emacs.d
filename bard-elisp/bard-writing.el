@@ -113,6 +113,7 @@
   (add-multiple-into-list
    'cdlatex-math-symbol-alist-comb
    '((?V "\\vec")
+     (?s "\\sigma" "\\text{ s.t. }" "\\sin")
      (?= "\\implies" "\\Leftrightarrow" "\\Longleftrightarrow"))))
 
 (use-package xenops

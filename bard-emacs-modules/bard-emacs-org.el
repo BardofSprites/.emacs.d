@@ -21,6 +21,7 @@
         org-goto-max-level '2)
   (setq org-id-track-globally nil)
   (setq org-special-ctrl-a/e t)
+  (setq org-id-track-globally nil)
   (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
@@ -35,9 +36,11 @@
 
 (setq org-structure-template-alist
       '(("c" . "center")
-        ("x" . "example")
+        ("x" . "eg")
+        ("X" . "example")
         ("d" . "definition")
         ("t" . "theorem")
+        ("n" . "NB")
         ("q" . "quote")
         ("v" . "verse")
         ("s" . "src")
@@ -143,9 +146,15 @@
 (setq org-capture-templates
       '(("t" "task" entry
          (file+olp
-          "~/Notes/denote/20240328T215727--todo.org"
+          "~/Notes/denote/todo.org"
           "Inbox" "General tasks")
          "* TODO %?")
+        ("a" "appointment" entry
+         (file+olp
+          "~/Notes/denote/todo.org"
+          "Appointments" "General")
+         "* %?\n%^t"
+         :time-prompt t)
         ;; ("s" "Basic Statistics" entry
         ;;  (file+headline
         ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")

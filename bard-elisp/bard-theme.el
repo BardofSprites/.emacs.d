@@ -18,10 +18,17 @@
          :variable-pitch-family "Iosevka Comfy Wide Motion Duo")
         (prot
          :default-family "Iosevka Comfy Wide Motion"
-         :default-height 130
+         :default-height 140
          :default-weight medium
          :fixed-pitch-family "Iosevka Comfy Wide Motion"
          :variable-pitch-family "Iosevka Comfy Wide Motion Duo"
+         :bold-weight extrabold)
+        (duo
+         :default-family "Iosevka Comfy Motion"
+         :default-height 140
+         :default-weight medium
+         :fixed-pitch-family "Iosevka Comfy Motion"
+         :variable-pitch-family "Iosevka Comfy Motion Duo"
          :bold-weight extrabold)
         (mono
          :default-height 130

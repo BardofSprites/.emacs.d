@@ -62,9 +62,13 @@
 (use-package flycheck
   :ensure t
   :config
+  (setq flycheck-disabled-checkers '(org-lint))
   (global-flycheck-mode t))
 
 ;; Version control
+
+(setq vc-follow-symlinks t)
+
 (use-package magit
   :ensure t
   :config

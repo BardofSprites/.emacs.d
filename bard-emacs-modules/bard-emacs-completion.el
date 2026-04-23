@@ -49,9 +49,7 @@
   (marginalia-mode 1))
 
 (use-package orderless
-  :ensure t
-  :config
-  (setq completion-styles '(orderless basic)))
+  :ensure t)
 
 (use-package corfu
   :ensure t
@@ -91,19 +89,19 @@
 (use-package minibuffer
   :config
 ;;;; Completion styles
-  (setq completion-styles '(basic substring initials flex orderless))
+  (setq completion-styles '(orderless basic substring initials flex))
 
   (setq completion-category-defaults nil)
 
   (setq completion-category-overrides
-        '((file (styles . (basic partial-completion orderless)))
+        '((file (styles . (orderless basic partial-completion)))
           (bookmark (styles . (basic substring)))
           (library (styles . (basic substring)))
           (embark-keybinding (styles . (basic substring)))
-          (imenu (styles . (basic substring orderless)))
-          (consult-location (styles . (basic substring orderless)))
+          (imenu (styles . (orderless basic substring)))
+          (consult-location (styles . (orderless basic substring)))
           (kill-ring (styles . (emacs22 orderless)))
-          (eglot (styles . (emacs22 substring orderless))))))
+          (eglot (styles . (orderless emacs22 substring))))))
 
 (use-package consult
   :ensure t
@@ -225,9 +223,6 @@
   "da"             "↓"
   "ra"             "→"
   "la"             "←"
-  "iff"            "⇔"
-  "imp"            "⇒"
-  "tf"             "∴"
   "xmonad"         "XMonad"
   "xmobar"         "XMobar")
 

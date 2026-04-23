@@ -3,11 +3,10 @@
 ;; declare all themes as safe (i trust developers)
 (setq custom-safe-themes t)
 
-(use-package doom-themes
+(use-package doric-themes
   :ensure t
   :config
-  (setq doom-gruvbox-dark-variant "hard")
-  (bard/select-theme 'doom-gruvbox))
+  (bard/select-theme 'doric-obsidian))
 
 (use-package fontaine
   :ensure t

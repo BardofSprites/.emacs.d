@@ -28,6 +28,8 @@
 
 (add-to-list 'default-frame-alist '(alpha . (95 . 95)))
 
+(setq initial-frame-alist default-frame-alist)
+
 ;; garbage collection
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)
@@ -44,3 +46,6 @@
 
 ;; Package cache
 (setq package-enable-at-startup t)
+
+(unless package-archive-contents
+  (package-refresh-contents))

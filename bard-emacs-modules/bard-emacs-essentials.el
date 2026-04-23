@@ -139,7 +139,7 @@
   (setq tmr-descriptions-list 'tmr-description-history)
   (define-key global-map (kbd "C-c t l") 'tmr-tabulated-view)
   (define-key global-map (kbd "C-c t t") #'tmr)
-  (define-key global-map (kbd "C-c t T") #'tmr-with-description)
+  (define-key global-map (kbd "C-c t T") #'tmr-with-details)
   (define-key global-map (kbd "C-c t l") #'tmr-tabulated-view)
   (define-key global-map (kbd "C-c t c") #'tmr-clone)
   (define-key global-map (kbd "C-c t k") #'tmr-cancel)

@@ -142,8 +142,8 @@
    ("C-c n I" . denote-add-links)
    ("C-c n b" . bard/consult-buffer-notes)   ; notes buffer
    ("C-c n B" . bard/ibuffer-notes)          ; notes buffer but more
-   ("C-c n f" . bard/find-notes-file)        ; notes-find
-   ("C-c n g" . bard/search-notes-directory))) ; notes-grep
+   (:map dired-mode-map ; rename files in dired with denote structure
+         ("r" . denote-rename-file))))
 
 (use-package denote-org
   :ensure t
@@ -161,8 +161,7 @@
   (require 'bard-writing)
   :bind
   ("C-c n N" . denote-sequence)
-  ("C-c n D" . denote-sequence-dired)
-  ("C-c n <SPC>" . denote-sequence-region))
+  ("C-c n D" . denote-sequence-dired))
 
 (use-package denote-journal
   :ensure t
