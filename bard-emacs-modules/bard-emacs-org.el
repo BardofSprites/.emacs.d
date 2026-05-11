@@ -1,6 +1,7 @@
 (require 'org)
 (require 'ox)
 (require 'org-habit)
+(require 'org-crypt)
 
 (use-package org
   :defer nil
@@ -48,6 +49,11 @@
         ("z" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
         ("Z" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
 (setq org-ellipsis " ⤶")
+
+(use-package org-crypt
+  :config
+  (setq org-crypt-key "develop.bard@gmail.com")
+  (org-crypt-use-before-save-magic))
 
 (setq org-startup-indented t
       org-startup-folded 'showeverything

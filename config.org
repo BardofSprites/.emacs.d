@@ -1289,6 +1289,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
   (require 'org)
   (require 'ox)
   (require 'org-habit)
+  (require 'org-crypt)
 #+end_src
 
 *** Main Configuration
@@ -1344,6 +1345,14 @@ For a long time I really struggled with Emacs tab completion. It still only kind
           ("z" . "src emacs-lisp :tangle FILENAME") ; tangle without making dir, below makes dir
           ("Z" . "src emacs-lisp :tangle FILENAME :mkdirp yes")))
   (setq org-ellipsis " ⤶")
+#+end_src
+
+*** Encrypting org entries
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
+  (use-package org-crypt
+    :config
+    (setq org-crypt-key "develop.bard@gmail.com")
+    (org-crypt-use-before-save-magic))
 #+end_src
 
 *** Making org mode look nice
