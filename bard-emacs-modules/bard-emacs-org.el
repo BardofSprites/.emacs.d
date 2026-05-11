@@ -155,18 +155,16 @@
           "Appointments" "General")
          "* %?\n%^t"
          :time-prompt t)
-        ;; ("s" "Basic Statistics" entry
-        ;;  (file+headline
-        ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
-        ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Statistics\n:END:\n*** Front\n %?\n*** Back\n\n")
-        ;; ("S" "Cloze Statistics" entry
-        ;;  (file+headline
-        ;;   "~/Notes/denote/20240830T215644--statistics-flashcards__anki_stats.org" "Unsorted")
-        ;;  "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Cloze\n:ANKI_DECK: Statistics\n:END:\n*** Text\n %?\n*** Hooray\n\n")
-        ("c" "Basic Chemistry" entry
-         (file+headline
-          "~/Notes/denote/20251019T175402--chemistry-flashcards__anki_chem.org" "Unsorted")
-         "** %U %^g\n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic\n:ANKI_DECK: Chemistry\n:END:\n*** Front\n%?\n*** Back\n\n")
+        ("d" "devlog entry" entry
+         (file+olp+datetree "~/Notes/denote/20260511T105305--development-log__programming.org")
+         "* %u - %^{Project}\n%?"
+         :tree-type month)
+        ("s" "self learning task" plain
+         (file+olp
+          "~/Notes/denote/20251202T154611--self-learning-agenda__topic.org"
+          "Inbox")
+         "- [ ] %?"
+         :empty-lines-after 1)
         ("n" "common place note" entry
          (file "~/Notes/denote/20251023T182240--common-place-notes__topic.org")
          "* %^{Source}\n#+BEGIN_QUOTE\n%?\n#+END_QUOTE")

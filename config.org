@@ -1461,6 +1461,10 @@ For a long time I really struggled with Emacs tab completion. It still only kind
             "Appointments" "General")
            "* %?\n%^t"
            :time-prompt t)
+          ("d" "devlog entry" entry
+           (file+olp+datetree "~/Notes/denote/20260511T105305--development-log__programming.org")
+           "* %u - %^{Project}\n%?"
+           :tree-type month)
           ("s" "self learning task" plain
            (file+olp
             "~/Notes/denote/20251202T154611--self-learning-agenda__topic.org"
