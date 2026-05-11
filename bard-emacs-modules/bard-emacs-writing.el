@@ -291,6 +291,33 @@
    ("<f9>" . logos-focus-mode)
    ("C-x n n" . logos-narrow-dwim)))
 
+(use-package typst-ts-mode
+  :ensure t
+  :hook (typst-ts-mode . eglot-ensure)
+  :config
+  (add-to-list 'treesit-language-source-alist
+               '(typst "https://github.com/uben0/tree-sitter-typst")))
+
+;; Tinymist for LSP
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(typst-ts-mode "tinymist")))
+
+
+(use-package typst-preview
+  :ensure t
+  :init
+  (setq typst-preview-autostart t)
+  (setq typst-preview-open-browser-automatically t)
+  :custom
+  (setq typst-preview-browser "zen"
+        typst-preview-invert-colors "never"
+        typst-preview-executable "tinymist"
+        typst-preview-partial-rendering t)
+  ;; :config
+  ;; (define-key typst-preview-mode-map (kbd "C-c C-j") 'typst-preview-send-position)
+  )
+
 (use-package citar
   :ensure t
   :bind
@@ -340,5 +367,9 @@
   url          = {$10},
   file         = {PDF:%s:application/pdf},
 }" file))))
+
+(use-package citar-typst
+  :ensure t
+  :hook (typst-ts-mode . citar-typst-mode))
 
 (provide 'bard-emacs-writing)
