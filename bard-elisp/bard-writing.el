@@ -38,11 +38,10 @@
   ("C-c n f" . consult-denote-find))
 
 (defvar bard/class-dirs
-  '(("CSE 130 " . "~/Documents/Uni/SPRING2026-CSE 130/")
-    ("CSE 310 " . "~/Documents/Uni/SPRING2026-CSE 310/")
-    ("ENGR 111" . "~/Documents/Uni/SPRING2026-ENGR 111/")
-    ("MATH 206" . "~/Documents/Uni/SPRING2026-MATH 206/")
-    ("PHYS 298" . "~/Documents/Uni/SPRING2026-PHYS 298/"))
+  '(("COMM 111" . "~/Documents/Uni/SUMMER2026-COMM 111/")
+    ("CSE 220" . "~/Documents/Uni/SUMMER2026-CSE 220/")
+    ("PHYS 296" . "~/Documents/Uni/SUMMER2026-PHYS 296/")
+    ("PHYS 299" . "~/Documents/Uni/SUMMER2026-PHYS 299/"))
   "Mapping of class names to their document directories.")
 
 (defvar bard/uni-notes-file "~/Notes/denote/uni.org"
