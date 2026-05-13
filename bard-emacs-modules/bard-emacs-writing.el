@@ -309,7 +309,7 @@
   :init
   (setq typst-preview-autostart t)
   (setq typst-preview-open-browser-automatically t)
-  :custom
+  :config
   (setq typst-preview-browser "zen"
         typst-preview-invert-colors "never"
         typst-preview-executable "tinymist"
