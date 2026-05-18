@@ -61,9 +61,9 @@
 
 (use-package flycheck
   :ensure t
-  :config
-  (setq flycheck-disabled-checkers '(org-lint))
-  (global-flycheck-mode t))
+  :init (global-flycheck-mode 1)
+  :custom
+  (flycheck-disabled-checkers '(org-lint)))
 
 ;; Version control
 

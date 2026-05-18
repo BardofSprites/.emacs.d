@@ -21,8 +21,8 @@
         org-outline-path-complete-in-steps nil
         org-goto-max-level '2)
   (setq org-id-track-globally nil)
+  (setq org-id-search-archives nil)
   (setq org-special-ctrl-a/e t)
-  (setq org-id-track-globally nil)
   (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 
 (setq org-archive-location "~/Notes/denote/20240328T215840--archive__self.org::* Archive")
