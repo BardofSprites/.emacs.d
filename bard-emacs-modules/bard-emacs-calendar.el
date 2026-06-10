@@ -54,6 +54,8 @@
 (global-set-key (kbd "<f1>") 'bard/default-agenda)
 (global-set-key (kbd "M-<f1>") 'bard/choose-agenda)
 
+(global-set-key (kbd "C-c a") 'org-agenda)
+
 (setq org-agenda-include-diary t)
 (setq org-agenda-custom-commands
       `(("D" "Daily agenda and top priority tasks"
@@ -72,6 +74,19 @@
                       (org-deadline-warning-days 0)
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                       (org-agenda-overriding-header "Upcoming this week \n")))))
+        ("K" "Kanban board for projects"
+         ((todo "TODO"
+                ((org-agenda-files '("~/Notes/denote/kanban.org"))
+                 (org-agenda-overriding-header "Backlog")
+                 (org-agenda-sorting-strategy '(category-up))))
+          (todo "INPROG"
+                ((org-agenda-files '("~/Notes/denote/kanban.org"))
+                 (org-agenda-overriding-header "In Progress")
+                 (org-agenda-sorting-strategy '(category-up))))
+          (todo "DONE"
+                ((org-agenda-files '("~/Notes/denote/kanban.org"))
+                 (org-agenda-overriding-header "Completed projects")
+                 (org-agenda-sorting-strategy '(category-up))))))
         ("Y" "Yearly view for all tasks"
          ((agenda "" ((org-agenda-span 365)
                       (org-deadline-warning-days 2)
