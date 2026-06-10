@@ -2528,7 +2528,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :bind
     ("C-c n c" . citar-open)
     :config
-    (setq citar-bibliography '("~/Documents/bib/references.bib"))
+    (setq citar-bibliography '("~/Documents/bib/My Library.bib"))
     (setq org-cite-global-bibliography citar-bibliography
           org-cite-insert-processor 'citar
           org-cite-follow-processor 'citar
@@ -2536,6 +2536,14 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
 
     (setq citar-notes-paths '("~/Notes/denote"))
     (setq citar-library-paths '("~/Documents/Research Articles/"))
+
+    (defun bard/citar-open-pdf-zathura (file)
+      "Open PDF FILE in Zathura."
+      (start-process "zathura" nil "zathura" file))
+
+    (setq citar-file-open-functions '(("html" . citar-file-open-external)
+                                      ("pdf" . bard/citar-open-pdf-zathura)
+                                      (t . find-file)))
     ;; (setq citar-file-open-functions 'find-file)
     :hook
     (org-mode . citar-capf-setup)
