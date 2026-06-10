@@ -51,7 +51,17 @@
   :config
   (pdf-tools-install)
   (add-to-list 'pdf-tools-enabled-modes #'pdf-view-themed-minor-mode)
-  (add-to-list 'pdf-tools-enabled-modes #'pdf-view-roll-minor-mode))
+  (add-to-list 'pdf-tools-enabled-modes #'pdf-view-roll-minor-mode)
+  (defun bard/open-pdf-externally ()
+    "Open current pdf file in Zathura."
+    (interactive)
+    (start-process "zathura" nil "zathura"
+                   "--page" (number-to-string (pdf-view-current-page))
+                   (buffer-file-name)))
+
+  :bind
+  (:map pdf-view-mode-map
+        ("&" . bard/open-pdf-externally)))
 
 (use-package bard-media
   :ensure nil
