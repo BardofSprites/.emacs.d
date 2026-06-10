@@ -1236,6 +1236,21 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     (:map pdf-view-mode-map
           ("&" . bard/open-pdf-externally)))
 #+end_src
+
+*** Epub reader (~nov~)
+I use this package in tangent with [[https://github.com/nobiot/org-remark][org-remark]] to take notes on books as I am reading them.
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-media.el :mkdirp yes
+  (use-package nov
+    :ensure t
+    :after org-remark
+    :config
+    (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+    :hook
+    (nov-mode . logos-focus-mode)
+    :bind
+    (:map nov-mode-map
+          ("a" . org-remark-mark)
+          ("o" . org-remark-open)))
 #+end_src
 
 *** Custom functions
@@ -2388,7 +2403,14 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :custom
     (org-roam-ui-open-on-start nil))
 #+end_src
-
+*** Org mode annotations in other modes (~org-remark~)
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
+  (use-package org-remark
+    :ensure t
+    :config
+    (with-eval-after-load 'nov
+      (org-remark-nov-mode t)))
+#+end_src
 *** Focused writing environment
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
   ;; Center line scrolling for focused writing

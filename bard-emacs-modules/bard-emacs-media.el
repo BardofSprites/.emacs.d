@@ -63,6 +63,18 @@
   (:map pdf-view-mode-map
         ("&" . bard/open-pdf-externally)))
 
+(use-package nov
+  :ensure t
+  :after org-remark
+  :config
+  (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+  :hook
+  (nov-mode . logos-focus-mode)
+  :bind
+  (:map nov-mode-map
+        ("a" . org-remark-mark)
+        ("o" . org-remark-open)))
+
 (use-package bard-media
   :ensure nil
   :config

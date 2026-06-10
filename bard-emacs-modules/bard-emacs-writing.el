@@ -215,6 +215,12 @@
   :custom
   (org-roam-ui-open-on-start nil))
 
+(use-package org-remark
+  :ensure t
+  :config
+  (with-eval-after-load 'nov
+    (org-remark-nov-mode t)))
+
 ;; Center line scrolling for focused writing
 (use-package emacs
   :config
