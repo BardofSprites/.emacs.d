@@ -88,7 +88,9 @@
   (setq eww-use-external-browser-for-content-type
         "\\`\\(video/\\|audio\\)")
   :bind
-  ("C-c w" . eww))
+  ("C-c w" . eww)
+  :hook
+  (eww-mode . logos-focus-mode))
 
 (provide 'bard-emacs-web)
 ;;; bard-emacs-web.el ends here
