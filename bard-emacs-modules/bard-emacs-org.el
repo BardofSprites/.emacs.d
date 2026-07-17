@@ -1,10 +1,5 @@
-(require 'org)
-(require 'ox)
-(require 'org-habit)
-(require 'org-crypt)
-
 (use-package org
-  :defer nil
+  :defer t
   :bind
   (:map org-mode-map
         ("C-M-a" . backward-paragraph)
@@ -22,6 +17,7 @@
         org-goto-max-level '2)
   (setq org-id-track-globally nil)
   (setq org-id-search-archives nil)
+  (setq org-tags-column 0)
   (setq org-special-ctrl-a/e t)
   (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 
@@ -63,11 +59,11 @@
       org-list-allow-alphabetical t
       org-insert-heading-respect-content t)
 
-(use-package org-bullets
-  :ensure t
-  :hook (org-mode . org-bullets-mode)
-  :config
-  (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
+;; (use-package org-bullets
+;;   :ensure t
+;;   :hook (org-mode . org-bullets-mode)
+;;   :config
+;;   (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
@@ -86,12 +82,6 @@
 
 (use-package auctex
   :ensure t)
-
-(use-package cdlatex
-  :ensure t
-  :hook (LaTeX-mode . turn-on-cdlatex)
-  :bind (:map cdlatex-mode-map
-              ("<tab>" . cdlatex-tab)))
 
 ;; latex editing niceness
 (use-package org-fragtog
@@ -146,9 +136,9 @@
         ("upquote" "false")))
 
 (setq org-capture-bookmark nil
-      org-id-link-to-org-use-id t)
+      org-id-link-to-org-use-id 'create-if-interactive)
 
-(require 'org-protocol)
+;; (require 'org-protocol)
 (setq org-capture-templates
       '(("t" "task" entry
          (file+olp
@@ -195,22 +185,62 @@
 ;; copy/paste images
 (use-package org-download
   :after org
-  :defer nil
   :ensure t
   :custom
   (org-download-method 'directory)
   (org-download-image-dir "~/Notes/denote/Images")
   (org-download-heading-lvl 0)
   (org-download-timestamp "org_%Y%m%d-%H%M%S_")
-  (org-download-screenshot-method "xclip -selection clipboard -t image/png -o > '%s'")
+  (org-download-screenshot-method "wpaste -t image/png > '%s'")
   :bind
-  ("C-M-y" . org-download-screenshot)
-  :config
-  (require 'org-download))
+  ("C-M-y" . org-download-screenshot))
 
 ;; pdf notes
 (use-package org-noter
-  :ensure t)
+  :ensure t
+  :commands (org-noter))
+
+(use-package org-pdftools
+  :ensure t
+  :after org-noter
+  :defer t
+  :commands (org-pdftools-setup-link)
+  :hook (org-mode . org-pdftools-setup-link))
+
+(use-package org-noter-pdftools
+  :ensure t
+  :after org-noter
+  :defer t
+  :config
+  ;; Add a function to ensure precise note is inserted
+  (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                   (not org-noter-insert-note-no-questions)
+                                                 org-noter-insert-note-no-questions))
+           (org-pdftools-use-isearch-link t)
+           (org-pdftools-use-freepointer-annot t))
+       (org-noter-insert-note (org-noter--get-precise-info)))))
+
+  ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+  (defun org-noter-set-start-location (&optional arg)
+    "When opening a session with this document, go to the current location.
+With a prefix ARG, remove start location."
+    (interactive "P")
+    (org-noter--with-valid-session
+     (let ((inhibit-read-only t)
+           (ast (org-noter--parse-root))
+           (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+       (with-current-buffer (org-noter--session-notes-buffer session)
+         (org-with-wide-buffer
+          (goto-char (org-element-property :begin ast))
+          (if arg
+              (org-entry-delete nil org-noter-property-note-location)
+            (org-entry-put nil org-noter-property-note-location
+                           (org-noter--pretty-print-location location))))))))
+  (with-eval-after-load 'pdf-annot
+    (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
 ;; links
 (use-package org-cliplink

@@ -36,18 +36,20 @@
       (error "yt-dlp or youtube-dl is not installed or not in PATH"))
     (unless (string-match-p "^https?://" url)
       (error "Current track is not a valid video URL"))
-
-    (let ((cmd (format "%s -o \"%s\" \"%s\""
-                       downloader output-template url)))
-      (message "Downloading video from: %s" url)
-      (let ((exit-code (shell-command cmd)))
-        (if (not (eq exit-code 0))
-            (error "Download failed, see *Messages* for details")
-          ;; Move the downloaded file
-          (let* ((downloaded-file (car (directory-files default-directory t ".*\\(mp4\\|mkv\\|webm\\)$" 'time)))
-                 (target-path (expand-file-name (file-name-nondirectory downloaded-file) destination)))
-            (rename-file downloaded-file target-path t)
-            (message "Video saved to: %s" target-path)))))))
+    (message "Downloading video from: %s" url)
+    (make-process
+     :name "emms-yt-dlp"
+     :buffer "*emms-yt-dlp*"
+     :command (list downloader "-o" output-template url)
+     :sentinel (lambda (proc event)
+                 (cond
+                  ((string= event "finished\n")
+                   (let* ((downloaded-file (car (directory-files default-directory t ".*\\(mp4\\|mkv\\|webm\\)$" 'time)))
+                          (target-path (expand-file-name (file-name-nondirectory downloaded-file) destination)))
+                     (rename-file downloaded-file target-path t)
+                     (message "Video saved to: %s" target-path)))
+                  ((string-match-p "exited abnormally" event)
+                   (message "Download failed! See *emms-yt-dlp* for details")))))))
 
 (defun bard/image-browser-choose (directory)
   "Open nsxiv in thumbnail mode on DIRECTORY.

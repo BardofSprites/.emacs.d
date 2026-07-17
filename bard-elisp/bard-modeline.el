@@ -338,7 +338,7 @@ face.  Let other buffers have no face.")
                     ((derived-mode-p 'prog-mode) "λ")
                     ((derived-mode-p 'term-mode) ">_")
                     ((derived-mode-p 'emms-playlist-mode) "♪")
-                    (t "◦"))))
+                    (t "δ"))))
     (propertize indicator 'face 'shadow)))
 
 (defun prot-modeline-major-mode-name ()
@@ -599,6 +599,21 @@ Display the indicator only on the focused window's mode line.")
   "Mode line construct displaying `mode-line-misc-info'.
 Specific to the current window's mode line.")
 
+(defvar-local prot-modeline-frame-name
+    '(:eval
+      (when-let* ((_ (mode-line-window-selected-p))
+                  (current-frame (selected-frame))
+                  (_ (frame-live-p current-frame))
+                  (parameters (frame-parameters))
+                  (name (capitalize (alist-get 'name parameters))))
+        (format "%s %s "
+                "@"
+                (propertize name
+                            'face 'prot-modeline-indicator-blue
+                            'mouse-face 'mode-line-highlight
+                            'help-echo (format "Current frame name\nmouse-1: `buffer-menu'")))))
+  "Mode line construct to display the current frame name.")
+
 ;;;; Risky local variables
 
 ;; NOTE 2023-04-28: The `risky-local-variable' is critical, as those
@@ -611,6 +626,7 @@ Specific to the current window's mode line.")
                      bard-modeline-org-clock
                      prot-modeline-buffer-status
                      prot-modeline-window-dedicated-status
+                     prot-modeline-frame-name
                      prot-modeline-evil
                      prot-modeline-buffer-identification
                      prot-modeline-major-mode

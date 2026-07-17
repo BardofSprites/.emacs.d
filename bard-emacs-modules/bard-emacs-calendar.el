@@ -47,7 +47,7 @@
 
 (use-package org
   ;; not really show what this does anymore
-  :demand t
+  :demand nil
   :hook
   ((org-clock-out . bard/org-clock-update-mode-line)))
 

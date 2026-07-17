@@ -51,12 +51,24 @@
 
 (use-package yasnippet-capf
   :ensure t
-  :after cape
+  :after (cape yasnippet)
+  :demand t
   :config
-  (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+  (defun bard/cape-yas-setup ()
+    (let* ((capfs (delq t (append completion-at-point-functions '(yasnippet-capf))))
+           (super (apply #'cape-capf-super capfs)))
+      (setq-local completion-at-point-functions (list super t))))
+  (add-hook 'prog-mode-hook #'bard/cape-yas-setup)
+  (add-hook 'text-mode-hook #'bard/cape-yas-setup)
+  (add-hook 'typst-ts-mode-hook #'bard/cape-yas-setup))
 
 (use-package cdlatex
-  :hook ((cdlatex-tab . yas-expand)
+  :ensure t
+  :defer t
+  :bind (:map cdlatex-mode-map
+              ("<tab>" . cdlatex-tab))
+  :hook ((LaTeX-mode . turn-on-cdlatex)
+         (cdlatex-tab . yas-expand)
          (cdlatex-tab . cdlatex-in-yas-field))
   :config
   (use-package yasnippet
@@ -111,8 +123,10 @@
           ))
 
   (setq denote-templates
-        '((default . "Related to — ")
-          (todo . bard/denote-todo-template)))
+        '((blank   . "")
+          (default . "Related to — ")
+          (todo    . bard/denote-todo-template)
+          (typst-lecture . "#import \"./typst-setups/lecture.typ\": *\n\n#show: lecture.with(\n    title: \"\",\n    class: \"\",\n    author: \"Daniel Pinkston\",\n)\n\n")))
 
   (setq denote-save-buffers t)
   (setq denote-prompts '(title keywords))
@@ -153,15 +167,8 @@
   :ensure t
   :config
   (setq denote-silo-directories '("~/Notes/denote"
-                                  "~/Notes/Old Notes/")))
-
-(use-package denote-sequence
-  :ensure t
-  :config
-  (require 'bard-writing)
-  :bind
-  ("C-c n N" . denote-sequence)
-  ("C-c n D" . denote-sequence-dired))
+                                  "~/Notes/Old Notes/"
+                                  "~/Notes/personal/")))
 
 (use-package denote-journal
   :ensure t
@@ -170,7 +177,7 @@
   :config
   (setq denote-journal-directory "~/Notes/denote/journal/")
 
-  (setq denote-journal-title-format "Daily Tasks and Notes"))
+  (setq denote-journal-title-format 'day-date-month-year-24h))
 
 (use-package denote-roam
   :ensure nil
@@ -179,7 +186,7 @@
   ("C-c n i" . denote-roam-insert-or-create-node)  ; node insert
   ("C-c n o" . denote-roam-find-or-create-node)    ; node open
   :custom
-  (denote-roam-include-journal nil)
+  (denote-roam-include-journal t)
   (denote-roam-directory "~/Notes/denote")
   :config
   (denote-roam-mode t))
@@ -199,8 +206,28 @@
        (tags                  "main")
        (t                     "root"))))
 
+  ;; (cl-defmethod org-roam-node-denote-id ((node org-roam-node))
+  ;;   "Return the denote timestamp ID from NODE's filename, e.g. 20251202T154611."
+  ;;   (when-let ((file (org-roam-node-file node)))
+  ;;     (and (string-match "\\([0-9]\\{8\\}T[0-9]\\{6\\}\\)" file)
+  ;;          (match-string 1 file))))
+
+  (cl-defmethod org-roam-node-denote-id ((node org-roam-node))
+    "Return reformatted denote timestamp from NODE's filename as YYYY-MM-DD HH:MM."
+    (when-let ((file (org-roam-node-file node)))
+      (and (string-match "\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)T\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)" file)
+           (format "%s-%s-%s %s:%s"
+                   (match-string 1 file)   ; YYYY
+                   (match-string 2 file)   ; MM
+                   (match-string 3 file)   ; DD
+                   (match-string 4 file)   ; HH
+                   (match-string 5 file))))) ; MM
+
+  ;; depends on denote faces :P
   (setq org-roam-node-display-template
-        (concat "${type:10} ${title:*} " (propertize "${tags:*}" 'face 'org-tag)))
+        (concat (propertize "${denote-id:20}" 'face 'denote-faces-date)
+                (propertize "${title:60} " 'face 'denote-faces-title)
+                (propertize "${tags:*}" 'face 'denote-faces-keywords)))
 
   (setq org-roam-db-node-include-function
         (lambda ()
@@ -219,7 +246,13 @@
   :ensure t
   :config
   (with-eval-after-load 'nov
-    (org-remark-nov-mode t)))
+    (org-remark-nov-mode t))
+  (with-eval-after-load 'eww
+    (org-remark-eww-mode t))
+  :bind
+  (:map eww-mode-map
+        ("m" . org-remark-mark)
+        ("o" . org-remark-open)))
 
 ;; Center line scrolling for focused writing
 (use-package emacs

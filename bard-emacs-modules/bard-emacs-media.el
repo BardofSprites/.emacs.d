@@ -1,6 +1,6 @@
 (use-package emms
   :ensure t
-  ;; :demand t
+  :defer t
   :bind
   (:map emms-playlist-mode-map
         ("A" . emms-add-directory)
@@ -45,6 +45,10 @@
   (setq bard/emms-playlist-format 'm3u)
   (setq bard/watch-later-file "~/Videos/watch-later.m3u")
   )
+
+(use-package yeetube
+  :ensure t
+  :defer 30)
 
 (use-package pdf-tools
   :ensure t

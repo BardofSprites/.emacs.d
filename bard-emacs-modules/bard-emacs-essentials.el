@@ -1,3 +1,8 @@
+(use-package grep
+  :ensure t
+  :config
+  (setq grep-use-headings t))
+
 (use-package wgrep
   :ensure t
   :bind
@@ -32,13 +37,6 @@
    ("C-c s a" . substitute-target-above-point)
    ("C-c s d" . substitute-target-in-defun)
    ("C-c s s" . substitute-target-in-buffer)))
-
-(use-package move-text
-  :ensure t
-  :bind
-  (:map prog-mode-map
-        ("M-p" . move-text-up)
-        ("M-n" . move-text-down)))
 
 ;; Desktop mode/session saving
 (setq desktop-path '("~/.emacs.d/desktop")
@@ -154,11 +152,17 @@
   (bookmark-bmenu-mode-hook . hl-line-mode)
   :config
   (setq bookmark-fringe-mark nil)
-  (setq bookmark-save-flag 1))
+  (setq bookmark-save-flag 1)
+  :bind ; C-c m for (book)-*m*ark
+  ("C-c m" . bookmark-bmenu-list))
 
 (require 'server)
 (setq server-client-instructions nil)
 (unless (server-running-p)
   (server-start))
+
+(defun bard/recording-mode ()
+  "A minor mode for recording Emacs videos."
+  )
 
 (provide 'bard-emacs-essentials)

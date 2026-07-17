@@ -29,8 +29,9 @@
   :config
   (setq display-buffer-alist
         `(;; no window
-          ("\\`\\*Async Shell Command\\*\\'"
-           (display-buffer-no-window))
+          ("\\`\\*\\(Async Shell Command\\|typst-ts-compilation\\|Flycheck error messages\\)\\*\\'"
+           (display-buffer-no-window)
+           (allow-no-window . t))
           ("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
            (display-buffer-no-window)
            (allow-no-window . t))
@@ -127,6 +128,27 @@
          ("C-x w c" . clone-indirect-buffer-other-window))
   :hook (after-init . undelete-frame-mode))
 
+(defun bard/rename-frame (frame name)
+  "Rename FRAME to NAME."
+  (interactive
+   (let* ((frames (frame-list))
+          (frame (completing-read
+                  "Frame: "
+                  (mapcar (lambda (f)
+                            (frame-parameter f 'name))
+                          frames)
+                  nil t))
+          (frame-obj (seq-find
+                       (lambda (f)
+                         (equal (frame-parameter f 'name) frame))
+                       frames)))
+     (list frame-obj
+           (read-string
+            (format "Rename `%s' to: " frame)
+            frame))))
+  (modify-frame-parameters frame
+                           (list (cons 'name name))))
+
 (use-package beframe
   :ensure t
   :config
@@ -188,4 +210,5 @@
   :ensure nil
   :config
   (setq ibuffer-default-sorting-mode 'major-mode)
-  (ibuffer-auto-mode t))
+  :hook
+  (ibuffer-mode . ibuffer-auto-mode))

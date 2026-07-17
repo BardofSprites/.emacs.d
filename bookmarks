@@ -2,39 +2,23 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("dotemacs"
+(("eshell-wallpaper"
+ (location .
+           #("~/Pictures/wallpaper/" 0 21
+             (insert-in-front-hooks
+              (eshell--mark-as-output eshell--mark-yanked-as-output)
+              rear-nonsticky
+              (field)
+              front-sticky
+              (field)
+              field command-output)))
+ (handler . eshell-bookmark-jump))
+("dotemacs"
  (filename . "~/.emacs.d/config.org")
  (front-context-string . "#+title: My Lite")
  (rear-context-string)
  (position . 1)
  (last-modified 27095 46704 658997 868000))
-("PHYS 298 Notes"
- (filename . "~/Notes/boox/School/Spring 2026/PHYS 298/PHYS 298.pdf")
- (position . 1)
- (last-modified 26978 37501 964748 237000)
- (page . 1)
- (slice)
- (size . fit-width)
- (origin 0.0 . 0.0)
- (handler . pdf-view-bookmark-jump-handler))
-("MATH 206 Notes"
- (filename . "~/Notes/boox/School/Spring 2026/MATH 206/MATH 206.pdf")
- (position . 1)
- (last-modified 26978 37494 315193 243000)
- (page . 1)
- (slice)
- (size . fit-width)
- (origin 0.0 . 0.0)
- (handler . pdf-view-bookmark-jump-handler))
-("CSE 310 Notes"
- (filename . "~/Notes/boox/School/Spring 2026/CSE 310/CSE 310.pdf")
- (position . 1)
- (last-modified 26978 37481 624793 363000)
- (page . 1)
- (slice)
- (size . fit-width)
- (origin 0.0 . 0.0)
- (handler . pdf-view-bookmark-jump-handler))
 ("references bib"
  (filename . "~/Documents/bib/references.bib")
  (front-context-string)
@@ -77,12 +61,6 @@
  (rear-context-string)
  (position . 1)
  (last-modified 26109 60400 247785 79000))
-("operandi-startpage"
- (filename . "~/Code/operandi-startpage/index.html")
- (front-context-string . "	  <li> <a href=")
- (rear-context-string . "ark></h2>\n	<ul>\n")
- (position . 659)
- (last-modified 26092 50947 573541 911000))
 ("vivendi-startpage"
  (filename . "~/Code/vivendi-startpage/index.html")
  (front-context-string . "<!DOCTYPE html>\n")

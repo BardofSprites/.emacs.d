@@ -26,7 +26,8 @@
 ;; settings for windows
 (setq focus-follows-mouse t)
 
-(add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+(add-to-list 'default-frame-alist '(alpha . (98 . 98)))
+(add-to-list 'default-frame-alist '(undecorated . t))
 
 (setq initial-frame-alist default-frame-alist)
 
@@ -44,8 +45,7 @@
                   file-name-handler-alist bard-emacs--file-name-handler-alist
                   vc-handled-backends bard-emacs--vc-handled-backends)))
 
-;; Package cache
-(setq package-enable-at-startup t)
-
-(unless package-archive-contents
-  (package-refresh-contents))
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (profiler-stop)
+            (profiler-report)))

@@ -3,6 +3,7 @@
 ;;; Mode line
 (setq mode-line-compact nil) ; Emacs 28
 (setq mode-line-right-align-edge 'right-margin)
+(setq prot-modeline-show-frame-name (alist-get 'undecorated initial-frame-alist))
 (setq-default mode-line-format
               '("%e"
                 prot-modeline-kbd-macro
@@ -14,7 +15,10 @@
                 bard-evil-state-indicator
                 " "
                 prot-modeline-buffer-identification
-                "  "
+                " "
+                prot-modeline-frame-name
+                " "
+
                 prot-modeline-major-mode
                 prot-modeline-process
                 "  "

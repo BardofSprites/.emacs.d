@@ -13,6 +13,7 @@
 
 (use-package haskell-mode
   :ensure t
+  :defer t
   :config
   (setq haskell-interactive-popup-errors nil))
 
@@ -23,15 +24,6 @@
                           (java-mode . "java")
                           (awk-mode . "awk"))))
 
-(use-package ggtags
-  :ensure t
-  :config
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                (ggtags-mode 1)
-                (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))))
-
 (use-package compile
   :ensure nil
   :defer 2
@@ -41,29 +33,28 @@
         compilation-auto-jump-to-first-error nil))
 
 (use-package clojure-mode
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package cider
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package sly
   :ensure t
+  :defer t
   :config
   (setq inferior-lisp-program (executable-find "sbcl")))
 
 (use-package geiser
-  :ensure t)
+  :ensure t
+  :defer t)
 
 (use-package geiser-gauche
-  :ensure t)
+  :ensure t
+  :defer t)
 
 ;; parens packages
-
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode 1)
-  :custom
-  (flycheck-disabled-checkers '(org-lint)))
 
 ;; Version control
 

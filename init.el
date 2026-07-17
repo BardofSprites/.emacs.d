@@ -100,7 +100,6 @@ making an abbreviation to a function."
 (require 'bard-emacs-media)
 (require 'bard-emacs-eshell)
 (require 'bard-emacs-essentials)
-;; (require 'bard-emacs-keyboard)
 (require 'bard-emacs-modeline)
 (require 'bard-emacs-org)
 (require 'bard-emacs-prog)

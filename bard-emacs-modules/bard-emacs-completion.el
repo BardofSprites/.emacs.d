@@ -14,6 +14,15 @@
     ;; only your current input.
     (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)))
 
+(use-package mct
+  :ensure t
+  :defer t
+  :config
+
+  (setq mct-hide-completion-mode-line nil
+        mct-live-completion t)
+  (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode))
+
 (use-package rfn-eshadow
   :ensure nil
   :hook (minibuffer-setup . cursor-intangible-mode)
@@ -110,7 +119,7 @@
   ("C-x r b" . consult-bookmark)
   ("M-g M-g" . consult-goto-line)
   ("C-x b" . consult-buffer)
-  ("M-s M-f" . consult-find)
+  ("M-s M-f" . consult-fd)
   ("M-s M-g" . consult-grep)
   ("M-s M-h" . consult-history)
   ("M-s M-y" . consult-yank-pop)

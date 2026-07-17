@@ -6,6 +6,7 @@
 #+latex_compiler: xelatex
 #+options: toc:t num:t
 #+LATEX_SRC_BLOCK_BACKEND: listings
+#+STARTUP: show2levels
 
 * Startup
 ** Early initialization
@@ -40,7 +41,8 @@ The ~early-init.el~ removes all the visual fluff like scrollbars and sets up ver
   ;; settings for windows
   (setq focus-follows-mouse t)
 
-  (add-to-list 'default-frame-alist '(alpha . (95 . 95)))
+  (add-to-list 'default-frame-alist '(alpha . (98 . 98)))
+  (add-to-list 'default-frame-alist '(undecorated . t))
 
   (setq initial-frame-alist default-frame-alist)
 
@@ -58,11 +60,10 @@ The ~early-init.el~ removes all the visual fluff like scrollbars and sets up ver
                     file-name-handler-alist bard-emacs--file-name-handler-alist
                     vc-handled-backends bard-emacs--vc-handled-backends)))
 
-  ;; Package cache
-  (setq package-enable-at-startup t)
-
-  (unless package-archive-contents
-    (package-refresh-contents))
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (profiler-stop)
+              (profiler-report)))
 #+end_src
 
 ** Initialization
@@ -169,7 +170,6 @@ The ~early-init.el~ removes all the visual fluff like scrollbars and sets up ver
   (require 'bard-emacs-media)
   (require 'bard-emacs-eshell)
   (require 'bard-emacs-essentials)
-  ;; (require 'bard-emacs-keyboard)
   (require 'bard-emacs-modeline)
   (require 'bard-emacs-org)
   (require 'bard-emacs-prog)
@@ -296,7 +296,7 @@ This is an emacs package that allows me to write flashcards in org mode. I talke
 
   (use-package org
     ;; not really show what this does anymore
-    :demand t
+    :demand nil
     :hook
     ((org-clock-out . bard/org-clock-update-mode-line)))
 #+end_src
@@ -385,7 +385,17 @@ This is an emacs package that allows me to write flashcards in org mode. I talke
       ;; only your current input.
       (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)))
 #+end_src
+*** Mct completion framework
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-completion.el :mkdirp yes
+  (use-package mct
+    :ensure t
+    :defer t
+    :config
 
+    (setq mct-hide-completion-mode-line nil
+          mct-live-completion t)
+    (add-hook 'completion-list-mode-hook #'consult-preview-at-point-mode))
+#+end_src
 *** Rfn eshadow
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-completion.el :mkdirp yes
   (use-package rfn-eshadow
@@ -506,7 +516,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     ("C-x r b" . consult-bookmark)
     ("M-g M-g" . consult-goto-line)
     ("C-x b" . consult-buffer)
-    ("M-s M-f" . consult-find)
+    ("M-s M-f" . consult-fd)
     ("M-s M-g" . consult-grep)
     ("M-s M-h" . consult-history)
     ("M-s M-y" . consult-yank-pop)
@@ -960,7 +970,16 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 #+end_src
 
 ** bard-emacs-essentials
-*** Writable grep buffers (wgrep)
+*** Grep
+**** Settings for Emacs grep
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
+  (use-package grep
+    :ensure t
+    :config
+    (setq grep-use-headings t))
+#+end_src
+
+**** Writable grep buffers (wgrep)
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
   (use-package wgrep
     :ensure t
@@ -1005,16 +1024,6 @@ For a long time I really struggled with Emacs tab completion. It still only kind
      ("C-c s a" . substitute-target-above-point)
      ("C-c s d" . substitute-target-in-defun)
      ("C-c s s" . substitute-target-in-buffer)))
-#+end_src
-
-*** Moving text around
-#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
-  (use-package move-text
-    :ensure t
-    :bind
-    (:map prog-mode-map
-          ("M-p" . move-text-up)
-          ("M-n" . move-text-down)))
 #+end_src
 
 *** Saving session with desktop
@@ -1149,7 +1158,9 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     (bookmark-bmenu-mode-hook . hl-line-mode)
     :config
     (setq bookmark-fringe-mark nil)
-    (setq bookmark-save-flag 1))
+    (setq bookmark-save-flag 1)
+    :bind ; C-c m for (book)-*m*ark
+    ("C-c m" . bookmark-bmenu-list))
 #+end_src
 
 *** Running emacs as server
@@ -1158,6 +1169,13 @@ For a long time I really struggled with Emacs tab completion. It still only kind
   (setq server-client-instructions nil)
   (unless (server-running-p)
     (server-start))
+#+end_src
+
+*** Recording mode
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-essentials.el :mkdirp yes
+  (defun bard/recording-mode ()
+    "A minor mode for recording Emacs videos."
+    )
 #+end_src
 
 *** Provide module
@@ -1170,7 +1188,7 @@ For a long time I really struggled with Emacs tab completion. It still only kind
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-media.el :mkdirp yes
   (use-package emms
     :ensure t
-    ;; :demand t
+    :defer t
     :bind
     (:map emms-playlist-mode-map
           ("A" . emms-add-directory)
@@ -1217,6 +1235,12 @@ For a long time I really struggled with Emacs tab completion. It still only kind
     )
 #+end_src
 
+*** YouTube browser (~yeetube~)
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-media.el :mkdirp yes
+  (use-package yeetube
+    :ensure t
+    :defer 30)
+#+end_src
 *** PDF viewer (~pdf-tools~)
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-media.el :mkdirp yes
   (use-package pdf-tools
@@ -1277,6 +1301,7 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
   ;;; Mode line
   (setq mode-line-compact nil) ; Emacs 28
   (setq mode-line-right-align-edge 'right-margin)
+  (setq prot-modeline-show-frame-name (alist-get 'undecorated initial-frame-alist))
   (setq-default mode-line-format
                 '("%e"
                   prot-modeline-kbd-macro
@@ -1288,7 +1313,10 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
                   bard-evil-state-indicator
                   " "
                   prot-modeline-buffer-identification
-                  "  "
+                  " "
+                  prot-modeline-frame-name
+                  " "
+
                   prot-modeline-major-mode
                   prot-modeline-process
                   "  "
@@ -1325,38 +1353,30 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 #+end_src
 
 ** bard-emacs-org
-*** Include required libraries
-#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
-  (require 'org)
-  (require 'ox)
-  (require 'org-habit)
-  (require 'org-crypt)
-#+end_src
-
 *** Main Configuration
-
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
-  (use-package org
-    :defer nil
-    :bind
-    (:map org-mode-map
-          ("C-M-a" . backward-paragraph)
-          ("C-M-e" . forward-paragraph)
-          ("C-c M-c" . count-words-region)
-          ("C-c C-M-c" . count-words)
-          ("C-c l" . org-id-get-create)
-          ("C-c j" . org-goto)
-          )
-    :bind
-    (("C-c c" . org-capture))
-    :config
-    (setq org-goto-interface 'outline-path-completion
-          org-outline-path-complete-in-steps nil
-          org-goto-max-level '2)
-    (setq org-id-track-globally nil)
-    (setq org-id-search-archives nil)
-    (setq org-special-ctrl-a/e t)
-    (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
+    (use-package org
+      :defer t
+      :bind
+      (:map org-mode-map
+            ("C-M-a" . backward-paragraph)
+            ("C-M-e" . forward-paragraph)
+            ("C-c M-c" . count-words-region)
+            ("C-c C-M-c" . count-words)
+            ("C-c l" . org-id-get-create)
+            ("C-c j" . org-goto)
+            )
+      :bind
+      (("C-c c" . org-capture))
+      :config
+      (setq org-goto-interface 'outline-path-completion
+            org-outline-path-complete-in-steps nil
+            org-goto-max-level '2)
+      (setq org-id-track-globally nil)
+      (setq org-id-search-archives nil)
+      (setq org-tags-column 0)
+      (setq org-special-ctrl-a/e t)
+      (setq safe-local-variable-values '((org-refile-targets (nil :maxlevel . 3)))))
 #+end_src
 
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
@@ -1406,11 +1426,11 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
         org-list-allow-alphabetical t
         org-insert-heading-respect-content t)
 
-  (use-package org-bullets
-    :ensure t
-    :hook (org-mode . org-bullets-mode)
-    :config
-    (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
+  ;; (use-package org-bullets
+  ;;   :ensure t
+  ;;   :hook (org-mode . org-bullets-mode)
+  ;;   :config
+  ;;   (setq org-bullets-bullet-list '("◉" "○" "●" "🞛" "◇" "◆")))
 
 #+end_src
 
@@ -1433,12 +1453,6 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 
   (use-package auctex
     :ensure t)
-
-  (use-package cdlatex
-    :ensure t
-    :hook (LaTeX-mode . turn-on-cdlatex)
-    :bind (:map cdlatex-mode-map
-                ("<tab>" . cdlatex-tab)))
 
   ;; latex editing niceness
   (use-package org-fragtog
@@ -1496,9 +1510,9 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 *** Org capture
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-org.el :mkdirp yes
   (setq org-capture-bookmark nil
-        org-id-link-to-org-use-id t)
+        org-id-link-to-org-use-id 'create-if-interactive)
 
-  (require 'org-protocol)
+  ;; (require 'org-protocol)
   (setq org-capture-templates
         '(("t" "task" entry
            (file+olp
@@ -1548,22 +1562,62 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
   ;; copy/paste images
   (use-package org-download
     :after org
-    :defer nil
     :ensure t
     :custom
     (org-download-method 'directory)
     (org-download-image-dir "~/Notes/denote/Images")
     (org-download-heading-lvl 0)
     (org-download-timestamp "org_%Y%m%d-%H%M%S_")
-    (org-download-screenshot-method "xclip -selection clipboard -t image/png -o > '%s'")
+    (org-download-screenshot-method "wpaste -t image/png > '%s'")
     :bind
-    ("C-M-y" . org-download-screenshot)
-    :config
-    (require 'org-download))
+    ("C-M-y" . org-download-screenshot))
 
   ;; pdf notes
   (use-package org-noter
-    :ensure t)
+    :ensure t
+    :commands (org-noter))
+
+  (use-package org-pdftools
+    :ensure t
+    :after org-noter
+    :defer t
+    :commands (org-pdftools-setup-link)
+    :hook (org-mode . org-pdftools-setup-link))
+
+  (use-package org-noter-pdftools
+    :ensure t
+    :after org-noter
+    :defer t
+    :config
+    ;; Add a function to ensure precise note is inserted
+    (defun org-noter-pdftools-insert-precise-note (&optional toggle-no-questions)
+      (interactive "P")
+      (org-noter--with-valid-session
+       (let ((org-noter-insert-note-no-questions (if toggle-no-questions
+                                                     (not org-noter-insert-note-no-questions)
+                                                   org-noter-insert-note-no-questions))
+             (org-pdftools-use-isearch-link t)
+             (org-pdftools-use-freepointer-annot t))
+         (org-noter-insert-note (org-noter--get-precise-info)))))
+
+    ;; fix https://github.com/weirdNox/org-noter/pull/93/commits/f8349ae7575e599f375de1be6be2d0d5de4e6cbf
+    (defun org-noter-set-start-location (&optional arg)
+      "When opening a session with this document, go to the current location.
+  With a prefix ARG, remove start location."
+      (interactive "P")
+      (org-noter--with-valid-session
+       (let ((inhibit-read-only t)
+             (ast (org-noter--parse-root))
+             (location (org-noter--doc-approx-location (when (called-interactively-p 'any) 'interactive))))
+         (with-current-buffer (org-noter--session-notes-buffer session)
+           (org-with-wide-buffer
+            (goto-char (org-element-property :begin ast))
+            (if arg
+                (org-entry-delete nil org-noter-property-note-location)
+              (org-entry-put nil org-noter-property-note-location
+                             (org-noter--pretty-print-location location))))))))
+    (with-eval-after-load 'pdf-annot
+      (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))
 
   ;; links
   (use-package org-cliplink
@@ -1595,6 +1649,7 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
   (use-package haskell-mode
     :ensure t
+    :defer t
     :config
     (setq haskell-interactive-popup-errors nil))
 #+end_src
@@ -1608,15 +1663,6 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
                             (java-mode . "java")
                             (awk-mode . "awk"))))
 
-  (use-package ggtags
-    :ensure t
-    :config
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                  (ggtags-mode 1)
-                  (setq-local imenu-create-index-function #'ggtags-build-imenu-index)))))
-
   (use-package compile
     :ensure nil
     :defer 2
@@ -1629,32 +1675,28 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 *** Lisp development
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
   (use-package clojure-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 
   (use-package cider
-    :ensure t)
+    :ensure t
+    :defer t)
 
   (use-package sly
     :ensure t
+    :defer t
     :config
     (setq inferior-lisp-program (executable-find "sbcl")))
 
   (use-package geiser
-    :ensure t)
+    :ensure t
+    :defer t)
 
   (use-package geiser-gauche
-    :ensure t)
+    :ensure t
+    :defer t)
 
   ;; parens packages
-#+end_src
-
-*** Catching errors
-#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-prog.el :mkdirp yes
-  (use-package flycheck
-    :ensure t
-    :init (global-flycheck-mode 1)
-    :custom
-    (flycheck-disabled-checkers '(org-lint)))
 #+end_src
 
 *** Version control
@@ -1703,10 +1745,10 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 
 *** Color theme
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
-  (use-package doric-themes
+  (use-package modus-themes
     :ensure t
     :config
-    (bard/select-theme 'doric-obsidian))
+    (bard/select-theme 'modus-vivendi))
 #+end_src
 
 *** Fonts
@@ -1769,6 +1811,7 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 #+end_src
 
 ** bard-emacs-ui
+*** Whitespace
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
   (use-package whitespace
     :ensure nil
@@ -1784,7 +1827,10 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
                              space-mark tab-mark))
     :hook
     (prog-mode . whitespace-mode))
+#+end_src
 
+*** Line numbers
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
   (use-package display-line-numbers
     :ensure nil
     :demand t
@@ -1809,6 +1855,7 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-ui.el :mkdirp yes
   (use-package keycast
     :ensure t
+    :defer t
     :commands (keycast-mode-line-mode keycast-header-line-mode keycast-tab-bar-mode keycast-log-mode)
     :init
     (setq keycast-mode-line-format "%2s%k%c%R")
@@ -1835,6 +1882,7 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
   ;;; IRC
   (use-package circe
     :ensure t
+    :defer t
     :config
     (setq auth-sources '("~/.authinfo.gpg"))
 
@@ -1860,14 +1908,25 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 
 *** RSS Feeds
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-web.el :mkdirp yes
+  (use-package elfeed-protocol
+    :ensure t
+    :after elfeed
+    :config
+    (setq elfeed-protocol-enabled-protocols '(fever))
+    (elfeed-protocol-enable))
+
   (use-package elfeed
     :ensure t
     :config
     (require 'bard-web)
-    (global-set-key (kbd "C-c r") 'elfeed)
     (setq elfeed-search-filter "+unread")
 
+    (setq elfeed-feeds '(("fever+https://bard@feeds.bardman.dev/fever/"
+                          :api-url "https://feeds.bardman.dev/fever/"
+                          :use-authinfo t)))
+
     :bind
+    ("C-c r" . elfeed)
     (:map elfeed-search-mode-map
           ;; C-p for play now
           ("C-c C-p" . bard/play-elfeed-video)
@@ -1877,19 +1936,10 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
           ("C-c C-w" . bard/add-video-watch-later)
           ;; F is for fetch
           ("F"       . elfeed-update)))
-
-  (use-package elfeed-org
-    :ensure t
-    :init
-    (elfeed-org)
-    :config
-    (setq rmh-elfeed-org-files (list "~/Notes/denote/feeds.org"
-                                     "~/Notes/denote/youtube.org")))
 #+end_src
 
 *** Web Browsing (EWW and external)
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-web.el :mkdirp yes
-
   (use-package eww
     :defer t
     :config
@@ -1908,6 +1958,16 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
     (setq shr-max-width fill-column)
     (setq shr-discard-aria-hidden t)
     (setq shr-cookie-policy nil)
+
+    (defun skip-empty-li (shrtagli dom)
+      (when (cddr dom)
+        (funcall shrtagli dom)))
+
+    ;; remove empty <li> tags, specifically for wiktionary
+    ;; https://nickdrozd.github.io/2022/12/19/wiktionary-advice.html
+    (advice-add
+     'shr-tag-li :around
+     #'skip-empty-li)
 
     ;; eww
     (setq eww-search-prefix "https://duckduckgo.com/html/?q=")
@@ -1965,8 +2025,9 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :config
     (setq display-buffer-alist
           `(;; no window
-            ("\\`\\*Async Shell Command\\*\\'"
-             (display-buffer-no-window))
+            ("\\`\\*\\(Async Shell Command\\|typst-ts-compilation\\|Flycheck error messages\\)\\*\\'"
+             (display-buffer-no-window)
+             (allow-no-window . t))
             ("\\`\\*\\(Warnings\\|Compile-Log\\|Org Links\\)\\*\\'"
              (display-buffer-no-window)
              (allow-no-window . t))
@@ -2067,6 +2128,29 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
            ("C-x w c" . clone-indirect-buffer-other-window))
     :hook (after-init . undelete-frame-mode))
 #+end_src
+**** Renaming frame
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (defun bard/rename-frame (frame name)
+    "Rename FRAME to NAME."
+    (interactive
+     (let* ((frames (frame-list))
+            (frame (completing-read
+                    "Frame: "
+                    (mapcar (lambda (f)
+                              (frame-parameter f 'name))
+                            frames)
+                    nil t))
+            (frame-obj (seq-find
+                         (lambda (f)
+                           (equal (frame-parameter f 'name) frame))
+                         frames)))
+       (list frame-obj
+             (read-string
+              (format "Rename `%s' to: " frame)
+              frame))))
+    (modify-frame-parameters frame
+                             (list (cons 'name name))))
+#+end_src
 
 **** Beframe
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
@@ -2137,7 +2221,8 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :ensure nil
     :config
     (setq ibuffer-default-sorting-mode 'major-mode)
-    (ibuffer-auto-mode t))
+    :hook
+    (ibuffer-mode . ibuffer-auto-mode))
 #+end_src
 
 ** bard-emacs-writing
@@ -2198,12 +2283,24 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
 
   (use-package yasnippet-capf
     :ensure t
-    :after cape
+    :after (cape yasnippet)
+    :demand t
     :config
-    (add-to-list 'completion-at-point-functions #'yasnippet-capf))
+    (defun bard/cape-yas-setup ()
+      (let* ((capfs (delq t (append completion-at-point-functions '(yasnippet-capf))))
+             (super (apply #'cape-capf-super capfs)))
+        (setq-local completion-at-point-functions (list super t))))
+    (add-hook 'prog-mode-hook #'bard/cape-yas-setup)
+    (add-hook 'text-mode-hook #'bard/cape-yas-setup)
+    (add-hook 'typst-ts-mode-hook #'bard/cape-yas-setup))
 
   (use-package cdlatex
-    :hook ((cdlatex-tab . yas-expand)
+    :ensure t
+    :defer t
+    :bind (:map cdlatex-mode-map
+                ("<tab>" . cdlatex-tab))
+    :hook ((LaTeX-mode . turn-on-cdlatex)
+           (cdlatex-tab . yas-expand)
            (cdlatex-tab . cdlatex-in-yas-field))
     :config
     (use-package yasnippet
@@ -2261,8 +2358,10 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
             ))
 
     (setq denote-templates
-          '((default . "Related to — ")
-            (todo . bard/denote-todo-template)))
+          '((blank   . "")
+            (default . "Related to — ")
+            (todo    . bard/denote-todo-template)
+            (typst-lecture . "#import \"./typst-setups/lecture.typ\": *\n\n#show: lecture.with(\n    title: \"\",\n    class: \"\",\n    author: \"Daniel Pinkston\",\n)\n\n")))
 
     (setq denote-save-buffers t)
     (setq denote-prompts '(title keywords))
@@ -2308,18 +2407,8 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :ensure t
     :config
     (setq denote-silo-directories '("~/Notes/denote"
-                                    "~/Notes/Old Notes/")))
-#+end_src
-
-**** Denote sequence extension
-#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
-  (use-package denote-sequence
-    :ensure t
-    :config
-    (require 'bard-writing)
-    :bind
-    ("C-c n N" . denote-sequence)
-    ("C-c n D" . denote-sequence-dired))
+                                    "~/Notes/Old Notes/"
+                                    "~/Notes/personal/")))
 #+end_src
 
 **** Denote journal extension
@@ -2331,7 +2420,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :config
     (setq denote-journal-directory "~/Notes/denote/journal/")
 
-    (setq denote-journal-title-format "Daily Tasks and Notes"))
+    (setq denote-journal-title-format 'day-date-month-year-24h))
 #+end_src
 
 *** Denote roam
@@ -2344,7 +2433,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     ("C-c n i" . denote-roam-insert-or-create-node)  ; node insert
     ("C-c n o" . denote-roam-find-or-create-node)    ; node open
     :custom
-    (denote-roam-include-journal nil)
+    (denote-roam-include-journal t)
     (denote-roam-directory "~/Notes/denote")
     :config
     (denote-roam-mode t))
@@ -2387,7 +2476,7 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     ;; depends on denote faces :P
     (setq org-roam-node-display-template
           (concat (propertize "${denote-id:20}" 'face 'denote-faces-date)
-                  (propertize "${title:*} " 'face 'denote-faces-title)
+                  (propertize "${title:60} " 'face 'denote-faces-title)
                   (propertize "${tags:*}" 'face 'denote-faces-keywords)))
 
     (setq org-roam-db-node-include-function
@@ -2409,7 +2498,13 @@ Watch [[https://protesilaos.com/codelog/2024-02-08-emacs-window-rules-display-bu
     :ensure t
     :config
     (with-eval-after-load 'nov
-      (org-remark-nov-mode t)))
+      (org-remark-nov-mode t))
+    (with-eval-after-load 'eww
+      (org-remark-eww-mode t))
+    :bind
+    (:map eww-mode-map
+          ("m" . org-remark-mark)
+          ("o" . org-remark-open)))
 #+end_src
 *** Focused writing environment
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-writing.el :mkdirp yes
@@ -3209,18 +3304,20 @@ Somewhat related to my Elfeed/EMMS Youtube Code.
         (error "yt-dlp or youtube-dl is not installed or not in PATH"))
       (unless (string-match-p "^https?://" url)
         (error "Current track is not a valid video URL"))
-
-      (let ((cmd (format "%s -o \"%s\" \"%s\""
-                         downloader output-template url)))
-        (message "Downloading video from: %s" url)
-        (let ((exit-code (shell-command cmd)))
-          (if (not (eq exit-code 0))
-              (error "Download failed, see *Messages* for details")
-            ;; Move the downloaded file
-            (let* ((downloaded-file (car (directory-files default-directory t ".*\\(mp4\\|mkv\\|webm\\)$" 'time)))
-                   (target-path (expand-file-name (file-name-nondirectory downloaded-file) destination)))
-              (rename-file downloaded-file target-path t)
-              (message "Video saved to: %s" target-path)))))))
+      (message "Downloading video from: %s" url)
+      (make-process
+       :name "emms-yt-dlp"
+       :buffer "*emms-yt-dlp*"
+       :command (list downloader "-o" output-template url)
+       :sentinel (lambda (proc event)
+                   (cond
+                    ((string= event "finished\n")
+                     (let* ((downloaded-file (car (directory-files default-directory t ".*\\(mp4\\|mkv\\|webm\\)$" 'time)))
+                            (target-path (expand-file-name (file-name-nondirectory downloaded-file) destination)))
+                       (rename-file downloaded-file target-path t)
+                       (message "Video saved to: %s" target-path)))
+                    ((string-match-p "exited abnormally" event)
+                     (message "Download failed! See *emms-yt-dlp* for details")))))))
 #+end_src
 
 *** Interacting with ~nsxiv~ image browser through elisp
@@ -3661,7 +3758,7 @@ This is another one of prot's libraries that I copied and modified a long time a
                       ((derived-mode-p 'prog-mode) "λ")
                       ((derived-mode-p 'term-mode) ">_")
                       ((derived-mode-p 'emms-playlist-mode) "♪")
-                      (t "◦"))))
+                      (t "δ"))))
       (propertize indicator 'face 'shadow)))
 
   (defun prot-modeline-major-mode-name ()
@@ -3922,6 +4019,21 @@ This is another one of prot's libraries that I copied and modified a long time a
     "Mode line construct displaying `mode-line-misc-info'.
   Specific to the current window's mode line.")
 
+  (defvar-local prot-modeline-frame-name
+      '(:eval
+        (when-let* ((_ (mode-line-window-selected-p))
+                    (current-frame (selected-frame))
+                    (_ (frame-live-p current-frame))
+                    (parameters (frame-parameters))
+                    (name (capitalize (alist-get 'name parameters))))
+          (format "%s %s "
+                  "@"
+                  (propertize name
+                              'face 'prot-modeline-indicator-blue
+                              'mouse-face 'mode-line-highlight
+                              'help-echo (format "Current frame name\nmouse-1: `buffer-menu'")))))
+    "Mode line construct to display the current frame name.")
+
   ;;;; Risky local variables
 
   ;; NOTE 2023-04-28: The `risky-local-variable' is critical, as those
@@ -3934,6 +4046,7 @@ This is another one of prot's libraries that I copied and modified a long time a
                        bard-modeline-org-clock
                        prot-modeline-buffer-status
                        prot-modeline-window-dedicated-status
+                       prot-modeline-frame-name
                        prot-modeline-evil
                        prot-modeline-buffer-identification
                        prot-modeline-major-mode
@@ -4048,11 +4161,10 @@ The main configuration for fontaine is found at ~bard-emacs-theme~ - Fonts. Thes
            :variable-pitch-family "Iosevka Comfy Motion Duo"
            :bold-weight extrabold)
           (mono
-           :default-height 130
-           :default-family "monospace"
-           :fixed-pitch-family "monospace"
-           :variable-pitch-family "Baskerville"
-           :variable-pitch-height 140)
+           :default-height 140
+           :default-family "Terminus"
+           :fixed-pitch-family "Terminus"
+           :variable-pitch-family "Terminus")
           (mono-large
            :inherit mono
            :default-height 150
@@ -4130,7 +4242,7 @@ Explanation provided by [[https://tatsumoto-ren.github.io/blog/japanese-fonts.ht
 #+end_src
 
 *** Heading faces
-#+begin_src emacs-lisp :tangle bard-elisp/bard-theme.el :mkdirp yes
+#+begin_src emacs-lisp
   (defun bard/outline-heading-faces ()
     (set-face-attribute 'org-document-title nil
                         :inherit '(outline-1 variable-pitch)
@@ -4491,7 +4603,10 @@ This is what the tabs look like with ~doom-gruvbox~ theme:
     :ensure t
     :bind
     ("C-c n g" . consult-denote-grep)
-    ("C-c n f" . consult-denote-find))
+    ("C-c n f" . consult-denote-find)
+    :config
+    (setq consult-denote-find-command 'consult-fd
+          consult-denote-grep-command 'consult-ripgrep))
 #+end_src
 
 *** University Class jumping in ~uni.org~ file
@@ -4550,6 +4665,126 @@ This is what the tabs look like with ~doom-gruvbox~ theme:
   (global-set-key (kbd "C-c U") #'bard/jump-to-class-new-frame)
 #+end_src
 
+#+begin_src emacs-lisp :tangle bard-elisp/bard-writing.el :mkdirp yes
+  (defvar bard/subheading-keys
+    '(("schedule"  . "s")
+      ("check in"  . "c")
+      ("homework"  . "h")
+      ("notes"     . "n")
+      ("exams"     . "e")
+      ("todos"     . "t"))
+    "Fixed key bindings for known class subheadings in the transient menu.")
+
+  (defun bard/get-class-subheadings (class)
+    "Return a list of level-2 subheading titles under CLASS in `bard/uni-notes-file'."
+    (with-current-buffer (find-file-noselect bard/uni-notes-file)
+      (save-excursion
+        (widen)
+        (goto-char (point-min))
+        (search-forward class nil nil)
+        (let ((class-end (save-excursion
+                           (org-end-of-subtree t)
+                           (point)))
+              (subheadings '()))
+          (while (re-search-forward "^\\*\\* \\(.+\\)" class-end t)
+            (push (match-string-no-properties 1) subheadings))
+          (nreverse subheadings)))))
+
+  (defun bard/jump-to-class-subheading (class subheading &optional with-dired)
+    "Jump to SUBHEADING under CLASS in `bard/uni-notes-file'."
+    (let ((dir (cdr (assoc class bard/class-dirs))))
+      (delete-other-windows)
+      (find-file bard/uni-notes-file)
+      (widen)
+      (goto-char (point-min))
+      (search-forward class nil nil)
+      (let ((class-pos (point)))
+        (if (re-search-forward
+             (concat "^\\*\\* " (regexp-quote subheading)) nil t)
+            (progn
+              (org-fold-show-entry)
+              (org-narrow-to-subtree))
+          (goto-char class-pos)))
+      (when with-dired
+        (let ((dired-window (split-window-right)))
+          (with-selected-window dired-window
+            (dired dir))))))
+
+  (defun bard/jump-to-class-section ()
+    "Pick a class then a subheading, both via completing-read."
+    (interactive)
+    (let* ((class    (completing-read "Class: " (mapcar #'car bard/class-dirs) nil t))
+           (sections (bard/get-class-subheadings class))
+           (section  (completing-read "Section: " sections nil t))
+           (dired-p  current-prefix-arg))
+      (bard/jump-to-class-subheading class section dired-p)))
+
+  (defvar bard/--current-class nil
+    "Class selected in the first step of bard/class-menu.")
+
+
+  (transient-define-prefix bard/--section-menu ()
+    "Pick a subheading within `bard/--current-class'."
+    [:description
+     (lambda () (format "Sections in %s" bard/--current-class))
+     :class transient-column
+     :setup-children
+     (lambda (_)
+       (let ((sections (bard/get-class-subheadings bard/--current-class)))
+         (delq nil
+               (mapcar
+                (lambda (section)
+                  (let ((key (cdr (assoc section bard/subheading-keys))))
+                    (when key
+                      (transient-parse-suffix
+                       'bard/--section-menu
+                       `(,key ,section (lambda () (interactive)
+                                         (bard/jump-to-class-subheading
+                                          bard/--current-class ,section)))))))
+                sections))))])
+
+  ;; TODO make some kind of dired menu after selecting the class
+  ;; (transient-define-prefix bard/--dired-menu ()
+  ;;   "Pick an action relating to dired."
+  ;;   [:description
+  ;;    (lambda () (format "Open dired in" bard/--current-class))
+  ;;    :class transient-column
+  ;;    :setup-children
+  ;;    (lambda
+  ;;      )])
+
+  (transient-define-prefix bard/class-menu ()
+    "Jump to a class section via transient menus."
+    ["Classes"
+     :class transient-column
+     :setup-children
+     (lambda (_)
+       (let ((i 1))
+         (mapcar
+          (lambda (entry)
+            (let* ((class (car entry))
+                   (key   (number-to-string i)))
+              (setq i (1+ i))
+              (transient-parse-suffix
+               'bard/class-menu
+               `(,key ,class (lambda () (interactive)
+                               (setq bard/--current-class ,class)
+                               (bard/--section-menu))))))
+          bard/class-dirs)))])
+#+end_src
+
+*** Typst lecture notes with denote file naming scheme
+#+begin_src emacs-lisp :tangle bard-elisp/bard-writing.el :mkdirp yes
+  (defun denote-typst-with-signature ()
+    "Create a Typst note while prompting for template and signature."
+    (declare (interactive-only t))
+    (interactive)
+    (let ((denote-file-type 'typst)
+          (denote-prompts
+           (denote-add-prompts '(signature template))))
+      (call-interactively #'denote)))
+#+end_src
+
 *** Denote journal
 I want to have a custom format for my daily journal file to start what I want to get done that day specifically. It helps me get focused on what needs to be accomplished on days when I have a lot of tasks.
 #+begin_src emacs-lisp :tangle bard-elisp/bard-writing.el :mkdirp yes
@@ -4581,10 +4816,10 @@ I want to have a custom format for my daily journal file to start what I want to
        (?s "\\sigma" "\\text{ s.t. }" "\\sin")
        (?= "\\implies" "\\Leftrightarrow" "\\Longleftrightarrow"))))
 
-  (use-package xenops
-    :ensure t
-    :config
-    (setq xenops-math-image-scale-factor 1.2))
+  ;; (use-package xenops
+  ;;   :ensure t
+  ;;   :config
+  ;;   (setq xenops-math-image-scale-factor 1.2))
 
   (define-minor-mode bard/org-math-mode
     "Enable features to write math in `org-mode'."

@@ -35,7 +35,10 @@
   :ensure t
   :bind
   ("C-c n g" . consult-denote-grep)
-  ("C-c n f" . consult-denote-find))
+  ("C-c n f" . consult-denote-find)
+  :config
+  (setq consult-denote-find-command 'consult-fd
+        consult-denote-grep-command 'consult-ripgrep))
 
 (defvar bard/class-dirs
   '(("COMM 111" . "~/Documents/Uni/SUMMER2026-COMM 111/")
@@ -90,6 +93,121 @@
 (global-set-key (kbd "C-c u") #'bard/jump-to-class)
 (global-set-key (kbd "C-c U") #'bard/jump-to-class-new-frame)
 
+(defvar bard/subheading-keys
+  '(("schedule"  . "s")
+    ("check in"  . "c")
+    ("homework"  . "h")
+    ("notes"     . "n")
+    ("exams"     . "e")
+    ("todos"     . "t"))
+  "Fixed key bindings for known class subheadings in the transient menu.")
+
+(defun bard/get-class-subheadings (class)
+  "Return a list of level-2 subheading titles under CLASS in `bard/uni-notes-file'."
+  (with-current-buffer (find-file-noselect bard/uni-notes-file)
+    (save-excursion
+      (widen)
+      (goto-char (point-min))
+      (search-forward class nil nil)
+      (let ((class-end (save-excursion
+                         (org-end-of-subtree t)
+                         (point)))
+            (subheadings '()))
+        (while (re-search-forward "^\\*\\* \\(.+\\)" class-end t)
+          (push (match-string-no-properties 1) subheadings))
+        (nreverse subheadings)))))
+
+(defun bard/jump-to-class-subheading (class subheading &optional with-dired)
+  "Jump to SUBHEADING under CLASS in `bard/uni-notes-file'."
+  (let ((dir (cdr (assoc class bard/class-dirs))))
+    (delete-other-windows)
+    (find-file bard/uni-notes-file)
+    (widen)
+    (goto-char (point-min))
+    (search-forward class nil nil)
+    (let ((class-pos (point)))
+      (if (re-search-forward
+           (concat "^\\*\\* " (regexp-quote subheading)) nil t)
+          (progn
+            (org-fold-show-entry)
+            (org-narrow-to-subtree))
+        (goto-char class-pos)))
+    (when with-dired
+      (let ((dired-window (split-window-right)))
+        (with-selected-window dired-window
+          (dired dir))))))
+
+(defun bard/jump-to-class-section ()
+  "Pick a class then a subheading, both via completing-read."
+  (interactive)
+  (let* ((class    (completing-read "Class: " (mapcar #'car bard/class-dirs) nil t))
+         (sections (bard/get-class-subheadings class))
+         (section  (completing-read "Section: " sections nil t))
+         (dired-p  current-prefix-arg))
+    (bard/jump-to-class-subheading class section dired-p)))
+
+(defvar bard/--current-class nil
+  "Class selected in the first step of bard/class-menu.")
+
+
+(transient-define-prefix bard/--section-menu ()
+  "Pick a subheading within `bard/--current-class'."
+  [:description
+   (lambda () (format "Sections in %s" bard/--current-class))
+   :class transient-column
+   :setup-children
+   (lambda (_)
+     (let ((sections (bard/get-class-subheadings bard/--current-class)))
+       (delq nil
+             (mapcar
+              (lambda (section)
+                (let ((key (cdr (assoc section bard/subheading-keys))))
+                  (when key
+                    (transient-parse-suffix
+                     'bard/--section-menu
+                     `(,key ,section (lambda () (interactive)
+                                       (bard/jump-to-class-subheading
+                                        bard/--current-class ,section)))))))
+              sections))))])
+
+;; TODO make some kind of dired menu after selecting the class
+;; (transient-define-prefix bard/--dired-menu ()
+;;   "Pick an action relating to dired."
+;;   [:description
+;;    (lambda () (format "Open dired in" bard/--current-class))
+;;    :class transient-column
+;;    :setup-children
+;;    (lambda
+;;      )])
+
+(transient-define-prefix bard/class-menu ()
+  "Jump to a class section via transient menus."
+  ["Classes"
+   :class transient-column
+   :setup-children
+   (lambda (_)
+     (let ((i 1))
+       (mapcar
+        (lambda (entry)
+          (let* ((class (car entry))
+                 (key   (number-to-string i)))
+            (setq i (1+ i))
+            (transient-parse-suffix
+             'bard/class-menu
+             `(,key ,class (lambda () (interactive)
+                             (setq bard/--current-class ,class)
+                             (bard/--section-menu))))))
+        bard/class-dirs)))])
+
+(defun denote-typst-with-signature ()
+  "Create a Typst note while prompting for template and signature."
+  (declare (interactive-only t))
+  (interactive)
+  (let ((denote-file-type 'typst)
+        (denote-prompts
+         (denote-add-prompts '(signature template))))
+    (call-interactively #'denote)))
+
 (defun bard/denote-todo-template ()
   "Return string for daily tasks heading in `denote-journal' entries."
   (with-temp-buffer
@@ -115,10 +233,10 @@
      (?s "\\sigma" "\\text{ s.t. }" "\\sin")
      (?= "\\implies" "\\Leftrightarrow" "\\Longleftrightarrow"))))
 
-(use-package xenops
-  :ensure t
-  :config
-  (setq xenops-math-image-scale-factor 1.2))
+;; (use-package xenops
+;;   :ensure t
+;;   :config
+;;   (setq xenops-math-image-scale-factor 1.2))
 
 (define-minor-mode bard/org-math-mode
   "Enable features to write math in `org-mode'."

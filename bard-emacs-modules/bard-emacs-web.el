@@ -1,6 +1,7 @@
 ;;; IRC
 (use-package circe
   :ensure t
+  :defer t
   :config
   (setq auth-sources '("~/.authinfo.gpg"))
 
@@ -23,14 +24,25 @@
            ;; :channels ("#emacs" "##anime" "#gentoo")
            :nickserv-password my-nickserv-password))))
 
+(use-package elfeed-protocol
+  :ensure t
+  :after elfeed
+  :config
+  (setq elfeed-protocol-enabled-protocols '(fever))
+  (elfeed-protocol-enable))
+
 (use-package elfeed
   :ensure t
   :config
   (require 'bard-web)
-  (global-set-key (kbd "C-c r") 'elfeed)
   (setq elfeed-search-filter "+unread")
 
+  (setq elfeed-feeds '(("fever+https://bard@feeds.bardman.dev/fever/"
+                        :api-url "https://feeds.bardman.dev/fever/"
+                        :use-authinfo t)))
+
   :bind
+  ("C-c r" . elfeed)
   (:map elfeed-search-mode-map
         ;; C-p for play now
         ("C-c C-p" . bard/play-elfeed-video)
@@ -40,14 +52,6 @@
         ("C-c C-w" . bard/add-video-watch-later)
         ;; F is for fetch
         ("F"       . elfeed-update)))
-
-(use-package elfeed-org
-  :ensure t
-  :init
-  (elfeed-org)
-  :config
-  (setq rmh-elfeed-org-files (list "~/Notes/denote/feeds.org"
-                                   "~/Notes/denote/youtube.org")))
 
 (use-package eww
   :defer t
@@ -67,6 +71,16 @@
   (setq shr-max-width fill-column)
   (setq shr-discard-aria-hidden t)
   (setq shr-cookie-policy nil)
+
+  (defun skip-empty-li (shrtagli dom)
+    (when (cddr dom)
+      (funcall shrtagli dom)))
+
+  ;; remove empty <li> tags, specifically for wiktionary
+  ;; https://nickdrozd.github.io/2022/12/19/wiktionary-advice.html
+  (advice-add
+   'shr-tag-li :around
+   #'skip-empty-li)
 
   ;; eww
   (setq eww-search-prefix "https://duckduckgo.com/html/?q=")

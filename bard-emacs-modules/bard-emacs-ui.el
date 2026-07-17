@@ -31,6 +31,7 @@
 
 (use-package keycast
   :ensure t
+  :defer t
   :commands (keycast-mode-line-mode keycast-header-line-mode keycast-tab-bar-mode keycast-log-mode)
   :init
   (setq keycast-mode-line-format "%2s%k%c%R")

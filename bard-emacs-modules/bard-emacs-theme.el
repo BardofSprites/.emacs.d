@@ -3,10 +3,10 @@
 ;; declare all themes as safe (i trust developers)
 (setq custom-safe-themes t)
 
-(use-package doric-themes
+(use-package modus-themes
   :ensure t
   :config
-  (bard/select-theme 'doric-obsidian))
+  (bard/select-theme 'modus-vivendi))
 
 (use-package fontaine
   :ensure t
