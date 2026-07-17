@@ -1,18 +1,18 @@
 (require 'bard-window)
 
-(use-package emacs
-  ;; configuration for window splits/window sizes
-  :config
-  (setq focus-follows-mouse t)
-  (setq mouse-autoselect-window t)
-  (setq window-combination-resize t)
-  (setq even-window-sizes 'height-only)
-  (setq window-sides-vertical nil)
-  (setq switch-to-buffer-in-dedicated-window 'pop)
-  (setq split-height-threshold 80
-        split-width-threshold 125)
-  (setq window-min-height 3
-        window-min-width 30))
+(setq focus-follows-mouse t)
+(setq mouse-autoselect-window t)
+(setq window-combination-resize t)
+(setq even-window-sizes 'height-only)
+(setq window-sides-vertical nil)
+(setq switch-to-buffer-in-dedicated-window 'pop)
+(setq split-height-threshold 80
+      split-width-threshold 125)
+(setq window-min-height 3
+      window-min-width 30))
+
+(global-set-key [remap bury-buffer] #'kill-current-buffer)
+(global-set-key [remap quit-window] #'kill-current-buffer)
 
 (use-package windmove
   :bind*

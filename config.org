@@ -2029,23 +2029,29 @@ This face override makes the region only focus on the text instead of extending 
   (require 'bard-window)
 #+end_src
 
+*** Basic window split configurations
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
-  (use-package emacs
-    ;; configuration for window splits/window sizes
-    :config
-    (setq focus-follows-mouse t)
-    (setq mouse-autoselect-window t)
-    (setq window-combination-resize t)
-    (setq even-window-sizes 'height-only)
-    (setq window-sides-vertical nil)
-    (setq switch-to-buffer-in-dedicated-window 'pop)
-    (setq split-height-threshold 80
-          split-width-threshold 125)
-    (setq window-min-height 3
-          window-min-width 30))
+  (setq focus-follows-mouse t)
+  (setq mouse-autoselect-window t)
+  (setq window-combination-resize t)
+  (setq even-window-sizes 'height-only)
+  (setq window-sides-vertical nil)
+  (setq switch-to-buffer-in-dedicated-window 'pop)
+  (setq split-height-threshold 80
+        split-width-threshold 125)
+  (setq window-min-height 3
+        window-min-width 30))
 #+end_src
 
-*** Moving windos
+*** Replace burying buffers/quitting windows with killing the buffer
+I find it super annoying that pressing q removes the buffer from view but doesn't actually kill it. Remapping these functions will make any keybind that uses these functions kill the buffer instead.
+
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
+  (global-set-key [remap bury-buffer] #'kill-current-buffer)
+  (global-set-key [remap quit-window] #'kill-current-buffer)
+#+end_src
+
+*** Moving windows
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-window.el :mkdirp yes
   (use-package windmove
     :bind*
