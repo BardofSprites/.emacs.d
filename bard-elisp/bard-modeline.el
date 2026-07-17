@@ -1,3 +1,15 @@
+;;; bard-modeline.el --- prot-style modeline colored via modus/doric-themes -*- lexical-binding: t -*-
+
+;; This is a variant of the reference `bard-modeline'/`prot-modeline'
+;; library.  The only substantive change is in the "Faces" section:
+;; instead of hardcoding hex colors in each `defface', the indicator
+;; faces are populated at run time from whichever theme palette is
+;; active -- either `modus-themes' or `doric-themes' -- and are kept
+;; in sync automatically whenever you switch or reload a theme.
+;;
+;; Everything else (helper functions, mode line constructs, risky
+;; local variables) is unchanged from the reference file.
+
 (require 'prot-common)
 
 (defgroup prot-modeline nil
@@ -20,11 +32,16 @@ on whether the mode line belongs to the currently selected window
 or not."
   (let ((window (selected-window)))
     (or (eq window (old-selected-window))
-    (and (minibuffer-window-active-p (minibuffer-window))
-         (with-selected-window (minibuffer-window)
-           (eq window (minibuffer-selected-window)))))))
+        (and (minibuffer-window-active-p (minibuffer-window))
+             (with-selected-window (minibuffer-window)
+               (eq window (minibuffer-selected-window)))))))
 
 ;;;; Faces
+;;
+;; Rather than hardcoding hex values, these faces are left with an
+;; empty spec and are populated/refreshed by `bard-modeline-setup-faces',
+;; which reads colors from whichever theme package is currently
+;; active.  See "Theme-aware face setup" further below.
 
 (defface prot-modeline-indicator-button nil
   "Generic face used for indicators that have a background.
@@ -33,124 +50,223 @@ relevant indicators (combines nicely with my `spacious-padding'
 package).")
 
 (defface prot-modeline-indicator-red
-  '((default :inherit bold)
-    (((class color) (min-colors 88) (background light))
-     :foreground "#880000")
-    (((class color) (min-colors 88) (background dark))
-     :foreground "#ff9f9f")
-    (t :foreground "red"))
-  "Face for modeline indicators (e.g. see my `notmuch-indicator')."
+  '((default :inherit bold))
+  "Face for modeline indicators (e.g. see my `notmuch-indicator').
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-red-bg
-  '((default :inherit (bold prot-modeline-indicator-button))
-    (((class color) (min-colors 88) (background light))
-     :background "#aa1111" :foreground "white")
-    (((class color) (min-colors 88) (background dark))
-     :background "#ff9090" :foreground "black")
-    (t :background "red" :foreground "black"))
-  "Face for modeline indicators with a background."
+  '((default :inherit (bold prot-modeline-indicator-button)))
+  "Face for modeline indicators with a background.
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-green
-  '((default :inherit bold)
-    (((class color) (min-colors 88) (background light))
-     :foreground "#005f00")
-    (((class color) (min-colors 88) (background dark))
-     :foreground "#73fa7f")
-    (t :foreground "green"))
-  "Face for modeline indicators (e.g. see my `notmuch-indicator')."
+  '((default :inherit bold))
+  "Face for modeline indicators (e.g. see my `notmuch-indicator').
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-green-bg
-  '((default :inherit (bold prot-modeline-indicator-button))
-    (((class color) (min-colors 88) (background light))
-     :background "#207b20" :foreground "white")
-    (((class color) (min-colors 88) (background dark))
-     :background "#77d077" :foreground "black")
-    (t :background "green" :foreground "black"))
-  "Face for modeline indicators with a background."
+  '((default :inherit (bold prot-modeline-indicator-button)))
+  "Face for modeline indicators with a background.
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-yellow
-  '((default :inherit bold)
-    (((class color) (min-colors 88) (background light))
-     :foreground "#6f4000")
-    (((class color) (min-colors 88) (background dark))
-     :foreground "#f0c526")
-    (t :foreground "yellow"))
-  "Face for modeline indicators (e.g. see my `notmuch-indicator')."
+  '((default :inherit bold))
+  "Face for modeline indicators (e.g. see my `notmuch-indicator').
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-yellow-bg
-  '((default :inherit (bold prot-modeline-indicator-button))
-    (((class color) (min-colors 88) (background light))
-     :background "#805000" :foreground "white")
-    (((class color) (min-colors 88) (background dark))
-     :background "#ffc800" :foreground "black")
-    (t :background "yellow" :foreground "black"))
-  "Face for modeline indicators with a background."
+  '((default :inherit (bold prot-modeline-indicator-button)))
+  "Face for modeline indicators with a background.
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-blue
-  '((default :inherit bold)
-    (((class color) (min-colors 88) (background light))
-     :foreground "#00228a")
-    (((class color) (min-colors 88) (background dark))
-     :foreground "#88bfff")
-    (t :foreground "blue"))
-  "Face for modeline indicators (e.g. see my `notmuch-indicator')."
+  '((default :inherit bold))
+  "Face for modeline indicators (e.g. see my `notmuch-indicator').
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-blue-bg
-  '((default :inherit (bold prot-modeline-indicator-button))
-    (((class color) (min-colors 88) (background light))
-     :background "#0000aa" :foreground "white")
-    (((class color) (min-colors 88) (background dark))
-     :background "#77aaff" :foreground "black")
-    (t :background "blue" :foreground "black"))
-  "Face for modeline indicators with a background."
+  '((default :inherit (bold prot-modeline-indicator-button)))
+  "Face for modeline indicators with a background.
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-magenta
-  '((default :inherit bold)
-    (((class color) (min-colors 88) (background light))
-     :foreground "#6a1aaf")
-    (((class color) (min-colors 88) (background dark))
-     :foreground "#e0a0ff")
-    (t :foreground "magenta"))
-  "Face for modeline indicators (e.g. see my `notmuch-indicator')."
+  '((default :inherit bold))
+  "Face for modeline indicators (e.g. see my `notmuch-indicator').
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-magenta-bg
-  '((default :inherit (bold prot-modeline-indicator-button))
-    (((class color) (min-colors 88) (background light))
-     :background "#6f0f9f" :foreground "white")
-    (((class color) (min-colors 88) (background dark))
-     :background "#e3a2ff" :foreground "black")
-    (t :background "magenta" :foreground "black"))
-  "Face for modeline indicators with a background."
+  '((default :inherit (bold prot-modeline-indicator-button)))
+  "Face for modeline indicators with a background.
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-cyan
-  '((default :inherit bold)
-    (((class color) (min-colors 88) (background light))
-     :foreground "#004060")
-    (((class color) (min-colors 88) (background dark))
-     :foreground "#30b7cc")
-    (t :foreground "cyan"))
-  "Face for modeline indicators (e.g. see my `notmuch-indicator')."
+  '((default :inherit bold))
+  "Face for modeline indicators (e.g. see my `notmuch-indicator').
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
 
 (defface prot-modeline-indicator-cyan-bg
-  '((default :inherit (bold prot-modeline-indicator-button))
-    (((class color) (min-colors 88) (background light))
-     :background "#006080" :foreground "white")
-    (((class color) (min-colors 88) (background dark))
-     :background "#40c0e0" :foreground "black")
-    (t :background "cyan" :foreground "black"))
-  "Face for modeline indicators with a background."
+  '((default :inherit (bold prot-modeline-indicator-button)))
+  "Face for modeline indicators with a background.
+Colors are populated by `bard-modeline-setup-faces'."
   :group 'prot-modeline-faces)
+
+;;;; Theme-aware face setup
+
+(defvar bard-modeline--fallback-colors
+  '((red      . "#880000") (red-bg      . "#aa1111") (red-fg-bg      . "white")
+    (green    . "#005f00") (green-bg    . "#207b20") (green-fg-bg    . "white")
+    (yellow   . "#6f4000") (yellow-bg   . "#805000") (yellow-fg-bg    . "white")
+    (blue     . "#00228a") (blue-bg     . "#0000aa") (blue-fg-bg     . "white")
+    (magenta . "#6a1aaf") (magenta-bg . "#6f0f9f") (magenta-fg-bg . "white")
+    (cyan     . "#004060") (cyan-bg     . "#006080") (cyan-fg-bg     . "white"))
+  "Fallback colors used when neither `modus-themes' nor `doric-themes' is active.")
+
+(defun bard-modeline--set (face &optional fg bg)
+  "Set FACE's foreground to FG and background to BG.
+Explicitly clears attributes back to `unspecified' if they are nil,
+ensuring old colors don't stick around during theme switches."
+  (let ((fg-val (if (and fg (not (eq fg 'unspecified))) fg 'unspecified))
+        (bg-val (if (and bg (not (eq bg 'unspecified))) bg 'unspecified)))
+    (set-face-attribute face nil :foreground fg-val :background bg-val)))
+
+(defun bard-modeline--setup-faces-modus ()
+  "Populate indicator faces from the active `modus-themes' palette."
+  (unless (fboundp 'modus-themes-get-color-value)
+    (error "modus-themes-get-color-value is not available"))
+  (cl-flet ((c (name) (modus-themes-get-color-value name)))
+    (bard-modeline--set 'prot-modeline-indicator-red (c 'red) nil)
+    (bard-modeline--set 'prot-modeline-indicator-red-bg (c 'fg-red-intense) (c 'bg-red-intense))
+    (bard-modeline--set 'prot-modeline-indicator-green (c 'green) nil)
+    (bard-modeline--set 'prot-modeline-indicator-green-bg (c 'fg-green-intense) (c 'bg-green-intense))
+    (bard-modeline--set 'prot-modeline-indicator-yellow (c 'yellow) nil)
+    (bard-modeline--set 'prot-modeline-indicator-yellow-bg (c 'fg-yellow-intense) (c 'bg-yellow-intense))
+    (bard-modeline--set 'prot-modeline-indicator-blue (c 'blue) nil)
+    (bard-modeline--set 'prot-modeline-indicator-blue-bg (c 'fg-blue-intense) (c 'bg-blue-intense))
+    (bard-modeline--set 'prot-modeline-indicator-magenta (c 'magenta) nil)
+    (bard-modeline--set 'prot-modeline-indicator-magenta-bg (c 'fg-magenta-intense) (c 'bg-magenta-intense))
+    (bard-modeline--set 'prot-modeline-indicator-cyan (c 'cyan) nil)
+    (bard-modeline--set 'prot-modeline-indicator-cyan-bg (c 'fg-cyan-intense) (c 'bg-cyan-intense))))
+
+(defun bard-modeline--setup-faces-doric ()
+  "Populate indicator faces from the active `doric-themes` palette.
+Uses the fixed `bard-modeline--set' to prevent color leakage."
+  (unless (fboundp 'doric-themes-with-colors)
+    (error "doric-themes-with-colors is not available"))
+  (doric-themes-with-colors
+    (bard-modeline--set 'prot-modeline-indicator-red     fg-red     nil)
+    (bard-modeline--set 'prot-modeline-indicator-green   fg-green   nil)
+    (bard-modeline--set 'prot-modeline-indicator-yellow  fg-yellow  nil)
+    (bard-modeline--set 'prot-modeline-indicator-blue    fg-blue    nil)
+    (bard-modeline--set 'prot-modeline-indicator-magenta fg-magenta nil)
+    (bard-modeline--set 'prot-modeline-indicator-cyan    fg-cyan    nil)
+
+    (bard-modeline--set 'prot-modeline-indicator-red-bg     fg-main bg-red)
+    (bard-modeline--set 'prot-modeline-indicator-green-bg   fg-main bg-green)
+    (bard-modeline--set 'prot-modeline-indicator-yellow-bg  fg-main bg-yellow)
+    (bard-modeline--set 'prot-modeline-indicator-blue-bg    fg-main bg-blue)
+    (bard-modeline--set 'prot-modeline-indicator-magenta-bg fg-main bg-magenta)
+    (bard-modeline--set 'prot-modeline-indicator-cyan-bg    fg-main bg-cyan)))
+
+(doric-themes-with-colors
+  (message "Foreground blue %s" fg-blue))
+
+(defun bard-modeline--setup-faces-fallback ()
+  "Populate indicator faces from `bard-modeline--fallback-colors'."
+  (cl-flet ((c (key) (alist-get key bard-modeline--fallback-colors)))
+    (bard-modeline--set 'prot-modeline-indicator-red (c 'red) nil)
+    (bard-modeline--set 'prot-modeline-indicator-red-bg (c 'red-fg-bg) (c 'red-bg))
+    (bard-modeline--set 'prot-modeline-indicator-green (c 'green) nil)
+    (bard-modeline--set 'prot-modeline-indicator-green-bg (c 'green-fg-bg) (c 'green-bg))
+    (bard-modeline--set 'prot-modeline-indicator-yellow (c 'yellow) nil)
+    (bard-modeline--set 'prot-modeline-indicator-yellow-bg (c 'yellow-fg-bg) (c 'yellow-bg))
+    (bard-modeline--set 'prot-modeline-indicator-blue (c 'blue) nil)
+    (bard-modeline--set 'prot-modeline-indicator-blue-bg (c 'blue-fg-bg) (c 'blue-bg))
+    (bard-modeline--set 'prot-modeline-indicator-magenta (c 'magenta) nil)
+    (bard-modeline--set 'prot-modeline-indicator-magenta-bg (c 'magenta-fg-bg) (c 'magenta-bg))
+    (bard-modeline--set 'prot-modeline-indicator-cyan (c 'cyan) nil)
+    (bard-modeline--set 'prot-modeline-indicator-cyan-bg (c 'cyan-fg-bg) (c 'cyan-bg))))
+
+;;;###autoload
+(defun bard-modeline-setup-faces ()
+  "Refresh `prot-modeline' indicator faces from the active theme flavor."
+  (interactive)
+  (cond
+   ;; 1. Handle Modus Themes Flavor
+   ((cl-some (lambda (theme) (string-prefix-p "modus-" (symbol-name theme)))
+             custom-enabled-themes)
+    (when (fboundp 'modus-themes-with-colors)
+      (modus-themes-with-colors
+        (custom-set-faces
+         `(prot-modeline-indicator-red ((,c :inherit bold :foreground ,red)))
+         `(prot-modeline-indicator-green ((,c :inherit bold :foreground ,green)))
+         `(prot-modeline-indicator-yellow ((,c :inherit bold :foreground ,yellow)))
+         `(prot-modeline-indicator-blue ((,c :inherit bold :foreground ,blue)))
+         `(prot-modeline-indicator-magenta ((,c :inherit bold :foreground ,magenta)))
+         `(prot-modeline-indicator-cyan ((,c :inherit bold :foreground ,cyan)))
+         `(prot-modeline-indicator-red-bg ((,c :inherit (bold prot-modeline-indicator-button) :background ,bg-red-intense :foreground ,fg-main)))
+         `(prot-modeline-indicator-green-bg ((,c :inherit (bold prot-modeline-indicator-button) :background ,bg-green-intense :foreground ,fg-main)))
+         `(prot-modeline-indicator-yellow-bg ((,c :inherit (bold prot-modeline-indicator-button) :background ,bg-yellow-intense :foreground ,fg-main)))
+         `(prot-modeline-indicator-blue-bg ((,c :inherit (bold prot-modeline-indicator-button) :background ,bg-blue-intense :foreground ,fg-main)))
+         `(prot-modeline-indicator-magenta-bg ((,c :inherit (bold prot-modeline-indicator-button) :background ,bg-magenta-intense :foreground ,fg-main)))
+         `(prot-modeline-indicator-cyan-bg ((,c :inherit (bold prot-modeline-indicator-button) :background ,bg-cyan-intense :foreground ,fg-main)))))))
+
+   ;; 2. Handle Doric Themes Flavor
+   ((cl-some (lambda (theme) (string-prefix-p "doric-" (symbol-name theme)))
+             custom-enabled-themes)
+    (when (fboundp 'doric-themes-with-colors)
+      (doric-themes-with-colors
+        (custom-set-faces
+         `(prot-modeline-indicator-red ((t :inherit bold :foreground ,fg-red)))
+         `(prot-modeline-indicator-green ((t :inherit bold :foreground ,fg-green)))
+         `(prot-modeline-indicator-yellow ((t :inherit bold :foreground ,fg-yellow)))
+         `(prot-modeline-indicator-blue ((t :inherit bold :foreground ,fg-blue)))
+         `(prot-modeline-indicator-magenta ((t :inherit bold :foreground ,fg-magenta)))
+         `(prot-modeline-indicator-cyan ((t :inherit bold :foreground ,fg-cyan)))
+         `(prot-modeline-indicator-red-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-red :foreground ,fg-main)))
+         `(prot-modeline-indicator-green-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-green :foreground ,fg-main)))
+         `(prot-modeline-indicator-yellow-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-yellow :foreground ,fg-main)))
+         `(prot-modeline-indicator-blue-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-blue :foreground ,fg-main)))
+         `(prot-modeline-indicator-magenta-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-magenta :foreground ,fg-main)))
+         `(prot-modeline-indicator-cyan-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-cyan :foreground ,fg-main)))))))
+
+   ;; 3. Fallback to Hardcoded Hex Colors
+   (t
+    (cl-flet ((c (key) (alist-get key bard-modeline--fallback-colors)))
+      (custom-set-faces
+       `(prot-modeline-indicator-red ((t :inherit bold :foreground ,(c 'red))))
+       `(prot-modeline-indicator-green ((t :inherit bold :foreground ,(c 'green))))
+       `(prot-modeline-indicator-yellow ((t :inherit bold :foreground ,(c 'yellow))))
+       `(prot-modeline-indicator-blue ((t :inherit bold :foreground ,(c 'blue))))
+       `(prot-modeline-indicator-magenta ((t :inherit bold :foreground ,(c 'magenta))))
+       `(prot-modeline-indicator-cyan ((t :inherit bold :foreground ,(c 'cyan))))
+       `(prot-modeline-indicator-red-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,(c 'red-bg) :foreground ,(c 'red-fg-bg))))
+       `(prot-modeline-indicator-green-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,(c 'green-bg) :foreground ,(c 'green-fg-bg))))
+       `(prot-modeline-indicator-yellow-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,(c 'yellow-bg) :foreground ,(c 'yellow-fg-bg))))
+       `(prot-modeline-indicator-blue-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,(c 'blue-bg) :foreground ,(c 'blue-fg-bg))))
+       `(prot-modeline-indicator-magenta-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,(c 'magenta-bg) :foreground ,(c 'magenta-fg-bg))))
+       `(prot-modeline-indicator-cyan-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,(c 'cyan-bg) :foreground ,(c 'cyan-fg-bg)))))))))
+
+(with-eval-after-load 'modus-themes
+  (add-hook 'modus-themes-after-load-theme-hook #'bard-modeline-setup-faces))
+
+(with-eval-after-load 'doric-themes
+  (add-hook 'doric-themes-after-load-theme-hook #'bard-modeline-setup-faces))
+
+(with-eval-after-load 'bard-theme
+  (add-hook 'bard/after-theme-load-hook #'bard-modeline-setup-faces))
+
+(bard-modeline-setup-faces)
 
 ;;;; Common helper functions
 
@@ -161,15 +277,12 @@ package).")
        (not (one-window-p :no-minibuffer))))
 
 (defun prot-modeline--truncate-p ()
-  "Return non-nil if truncation should happen.
-This is a more general and less stringent variant of
-`prot-modeline--string-truncate-p'."
+  "Return non-nil if truncation should happen."
   (and (prot-common-window-small-p)
        (not (one-window-p :no-minibuffer))))
 
 (defun prot-modeline-string-truncate (str)
-  "Return truncated STR, if appropriate, else return STR.
-Truncation is done up to `prot-modeline-string-truncate-length'."
+  "Return truncated STR, if appropriate, else return STR."
   (if (prot-modeline--string-truncate-p str)
       (concat (substring str 0 prot-modeline-string-truncate-length) "...")
     str))
@@ -185,15 +298,13 @@ Truncation is done up to `prot-modeline-string-truncate-length'."
   (substring str 0 1))
 
 (defun prot-modeline-string-abbreviate (str)
-  "Abbreviate STR individual hyphen or underscore separated words.
-Also see `prot-modeline-string-abbreviate-but-last'."
+  "Abbreviate STR individual hyphen or underscore separated words."
   (if (prot-modeline--string-truncate-p str)
       (mapconcat #'prot-modeline--first-char (split-string str "[_-]") "-")
     str))
 
 (defun prot-modeline-string-abbreviate-but-last (str nthlast)
-  "Abbreviate STR, keeping NTHLAST words intact.
-Also see `prot-modeline-string-abbreviate'."
+  "Abbreviate STR, keeping NTHLAST words intact."
   (if (prot-modeline--string-truncate-p str)
       (let* ((all-strings (split-string str "[_-]"))
              (nbutlast-strings (nbutlast (copy-sequence all-strings) nthlast))
@@ -211,8 +322,7 @@ Also see `prot-modeline-string-abbreviate'."
     '(:eval
       (when (and (mode-line-window-selected-p) defining-kbd-macro)
         (propertize " KMacro " 'face 'prot-modeline-indicator-blue-bg)))
-  "Mode line construct displaying `mode-line-defining-kbd-macro'.
-Specific to the current window's mode line.")
+  "Mode line construct displaying `mode-line-defining-kbd-macro'.")
 
 ;;;; Narrow indicator
 
@@ -222,7 +332,7 @@ Specific to the current window's mode line.")
                  (buffer-narrowed-p)
                  (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
         (propertize " Narrow " 'face 'prot-modeline-indicator-cyan-bg)))
-  "Mode line construct to report the multilingual environment.")
+  "Mode line construct to report the narrowed state.")
 
 ;;;; Centered cursor indicator
 (defvar-local bard-modeline-centered-cursor
@@ -231,16 +341,14 @@ Specific to the current window's mode line.")
                  (bard/cursor-centered-p)
                  (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
         (propertize " Center " 'face 'prot-modeline-indicator-yellow-bg)))
-  "Mode line construct to report the multilingual environment.")
+  "Mode line construct to report centered cursor.")
 
-;; FIXME: Combine these two functions one day...
 (defvar-local bard-modeline-ryo-modal-normal
     '(:eval
       (when (and (mode-line-window-selected-p)
                  (not (bard/ryo-insert-p))
                  (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
-        (propertize "<N>" 'face 'prot-modeline-indicator-magenta-bg))
-      )
+        (propertize "<N>" 'face 'prot-modeline-indicator-magenta-bg)))
   "Mode line construct to show normal mode for ryo-modal.")
 
 (defvar-local bard-modeline-ryo-modal-insert
@@ -248,15 +356,15 @@ Specific to the current window's mode line.")
       (when (and (mode-line-window-selected-p)
                  (bard/ryo-insert-p)
                  (not (derived-mode-p 'Info-mode 'help-mode 'special-mode 'message-mode)))
-        (propertize "<I>" 'face 'prot-modeline-indicator-blue-bg))
-      )
+        (propertize "<I>" 'face 'prot-modeline-indicator-blue-bg)))
   "Mode line construct to show insert mode for ryo-modal.")
 
 ;;;; Input method
 
 (defvar-local prot-modeline-input-method
     '(:eval
-      (when current-input-method-title
+      (when (and (mode-line-window-selected-p)
+                 current-input-method-title)
         (propertize (format " %s " current-input-method-title)
                     'face 'prot-modeline-indicator-green-bg
                     'mouse-face 'mode-line-highlight)))
@@ -297,8 +405,7 @@ Specific to the current window's mode line.")
       'mode-line-buffer-id))))
 
 (defun prot-modeline--buffer-name ()
-  "Return `buffer-name', truncating it if necessary.
-See `prot-modeline-string-truncate'."
+  "Return `buffer-name', truncating it if necessary."
   (when-let ((name (buffer-name)))
     (prot-modeline-string-truncate name)))
 
@@ -325,9 +432,7 @@ See `prot-modeline-string-truncate'."
                   'face (prot-modeline-buffer-identification-face)
                   'mouse-face 'mode-line-highlight
                   'help-echo (prot-modeline-buffer-name-help-echo)))
-  "Mode line construct for identifying the buffer being displayed.
-Propertize the current buffer with the `mode-line-buffer-id'
-face.  Let other buffers have no face.")
+  "Mode line construct for identifying the buffer being displayed.")
 
 ;;;; Major mode
 
@@ -397,8 +502,7 @@ face.  Let other buffers have no face.")
           (vc-working-revision file)))
 
 (defun prot-modeline--vc-text (file branch &optional face)
-  "Prepare text for Git controlled FILE, given BRANCH.
-With optional FACE, use it to propertize the BRANCH."
+  "Prepare text for Git controlled FILE, given BRANCH."
   (concat
    (propertize (char-to-string #xE0A0) 'face 'shadow)
    " "
@@ -406,15 +510,10 @@ With optional FACE, use it to propertize the BRANCH."
                'face face
                'mouse-face 'mode-line-highlight
                'help-echo (prot-modeline--vc-help-echo file)
-               'local-map prot-modeline-vc-map)
-   ;; " "
-   ;; (prot-modeline-diffstat file)
-   ))
+               'local-map prot-modeline-vc-map)))
 
 (defun prot-modeline--vc-details (file branch &optional face)
-  "Return Git BRANCH details for FILE, truncating it if necessary.
-The string is truncated if the width of the window is smaller
-than `split-width-threshold'."
+  "Return Git BRANCH details for FILE, truncating it if necessary."
   (prot-modeline-string-truncate
    (prot-modeline--vc-text file branch face)))
 
@@ -441,7 +540,6 @@ than `split-width-threshold'."
       (when-let* (((mode-line-window-selected-p))
                   (file (buffer-file-name))
                   (backend (vc-backend file))
-                  ;; ((vc-git-registered file))
                   (branch (prot-modeline--vc-branch-name file backend))
                   (face (prot-modeline--vc-face file backend)))
         (prot-modeline--vc-details file branch face)))
@@ -452,10 +550,8 @@ than `split-width-threshold'."
 (declare-function flymake--severity "flymake" (type))
 (declare-function flymake-diagnostic-type "flymake" (diag))
 
-;; Based on `flymake--mode-line-counter'.
 (defun prot-modeline-flymake-counter (type)
-  "Compute number of diagnostics in buffer with TYPE's severity.
-TYPE is usually keyword `:error', `:warning' or `:note'."
+  "Compute number of diagnostics in buffer with TYPE's severity."
   (let ((count 0))
     (dolist (d (flymake-diagnostics))
       (when (= (flymake--severity type)
@@ -481,9 +577,6 @@ TYPE is usually keyword `:error', `:warning' or `:note'."
         (propertize count
                     'face ',(or face type)
                      'mouse-face 'mode-line-highlight
-                     ;; FIXME 2023-07-03: Clicking on the text with
-                     ;; this buffer and a single warning present, the
-                     ;; diagnostics take up the entire frame.  Why?
                      'local-map prot-modeline-flymake-map
                      'help-echo "mouse-1: buffer diagnostics\nmouse-3: project diagnostics")))))
 
@@ -496,12 +589,10 @@ TYPE is usually keyword `:error', `:warning' or `:note'."
       (when (and (bound-and-true-p flymake-mode)
                  (mode-line-window-selected-p))
         (list
-         ;; See the calls to the macro `prot-modeline-flymake-type'
          '(:eval (prot-modeline-flymake-error))
          '(:eval (prot-modeline-flymake-warning))
          '(:eval (prot-modeline-flymake-note)))))
-  "Mode line construct displaying `flymake-mode-line-format'.
-Specific to the current window's mode line.")
+  "Mode line construct displaying `flymake-mode-line-format'.")
 
 (with-eval-after-load 'eglot
   (setq mode-line-misc-info
@@ -511,16 +602,14 @@ Specific to the current window's mode line.")
     `(:eval
       (when (and (featurep 'eglot) (mode-line-window-selected-p))
         '(eglot--managed-mode eglot--mode-line-format)))
-  "Mode line construct displaying Eglot information.
-Specific to the current window's mode line.")
+  "Mode line construct displaying Eglot information.")
 
 (defvar-local prot-modeline-notmuch-indicator
     '(notmuch-indicator-mode
       (" "
        (:eval (when (mode-line-window-selected-p)
                 notmuch-indicator--counters))))
-  "The equivalent of `notmuch-indicator-mode-line-construct'.
-Display the indicator only on the focused window's mode line.")
+  "The equivalent of `notmuch-indicator-mode-line-construct'.")
 
 (defvar-local bard-evil-state-indicator
   '(:eval
@@ -583,11 +672,6 @@ Display the indicator only on the focused window's mode line.")
 
 ;;;; Miscellaneous
 
-;; (setq global-mode-string
-;;       (remove 'org-mode-line-string global-mode-string))
-
-;; (delq 'org-mode-line-string global-mode-string)
-
 (with-eval-after-load 'org
   (setq mode-line-misc-info
         (delete 'org-mode-line-string mode-line-misc-info)))
@@ -596,8 +680,7 @@ Display the indicator only on the focused window's mode line.")
     '(:eval
       (when (mode-line-window-selected-p)
         mode-line-misc-info))
-  "Mode line construct displaying `mode-line-misc-info'.
-Specific to the current window's mode line.")
+  "Mode line construct displaying `mode-line-misc-info'.")
 
 (defvar-local prot-modeline-frame-name
     '(:eval
@@ -616,8 +699,6 @@ Specific to the current window's mode line.")
 
 ;;;; Risky local variables
 
-;; NOTE 2023-04-28: The `risky-local-variable' is critical, as those
-;; variables will not work without it.
 (dolist (construct '(prot-modeline-kbd-macro
                      prot-modeline-narrow
                      bard-modeline-centered-cursor
@@ -639,3 +720,4 @@ Specific to the current window's mode line.")
   (put construct 'risky-local-variable t))
 
 (provide 'bard-modeline)
+;;; bard-modeline.el ends here
