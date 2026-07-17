@@ -44,8 +44,3 @@
                   gc-cons-percentage 0.1
                   file-name-handler-alist bard-emacs--file-name-handler-alist
                   vc-handled-backends bard-emacs--vc-handled-backends)))
-
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (profiler-stop)
-            (profiler-report)))

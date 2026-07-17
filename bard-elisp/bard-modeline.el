@@ -202,8 +202,12 @@ Uses the fixed `bard-modeline--set' to prevent color leakage."
   "Refresh `prot-modeline' indicator faces from the active theme flavor."
   (interactive)
   (cond
-   ;; 1. Handle Modus Themes Flavor
-   ((cl-some (lambda (theme) (string-prefix-p "modus-" (symbol-name theme)))
+   ;; 1. Handle Modus, Ef, and Standard Themes Families (all use the modus framework)
+   ((cl-some (lambda (theme)
+               (let ((name (symbol-name theme)))
+                 (or (string-prefix-p "modus-" name)
+                     (string-prefix-p "ef-" name)
+                     (string-prefix-p "standard-" name))))
              custom-enabled-themes)
     (when (fboundp 'modus-themes-with-colors)
       (modus-themes-with-colors
@@ -240,7 +244,7 @@ Uses the fixed `bard-modeline--set' to prevent color leakage."
          `(prot-modeline-indicator-magenta-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-magenta :foreground ,fg-main)))
          `(prot-modeline-indicator-cyan-bg ((t :inherit (bold prot-modeline-indicator-button) :background ,bg-cyan :foreground ,fg-main)))))))
 
-   ;; 3. Fallback to Hardcoded Hex Colors
+   ;; 3. Fallback
    (t
     (cl-flet ((c (key) (alist-get key bard-modeline--fallback-colors)))
       (custom-set-faces

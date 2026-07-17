@@ -59,11 +59,6 @@ The ~early-init.el~ removes all the visual fluff like scrollbars and sets up ver
                     gc-cons-percentage 0.1
                     file-name-handler-alist bard-emacs--file-name-handler-alist
                     vc-handled-backends bard-emacs--vc-handled-backends)))
-
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              (profiler-stop)
-              (profiler-report)))
 #+end_src
 
 ** Initialization
@@ -1743,12 +1738,59 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
   (setq custom-safe-themes t)
 #+end_src
 
-*** Color theme
+*** Region face override
+This face override makes the region only focus on the text instead of extending all the way to the border of the window. This is more like highlighting in a modern application, which is why I liked it. The emphasis remains on what is highlighted versus the entire area of the highlight.
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
+(custom-set-faces
+      '(region ((t :extend nil))))
+#+end_src
+
+*** Modus themes
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
   (use-package modus-themes
     :ensure t
     :config
+    (setq modus-themes-mixed-fonts t
+          modus-themes-variable-pitch-ui t
+          modus-themes-italic-constructs nil
+          modus-themes-bold-constructs t
+          modus-themes-completions '((t . (bold)))
+          modus-themes-prompts '(bold))
+
+    ;; custom colors for certain parts of the modus vivendi
+    (setq modus-vivendi-palette-overrides
+          '((bg-region bg-dim)
+            (fg-region yellow-faint)
+            (fg-space bg-dim)))
+
+
+    ;; custom color inherited by all modus themes
+    (setq modus-themes-common-palette-overrides
+          '((fg-space bg-dim)
+            (comment fg-dim)))
+
+    (setq modus-vivendi-deuteranopia-palette-overrides
+          '((comment yellow-faint)))
+
+    (setq modus-operandi-deuteranopia-palette-overrides
+          '((comment yellow-faint)))
+
     (bard/select-theme 'modus-vivendi))
+
+#+end_src
+
+*** Other themes
+#+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
+  (use-package ef-themes
+    :ensure t
+    :defer t)
+
+  (use-package doric-themes
+    :ensure t)
+
+  (use-package standard-themes
+    :ensure t
+    :defer t)
 #+end_src
 
 *** Fonts
@@ -1776,7 +1818,7 @@ I use this package in tangent with [[https://github.com/nobiot/org-remark][org-r
 
 *** Binding for custom select theme function
 #+begin_src emacs-lisp :tangle bard-emacs-modules/bard-emacs-theme.el :mkdirp yes
-  (global-set-key (kbd "M-<f6>") #'bard/select-theme)
+  (global-set-key (kbd "<f6>") #'bard/select-theme)
 #+end_src
 
 *** Mixed pitch faces for writing

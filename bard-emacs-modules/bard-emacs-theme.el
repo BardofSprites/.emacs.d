@@ -3,10 +3,49 @@
 ;; declare all themes as safe (i trust developers)
 (setq custom-safe-themes t)
 
+(custom-set-faces
+      '(region ((t :extend nil))))
+
 (use-package modus-themes
   :ensure t
   :config
+  (setq modus-themes-mixed-fonts t
+        modus-themes-variable-pitch-ui t
+        modus-themes-italic-constructs nil
+        modus-themes-bold-constructs t
+        modus-themes-completions '((t . (bold)))
+        modus-themes-prompts '(bold))
+
+  ;; custom colors for certain parts of the modus vivendi
+  (setq modus-vivendi-palette-overrides
+        '((bg-region bg-dim)
+          (fg-region yellow-faint)
+          (fg-space bg-dim)))
+
+
+  ;; custom color inherited by all modus themes
+  (setq modus-themes-common-palette-overrides
+        '((fg-space bg-dim)
+          (comment fg-dim)))
+
+  (setq modus-vivendi-deuteranopia-palette-overrides
+        '((comment yellow-faint)))
+
+  (setq modus-operandi-deuteranopia-palette-overrides
+        '((comment yellow-faint)))
+
   (bard/select-theme 'modus-vivendi))
+
+(use-package ef-themes
+  :ensure t
+  :defer t)
+
+(use-package doric-themes
+  :ensure t)
+
+(use-package standard-themes
+  :ensure t
+  :defer t)
 
 (use-package fontaine
   :ensure t
@@ -26,7 +65,7 @@
 (use-package rainbow-mode
   :ensure t)
 
-(global-set-key (kbd "M-<f6>") #'bard/select-theme)
+(global-set-key (kbd "<f6>") #'bard/select-theme)
 
 (use-package mixed-pitch
   :ensure t
