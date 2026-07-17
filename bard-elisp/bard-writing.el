@@ -43,7 +43,6 @@
 (defvar bard/class-dirs
   '(("COMM 111" . "~/Documents/Uni/SUMMER2026-COMM 111/")
     ("CSE 220" . "~/Documents/Uni/SUMMER2026-CSE 220/")
-    ("PHYS 296" . "~/Documents/Uni/SUMMER2026-PHYS 296/")
     ("PHYS 299" . "~/Documents/Uni/SUMMER2026-PHYS 299/"))
   "Mapping of class names to their document directories.")
 
@@ -90,7 +89,7 @@
           (beframe-rename-current-frame))))))
 
 ;; Optional: bind to a key
-(global-set-key (kbd "C-c u") #'bard/jump-to-class)
+(global-set-key (kbd "C-c u") #'bard/jump-to-class-section)
 (global-set-key (kbd "C-c U") #'bard/jump-to-class-new-frame)
 
 (defvar bard/subheading-keys
